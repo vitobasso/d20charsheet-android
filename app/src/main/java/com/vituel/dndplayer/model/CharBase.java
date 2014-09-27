@@ -2,7 +2,14 @@ package com.vituel.dndplayer.model;
 
 import com.vituel.dndplayer.util.AttackUtil;
 
-import java.util.*;
+import java.text.MessageFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 import static com.vituel.dndplayer.model.Attack.WeaponReferenceType.MAIN_HAND;
 
@@ -94,6 +101,21 @@ public class CharBase extends AbstractEntity {
             }
         }
         return result;
+    }
+
+    public String getDescription(){
+        return MessageFormat.format("{0}, level {1} {2} {3}", //TODO i18n
+                name, getExperienceLevel(), getMulticlassString(), race.name);
+    }
+
+    private String getMulticlassString() {
+        StringBuilder str = new StringBuilder();
+        for (ClassLevel classLevel : classLevels) {
+            str.append(classLevel.getClazz().getName());
+            str.append("/");
+        }
+        str.deleteCharAt(str.length() - 1);
+        return str.toString();
     }
 
     public Set<Condition> getActiveConditions() {

@@ -58,7 +58,7 @@ public class ClassLevel extends AbstractEffect {
     @Override
     public String getName() {
         if (getClazz() != null) {
-            return MessageFormat.format("{0} {1} {2}", getClazz().getName(), "lvl", getLevel()); //TODO internationalize "lvl"
+            return MessageFormat.format("{0} lvl {1}", getClazz().getName(), getLevel()); //TODO i18n
         } else {
             return null;
         }

@@ -3,15 +3,19 @@ package com.vituel.dndplayer.activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ListActivity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+
 import com.vituel.dnd_character_sheet.R;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.dao.CharDao;
@@ -19,7 +23,11 @@ import com.vituel.dndplayer.model.CharBase;
 
 import java.util.List;
 
-import static com.vituel.dndplayer.util.ActivityUtil.*;
+import static android.widget.AdapterView.OnItemLongClickListener;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
+import static com.vituel.dndplayer.util.ActivityUtil.defaultOnOptionsItemSelected;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 
@@ -38,47 +46,11 @@ public class SelectCharActivity extends ListActivity {
         CharDao dataSource = new CharDao(this);
         list = dataSource.listAll();
 
-        setListAdapter(new ArrayAdapter<CharBase>(this, android.R.layout.simple_list_item_1, list));
+        setListAdapter(new Adapter(this, android.R.layout.simple_list_item_1, list));
 
         ListView listView = (ListView) findViewById(android.R.id.list);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent();
-                intent.putExtra(EXTRA_SELECTED, list.get(i));
-                setResult(RESULT_OK, intent);
-                finish();
-            }
-        });
-        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int pos, long l) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(SelectCharActivity.this);
-                builder.setMessage(getString(R.string.char_remove))
-                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-
-                                //delete from db
-                                CharDao dataSource = new CharDao(SelectCharActivity.this);
-                                dataSource.remove(list.get(pos));
-                                dataSource.close();
-
-                                //update ui
-                                dialog.dismiss();
-                                list.remove(pos);
-                                setListAdapter(new ArrayAdapter<CharBase>(SelectCharActivity.this, android.R.layout.simple_list_item_1, list));
-                            }
-                        })
-                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.dismiss();
-                            }
-                        });
-                Dialog dialog = builder.create();
-                dialog.show();
-                return false;
-            }
-        });
+        listView.setOnItemClickListener(new ClickListener());
+        listView.setOnItemLongClickListener(new LongClickListener());
 
         dataSource.close();
 
@@ -121,11 +93,65 @@ public class SelectCharActivity extends ListActivity {
 
                         //update ui
                         list.add(base);
-                        setListAdapter(new ArrayAdapter<CharBase>(SelectCharActivity.this, android.R.layout.simple_list_item_1, list));
+                        setListAdapter(new ArrayAdapter<>(SelectCharActivity.this, android.R.layout.simple_list_item_1, list));
 
                 }
                 break;
         }
     }
 
+    private class LongClickListener implements OnItemLongClickListener {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int pos, long l) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(SelectCharActivity.this);
+            builder.setMessage(getString(R.string.char_remove))
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+
+                            //delete from db
+                            CharDao dataSource = new CharDao(SelectCharActivity.this);
+                            dataSource.remove(list.get(pos));
+                            dataSource.close();
+
+                            //update ui
+                            dialog.dismiss();
+                            list.remove(pos);
+                            setListAdapter(new ArrayAdapter<>(SelectCharActivity.this, android.R.layout.simple_list_item_1, list));
+                        }
+                    })
+                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+            Dialog dialog = builder.create();
+            dialog.show();
+            return false;
+        }
+    }
+
+    private class ClickListener implements AdapterView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            Intent intent = new Intent();
+            intent.putExtra(EXTRA_SELECTED, list.get(i));
+            setResult(RESULT_OK, intent);
+            finish();
+        }
+    }
+
+    private class Adapter extends ArrayAdapter<CharBase> {
+
+        public Adapter(Context context, int resource, List<CharBase> objects) {
+            super(context, resource, objects);
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            TextView view = (TextView) super.getView(position, convertView, parent);
+            String description = list.get(position).getDescription();
+            view.setText(description);
+            return view;
+        }
+    }
 }

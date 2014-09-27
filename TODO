@@ -1,7 +1,6 @@
 IMPROVEMENTS
 
 #open char
-- show details on char selection list ("Level 6 Elf Ranger")
 - avoid full queries when opening char
 
 #edit
