@@ -5,10 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.vituel.dndplayer.model.AbstractEntity;
+import com.vituel.dndplayer.model.ActiveTempEffect;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.CharEquip;
 import com.vituel.dndplayer.model.DamageTaken;
-import com.vituel.dndplayer.model.ActiveTempEffect;
 
 import java.util.HashSet;
 import java.util.List;
@@ -196,30 +196,34 @@ public class CharDao extends AbstractEntityDao<CharBase> {
         values.put(COLUMN_BASE_INT, entity.getIntelligence());
         values.put(COLUMN_BASE_WIS, entity.getWisdom());
         values.put(COLUMN_BASE_CHA, entity.getCharisma());
-        values.put(COLUMN_DAMAGE_HP_LETHAL, entity.getDamageTaken().getLethal());
-        values.put(COLUMN_DAMAGE_HP_NONLETHAL, entity.getDamageTaken().getNonlethal());
-        values.put(COLUMN_TEMP_HP, entity.getDamageTaken().getTempHp());
-        values.put(COLUMN_DAMAGE_STR, entity.getDamageTaken().getStrength());
-        values.put(COLUMN_DAMAGE_DEX, entity.getDamageTaken().getDexterity());
-        values.put(COLUMN_DAMAGE_CON, entity.getDamageTaken().getConstitution());
-        values.put(COLUMN_DAMAGE_INT, entity.getDamageTaken().getIntelligence());
-        values.put(COLUMN_DAMAGE_WIS, entity.getDamageTaken().getWisdom());
-        values.put(COLUMN_DAMAGE_CHA, entity.getDamageTaken().getCharisma());
-        values.put(COLUMN_DAMAGE_LEVEL, entity.getDamageTaken().getLevel());
-        putEntityId(values, COLUMN_EQUIP_MAINHAND, entity.getEquipment().getMainHand().getItem());
-        putEntityId(values, COLUMN_EQUIP_OFFHAND, entity.getEquipment().getOffhand().getItem());
-        putEntityId(values, COLUMN_EQUIP_BODY, entity.getEquipment().getBody().getItem());
-        putEntityId(values, COLUMN_EQUIP_HEAD, entity.getEquipment().getHead().getItem());
-        putEntityId(values, COLUMN_EQUIP_EYES, entity.getEquipment().getEyes().getItem());
-        putEntityId(values, COLUMN_EQUIP_NECK, entity.getEquipment().getNeck().getItem());
-        putEntityId(values, COLUMN_EQUIP_TORSO, entity.getEquipment().getTorso().getItem());
-        putEntityId(values, COLUMN_EQUIP_WAIST, entity.getEquipment().getWaist().getItem());
-        putEntityId(values, COLUMN_EQUIP_SHOULDERS, entity.getEquipment().getShoulders().getItem());
-        putEntityId(values, COLUMN_EQUIP_ARMS, entity.getEquipment().getArms().getItem());
-        putEntityId(values, COLUMN_EQUIP_HANDS, entity.getEquipment().getHands().getItem());
-        putEntityId(values, COLUMN_EQUIP_FINGER1, entity.getEquipment().getFinger1().getItem());
-        putEntityId(values, COLUMN_EQUIP_FINGER2, entity.getEquipment().getFinger2().getItem());
-        putEntityId(values, COLUMN_EQUIP_FEET, entity.getEquipment().getFeet().getItem());
+
+        DamageTaken damage = entity.getDamageTaken();
+        values.put(COLUMN_DAMAGE_HP_LETHAL, damage.getLethal());
+        values.put(COLUMN_DAMAGE_HP_NONLETHAL, damage.getNonlethal());
+        values.put(COLUMN_TEMP_HP, damage.getTempHp());
+        values.put(COLUMN_DAMAGE_STR, damage.getStrength());
+        values.put(COLUMN_DAMAGE_DEX, damage.getDexterity());
+        values.put(COLUMN_DAMAGE_CON, damage.getConstitution());
+        values.put(COLUMN_DAMAGE_INT, damage.getIntelligence());
+        values.put(COLUMN_DAMAGE_WIS, damage.getWisdom());
+        values.put(COLUMN_DAMAGE_CHA, damage.getCharisma());
+        values.put(COLUMN_DAMAGE_LEVEL, damage.getLevel());
+
+        CharEquip equip = entity.getEquipment();
+        putEntityId(values, COLUMN_EQUIP_MAINHAND, equip.getMainHand().getItem());
+        putEntityId(values, COLUMN_EQUIP_OFFHAND, equip.getOffhand().getItem());
+        putEntityId(values, COLUMN_EQUIP_BODY, equip.getBody().getItem());
+        putEntityId(values, COLUMN_EQUIP_HEAD, equip.getHead().getItem());
+        putEntityId(values, COLUMN_EQUIP_EYES, equip.getEyes().getItem());
+        putEntityId(values, COLUMN_EQUIP_NECK, equip.getNeck().getItem());
+        putEntityId(values, COLUMN_EQUIP_TORSO, equip.getTorso().getItem());
+        putEntityId(values, COLUMN_EQUIP_WAIST, equip.getWaist().getItem());
+        putEntityId(values, COLUMN_EQUIP_SHOULDERS, equip.getShoulders().getItem());
+        putEntityId(values, COLUMN_EQUIP_ARMS, equip.getArms().getItem());
+        putEntityId(values, COLUMN_EQUIP_HANDS, equip.getHands().getItem());
+        putEntityId(values, COLUMN_EQUIP_FINGER1, equip.getFinger1().getItem());
+        putEntityId(values, COLUMN_EQUIP_FINGER2, equip.getFinger2().getItem());
+        putEntityId(values, COLUMN_EQUIP_FEET, equip.getFeet().getItem());
 
         //race
         if (entity.getRace() != null) {
@@ -319,7 +323,7 @@ public class CharDao extends AbstractEntityDao<CharBase> {
 
         //attacks
         AttackRoundDao attacksDao = new AttackRoundDao(context, database);
-        c.setAttacks(attacksDao.findByChar(c.getId()));
+        c.setAttacks(attacksDao.listForChar(c.getId()));
 
         //load race
         RaceDao raceDao = new RaceDao(context, database);
@@ -339,7 +343,7 @@ public class CharDao extends AbstractEntityDao<CharBase> {
 
         //load temporary effects
         TempEffectActivityDao activeTempDao = new TempEffectActivityDao(context, database);
-        List<ActiveTempEffect> list = activeTempDao.findByChar(c.getId());
+        List<ActiveTempEffect> list = activeTempDao.listForChar(c.getId());
         for (ActiveTempEffect acond : list) {
             c.getTempEffects().put(acond.getTempEffect(), acond.isActive());
         }

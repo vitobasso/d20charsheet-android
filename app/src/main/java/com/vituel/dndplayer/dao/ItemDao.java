@@ -13,11 +13,11 @@ import com.vituel.dndplayer.model.WeaponItem;
 import java.util.List;
 
 import static com.vituel.dndplayer.model.AbstractEffect.Type.EQUIP_MAGIC;
-import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
-import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 import static com.vituel.dndplayer.model.Item.ItemType;
 import static com.vituel.dndplayer.model.Item.ItemType.WEAPON;
 import static com.vituel.dndplayer.model.Item.ItemType.valueOf;
+import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
+import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 
 
 public class ItemDao extends AbstractEntityDao<Item> {
@@ -82,8 +82,8 @@ public class ItemDao extends AbstractEntityDao<Item> {
         if (entity.getItemType() == WEAPON) {
             WeaponDao weaponDao = new WeaponDao(context, database);
             WeaponItem weapon = (WeaponItem) entity;
-            long weaponId = weaponDao.save(weapon.getWeaponProperties());
-            values.put(COLUMN_WEAPON_ID, weaponId);
+            weaponDao.save(weapon.getWeaponProperties());
+            values.put(COLUMN_WEAPON_ID, weapon.getWeaponProperties().getId());
         }
 
         long id = insertOrUpdate(values, entity.getId());
@@ -123,7 +123,7 @@ public class ItemDao extends AbstractEntityDao<Item> {
 
         //magic bonuses
         ModifierDao effectData = new ModifierDao(context);
-        item.setModifiers(effectData.findAll(EQUIP_MAGIC, item.getId()));
+        item.setModifiers(effectData.listAll(EQUIP_MAGIC, item.getId()));
 
         return item;
     }

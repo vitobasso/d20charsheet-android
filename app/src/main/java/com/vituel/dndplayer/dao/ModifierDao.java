@@ -5,17 +5,15 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
-import com.vituel.dndplayer.model.AbstractEffect;
-import com.vituel.dndplayer.model.AbstractEntity;
-import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Condition;
+import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.ModifierType;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import static com.vituel.dndplayer.model.AbstractEffect.Type;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 
 
@@ -69,7 +67,7 @@ public class ModifierDao extends AbstractEntityDao<Modifier> {
         };
     }
 
-    public List<Modifier> save(List<Modifier> modifiers, AbstractEffect.Type sourceType, long sourceId) {
+    public List<Modifier> save(List<Modifier> modifiers, Type sourceType, long sourceId) {
         for (Modifier modifier : modifiers) {
             if (modifier == null || modifier.getTarget() == null || modifier.getAmount() == null) {
                 Log.w(getClass().getSimpleName(), "Empty modifier ignored.");
@@ -81,7 +79,7 @@ public class ModifierDao extends AbstractEntityDao<Modifier> {
         return modifiers;
     }
 
-    public AbstractEntity save(Modifier entity, AbstractEffect.Type sourceType, long sourceId) {
+    public Modifier save(Modifier entity, Type sourceType, long sourceId) {
 
         ContentValues values = new ContentValues();
         values.put(COLUMN_SOURCE_TYPE, sourceType.toString());
@@ -102,25 +100,15 @@ public class ModifierDao extends AbstractEntityDao<Modifier> {
         return entity;
     }
 
-    public List<Modifier> findAll(AbstractEffect.Type sourceType, long sourceId) {
-        List<Modifier> list = new ArrayList<Modifier>();
-
-        Cursor cursor = database.query(TABLE, allColumns(), query(sourceType, sourceId), null, null, null, null);
-        if (cursor.moveToFirst()) {
-            do {
-                list.add(fromCursor(cursor));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-
-        return list;
+    public List<Modifier> listAll(Type sourceType, long sourceId) {
+        return listForQuery(query(sourceType, sourceId));
     }
 
-    public void removeAllForEffect(AbstractEffect.Type sourceType, long sourceId) {
-        database.delete(tableName(), query(sourceType, sourceId), null);
+    public void removeAllForEffect(Type sourceType, long sourceId) {
+        removeForQuery(query(sourceType, sourceId));
     }
 
-    private String query(AbstractEffect.Type sourceType, long sourceId) {
+    private String query(Type sourceType, long sourceId) {
         return String.format("%s='%s' and %s=%d", COLUMN_SOURCE_TYPE, sourceType, COLUMN_SOURCE_ID, sourceId);
     }
 

@@ -67,15 +67,14 @@ public class AttackRoundDao extends AbstractDao<AttackRound> {
         round.setId(id);
         assert id > 0;
 
-        AttackDao groupDao = new AttackDao(context, database);
-        groupDao.removeAllForAttackRound(id);
-        groupDao.save(round.getAttacks(), id);
+        AttackDao attackDao = new AttackDao(context, database);
+        attackDao.removeAllForAttackRound(id);
+        attackDao.save(round.getAttacks(), id);
     }
 
-    public List<AttackRound> findByChar(long charId) {
+    public List<AttackRound> listForChar(long charId) {
         String query = MessageFormat.format("{0}={1}", COLUMN_CHAR_ID, charId);
-        Cursor cursor = database.query(tableName(), allColumns(), query, null, null, null, null);
-        return cursorToList(cursor);
+        return listForQuery(query);
     }
 
     @Override
@@ -99,18 +98,18 @@ public class AttackRoundDao extends AbstractDao<AttackRound> {
         groupDao.removeAllForAttackRound(id);
 
         String removeQuery = MessageFormat.format("{0}={1}", COLUMN_ID, id);
-        database.delete(tableName(), removeQuery, null);
+        removeForQuery(removeQuery);
     }
 
     public void removeAllForChar(long charId) {
         AttackDao groupDao = new AttackDao(context, database);
-        List<AttackRound> rounds = findByChar(charId);
+        List<AttackRound> rounds = listForChar(charId);
         for (AttackRound round : rounds) {
             groupDao.removeAllForAttackRound(round.getId());
         }
 
         String removeQuery = MessageFormat.format("{0}={1}", COLUMN_CHAR_ID, charId);
-        database.delete(tableName(), removeQuery, null);
+        removeForQuery(removeQuery);
     }
 
 }

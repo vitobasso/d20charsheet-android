@@ -50,14 +50,14 @@ public class ActiveConditionDao extends AbstractDao<Condition> {
         };
     }
 
-    public void save(long charId, Set<Condition> conds){
+    public void save(Set<Condition> conds, long charId){
         removeAllForChar(charId);
         for(Condition cond : conds){
-            save(charId, cond);
+            save(cond, charId);
         }
     }
 
-    private void save(long charId, Condition cond) {
+    private void save(Condition cond, long charId) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, cond.getName());
         values.put(COLUMN_PREDICATE, cond.getPredicate().toString());
@@ -81,7 +81,7 @@ public class ActiveConditionDao extends AbstractDao<Condition> {
     }
 
     private void removeAllForChar(long charId) {
-        database.delete(tableName(), queryByChar(charId), null);
+        removeForQuery(queryByChar(charId));
     }
 
     private String queryByChar(long charId){

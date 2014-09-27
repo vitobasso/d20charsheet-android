@@ -70,7 +70,7 @@ public class RaceDao extends AbstractEntityDao<Race> {
 
         //modifiers
         ModifierDao effectData = new ModifierDao(context);
-        result.setModifiers(effectData.findAll(RACE, result.getId()));
+        result.setModifiers(effectData.listAll(RACE, result.getId()));
 
         //traits
         TraitLinkDao traitLinkDao = new TraitLinkDao(context, database);

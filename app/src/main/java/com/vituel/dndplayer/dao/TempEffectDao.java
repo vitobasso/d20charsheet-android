@@ -70,7 +70,7 @@ public class TempEffectDao extends AbstractEntityDao<TempEffect> {
 
         //modifiers
         ModifierDao effectData = new ModifierDao(context);
-        result.setModifiers(effectData.findAll(TEMPORARY, result.getId()));
+        result.setModifiers(effectData.listAll(TEMPORARY, result.getId()));
 
         return result;
     }

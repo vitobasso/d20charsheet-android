@@ -71,6 +71,11 @@ public abstract class AbstractDao<T> {
         return cursorToList(cursor);
     }
 
+    protected List<T> listForQuery(String selection) {
+        Cursor cursor = database.query(tableName(), allColumns(), selection, null, null, null, null);
+        return cursorToList(cursor);
+    }
+
     protected List<T> cursorToList(Cursor cursor) {
         List<T> list = new ArrayList<>();
 
@@ -84,4 +89,9 @@ public abstract class AbstractDao<T> {
 
         return list;
     }
+
+    protected void removeForQuery(String selection) {
+        database.delete(tableName(), selection, null);
+    }
+
 }

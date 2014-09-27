@@ -14,11 +14,6 @@ public class ActiveTempEffect extends AbstractEntity implements Comparable<Activ
     public ActiveTempEffect() {
     }
 
-    public ActiveTempEffect(TempEffect tempEffect, boolean active) {
-        this.setTempEffect(tempEffect);
-        this.setActive(active);
-    }
-
     public void toggleActive() {
         setActive(!isActive());
     }

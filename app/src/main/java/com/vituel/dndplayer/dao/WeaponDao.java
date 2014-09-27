@@ -6,10 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.model.Critical;
-import com.vituel.dndplayer.model.WeaponProperties;
 import com.vituel.dndplayer.model.DiceRoll;
-
-import java.text.MessageFormat;
+import com.vituel.dndplayer.model.WeaponProperties;
 
 import static com.vituel.dndplayer.model.WeaponProperties.RangeType;
 import static com.vituel.dndplayer.model.WeaponProperties.WeightType;
@@ -19,7 +17,7 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 /**
  * Created by Victor on 01/05/14.
  */
-public class WeaponDao extends AbstractDao<WeaponProperties> {
+public class WeaponDao extends AbstractEntityDao<WeaponProperties> {
 
     public static final String TABLE = "weapon";
 
@@ -71,7 +69,7 @@ public class WeaponDao extends AbstractDao<WeaponProperties> {
         };
     }
 
-    public long save(WeaponProperties weapon) {
+    public void save(WeaponProperties weapon) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, weapon.getName());
         values.put(COLUMN_DAMAGE, weapon.getDamage().toString());
@@ -84,7 +82,6 @@ public class WeaponDao extends AbstractDao<WeaponProperties> {
 
         long id = database.insert(tableName(), null, values);
         weapon.setId(id);
-        return id;
     }
 
     @Override
@@ -104,11 +101,6 @@ public class WeaponDao extends AbstractDao<WeaponProperties> {
         WeaponProperties weapon = new WeaponProperties(name, damage, critical, range, statusEffect, rangeType, weightType);
         weapon.setId(id);
         return weapon;
-    }
-
-    public void remove(long id) {
-        String removeQuery = MessageFormat.format("{0}={1}", COLUMN_ID, id);
-        database.delete(tableName(), removeQuery, null);
     }
 
 }

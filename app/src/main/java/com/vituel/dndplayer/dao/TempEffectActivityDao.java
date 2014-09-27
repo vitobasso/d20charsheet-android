@@ -9,7 +9,6 @@ import com.vituel.dndplayer.model.ActiveTempEffect;
 import com.vituel.dndplayer.model.TempEffect;
 import com.vituel.dndplayer.util.database.SQLiteHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -73,44 +72,16 @@ public class TempEffectActivityDao extends AbstractEntityDao<ActiveTempEffect> {
         database.insert(tableName(), null, values);
     }
 
-    public List<ActiveTempEffect> findByChar(long charId) {
-        List<ActiveTempEffect> list = new ArrayList<ActiveTempEffect>();
-
-        Cursor cursor = database.query(TABLE, allColumns(), query(charId), null, null, null, null);
-        if (cursor.moveToFirst()) {
-            do {
-                list.add(fromCursor(cursor));
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-
-        return list;
-    }
-
-    private void removeAllForChar(long charId) {
-        database.delete(tableName(), query(charId), null);
+    public List<ActiveTempEffect> listForChar(long charId) {
+        return listForQuery(String.format("%s=%d", COLUMN_CHAR_ID, charId));
     }
 
     public void removeAllForEffect(long effectId) {
-        String query = String.format("%s=%d", COLUMN_EFFECT_ID, effectId);
-        database.delete(tableName(), query, null);
+        removeForQuery(String.format("%s=%d", COLUMN_EFFECT_ID, effectId));
     }
 
-    @Override
-    public void remove(ActiveTempEffect effect) {
-        database.delete(tableName(), query(effect), null);
-    }
-
-    private String query(long charId) {
-        return String.format("%s=%d", COLUMN_CHAR_ID, charId);
-    }
-
-    private String query(long charId, long condId) {
-        return String.format("%s=%d and %s=%d", COLUMN_CHAR_ID, charId, COLUMN_EFFECT_ID, condId);
-    }
-
-    private String query(ActiveTempEffect cond) {
-        return String.format("%s=%d", COLUMN_ID, cond.getId());
+    private void removeAllForChar(long charId) {
+        removeForQuery(String.format("%s=%d", COLUMN_CHAR_ID, charId));
     }
 
     @Override

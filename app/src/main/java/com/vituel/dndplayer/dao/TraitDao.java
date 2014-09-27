@@ -76,7 +76,7 @@ public class TraitDao extends AbstractEntityDao<Trait> {
 
         //modifiers
         ModifierDao effectData = new ModifierDao(context);
-        result.setModifiers(effectData.findAll(TRAIT, result.getId()));
+        result.setModifiers(effectData.listAll(TRAIT, result.getId()));
 
         return result;
     }

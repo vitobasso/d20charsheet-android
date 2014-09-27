@@ -45,7 +45,6 @@ IMPROVEMENTS
 - source book
 
 
-
 BUGS
 
 - skill list in Summary rolls to top when toggling conditions
@@ -82,6 +81,5 @@ REFACTOR
 
 PROJECT
 
-- manage libs (gradle?)
-- reorganize packages
-- ORMLite?
+- ORMLite? greenDAO?
+- groovy? https://github.com/melix/groovy-android-gradle-plugin

@@ -35,6 +35,7 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
             cursor.close();
             return result;
         } else {
+            cursor.close();
             String msg = String.format("Couldn't find name '%s' in table '%s'", name, tableName());
             Log.w(getClass().getSimpleName(), msg);
             return null;
@@ -50,7 +51,7 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
     public abstract void save(T entity);
 
     public void remove(T c) {
-        database.delete(tableName(), COLUMN_ID + " = " + c.getId(), null);
+        removeForQuery(COLUMN_ID + " = " + c.getId());
     }
 
 }

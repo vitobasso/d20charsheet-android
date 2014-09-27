@@ -5,9 +5,9 @@ import android.util.Log;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.vituel.dnd_character_sheet.R;
+import com.vituel.dndplayer.dao.SkillDao;
 import com.vituel.dndplayer.util.AttackUtil;
 import com.vituel.dndplayer.util.ModifierStringConverter;
-import com.vituel.dndplayer.dao.SkillDao;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -20,7 +20,6 @@ import java.util.Set;
 
 import static com.vituel.dndplayer.model.Attack.WeaponReferenceType.MAIN_HAND;
 import static com.vituel.dndplayer.model.Attack.WeaponReferenceType.OFFHAND;
-import static com.vituel.dndplayer.model.Size.MEDIUM;
 import static com.vituel.dndplayer.model.ModifierTarget.AC;
 import static com.vituel.dndplayer.model.ModifierTarget.CHA;
 import static com.vituel.dndplayer.model.ModifierTarget.CON;
@@ -36,6 +35,7 @@ import static com.vituel.dndplayer.model.ModifierTarget.SKILL;
 import static com.vituel.dndplayer.model.ModifierTarget.STR;
 import static com.vituel.dndplayer.model.ModifierTarget.WILL;
 import static com.vituel.dndplayer.model.ModifierTarget.WIS;
+import static com.vituel.dndplayer.model.Size.MEDIUM;
 
 /**
  * Values shown in the Summary. Including bonuses from items, traits and spells.
@@ -112,7 +112,6 @@ public class Character {
     private void initAttacks() {
         WeaponProperties mainWeapon = getWeapon(getBase().getEquipment().getMainHand());
         WeaponProperties offhandWeapon = getWeapon(getBase().getEquipment().getOffhand());
-
 
         Kryo cloner = new Kryo();
         setAttacks(cloner.copy(getBase().getAttacks())); //cloned objects will be modified by magic bonuses, etc

@@ -87,7 +87,7 @@ public class AttackDao extends AbstractDao<Attack> {
 
     public void removeAllForAttackRound(long roundId) {
         String removeQuery = MessageFormat.format("{0}={1}", COLUMN_ATTACK_ROUND_ID, roundId);
-        database.delete(tableName(), removeQuery, null);
+        removeForQuery(removeQuery);
     }
 
 }

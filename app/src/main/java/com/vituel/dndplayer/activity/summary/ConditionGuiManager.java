@@ -4,19 +4,22 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import com.vituel.dnd_character_sheet.R;
-import com.vituel.dndplayer.util.ModifierStringConverter;
 import com.vituel.dndplayer.dao.ActiveConditionDao;
 import com.vituel.dndplayer.model.Character;
-import com.vituel.dndplayer.util.JavaUtil;
 import com.vituel.dndplayer.model.Condition;
+import com.vituel.dndplayer.util.JavaUtil;
+import com.vituel.dndplayer.util.ModifierStringConverter;
 
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import static android.view.MotionEvent.*;
+import static android.view.MotionEvent.ACTION_DOWN;
+import static android.view.MotionEvent.ACTION_MOVE;
+import static android.view.MotionEvent.ACTION_UP;
 import static com.vituel.dndplayer.model.Condition.Predicate;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.inflate;
@@ -129,7 +132,7 @@ public class ConditionGuiManager {
 
             //update conditions on DB
             ActiveConditionDao condDao = new ActiveConditionDao(activity);
-            condDao.save(character.getBase().getId(), activeConds);
+            condDao.save(activeConds, character.getBase().getId());
             condDao.close();
 
             activity.refreshUI();
