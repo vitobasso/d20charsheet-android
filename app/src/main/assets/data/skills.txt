@@ -1,0 +1,50 @@
+#name	key ability	armor penalty	untrained	synergy to
+Appraise	INT		yes	
+Balance	DEX	yes	yes	
+Bluff	CHA		yes	Diplomacy, Disguise [acting], Intimidate, Sleight of Hand
+Climb	STR	yes	yes	
+Concentration	CON		yes	
+Craft (alchemy)	INT		yes	Appraise (alchemy)
+Craft (armor-smithing)	INT		yes	Appraise (armor-smithing)]
+Craft (bowmaking)	INT		yes	Appraise (bowmaking)
+Craft (blacksmithing)	INT		yes	Appraise (blacksmithing)
+Craft (trapmaking)	INT		yes	Appraise (trapmaking)
+Craft (weaponsmithing)	INT		yes	Appraise (weaponsmithing)
+Decipher Script	INT			Use Magic Device [scrolls]
+Diplomacy	CHA		yes	
+Disable Device	INT		yes	
+Disguise	CHA		yes	
+Escape Artist	DEX	yes	yes	Use Rope [bindings]
+Forgery	INT		yes	
+Gather Information	CHA		yes	
+Handle Animal	CHA			Ride
+Heal	WIS		yes	
+Hide	DEX	yes	yes	
+Intimidate	CHA		yes	
+Jump	STR		yes	Tumble
+Knowledge (arcana)	INT			Spellcraft
+Knowledge (geography)	INT			Survival [avoid getting lost, hazards]
+Knowledge (history)	INT			
+Knowledge (nature)	INT			Survival [aboveground natural]
+Knowledge (nobility and royality)	INT			Diplomacy
+Knowledge (religion)	INT			
+Knowledge (the planes)	INT			Survival [other planes]
+Listen	WIS		yes	
+Move Silently	DEX	yes	yes	
+Open Lock	DEX			
+Perform (act)	CHA			
+Perform (dance)	CHA			
+Perform (sing)	CHA			
+Profession (cook)	WIS			
+Profession (herbalist)	WIS			
+Ride	DEX		yes	
+Search	INT		yes	Survival [tracks]
+Sense Motive	WIS		yes	Diplomacy
+Sleight of Hand	DEX	yes		
+Spellcraft	INT			Use Magic Device [scrolls]
+Spot	WIS		yes	
+Survival	WIS		yes	Knowledge (nature)
+Swim	STR		yes	
+Tumble	DEX	yes		Balance, Jump
+Use Magic Device	CHA			Spellcraft [scrolls]
+Use Rope	DEX		yes	Climb [ropes], Escape Artist [ropes]

@@ -1,0 +1,8 @@
+#name	STR	DEX	CON	INT	WIS	CHA	size	speed
+Human							0	6
+Dwarf			2			-2	0	4
+Elf		2	-2				0	6
+Gnome	-2		2				-1	4
+Half-elf							0	6
+Half-orc	2			-2		-2	0	6
+Halfling	-2	2					-1	4

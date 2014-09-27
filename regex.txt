@@ -1,0 +1,15 @@
+# populate text view
+EditText \w+ = findView\(R\.id\.(\w+)\);\n\s+\w+\.setText\((.+)\);
+populateTextView\(this, R\.id\.$1, $2\);
+
+# read string (setter)
+EditText (\w+) = findView\(R\.id.(\w+)\);(\n\s+)(\w+.\w+)\(.+\);
+$2(readString(this, R.id.$1));
+
+# read string (attribution)
+EditText \w+ = findView\(R\.id.(\w+)\);\n\s+(\w+.\w+) = .+;
+$2 = readString(this, R.id.$1);
+
+# read int
+EditText \w+ = findView\(R\.id.(\w+)\);\n\s+(\w+.\w+) = .+;
+$2 = readInt(this, R.id.$1);

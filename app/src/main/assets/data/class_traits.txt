@@ -1,0 +1,190 @@
+#class	level	trait	overrides	effect	
+Barbarian	1	Fast movement		SPEED 2	
+Barbarian	1	Illiteracy			
+Barbarian	1	Rage 1/day			
+Barbarian	2	Uncanny dodge			
+Barbarian	3	Trap sense +1			
+Barbarian	4	Rage 2/day	Rage 1/day		
+Barbarian	5	Improved uncanny dodge	Uncanny dodge		
+Barbarian	6	Trap sense +2	Trap sense +1		
+Barbarian	7	Damage reduction 1/-		DR 1	
+Barbarian	8	Rage 3/day	Rage 2/day		
+Barbarian	9	Trap sense +3	Trap sense +2		
+Barbarian	10	Damage reduction 2/-	Damage reduction 1/-	DR 2	
+Barbarian	11	Greater rage			
+Barbarian	12	Rage 4/day	Rage 3/day		
+Barbarian	12	Trap sense +4	Trap sense +3		
+Barbarian	13	Damage reduction 3/-	Damage reduction 2/-	DR 3	
+Barbarian	14	Indomitable will			
+Barbarian	15	Trap sense +5	Trap sense +4		
+Barbarian	16	Damage reduction 4/-	Damage reduction 3/-	DR 4	
+Barbarian	16	rage 5/day	Rage 4/day		
+Barbarian	17	Tireless rage			
+Barbarian	18	Trap sense +6	Trap sense +5		
+Barbarian	19	Damage Reduction 5/-	Damage reduction 4/-	DR 5	
+Barbarian	20	Mighty rage			
+Barbarian	20	Rage 6/day	rage 5/day		
+Bard	1	Bardic music			
+Bard	1	Bardic knowledge			
+Bard	1	Countersong			
+Bard	1	Fascinate			
+Bard	1	Inspire courage +1			
+Bard	3	Inspire competence			
+Bard	6	Suggestion			
+Bard	8	Inspire courage +2	Inspire courage +1		
+Bard	9	Inspire greatness			
+Bard	12	Song of freedom			
+Bard	14	Inspire courage +3	Inspire courage +2		
+Bard	15	Inspire heroics			
+Bard	18	Mass suggestion			
+Bard	20	Inspire courage +4	Inspire courage +3		
+Cleric	1	Turn or rebuke undead			
+Druid	1	Animal companion			
+Druid	1	Nature sense		SKILL(Knowledge (nature)) 2	SKILL(Survival) 2
+Druid	1	Wild empathy			
+Druid	2	Woodland stride			
+Druid	3	Trackless step			
+Druid	4	Resist nature's lure		SAVES 4 [fey]	
+Druid	5	Wild shape (1/day)			
+Druid	6	Wild shape (2/day)	Wild shape (1/day)		
+Druid	7	Wild shape (3/day)	Wild shape (2/day)		
+Druid	8	Wild shape (large)			
+Druid	9	Venom immunity		IMUNE [poison]	
+Druid	10	Wild shape (4/day)	Wild shape (3/day)		
+Druid	11	Wild shape (tiny)			
+Druid	12	Wild shape (plant)			
+Druid	13	A thousand faces			
+Druid	14	Wild shape (5/day)	Wild shape (4/day)		
+Druid	15	Timeless body		IMUNE [aging]	
+Druid	15	Wild shape (huge)			
+Druid	16	Wild shape (elemental 1/day)			
+Druid	18	Wild shape (6/day)	Wild shape (5/day)		
+Druid	18	Wild shape (elemental 2/day)	Wild shape (elemental 1/day)		
+Druid	20	Wild shape (elemental 3/day)	Wild shape (elemental 2/day)		
+Druid	20	Wild shape (huge elemental)			
+Fighter	1	*Bonus feat			
+Fighter	2	*Bonus feat			
+Fighter	4	*Bonus feat			
+Fighter	6	*Bonus feat			
+Fighter	8	*Bonus feat			
+Fighter	10	*Bonus feat			
+Fighter	12	*Bonus feat			
+Fighter	14	*Bonus feat			
+Fighter	16	*Bonus feat			
+Fighter	18	*Bonus feat			
+Fighter	20	*Bonus feat			
+Monk	1	*Bonus feat			
+Monk	1	Flurry of blows (-2)			
+Monk	1	Unarmed strike			
+Monk	1	Unarmed damage 1d6			
+Monk	2	*Bonus feat			
+Monk	2	Evasion			
+Monk	3	Still mind		SAVES 2 [enchantment]	
+Monk	3	Speed bonus +10 ft.		SPEED 2	
+Monk	4	Ki strike (magic)			
+Monk	4	Slow fall 20 ft.			
+Monk	4	Unarmed damage 1d8	Unarmed damage 1d6		
+Monk	5	Purity of body		IMUNE [disease]	
+Monk	5	AC bonus +1		AC 1	
+Monk	5	Flurry of blows (-1)	Flurry of blows (-2)		
+Monk	6	*Bonus feat			
+Monk	6	Slow fall 30 ft.	Slow fall 20 ft.		
+Monk	6	Speed bonus +20 ft.	Speed bonus +10 ft.	SPEED 4	
+Monk	7	Wholeness of body			
+Monk	8	Slow fall 40 ft.	Slow fall 30 ft.		
+Monk	8	Unarmed damage 1d10	Unarmed damage 1d8		
+Monk	9	Improved evasion	Evasion		
+Monk	9	Speed bonus +30 ft.	Speed bonus +20 ft.	SPEED 6	
+Monk	9	Flurry of blows	Flurry of blows (-1)		
+Monk	10	Ki strike (lawful)			
+Monk	10	Slow fall 50 ft.	Slow fall 40 ft.		
+Monk	10	AC bonus +2	AC bonus +1	AC 2	
+Monk	11	Diamond body		IMUNE[poison]	
+Monk	11	Greater flurry of blows	Flurry of blows		
+Monk	12	Abundant step			
+Monk	12	Slow fall 60 ft.	Slow fall 50 ft.		
+Monk	12	Unarmed damage 2d6	Unarmed damage 1d10		
+Monk	12	Speed bonus +40 ft.	Speed bonus +30 ft.	SPEED 8	
+Monk	13	Diamond soul		MR 10+lvl	
+Monk	14	Slow fall 70 ft.	Slow fall 60 ft.		
+Monk	15	Quivering palm			
+Monk	15	AC bonus +3	AC bonus +2	AC 3	
+Monk	15	Speed bonus +50 ft.	Speed bonus +40 ft.	SPEED 10	
+Monk	16	Ki strike (adamantine)			
+Monk	16	Slow fall 80 ft.	Slow fall 70 ft.		
+Monk	16	Unarmed damage 2d8	Unarmed damage 2d6		
+Monk	17	Timeless body		IMUNE [aging]	
+Monk	17	Tongue of the sun and the moon			
+Monk	18	Slow fall 90 ft.	Slow fall 80 ft.		
+Monk	18	Speed bonus +60 ft.	Speed bonus +50 ft.	SPEED 12	
+Monk	19	Empty body			
+Monk	20	Perfect self		DR 10	
+Monk	20	Slow fall any distance	Slow fall 90 ft.		
+Monk	20	Unarmed damage 2d10	Unarmed damage 2d8		
+Monk	20	AC bonus +4	AC bonus +3	AC 4	
+Paladin	1	Aura of good			
+Paladin	1	Detect evil			
+Paladin	1	Smite evil 1/day			
+Paladin	2	Divine grace			
+Paladin	2	Lay on hands			
+Paladin	3	Aura of courage			
+Paladin	3	Divine health			
+Paladin	4	Turn undead			
+Paladin	5	Smite evil 2/day	Smite evil 1/day		
+Paladin	5	Special mount			
+Paladin	6	Remove disease 1/week			
+Paladin	9	Remove disease 2/week	Remove disease 1/week		
+Paladin	10	Smite Evil 3/day	Smite evil 2/day		
+Paladin	12	Remove disease 3/week	Remove disease 2/week		
+Paladin	15	Remove disease 4/week	Remove disease 3/week		
+Paladin	15	Smite evil 4/day	Smite Evil 3/day		
+Paladin	18	Remove disease 5/week	Remove disease 4/week		
+Paladin	20	Smite evil 5/day	Smite evil 4/day		
+Ranger	1	*1st favored enemy			
+Ranger	1	Track			
+Ranger	1	Wild empathy			
+Ranger	2	*Combat style			
+Ranger	3	Endurance			
+Ranger	4	Animal companion			
+Ranger	5	*2nd favored enemy			
+Ranger	6	*Improved combat style			
+Ranger	7	Woodland stride			
+Ranger	8	Swift tracker			
+Ranger	9	Evasion			
+Ranger	10	*3rd favored enemy			
+Ranger	11	*Combat style mastery			
+Ranger	13	Camouflage			
+Ranger	15	*4th favored enemy			
+Ranger	17	Hide in plain sight			
+Ranger	29	*5th favored enemy			
+Rogue	1	Sneak attack +1d6			
+Rogue	1	Trapfinding			
+Rogue	2	Evasion			
+Rogue	3	Sneak attack +2d6	Sneak attack +1d6		
+Rogue	3	Trap sense +1			
+Rogue	4	Uncanny dodge			
+Rogue	5	Sneak attack +3d6	Sneak attack +2d6		
+Rogue	6	Trap sense +2	Trap sense +1		
+Rogue	7	Sneak attack +4d6	Sneak attack +3d6		
+Rogue	8	Improved uncanny dodge	Uncanny dodge		
+Rogue	9	Sneak attack +5d6	Sneak attack +4d6		
+Rogue	9	Trap sense +3	Trap sense +2		
+Rogue	10	*Special ability			
+Rogue	11	Sneak attack +6d6	Sneak attack +5d6		
+Rogue	12	Trap sense +4	Trap sense +3		
+Rogue	13	Sneak attack +7d6	Sneak attack +6d6		
+Rogue	13	*Special ability			
+Rogue	15	Sneak attack +8d6	Sneak attack +7d6		
+Rogue	15	Trap sense +5	Trap sense +4		
+Rogue	16	*Special ability			
+Rogue	17	Sneak attack +9d6	Sneak attack +8d6		
+Rogue	18	Trap sense +6	Trap sense +5		
+Rogue	19	Sneak attack +10d6	Sneak attack +9d6		
+Rogue	19	*Special ability			
+Wizard	1	Summon familiar			
+Wizard	1	Scribe scroll			
+Wizard	5	*Bonus feat			
+Wizard	10	*Bonus feat			
+Wizard	15	*Bonus feat			
+Wizard	20	*Bonus feat			
+Sorcerer	1	Summon familiar			

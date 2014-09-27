@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="gender">
+        <item>@string/gender_m</item>
+        <item>@string/gender_f</item>
+    </array>
+    <array name="tendency_moral">
+        <item>@string/tendency_good</item>
+        <item>@string/tendency_neutral</item>
+        <item>@string/tendency_evil</item>
+    </array>
+    <array name="tendency_loyalty">
+        <item>@string/tendency_loyal</item>
+        <item>@string/tendency_neutral</item>
+        <item>@string/tendency_chaotic</item>
+    </array>
+    <array name="attack_progression">
+        <item>@string/progression_good</item>
+        <item>@string/progression_average</item>
+        <item>@string/progression_poor</item>
+    </array>
+    <array name="resist_progression">
+        <item>@string/progression_good</item>
+        <item>@string/progression_poor</item>
+    </array>
+    <array name="edit_dialog_items">
+        <item>@string/edit</item>
+        <item>@string/remove</item>
+    </array>
+    <array name="ability">
+        <item>@string/str</item>
+        <item>@string/dex</item>
+        <item>@string/con</item>
+        <item>@string/int_ability</item>
+        <item>@string/wis</item>
+        <item>@string/cha</item>
+    </array>
+    <array name="ordinals">
+        <item>@string/ord_1</item>
+        <item>@string/ord_2</item>
+        <item>@string/ord_3</item>
+        <item>@string/ord_4</item>
+        <item>@string/ord_5</item>
+        <item>@string/ord_6</item>
+        <item>@string/ord_7</item>
+        <item>@string/ord_8</item>
+        <item>@string/ord_9</item>
+        <item>@string/ord_10</item>
+    </array>
+</resources>

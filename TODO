@@ -1,0 +1,87 @@
+IMPROVEMENTS
+
+#open char
+- show details on char selection list ("Level 6 Elf Ranger")
+- avoid full queries when opening char
+
+#edit
+- show NumberPicker when touching EditTexts with a plain integer?
+- create class w/ traits
+- create race w/ traits
+- create modifier w/ conditional
+- gui validation
+
+#summary
+- touch AC
+- ability damage
+- fix representative attack/weapon on summary
+
+#summary breakdown
+- breakdown of composite attributes (critical, speed, damage, damage reduction)
+- show dialog as balloon (http://www.londatiga.net/it/how-to-create-quickaction-dialog-in-android/)
+- show conditions on breakdown
+- show inactive conditions faded on breakdown
+- show race/class traits on breakdown
+
+#conditions
+- animate when hiding/showing
+- touch to hide/show
+
+#temp effects
+- remove type (SPELL vs COMBAT_MODIFIER etc)?
+- tabs to filter by type (SPELL vs COMBAT_MODIFIER etc)?
+- move active ones to top?
+
+#items
+- item models (long sword vs. long sword +2)
+- weapon status modifier on edit screen
+
+#parser
+- weapons crit
+
+#others
+- parse modifiers w/ comma separated conditions
+- mutually excluding conditions
+- source book
+
+
+
+BUGS
+
+- skill list in Summary rolls to top when toggling conditions
+- can add the same skill twice
+- can add the same feat twice
+- temp HP effect
+- Barkskin doesn't parse
+- when coming back to an effect list, after create/edit, mods don't show
+- summary: bold font changes when comming back from last page
+- when has 2+ classes, class fields change when moving away from EditCharBasicFragment and back
+
+
+FEATURES
+
+- import/export
+- translate to PT
+- port to tablet
+- loading screen on first run
+- baggage (+ weight calculation)
+- spells
+- xp
+- animal companion, mount, followers
+- library
+- print
+
+
+REFACTOR
+
+- abstract DAOs of dependant entities
+- unify attribute calculation (summary and breakdown)
+- organize BreakdownDialog
+- abstract EditCharFeatsFragment, SummaryTempEffectsFragment, EditCharSkillsFragment
+
+
+PROJECT
+
+- manage libs (gradle?)
+- reorganize packages
+- ORMLite?
