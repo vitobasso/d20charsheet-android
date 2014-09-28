@@ -57,7 +57,9 @@ public class EditCharBasicFragment extends PagerFragment<Object, EditCharActivit
 
         classes = new ArrayList<>(base.getClassLevels());
         if(classes.isEmpty()){
-            classes.add(null);
+            ClassLevel classLevel = new ClassLevel();
+            classLevel.setLevel(1);
+            classes.add(classLevel);
         }
         populateClasses(classes);
 

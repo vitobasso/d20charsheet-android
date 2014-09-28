@@ -1,9 +1,5 @@
 IMPROVEMENTS
 
-#edit
-- show NumberPicker when touching EditTexts with a plain integer?
-- create modifier w/ conditional
-
 #summary
 - fix representative attack/weapon on summary
 - ability damage
@@ -16,6 +12,11 @@ IMPROVEMENTS
 - show inactive conditions faded on breakdown
 - show race/class traits on breakdown
 
+#edit
+- show NumberPicker when touching EditTexts with a plain integer?
+- custom keyboard on fields: damage, critical?
+- create modifier w/ conditional
+
 #conditions
 - animate when hiding/showing
 - touch to hide/show
@@ -23,7 +24,6 @@ IMPROVEMENTS
 #temp effects
 - remove type (SPELL vs COMBAT_MODIFIER etc)?
 - tabs to filter by type (SPELL vs COMBAT_MODIFIER etc)?
-- move active ones to top?
 
 #items
 - item models (long sword vs. long sword +2)

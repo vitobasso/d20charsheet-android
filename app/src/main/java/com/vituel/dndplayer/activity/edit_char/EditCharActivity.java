@@ -2,7 +2,6 @@ package com.vituel.dndplayer.activity.edit_char;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
@@ -12,6 +11,7 @@ import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.PagerFragment;
 import com.vituel.dndplayer.dao.CharDao;
 import com.vituel.dndplayer.model.CharBase;
+import com.vituel.dndplayer.util.ActivityUtil;
 
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
@@ -26,7 +26,8 @@ public class EditCharActivity extends FragmentActivity {
 
     CharBase base;
 
-    ViewPager pager;
+    private ViewPager pager;
+    private int currentPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +42,7 @@ public class EditCharActivity extends FragmentActivity {
 
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(new EditCharPagerAdapter(getSupportFragmentManager(), this));
+        pager.setOnPageChangeListener(new PagerListener());
 
         int page = getIntent().getIntExtra(EXTRA_PAGE, 0);
         pager.setCurrentItem(page);
@@ -58,16 +60,11 @@ public class EditCharActivity extends FragmentActivity {
             case R.id.action_save:
 
                 //copy fields from fragments
-                for (Fragment frag : getSupportFragmentManager().getFragments()) {
-                    if (frag instanceof PagerFragment) {
-                        PagerFragment pagerFrag = (PagerFragment) frag;
-                        if(pagerFrag.onValidate()) {
-                            pagerFrag.onSaveToModel();
-                        }else{
-                            return true; //TODO go to page w/ error.
-                            //TODO validate destroyed pages too
-                        }
-                    }
+                PagerFragment fragment = (PagerFragment) ActivityUtil.findFragment(EditCharActivity.this, pager, currentPage);
+                if (fragment.onValidate()) {
+                    fragment.onSaveToModel();
+                }else{
+                    return true;
                 }
 
                 //standard attack
@@ -115,6 +112,23 @@ public class EditCharActivity extends FragmentActivity {
 
     public void updateFragment(PagerFragment<CharBase, EditCharActivity> fragment){
         fragment.update(base);
+    }
+
+    private class PagerListener extends ViewPager.SimpleOnPageChangeListener {
+        @Override
+        public void onPageSelected(int position) {
+            PagerFragment fragment = (PagerFragment) ActivityUtil.findFragment(EditCharActivity.this, pager, currentPage);
+            if (fragment == null) {
+                //do nothing
+                //should fall here only when being called from onCreate
+            } else if (fragment.onValidate()) {
+                fragment.onSaveToModel();
+                currentPage = position; //go ahead
+            } else {
+                pager.setCurrentItem(currentPage); //stay in page
+            }
+
+        }
     }
 
 }

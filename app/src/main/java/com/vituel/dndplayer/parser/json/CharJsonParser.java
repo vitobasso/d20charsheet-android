@@ -36,9 +36,9 @@ public class CharJsonParser {
             parser.writeValue(file, charBase);
 
             String msg = MessageFormat.format("{0}: {1}", context.getString(R.string.saved_to), file.getAbsolutePath());
-            Toast.makeText(context, msg, Toast.LENGTH_LONG);
+            Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
         } catch (IOException e) {
-            Toast.makeText(context, context.getString(R.string.failed_saving), Toast.LENGTH_LONG);
+            Toast.makeText(context, context.getString(R.string.failed_saving), Toast.LENGTH_LONG).show();
             Log.e(TAG, "Failed to exportChar char to file.", e);
         }
     }
