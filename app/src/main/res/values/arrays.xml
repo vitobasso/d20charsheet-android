@@ -23,10 +23,6 @@
         <item>@string/progression_good</item>
         <item>@string/progression_poor</item>
     </array>
-    <array name="edit_dialog_items">
-        <item>@string/edit</item>
-        <item>@string/remove</item>
-    </array>
     <array name="ability">
         <item>@string/str</item>
         <item>@string/dex</item>
@@ -46,5 +42,13 @@
         <item>@string/ord_8</item>
         <item>@string/ord_9</item>
         <item>@string/ord_10</item>
+    </array>
+    <array name="edit_dialog_items">
+        <item>@string/edit</item>
+        <item>@string/remove</item>
+    </array>
+    <array name="select_char_dialog_items">
+        <item>@string/export</item>
+        <item>@string/remove</item>
     </array>
 </resources>

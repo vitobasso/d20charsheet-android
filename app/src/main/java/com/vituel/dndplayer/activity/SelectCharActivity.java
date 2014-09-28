@@ -20,6 +20,7 @@ import com.vituel.dnd_character_sheet.R;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.dao.CharDao;
 import com.vituel.dndplayer.model.CharBase;
+import com.vituel.dndplayer.parser.json.CharJsonParser;
 
 import java.util.List;
 
@@ -100,43 +101,55 @@ public class SelectCharActivity extends ListActivity {
         }
     }
 
-    private class LongClickListener implements OnItemLongClickListener {
-        @Override
-        public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int pos, long l) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(SelectCharActivity.this);
-            builder.setMessage(getString(R.string.char_remove))
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-
-                            //delete from db
-                            CharDao dataSource = new CharDao(SelectCharActivity.this);
-                            dataSource.remove(list.get(pos));
-                            dataSource.close();
-
-                            //update ui
-                            dialog.dismiss();
-                            list.remove(pos);
-                            setListAdapter(new ArrayAdapter<>(SelectCharActivity.this, android.R.layout.simple_list_item_1, list));
-                        }
-                    })
-                    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                        }
-                    });
-            Dialog dialog = builder.create();
-            dialog.show();
-            return false;
-        }
-    }
-
     private class ClickListener implements AdapterView.OnItemClickListener {
+
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Intent intent = new Intent();
             intent.putExtra(EXTRA_SELECTED, list.get(i));
             setResult(RESULT_OK, intent);
             finish();
+        }
+    }
+
+    private class LongClickListener implements OnItemLongClickListener {
+        @Override
+        public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int pos, long l) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(SelectCharActivity.this);
+            builder.setItems(R.array.select_char_dialog_items, new DialogClickListener(pos));
+            Dialog dialog = builder.create();
+            dialog.show();
+            return true;
+        }
+    }
+
+    private class DialogClickListener implements DialogInterface.OnClickListener{
+
+        private int pos;
+
+        private DialogClickListener(int pos) {
+            this.pos = pos;
+        }
+
+        @Override
+        public void onClick(DialogInterface dialog, int which) {
+            switch (which){
+                case 0: //export
+                    CharJsonParser writer = new CharJsonParser(SelectCharActivity.this);
+                    writer.exportChar(list.get(pos));
+                    break;
+                case 1: //remove
+                    //delete from db
+                    CharDao dataSource = new CharDao(SelectCharActivity.this);
+                    dataSource.remove(list.get(pos));
+                    dataSource.close();
+
+                    //update ui
+                    dialog.dismiss();
+                    list.remove(pos);
+                    setListAdapter(new ArrayAdapter<>(SelectCharActivity.this, android.R.layout.simple_list_item_1, list));
+                    break;
+            }
         }
     }
 

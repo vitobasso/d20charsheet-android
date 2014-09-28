@@ -21,7 +21,7 @@ public abstract class AbstractParser<T> extends ParserUtil {
     }
 
     public List<T> loadFile(String path) {
-        List<T> result = new ArrayList<T>();
+        List<T> result = new ArrayList<>();
 
         try {
             InputStream in = ctx.getAssets().open(path);

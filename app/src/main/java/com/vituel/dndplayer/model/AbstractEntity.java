@@ -1,5 +1,7 @@
 package com.vituel.dndplayer.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import java.io.Serializable;
 
 /**
@@ -7,6 +9,7 @@ import java.io.Serializable;
  */
 public abstract class AbstractEntity implements Serializable {
 
+    @JsonIgnore
     protected long id;
 
     protected String name;

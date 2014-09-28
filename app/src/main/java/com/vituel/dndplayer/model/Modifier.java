@@ -1,5 +1,7 @@
 package com.vituel.dndplayer.model;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 /**
  * Created by Victor on 25/02/14.
  */
@@ -10,11 +12,10 @@ public class Modifier extends AbstractEntity {
     private DiceRoll amount;
     private ModifierType type;
     private Condition condition;
+    @JsonIgnore
     private AbstractEffect source;
 
-    public Modifier() {
-
-    }
+    public Modifier() {}
 
     public Modifier(ModifierTarget target, String variation, DiceRoll amount, ModifierType type, Condition condition, AbstractEffect source) {
         this.setTarget(target);

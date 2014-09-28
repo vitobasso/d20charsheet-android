@@ -22,6 +22,19 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
+
+    packagingOptions {
+        // to avoid error: "duplicate files during packaging of APK"
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+    }
+
 }
 
 idea {
@@ -35,4 +48,7 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:20.0.0'
     compile 'com.esotericsoftware.kryo:kryo:2.24.0'
+    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
+    compile 'com.fasterxml.jackson.dataformat:jackson-dataformat-csv:2.4.2'
+    compile 'com.googlecode.jcsv:jcsv:1.4.0'
 }

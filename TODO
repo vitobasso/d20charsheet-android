@@ -1,19 +1,14 @@
 IMPROVEMENTS
 
-#open char
-- avoid full queries when opening char
-
 #edit
-- show NumberPicker when touching EditTexts with a plain integer?
-- create class w/ traits
-- create race w/ traits
-- create modifier w/ conditional
 - gui validation
+- show NumberPicker when touching EditTexts with a plain integer?
+- create modifier w/ conditional
 
 #summary
-- touch AC
-- ability damage
 - fix representative attack/weapon on summary
+- ability damage
+- touch AC
 
 #summary breakdown
 - breakdown of composite attributes (critical, speed, damage, damage reduction)
@@ -34,6 +29,7 @@ IMPROVEMENTS
 #items
 - item models (long sword vs. long sword +2)
 - weapon status modifier on edit screen
+- filter by weapon vs sheld, 1 vs 2handed, melee vs ranged
 
 #parser
 - weapons crit
@@ -42,6 +38,9 @@ IMPROVEMENTS
 - parse modifiers w/ comma separated conditions
 - mutually excluding conditions
 - source book
+
+#performance
+- avoid full queries when opening char
 
 
 BUGS

@@ -137,4 +137,20 @@ public class DiceRoll implements Serializable {
         return copy;
     }
 
+    public Map<Integer, Integer> getDice() {
+        return dice;
+    }
+
+    public void setDice(Map<Integer, Integer> dice) {
+        this.dice = dice;
+    }
+
+    public int getFixedValue() {
+        return fixedValue;
+    }
+
+    public void setFixedValue(int fixedValue) {
+        this.fixedValue = fixedValue;
+    }
+
 }
