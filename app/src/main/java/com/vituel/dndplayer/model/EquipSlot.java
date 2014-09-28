@@ -2,6 +2,8 @@ package com.vituel.dndplayer.model;
 
 import android.content.Context;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import java.io.Serializable;
 
 /**
@@ -11,6 +13,7 @@ import java.io.Serializable;
  */
 public class EquipSlot implements Serializable {
 
+    @JsonIgnore
     private int nameRes;
     private SlotType slotType;
     private Item item;
