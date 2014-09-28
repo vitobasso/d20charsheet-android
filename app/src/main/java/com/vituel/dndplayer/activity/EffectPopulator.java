@@ -4,7 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.vituel.dnd_character_sheet.R;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.AbstractEffect;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.util.ModifierStringConverter;

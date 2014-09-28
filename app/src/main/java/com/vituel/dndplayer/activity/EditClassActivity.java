@@ -2,7 +2,8 @@ package com.vituel.dndplayer.activity;
 
 import android.widget.EditText;
 import android.widget.Spinner;
-import com.vituel.dnd_character_sheet.R;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.ClassDao;
 import com.vituel.dndplayer.model.Clazz;
 

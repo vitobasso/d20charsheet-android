@@ -7,12 +7,15 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.vituel.dnd_character_sheet.R;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.PagerFragment;
 import com.vituel.dndplayer.dao.CharDao;
 import com.vituel.dndplayer.model.CharBase;
 
-import static com.vituel.dndplayer.util.ActivityUtil.*;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
+import static com.vituel.dndplayer.util.ActivityUtil.defaultOnOptionsItemSelected;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 

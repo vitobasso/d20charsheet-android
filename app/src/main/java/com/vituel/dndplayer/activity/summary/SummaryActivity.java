@@ -8,19 +8,25 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.vituel.dnd_character_sheet.R;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.PagerFragment;
+import com.vituel.dndplayer.activity.SelectCharActivity;
+import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
+import com.vituel.dndplayer.dao.CharDao;
+import com.vituel.dndplayer.model.CharBase;
+import com.vituel.dndplayer.model.Character;
 import com.vituel.dndplayer.util.ActivityUtil;
 import com.vituel.dndplayer.util.AppUtil;
-import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
-import com.vituel.dndplayer.activity.SelectCharActivity;
-import com.vituel.dndplayer.dao.CharDao;
-import com.vituel.dndplayer.model.*;
-import com.vituel.dndplayer.model.Character;
 
 import java.util.List;
 
-import static com.vituel.dndplayer.util.ActivityUtil.*;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
+import static com.vituel.dndplayer.util.ActivityUtil.PREF;
+import static com.vituel.dndplayer.util.ActivityUtil.PREF_OPENED_CHARACTER;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 

@@ -3,10 +3,11 @@ package com.vituel.dndplayer.activity.edit_char;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Spinner;
-import com.vituel.dnd_character_sheet.R;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.PagerFragment;
-import com.vituel.dndplayer.util.ActivityUtil;
 import com.vituel.dndplayer.model.CharBase;
+import com.vituel.dndplayer.util.ActivityUtil;
 
 import static com.vituel.dndplayer.util.ActivityUtil.setSpinnerSelection;
 

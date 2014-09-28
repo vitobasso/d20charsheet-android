@@ -5,26 +5,26 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.vituel.dndplayer.dao.ItemDao;
-import com.vituel.dndplayer.dao.RaceDao;
-import com.vituel.dndplayer.dao.CharSkillDao;
-import com.vituel.dndplayer.dao.SkillDao;
-import com.vituel.dndplayer.dao.TempEffectActivityDao;
-import com.vituel.dndplayer.dao.TempEffectDao;
-import com.vituel.dndplayer.dao.TraitDao;
-import com.vituel.dndplayer.dao.TraitLinkDao;
 import com.vituel.dndplayer.dao.ActiveConditionDao;
 import com.vituel.dndplayer.dao.AttackDao;
 import com.vituel.dndplayer.dao.AttackRoundDao;
 import com.vituel.dndplayer.dao.CharClassDao;
 import com.vituel.dndplayer.dao.CharDao;
+import com.vituel.dndplayer.dao.CharSkillDao;
 import com.vituel.dndplayer.dao.ClassDao;
+import com.vituel.dndplayer.dao.ItemDao;
 import com.vituel.dndplayer.dao.ModifierDao;
+import com.vituel.dndplayer.dao.RaceDao;
+import com.vituel.dndplayer.dao.SkillDao;
+import com.vituel.dndplayer.dao.TempEffectActivityDao;
+import com.vituel.dndplayer.dao.TempEffectDao;
+import com.vituel.dndplayer.dao.TraitDao;
+import com.vituel.dndplayer.dao.TraitLinkDao;
 import com.vituel.dndplayer.dao.WeaponDao;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 
-    public static final String DATABASE_NAME = "dnd_character_sheet.db";
+    public static final String DATABASE_NAME = "dndplayer.db";
     public static final int DATABASE_VERSION = 1;
 
     public static final String COLUMN_ID = "_id";

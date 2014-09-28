@@ -1,12 +1,17 @@
 package com.vituel.dndplayer.activity;
 
 import android.view.ViewGroup;
-import android.widget.*;
-import com.vituel.dnd_character_sheet.R;
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
+
+import com.vituel.dndplayer.R;
+import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.ModifierType;
-import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Trait;
 import com.vituel.dndplayer.util.gui.NoSelSpinnerAdapter;
 

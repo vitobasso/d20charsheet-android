@@ -4,13 +4,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import com.vituel.dnd_character_sheet.R;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.Attack;
 import com.vituel.dndplayer.model.AttackRound;
 
 import static com.vituel.dndplayer.model.Attack.WeaponReferenceType;
 import static com.vituel.dndplayer.model.Attack.WeaponReferenceType.MAIN_HAND;
-import static com.vituel.dndplayer.util.ActivityUtil.*;
+import static com.vituel.dndplayer.util.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.ActivityUtil.inflate;
+import static com.vituel.dndplayer.util.ActivityUtil.populateSpinnerWithEnum;
+import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.ActivityUtil.readInt;
+import static com.vituel.dndplayer.util.ActivityUtil.readSpinner;
+import static com.vituel.dndplayer.util.ActivityUtil.readString;
 
 public class EditAttackRoundActivity extends AbstractEditActivity<AttackRound> {
 

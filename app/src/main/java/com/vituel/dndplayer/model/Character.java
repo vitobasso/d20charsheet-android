@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.esotericsoftware.kryo.Kryo;
-import com.vituel.dnd_character_sheet.R;
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.SkillDao;
 import com.vituel.dndplayer.util.AttackUtil;
 import com.vituel.dndplayer.util.ModifierStringConverter;

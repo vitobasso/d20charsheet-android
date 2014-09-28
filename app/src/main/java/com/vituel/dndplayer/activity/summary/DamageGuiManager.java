@@ -5,15 +5,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.NumberPicker;
-import com.vituel.dnd_character_sheet.R;
-import com.vituel.dndplayer.model.ModifierTarget;
-import com.vituel.dndplayer.util.gui.GuiInflater;
-import com.vituel.dndplayer.util.ActivityUtil;
-import com.vituel.dndplayer.dao.CharDao;
-import com.vituel.dndplayer.model.*;
-import com.vituel.dndplayer.model.Character;
 
-import static android.view.View.*;
+import com.vituel.dndplayer.R;
+import com.vituel.dndplayer.dao.CharDao;
+import com.vituel.dndplayer.model.Character;
+import com.vituel.dndplayer.model.DamageTaken;
+import com.vituel.dndplayer.model.ModifierTarget;
+import com.vituel.dndplayer.util.ActivityUtil;
+import com.vituel.dndplayer.util.gui.GuiInflater;
+
+import static android.view.View.GONE;
+import static android.view.View.OnClickListener;
+import static android.view.View.VISIBLE;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;

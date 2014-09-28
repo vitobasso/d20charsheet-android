@@ -5,7 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.vituel.dnd_character_sheet.R;
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.ActiveConditionDao;
 import com.vituel.dndplayer.model.Character;
 import com.vituel.dndplayer.model.Condition;

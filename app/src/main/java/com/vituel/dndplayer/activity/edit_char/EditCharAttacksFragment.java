@@ -2,18 +2,23 @@ package com.vituel.dndplayer.activity.edit_char;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.*;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import com.vituel.dnd_character_sheet.R;
-import com.vituel.dndplayer.activity.PagerFragment;
-import com.vituel.dndplayer.util.ActivityUtil;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.EditAttackRoundActivity;
+import com.vituel.dndplayer.activity.PagerFragment;
 import com.vituel.dndplayer.dao.AttackRoundDao;
 import com.vituel.dndplayer.model.Attack;
 import com.vituel.dndplayer.model.AttackRound;
 import com.vituel.dndplayer.model.CharBase;
+import com.vituel.dndplayer.util.ActivityUtil;
 import com.vituel.dndplayer.util.AttackUtil;
 
 import java.util.ArrayList;
@@ -21,7 +26,13 @@ import java.util.List;
 import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
-import static com.vituel.dndplayer.util.ActivityUtil.*;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
+import static com.vituel.dndplayer.util.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.ActivityUtil.inflate;
+import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.vituel.dnd_character_sheet.R;
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.CharBase;
 
 import org.codehaus.jackson.map.ObjectMapper;

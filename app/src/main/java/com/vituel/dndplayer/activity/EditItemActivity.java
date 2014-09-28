@@ -3,24 +3,31 @@ package com.vituel.dndplayer.activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import com.vituel.dnd_character_sheet.R;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.ItemDao;
+import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Item;
-import com.vituel.dndplayer.model.SlotType;
-import com.vituel.dndplayer.model.WeaponItem;
-import com.vituel.dndplayer.model.WeaponProperties;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.ModifierType;
-import com.vituel.dndplayer.activity.AbstractEditActivity;
-import com.vituel.dndplayer.model.DiceRoll;
+import com.vituel.dndplayer.model.SlotType;
+import com.vituel.dndplayer.model.WeaponItem;
+import com.vituel.dndplayer.model.WeaponProperties;
 
 import java.util.List;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static com.vituel.dndplayer.util.ActivityUtil.*;
 import static com.vituel.dndplayer.model.Item.ItemType;
+import static com.vituel.dndplayer.util.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.ActivityUtil.inflate;
+import static com.vituel.dndplayer.util.ActivityUtil.populateSpinnerWithEnum;
+import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.ActivityUtil.readDice;
+import static com.vituel.dndplayer.util.ActivityUtil.readInt;
+import static com.vituel.dndplayer.util.ActivityUtil.readSpinner;
+import static com.vituel.dndplayer.util.ActivityUtil.readString;
 
 public class EditItemActivity extends AbstractEditActivity<Item> {
 

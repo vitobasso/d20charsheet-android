@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.vituel.dnd_character_sheet" >
+    package="com.vituel.dndplayer" >
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -12,7 +12,7 @@
         android:theme="@android:style/Theme.Holo.Light" >
 
         <activity
-            android:name="com.vituel.dndplayer.activity.summary.SummaryActivity"
+            android:name=".activity.summary.SummaryActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -21,63 +21,63 @@
         </activity>
 
         <activity
-            android:name="com.vituel.dndplayer.activity.edit_char.EditCharActivity"
+            android:name=".activity.edit_char.EditCharActivity"
             android:label="@string/char_edit"/>
 
         <activity
-            android:name="com.vituel.dndplayer.activity.SelectCharActivity"
+            android:name=".activity.SelectCharActivity"
             android:label="@string/char_open"/>
 
         <activity
-            android:name="com.vituel.dndplayer.activity.SelectClassActivity"
+            android:name=".activity.SelectClassActivity"
             android:label="@string/class_manage"/>
 
         <activity
-            android:name="com.vituel.dndplayer.activity.EditClassActivity"
+            android:name=".activity.EditClassActivity"
             android:label="@string/class_edit"/>
 
         <activity
-            android:name="com.vituel.dndplayer.activity.EditItemActivity"
+            android:name=".activity.EditItemActivity"
             android:label="@string/item_edit"/>
 
         <activity
-            android:name="com.vituel.dndplayer.activity.SelectItemActivity"
+            android:name=".activity.SelectItemActivity"
             android:label="@string/item_select"/>
 
         <activity
-            android:name="com.vituel.dndplayer.activity.SelectTempEffectActivity"
+            android:name=".activity.SelectTempEffectActivity"
             android:label="@string/temps_select"/>
 
         <activity
-            android:name="com.vituel.dndplayer.activity.EditTempEffectActivity"
+            android:name=".activity.EditTempEffectActivity"
             android:label="@string/temps_edit"/>
 
         <activity
-            android:name="com.vituel.dndplayer.activity.SelectRaceActivity"
+            android:name=".activity.SelectRaceActivity"
             android:label="@string/race_select"/>
 
         <activity
-            android:name="com.vituel.dndplayer.activity.EditRaceActivity"
+            android:name=".activity.EditRaceActivity"
             android:label="@string/race_edit"/>
 
         <activity
-            android:name="com.vituel.dndplayer.activity.EditTraitActivity"
+            android:name=".activity.EditTraitActivity"
             android:label="@string/trait_edit"/>
 
         <activity
-            android:name="com.vituel.dndplayer.activity.SelectTraitActivity"
+            android:name=".activity.SelectTraitActivity"
             android:label="@string/trait_select"/>
 
         <activity
-            android:name="com.vituel.dndplayer.activity.EditSkillActivity"
+            android:name=".activity.EditSkillActivity"
             android:label="@string/skill_edit"/>
 
         <activity
-            android:name="com.vituel.dndplayer.activity.SelectSkillActivity"
+            android:name=".activity.SelectSkillActivity"
             android:label="@string/skill_select"/>
 
         <activity
-            android:name="com.vituel.dndplayer.activity.EditAttackRoundActivity"
+            android:name=".activity.EditAttackRoundActivity"
             android:label="@string/skill_select"/>
 
     </application>

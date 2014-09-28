@@ -3,9 +3,9 @@ package com.vituel.dndplayer.activity;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
-import com.vituel.dnd_character_sheet.R;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.ModifierTarget;
-import com.vituel.dndplayer.activity.AbstractEditActivity;
 import com.vituel.dndplayer.model.Skill;
 
 import static com.vituel.dndplayer.util.ActivityUtil.setSpinnerSelection;

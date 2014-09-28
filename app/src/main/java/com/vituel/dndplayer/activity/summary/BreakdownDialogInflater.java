@@ -3,14 +3,15 @@ package com.vituel.dndplayer.activity.summary;
 import android.app.Activity;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.vituel.dnd_character_sheet.R;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.AbstractEffect;
+import com.vituel.dndplayer.model.Character;
+import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.ModifierType;
 import com.vituel.dndplayer.util.AppCommons;
-import com.vituel.dndplayer.model.DiceRoll;
-import com.vituel.dndplayer.model.Character;
 
 import java.util.Collection;
 import java.util.List;

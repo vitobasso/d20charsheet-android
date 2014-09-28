@@ -6,9 +6,10 @@ import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.StyleSpan;
 import android.util.Log;
-import com.vituel.dnd_character_sheet.R;
-import com.vituel.dndplayer.model.DiceRoll;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.Condition;
+import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.ModifierType;

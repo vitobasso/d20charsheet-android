@@ -2,25 +2,32 @@ package com.vituel.dndplayer.activity.summary;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.*;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.vituel.dnd_character_sheet.R;
-import com.vituel.dndplayer.util.AppCommons;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.PagerFragment;
-import com.vituel.dndplayer.util.ActivityUtil;
-import com.vituel.dndplayer.model.CharSkill;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
+import com.vituel.dndplayer.model.CharSkill;
 import com.vituel.dndplayer.model.Character;
+import com.vituel.dndplayer.util.ActivityUtil;
+import com.vituel.dndplayer.util.AppCommons;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static com.vituel.dndplayer.model.ModifierTarget.SKILL;
-import static com.vituel.dndplayer.util.ActivityUtil.*;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 

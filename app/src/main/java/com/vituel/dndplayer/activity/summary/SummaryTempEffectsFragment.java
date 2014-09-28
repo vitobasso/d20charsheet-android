@@ -1,17 +1,22 @@
 package com.vituel.dndplayer.activity.summary;
 
 import android.content.Intent;
-import android.view.*;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
-import com.vituel.dnd_character_sheet.R;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.EffectArrayAdapter;
 import com.vituel.dndplayer.activity.PagerFragment;
-import com.vituel.dndplayer.util.JavaUtil;
 import com.vituel.dndplayer.activity.SelectTempEffectActivity;
-import com.vituel.dndplayer.model.TempEffect;
 import com.vituel.dndplayer.dao.TempEffectActivityDao;
 import com.vituel.dndplayer.model.Character;
+import com.vituel.dndplayer.model.TempEffect;
+import com.vituel.dndplayer.util.JavaUtil;
 
 import java.util.ArrayList;
 import java.util.List;

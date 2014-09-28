@@ -5,12 +5,18 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.vituel.dnd_character_sheet.R;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.AbstractEntity;
 import com.vituel.dndplayer.util.ReflectionUtil;
 
-import static com.vituel.dndplayer.util.ActivityUtil.*;
-import static com.vituel.dndplayer.util.font.FontUtil.*;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
+import static com.vituel.dndplayer.util.ActivityUtil.defaultOnOptionsItemSelected;
+import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
+import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
+import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
+import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 
 public abstract class AbstractEditActivity<T extends AbstractEntity> extends Activity {
 

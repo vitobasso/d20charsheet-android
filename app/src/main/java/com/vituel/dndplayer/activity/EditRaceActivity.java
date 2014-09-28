@@ -5,13 +5,13 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
-import com.vituel.dnd_character_sheet.R;
-import com.vituel.dndplayer.model.Race;
-import com.vituel.dndplayer.model.Size;
+
+import com.vituel.dndplayer.R;
+import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierTarget;
-import com.vituel.dndplayer.activity.AbstractEditActivity;
-import com.vituel.dndplayer.model.DiceRoll;
+import com.vituel.dndplayer.model.Race;
+import com.vituel.dndplayer.model.Size;
 import com.vituel.dndplayer.util.ActivityUtil;
 
 import java.util.Arrays;

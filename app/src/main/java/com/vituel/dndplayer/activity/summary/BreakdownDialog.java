@@ -6,16 +6,19 @@ import android.app.Dialog;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import com.vituel.dnd_character_sheet.R;
-import com.vituel.dndplayer.model.*;
+
+import com.vituel.dndplayer.R;
+import com.vituel.dndplayer.model.AttackRound;
+import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.Character;
-import com.vituel.dndplayer.util.AttackUtil;
 import com.vituel.dndplayer.model.ClassLevel;
-import com.vituel.dndplayer.util.ModifierStringConverter;
 import com.vituel.dndplayer.model.ModifierTarget;
-import com.vituel.dndplayer.util.gui.GuiInflater;
-import com.vituel.dndplayer.util.font.FontUtil;
 import com.vituel.dndplayer.model.Race;
+import com.vituel.dndplayer.model.WeaponProperties;
+import com.vituel.dndplayer.util.AttackUtil;
+import com.vituel.dndplayer.util.ModifierStringConverter;
+import com.vituel.dndplayer.util.font.FontUtil;
+import com.vituel.dndplayer.util.gui.GuiInflater;
 
 import static android.view.View.GONE;
 import static com.vituel.dndplayer.model.Attack.WeaponReferenceType;

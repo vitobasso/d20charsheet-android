@@ -1,23 +1,34 @@
 package com.vituel.dndplayer.activity.edit_char;
 
 import android.content.Intent;
-import android.view.*;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
-import com.vituel.dnd_character_sheet.R;
-import com.vituel.dndplayer.model.ClassLevel;
-import com.vituel.dndplayer.model.Clazz;
-import com.vituel.dndplayer.activity.SelectClassActivity;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.PagerFragment;
-import com.vituel.dndplayer.util.ActivityUtil;
-import com.vituel.dndplayer.model.Race;
+import com.vituel.dndplayer.activity.SelectClassActivity;
 import com.vituel.dndplayer.activity.SelectRaceActivity;
 import com.vituel.dndplayer.model.CharBase;
+import com.vituel.dndplayer.model.ClassLevel;
+import com.vituel.dndplayer.model.Clazz;
+import com.vituel.dndplayer.model.Race;
+import com.vituel.dndplayer.util.ActivityUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static com.vituel.dndplayer.util.ActivityUtil.*;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT_CLASS;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT_RACE;
+import static com.vituel.dndplayer.util.ActivityUtil.inflate;
+import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.ActivityUtil.readInt;
+import static com.vituel.dndplayer.util.ActivityUtil.readString;
 
 /**
  * Created by Victor on 28/02/14.

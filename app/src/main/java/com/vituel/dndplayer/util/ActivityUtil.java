@@ -11,8 +11,13 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.*;
-import com.vituel.dnd_character_sheet.R;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
+import android.widget.TextView;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.summary.SummaryActivity;
 import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.util.gui.NoSelSpinnerAdapter;
@@ -37,7 +42,7 @@ public class ActivityUtil {
     public static final String EXTRA_REQUEST = "REQUEST";
     public static final String EXTRA_PAGE = "PAGE";
 
-    public static final String PREF = "dnd_character_sheet";
+    public static final String PREF = "dndplayer";
     public static final String PREF_OPENED_CHARACTER = "opened_character";
     public static final String PREF_FIRST_RUN = "first_run";
 

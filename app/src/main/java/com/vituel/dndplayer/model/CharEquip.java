@@ -1,13 +1,24 @@
 package com.vituel.dndplayer.model;
 
-import com.vituel.dnd_character_sheet.R;
+import com.vituel.dndplayer.R;
 
 import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.vituel.dndplayer.model.SlotType.*;
+import static com.vituel.dndplayer.model.SlotType.ARMS;
+import static com.vituel.dndplayer.model.SlotType.BODY;
+import static com.vituel.dndplayer.model.SlotType.EYES;
+import static com.vituel.dndplayer.model.SlotType.FEET;
+import static com.vituel.dndplayer.model.SlotType.FINGER;
+import static com.vituel.dndplayer.model.SlotType.HANDS;
+import static com.vituel.dndplayer.model.SlotType.HEAD;
+import static com.vituel.dndplayer.model.SlotType.HELD;
+import static com.vituel.dndplayer.model.SlotType.NECK;
+import static com.vituel.dndplayer.model.SlotType.SHOULDERS;
+import static com.vituel.dndplayer.model.SlotType.TORSO;
+import static com.vituel.dndplayer.model.SlotType.WAIST;
 
 /**
  * See DM Guide, p.214

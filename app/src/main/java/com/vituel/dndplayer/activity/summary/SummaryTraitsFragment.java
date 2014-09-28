@@ -3,24 +3,33 @@ package com.vituel.dndplayer.activity.summary;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
-import com.vituel.dnd_character_sheet.R;
-import com.vituel.dndplayer.model.ClassLevel;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.EffectPopulator;
 import com.vituel.dndplayer.activity.PagerFragment;
-import com.vituel.dndplayer.util.ActivityUtil;
-import com.vituel.dndplayer.util.gui.SingleColExpListAdapter;
-import com.vituel.dndplayer.model.Race;
-import com.vituel.dndplayer.model.Trait;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
 import com.vituel.dndplayer.model.Character;
+import com.vituel.dndplayer.model.ClassLevel;
+import com.vituel.dndplayer.model.Race;
+import com.vituel.dndplayer.model.Trait;
+import com.vituel.dndplayer.util.ActivityUtil;
+import com.vituel.dndplayer.util.gui.SingleColExpListAdapter;
 
-import java.util.*;
+import java.util.List;
+import java.util.TreeMap;
 
-import static com.vituel.dndplayer.util.ActivityUtil.*;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
 
 /**
  * Created by Victor on 21/03/14.

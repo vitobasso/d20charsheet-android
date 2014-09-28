@@ -14,15 +14,25 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
-import com.vituel.dnd_character_sheet.R;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.AbstractEntityDao;
 import com.vituel.dndplayer.model.AbstractEntity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.vituel.dndplayer.util.ActivityUtil.*;
-import static com.vituel.dndplayer.util.font.FontUtil.*;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_REQUEST;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
+import static com.vituel.dndplayer.util.ActivityUtil.defaultOnOptionsItemSelected;
+import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
+import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
+import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
+import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 
 /**
  * Created by Victor on 17/03/14.

@@ -4,19 +4,22 @@ import android.content.Intent;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.vituel.dnd_character_sheet.R;
+
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.PagerFragment;
-import com.vituel.dndplayer.util.ActivityUtil;
-import com.vituel.dndplayer.model.Item;
 import com.vituel.dndplayer.activity.SelectItemActivity;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.CharEquip;
 import com.vituel.dndplayer.model.EquipSlot;
+import com.vituel.dndplayer.model.Item;
+import com.vituel.dndplayer.util.ActivityUtil;
 
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static com.vituel.dndplayer.util.ActivityUtil.*;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_TYPE;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 
