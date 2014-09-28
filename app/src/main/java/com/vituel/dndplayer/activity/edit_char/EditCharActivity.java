@@ -60,7 +60,13 @@ public class EditCharActivity extends FragmentActivity {
                 //copy fields from fragments
                 for (Fragment frag : getSupportFragmentManager().getFragments()) {
                     if (frag instanceof PagerFragment) {
-                        ((PagerFragment) frag).onSaveToModel();
+                        PagerFragment pagerFrag = (PagerFragment) frag;
+                        if(pagerFrag.onValidate()) {
+                            pagerFrag.onSaveToModel();
+                        }else{
+                            return true; //TODO go to page w/ error.
+                            //TODO validate destroyed pages too
+                        }
                     }
                 }
 

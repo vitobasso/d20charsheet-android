@@ -1,7 +1,6 @@
 IMPROVEMENTS
 
 #edit
-- gui validation
 - show NumberPicker when touching EditTexts with a plain integer?
 - create modifier w/ conditional
 

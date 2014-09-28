@@ -29,6 +29,7 @@ import static com.vituel.dndplayer.util.ActivityUtil.inflate;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 import static com.vituel.dndplayer.util.ActivityUtil.readInt;
 import static com.vituel.dndplayer.util.ActivityUtil.readString;
+import static com.vituel.dndplayer.util.ActivityUtil.validateField;
 
 /**
  * Created by Victor on 28/02/14.
@@ -245,6 +246,22 @@ public class EditCharBasicFragment extends PagerFragment<Object, EditCharActivit
         base.setIntelligence(readInt(root, R.id.attr_int));
         base.setWisdom(readInt(root, R.id.wis));
         base.setCharisma(readInt(root, R.id.cha));
+    }
+
+    @Override
+    public boolean onValidate(){
+        boolean allValid = validateField(root, R.id.name);
+        allValid &= validateField(root, R.id.race);
+        allValid &= validateField(root, R.id.classField);
+        allValid &= validateField(root, R.id.level);
+        allValid &= validateField(root, R.id.hp);
+        allValid &= validateField(root, R.id.str);
+        allValid &= validateField(root, R.id.dex);
+        allValid &= validateField(root, R.id.con);
+        allValid &= validateField(root, R.id.attr_int);
+        allValid &= validateField(root, R.id.wis);
+        allValid &= validateField(root, R.id.cha);
+        return allValid;
     }
 
     private <T extends View> T findView(int... ids) {

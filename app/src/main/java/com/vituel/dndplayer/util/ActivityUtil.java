@@ -161,7 +161,7 @@ public class ActivityUtil {
         }
 
         //set listener
-        if(listener != null) {
+        if (listener != null) {
             spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -185,6 +185,7 @@ public class ActivityUtil {
         T view = findView(root, viewRes);
         if (view != null && value != null) {
             view.setText(value.toString());
+            view.setError(null);
         }
         return view;
     }
@@ -206,6 +207,19 @@ public class ActivityUtil {
     public static DiceRoll readDice(Object root, int viewRes) {
         TextView view = findView(root, viewRes);
         return view.getText().length() > 0 ? new DiceRoll(view.getText().toString()) : null;
+    }
+
+    public static boolean validateField(Object root, int viewRes) {
+        TextView view = findView(root, viewRes);
+        String str = view.getText().toString().trim();
+        if (str.isEmpty()) {
+            String msg = view.getContext().getString(R.string.cant_be_empty);
+            view.setError(msg);
+            return false;
+        } else {
+            view.setError(null);
+            return true;
+        }
     }
 
 }

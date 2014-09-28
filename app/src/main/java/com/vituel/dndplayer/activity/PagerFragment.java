@@ -40,6 +40,10 @@ public abstract class PagerFragment<T, A extends Activity> extends Fragment {
         super.onDestroyView();
     }
 
+    public boolean onValidate(){
+        return true;
+    }
+
     public void onSaveToModel() {
     }
 
