@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.util;
+package com.vituel.dndplayer.util.i18n;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -12,7 +12,6 @@ import com.vituel.dndplayer.model.Condition;
 import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierTarget;
-import com.vituel.dndplayer.model.ModifierType;
 
 /**
  * Created by Victor on 25/04/14.
@@ -20,9 +19,11 @@ import com.vituel.dndplayer.model.ModifierType;
 public class ModifierStringConverter {
 
     private Context ctx;
+    private EnumI18n i18n;
 
     public ModifierStringConverter(Context ctx) {
         this.ctx = ctx;
+        this.i18n = new EnumI18n(ctx);
     }
 
     public CharSequence getShortString(Modifier mod) {
@@ -104,7 +105,7 @@ public class ModifierStringConverter {
             case SKILL:
                 return variation;
             default:
-                Log.w(getClass().getSimpleName(), "Couldn't convert target to string: " + target.toString());
+                Log.w(getClass().getSimpleName(), "Couldn't convert string: " + target.toString());
                 return target.toString();
         }
     }
@@ -133,70 +134,11 @@ public class ModifierStringConverter {
         return str;
     }
 
-    private CharSequence getType(ModifierType type) {
-        switch (type) {
-            case ENHANCEMENT:
-                return getString(R.string.enhance);
-            case MORALE:
-                return getString(R.string.morale);
-            case COMPETENCE:
-                return getString(R.string.compete);
-            case CIRCUMSTANCE:
-                return getString(R.string.circums);
-            case ARMOR:
-                return getString(R.string.armor);
-            case SHIELD:
-                return getString(R.string.shield);
-            case NATURAL_ARMOR:
-                return getString(R.string.nat_armor);
-            case DEFLECTION:
-                return getString(R.string.defl);
-            case DODGE:
-                return getString(R.string.dodge);
-            case SIZE:
-                return getString(R.string.size);
-            case RACIAL:
-                return getString(R.string.racial);
-            case LUCK:
-                return getString(R.string.luck);
-            case ALCHEMICAL:
-                return getString(R.string.alchem);
-            case INSIGHT:
-                return getString(R.string.insight);
-            case RESISTANCE:
-                return getString(R.string.resist);
-            case INHERENT:
-                return getString(R.string.inherent);
-            case PROFANE:
-                return getString(R.string.profane);
-            case SACRED:
-                return getString(R.string.sacred);
-            default:
-                return null;
-        }
-    }
-
     private CharSequence getCondition(Condition cond) {
         if (cond == null) {
             return null;
         }
-        return String.format("%s %s", getConditionPredicate(cond.getPredicate()), cond.getName());
-    }
-
-    public CharSequence getConditionPredicate(Condition.Predicate pred) {
-        switch (pred) {
-            case WHEN:
-                return getString(R.string.when);
-            case USING:
-                return getString(R.string.using);
-            case AGAINST:
-                return getString(R.string.against);
-            case RELATED_TO:
-                return getString(R.string.related_to);
-            default:
-                Log.w(getClass().getSimpleName(), "Couldn't convert condition predicate to string: " + pred.toString());
-                return pred.toString();
-        }
+        return String.format("%s %s", i18n.get(cond.getPredicate()), cond.getName());
     }
 
     private CharSequence getString(int res) {

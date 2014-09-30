@@ -20,6 +20,7 @@ import com.vituel.dndplayer.model.AttackRound;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.util.ActivityUtil;
 import com.vituel.dndplayer.util.AttackUtil;
+import com.vituel.dndplayer.util.i18n.EnumI18n;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
 
     private static final String KEY_SELECTED_INDEX = "INDEX";
 
+    private EnumI18n i18n;
     private List<AttackRound> attackRounds;
     private int selectedIndex = -1;
 
@@ -53,6 +55,7 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
             selectedIndex = savedInstanceState.getInt(KEY_SELECTED_INDEX, -1);
         }
 
+        i18n = new EnumI18n(activity);
         activity.updateFragment(this);
     }
 
@@ -144,7 +147,8 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
             for (Attack attack : attackGroups.keySet()) {
                 ViewGroup group = inflate(activity, listRoot, R.layout.edit_attack_list_group_row);
                 populateTextView(group, R.id.penalties, attackGroups.get(attack));
-                populateTextView(group, R.id.weapon, attack.getReferenceType().toString()); //TODO i18n
+                String weaponType = i18n.get(attack.getReferenceType()).toString();
+                populateTextView(group, R.id.weapon, weaponType);
             }
 
             //remove button

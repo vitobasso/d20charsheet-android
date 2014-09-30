@@ -16,9 +16,9 @@ import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.Race;
 import com.vituel.dndplayer.model.WeaponProperties;
 import com.vituel.dndplayer.util.AttackUtil;
-import com.vituel.dndplayer.util.ModifierStringConverter;
 import com.vituel.dndplayer.util.font.FontUtil;
 import com.vituel.dndplayer.util.gui.GuiInflater;
+import com.vituel.dndplayer.util.i18n.ModifierStringConverter;
 
 import static android.view.View.GONE;
 import static com.vituel.dndplayer.model.Attack.WeaponReferenceType;

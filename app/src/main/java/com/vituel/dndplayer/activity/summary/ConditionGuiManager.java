@@ -10,7 +10,7 @@ import com.vituel.dndplayer.dao.ActiveConditionDao;
 import com.vituel.dndplayer.model.Character;
 import com.vituel.dndplayer.model.Condition;
 import com.vituel.dndplayer.util.JavaUtil;
-import com.vituel.dndplayer.util.ModifierStringConverter;
+import com.vituel.dndplayer.util.i18n.EnumI18n;
 
 import java.util.HashSet;
 import java.util.Map;
@@ -32,13 +32,13 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 public class ConditionGuiManager {
 
     SummaryActivity activity;
-    ModifierStringConverter modConv;
+    EnumI18n i18n;
 
     Character character;
 
     public ConditionGuiManager(SummaryActivity activity) {
         this.activity = activity;
-        this.modConv = new ModifierStringConverter(activity);
+        this.i18n = new EnumI18n(activity);
     }
 
     public void populate(Character character) {
@@ -62,7 +62,7 @@ public class ConditionGuiManager {
             ViewGroup predGroup = inflate(activity, list, R.layout.cond_group);
 
             TextView predView = findView(predGroup, R.id.pred);
-            predView.setText(modConv.getConditionPredicate(pred));
+            predView.setText(i18n.get(pred));
 
             //conditions
             for (int i = 0; i < conds.size(); i++) {

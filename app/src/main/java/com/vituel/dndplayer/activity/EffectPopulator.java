@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.AbstractEffect;
 import com.vituel.dndplayer.model.Modifier;
-import com.vituel.dndplayer.util.ModifierStringConverter;
+import com.vituel.dndplayer.util.i18n.ModifierStringConverter;
 
 /**
  * Created by Victor on 06/09/14.

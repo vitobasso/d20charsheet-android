@@ -7,7 +7,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.SkillDao;
 import com.vituel.dndplayer.util.AttackUtil;
-import com.vituel.dndplayer.util.ModifierStringConverter;
+import com.vituel.dndplayer.util.i18n.ModifierStringConverter;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;

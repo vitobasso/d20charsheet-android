@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -20,10 +19,10 @@ import android.widget.TextView;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.summary.SummaryActivity;
 import com.vituel.dndplayer.model.DiceRoll;
+import com.vituel.dndplayer.util.gui.EnumI18nSpinnerAdapter;
 import com.vituel.dndplayer.util.gui.NoSelSpinnerAdapter;
 
 import java.security.InvalidParameterException;
-import java.util.Arrays;
 
 /**
  * Created by Victor on 07/03/14.
@@ -150,8 +149,8 @@ public class ActivityUtil {
         }
 
         //set adapter
-        SpinnerAdapter adapter = new ArrayAdapter<>(
-                activity, android.R.layout.simple_spinner_item, Arrays.asList(enumValues));
+        SpinnerAdapter adapter = new EnumI18nSpinnerAdapter(
+                activity, android.R.layout.simple_spinner_item, enumValues);
         adapter = new NoSelSpinnerAdapter(activity, adapter);
         spinner.setAdapter(adapter);
 

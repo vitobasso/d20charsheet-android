@@ -1,9 +1,9 @@
 package com.vituel.dndplayer.util;
 
-import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Attack;
 import com.vituel.dndplayer.model.AttackRound;
 import com.vituel.dndplayer.model.Critical;
+import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.WeaponProperties;
 
 import java.util.ArrayList;
@@ -78,7 +78,7 @@ public class AttackUtil {
     }
 
     public static WeaponProperties unnarmedStrike(){
-        return new WeaponProperties("Unarmed Strike", new DiceRoll("1d6"), new Critical(1, 2), 1); //TODO i18n, monk dmg
+        return new WeaponProperties("Unarmed Strike", new DiceRoll("1d6"), new Critical(1, 2), 1); //TODO i18n, TODO monk dmg
     }
 
     public static WeaponProperties getRepresentativeWeapon(AttackRound round, WeaponReferenceType refType){
