@@ -3,6 +3,7 @@ package com.vituel.dndplayer.activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Spinner;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.ItemDao;
@@ -28,6 +29,8 @@ import static com.vituel.dndplayer.util.ActivityUtil.readDice;
 import static com.vituel.dndplayer.util.ActivityUtil.readInt;
 import static com.vituel.dndplayer.util.ActivityUtil.readSpinner;
 import static com.vituel.dndplayer.util.ActivityUtil.readString;
+import static com.vituel.dndplayer.util.ActivityUtil.validateSpinner;
+import static com.vituel.dndplayer.util.ActivityUtil.validateText;
 
 public class EditItemActivity extends AbstractEditActivity<Item> {
 
@@ -77,6 +80,26 @@ public class EditItemActivity extends AbstractEditActivity<Item> {
             populateSpinnerWithEnum(this, group, R.id.target, ModifierTarget.values(), null, null);
             populateSpinnerWithEnum(this, group, R.id.type, ModifierType.values(), null, null);
         }
+    }
+
+    @Override
+    protected boolean validate() {
+        boolean allValid = validateText(this, R.id.name);
+        allValid &= validateSpinner(this, R.id.slot);
+
+        SlotType slotType = readSpinner(this, R.id.slot);
+        if (slotType == SlotType.HELD) {
+            allValid &= validateSpinner(this, R.id.itemType);
+        }
+
+        ItemType itemType = readSpinner(this, R.id.itemType);
+        if (itemType == ItemType.WEAPON) {
+            allValid &= validateText(this, R.id.damage);
+            allValid &= validateText(this, R.id.crit_range);
+            allValid &= validateText(this, R.id.crit_mult);
+        }
+
+        return allValid;
     }
 
     @Override
@@ -133,14 +156,15 @@ public class EditItemActivity extends AbstractEditActivity<Item> {
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            View label = findViewById(R.id.itemTypeLabel);
-            View spinner = findViewById(R.id.itemType);
-            if (position > 0 && SlotType.values()[position] == SlotType.HELD) {
+            View label = findView(EditItemActivity.this, R.id.itemTypeLabel);
+            Spinner spinner = findView(EditItemActivity.this, R.id.itemType);
+            if (position >= 0 && SlotType.values()[position] == SlotType.HELD) {
                 label.setVisibility(VISIBLE);
                 spinner.setVisibility(VISIBLE);
             } else {
                 label.setVisibility(GONE);
                 spinner.setVisibility(GONE);
+                //TODO hide weapon fields
             }
         }
 
@@ -152,8 +176,8 @@ public class EditItemActivity extends AbstractEditActivity<Item> {
 
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-            View weaponFields = findViewById(R.id.weapon_fields);
-            if (position > 0 && ItemType.values()[position] == ItemType.WEAPON) {
+            View weaponFields = findView(EditItemActivity.this, R.id.weapon_fields);
+            if (position >= 0 && ItemType.values()[position] == ItemType.WEAPON) {
                 weaponFields.setVisibility(VISIBLE);
             } else {
                 weaponFields.setVisibility(GONE);

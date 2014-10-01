@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.vituel.dndplayer.model.Attack;
 import com.vituel.dndplayer.model.Condition;
+import com.vituel.dndplayer.model.Item;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.ModifierType;
 import com.vituel.dndplayer.model.SlotType;
@@ -30,6 +31,8 @@ public class EnumI18n {
             return new SlotTypeStringConverter(ctx).toString((SlotType) value);
         } else if (value instanceof ModifierTarget) {
             return new ModifierTargetStringConverter(ctx).toString((ModifierTarget) value);
+        } else if (value instanceof ModifierTarget) {
+            return new ItemTypeStringConverter(ctx).toString((Item.ItemType) value);
         } else {
             return null;
         }
