@@ -86,10 +86,10 @@ public class ModifierStringConverter {
                 return getString(R.string.atk_short);
             case DAMAGE:
             case DAMAGE_MULT:
-                return getString(R.string.dmg);
+                return getString(R.string.damage);
             case CRIT_RANGE:
             case CRIT_MULT:
-                return getString(R.string.crit);
+                return getString(R.string.critical);
             case SIZE:
                 return getString(R.string.size);
             case MAX_DEX:

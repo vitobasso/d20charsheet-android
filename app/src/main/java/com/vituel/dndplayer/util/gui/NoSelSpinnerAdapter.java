@@ -4,12 +4,8 @@ import android.content.Context;
 import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckedTextView;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
-
-import com.vituel.dndplayer.util.ActivityUtil;
-import com.vituel.dndplayer.util.font.FontUtil;
 
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
@@ -62,25 +58,26 @@ public class NoSelSpinnerAdapter implements SpinnerAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (position == 0 || position == -1) {
-            TextView v = ActivityUtil.inflateDisatached(context, parent, android.R.layout.simple_spinner_item);
+        TextView v;
+        if (position == 0) {
+            v = (TextView) base.getView(position, convertView, parent);
             v.setText(defaultValue);
-            return v;
+        } else {
+            v = (TextView) base.getView(position - 1, convertView, parent);
         }
-        View v = base.getView(position - 1, convertView, parent);
-        FontUtil.setFontRecursively(context, v, MAIN_FONT);
+        setFontRecursively(context, v, MAIN_FONT);
         return v;
     }
 
-
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
-        if (position == 0 || position == -1) {
-            CheckedTextView v = ActivityUtil.inflateDisatached(context, parent, android.R.layout.simple_spinner_dropdown_item);
+        TextView v;
+        if (position == 0) {
+            v = (TextView) base.getDropDownView(position, convertView, parent);
             v.setText(defaultValue);
-            return v;
+        } else {
+            v = (TextView) base.getDropDownView(position - 1, convertView, parent);
         }
-        View v = base.getDropDownView(position - 1, convertView, parent);
         setFontRecursively(context, v, MAIN_FONT);
         return v;
     }

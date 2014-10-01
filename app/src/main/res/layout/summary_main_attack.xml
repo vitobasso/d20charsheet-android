@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="8sp"
                 android:textAllCaps="true"
-                android:text="@string/dmg"
+                android:text="@string/damage"
                 android:layout_marginLeft="24dp"/>
 
         <TextView
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="8sp"
                 android:textAllCaps="true"
-                android:text="@string/crit"
+                android:text="@string/critical"
                 android:layout_marginLeft="24dp"/>
 
     </LinearLayout>

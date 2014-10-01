@@ -208,7 +208,7 @@ public class ActivityUtil {
         return view.getText().length() > 0 ? new DiceRoll(view.getText().toString()) : null;
     }
 
-    public static boolean validateField(Object root, int viewRes) {
+    public static boolean validateText(Object root, int viewRes) {
         TextView view = findView(root, viewRes);
         String str = view.getText().toString().trim();
         if (str.isEmpty()) {
@@ -216,6 +216,21 @@ public class ActivityUtil {
             view.setError(msg);
             return false;
         } else {
+            view.setError(null);
+            return true;
+        }
+    }
+
+    public static boolean validateSpinner(Object root, int viewRes) {
+        Spinner spinner = findView(root, viewRes);
+        Object selection = spinner.getSelectedItem();
+        if (selection == null) {
+            String msg = spinner.getContext().getString(R.string.cant_be_empty);
+            TextView view = (TextView) spinner.getSelectedView();
+            view.setError(msg);
+            return false;
+        } else {
+            TextView view = (TextView) spinner.getSelectedView();
             view.setError(null);
             return true;
         }

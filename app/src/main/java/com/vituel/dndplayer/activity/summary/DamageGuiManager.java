@@ -55,7 +55,7 @@ public class DamageGuiManager implements GuiInflater {
             bdi.appendRow(listGroup, dmg.getTempHp(), getString(R.string.hp_temp_long), bdi.green);
         }
         if (dmg.getLethal() != 0) {
-            bdi.appendRow(listGroup, dmg.getLethal(), getString(R.string.dmg), bdi.red);
+            bdi.appendRow(listGroup, dmg.getLethal(), getString(R.string.damage), bdi.red);
         }
         if (dmg.getNonlethal() != 0) {
             bdi.appendRow(listGroup, dmg.getNonlethal(), getString(R.string.dmg_nonlethal), bdi.red);

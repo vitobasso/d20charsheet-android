@@ -1,11 +1,6 @@
 package com.vituel.dndplayer.activity;
 
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
-import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.DiceRoll;
@@ -13,13 +8,18 @@ import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.ModifierType;
 import com.vituel.dndplayer.model.TempEffect;
-import com.vituel.dndplayer.util.gui.NoSelSpinnerAdapter;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.inflate;
+import static com.vituel.dndplayer.util.ActivityUtil.populateSpinnerWithEnum;
+import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.ActivityUtil.readDice;
+import static com.vituel.dndplayer.util.ActivityUtil.readSpinner;
+import static com.vituel.dndplayer.util.ActivityUtil.readString;
+import static com.vituel.dndplayer.util.ActivityUtil.validateSpinner;
+import static com.vituel.dndplayer.util.ActivityUtil.validateText;
 
 public class EditTempEffectActivity extends AbstractEditActivity<TempEffect> {
 
@@ -34,76 +34,49 @@ public class EditTempEffectActivity extends AbstractEditActivity<TempEffect> {
     protected void populate() {
 
         //basic fields
-        EditText name = (EditText) findViewById(R.id.name);
-        name.setText(entity.getName());
-
-        SpinnerAdapter condTypeAdapter = new ArrayAdapter<TempEffect.Type>(
-                this, android.R.layout.simple_spinner_item, Arrays.asList(TempEffect.Type.values()));
-        condTypeAdapter = new NoSelSpinnerAdapter(this, condTypeAdapter);
-        Spinner condTypeSpinner = (Spinner) findViewById(R.id.type);
-        condTypeSpinner.setAdapter(condTypeAdapter);
-        if(entity.getTempEffectType() != null) {
-            condTypeSpinner.setSelection(entity.getTempEffectType().ordinal() + 1); // +1 to compensate for the "no selection" position
-        }
+        populateTextView(this, R.id.name, entity.getName());
+        populateSpinnerWithEnum(this, null, R.id.type, TempEffect.Type.values(), entity.getTempEffectType(), null);
 
         //modifiers
-        SpinnerAdapter targetAdapter = new ArrayAdapter<ModifierTarget>(
-                this, android.R.layout.simple_spinner_item, Arrays.asList(ModifierTarget.values()));
-        targetAdapter = new NoSelSpinnerAdapter(this, targetAdapter);
-        SpinnerAdapter modTypeAdapter = new ArrayAdapter<ModifierType>(
-                this, android.R.layout.simple_spinner_item, Arrays.asList(ModifierType.values()));
-        modTypeAdapter = new NoSelSpinnerAdapter(this, modTypeAdapter);
         ViewGroup effectsRoot = findView(this, R.id.effectsList);
         List<Modifier> modifiers = entity.getModifiers();
         for (Modifier modifier : modifiers) {
             ViewGroup group = inflate(this, effectsRoot, R.layout.edit_modifier);
-
-            Spinner targetSpinner = findView(group, R.id.target);
-            targetSpinner.setAdapter(targetAdapter);
-            targetSpinner.setSelection(modifier.getTarget().ordinal() + 1); // +1 to compensate for the "no selection" position
-
-            EditText amtField = findView(group, R.id.amount);
-            amtField.setText("" + modifier.getAmount());
-
-            Spinner modTypeSpinner = findView(group, R.id.type);
-            modTypeSpinner.setAdapter(modTypeAdapter);
-            modTypeSpinner.setSelection(modifier.getType().ordinal() + 1); // +1 to compensate for the "no selection" position
+            populateSpinnerWithEnum(this, group, R.id.target, ModifierTarget.values(), modifier.getTarget(), null);
+            populateTextView(group, R.id.amount, modifier.getAmount());
+            populateSpinnerWithEnum(this, group, R.id.type, ModifierType.values(), modifier.getType(), null);
         }
 
         //remaining empty modifiers
         for (int i = modifiers.size(); i < NUM_EFFECTS; i++) {
             ViewGroup group = inflate(this, effectsRoot, R.layout.edit_modifier);
-
-            Spinner targetSpinner = findView(group, R.id.target);
-            targetSpinner.setAdapter(targetAdapter);
-
-            Spinner typeSpinner = findView(group, R.id.type);
-            typeSpinner.setAdapter(modTypeAdapter);
+            populateSpinnerWithEnum(this, group, R.id.target, ModifierTarget.values(), null, null);
+            populateSpinnerWithEnum(this, group, R.id.type, ModifierType.values(), null, null);
         }
+    }
+
+    @Override
+    protected boolean validate() {
+        boolean allValid = validateText(this, R.id.name);
+        allValid &= validateSpinner(this, R.id.type);
+        return allValid;
     }
 
     @Override
     protected TempEffect save() {
 
         //basic fields
-        EditText nameView = (EditText) findViewById(R.id.name);
-        entity.setName(nameView.getText().toString().trim());
-
-        Spinner condTypeSpinner = (Spinner) findViewById(R.id.type);
-        entity.setTempEffectType((TempEffect.Type) condTypeSpinner.getSelectedItem());
+        entity.setName(readString(this, R.id.name));
+        entity.setTempEffectType((TempEffect.Type) readSpinner(this, R.id.type));
 
         //modifiers
         entity.getModifiers().clear();
         ViewGroup effectsRoot = findView(this, R.id.effectsList);
         for (int i = 0; i < effectsRoot.getChildCount(); i++) {
             ViewGroup group = (ViewGroup) effectsRoot.getChildAt(i);
-            Spinner targetSpinner = findView(group, R.id.target);
-            TextView amountValue = findView(group, R.id.amount);
-            Spinner modTypeSpinner = findView(group, R.id.type);
-
-            ModifierTarget target = (ModifierTarget) targetSpinner.getSelectedItem();
-            DiceRoll amount = amountValue.getText().length() > 0 ? new DiceRoll(amountValue.getText().toString()) : null;
-            ModifierType modType = (ModifierType) modTypeSpinner.getSelectedItem();
+            ModifierTarget target = readSpinner(group, R.id.target);
+            DiceRoll amount = readDice(group, R.id.amount);
+            ModifierType modType = readSpinner(group, R.id.type);
 
             if (target != null && amount != null) {
                 Modifier modifier = new Modifier(target, amount, modType, entity);

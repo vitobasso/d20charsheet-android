@@ -7,7 +7,7 @@
 
     <TextView
             android:id="@+id/title"
-            android:text="@string/dmg"
+            android:text="@string/damage"
             android:paddingTop="@dimen/standard_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -99,7 +99,7 @@
                 android:layout_height="match_parent">
 
             <TextView
-                    android:text="@string/dmg"
+                    android:text="@string/damage"
                     android:textAppearance="?android:attr/textAppearanceMedium"
                     android:gravity="center_vertical"
                     android:layout_width="wrap_content"

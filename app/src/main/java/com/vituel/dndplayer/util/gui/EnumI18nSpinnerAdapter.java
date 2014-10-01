@@ -26,6 +26,16 @@ public class EnumI18nSpinnerAdapter extends ArrayAdapter<Enum> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         TextView view = (TextView) super.getView(position, convertView, parent);
+        return setupView(position, view);
+    }
+
+    @Override
+    public View getDropDownView(int position, View convertView, ViewGroup parent) {
+        TextView view = (TextView) super.getView(position, convertView, parent);
+        return setupView(position, view);
+    }
+
+    private View setupView(int position, TextView view) {
         Enum item = items[position];
         CharSequence str = i18n.get(item);
         if(str == null){
@@ -35,4 +45,6 @@ public class EnumI18nSpinnerAdapter extends ArrayAdapter<Enum> {
         view.setText(str);
         return view;
     }
+
+
 }

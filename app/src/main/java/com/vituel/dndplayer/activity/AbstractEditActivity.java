@@ -50,6 +50,10 @@ public abstract class AbstractEditActivity<T extends AbstractEntity> extends Act
         switch (item.getItemId()) {
             case R.id.action_save:
 
+                if(!validate()){
+                    return true;
+                }
+
                 //save fields from fragments
                 T entity = save();
 
@@ -71,5 +75,9 @@ public abstract class AbstractEditActivity<T extends AbstractEntity> extends Act
     protected abstract void populate();
 
     protected abstract T save();
+
+    protected boolean validate() {
+        return true;
+    }
 
 }

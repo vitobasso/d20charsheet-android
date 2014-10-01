@@ -13,6 +13,7 @@ IMPROVEMENTS
 - show race/class traits on breakdown
 
 #edit
+- filter type options upon selecting target
 - show NumberPicker when touching EditTexts with a plain integer?
 - custom keyboard on fields: damage, critical?
 - create modifier w/ conditional

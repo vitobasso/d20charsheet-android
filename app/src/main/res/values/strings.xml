@@ -140,16 +140,19 @@
     <string name="conceal">Conceal</string>
     <string name="sr">SR</string>
     <string name="dr">DR</string>
+    <string name="dr_type">DR Type</string>
     <string name="init">Initiative</string>
     <string name="init_short">Init</string>
     <string name="speed">Speed</string>
+    <string name="speed_mult">×Speed</string>
     <string name="atk">Attack Roll</string>
     <string name="atk_short">Attack</string>
-    <string name="dmg">Damage</string>
-    <string name="crit">Critical</string>
+    <string name="damage">Damage</string>
+    <string name="damage_mult">×Damage</string>
+    <string name="critical">Critical</string>
     <string name="size">Size</string>
     <string name="saves">Saves</string>
-    <string name="max_dex">Dex limit</string>
+    <string name="max_dex">Dex Limit</string>
     <string name="immune">Immune</string>
 
     <!-- modifier types -->
@@ -181,6 +184,7 @@
     <string name="dmg_lethal">Lethal damage</string>
 
     <!-- equip slots -->
+    <string name="held">Held</string>
     <string name="main_hand">Main hand</string>
     <string name="offhand">Offhand</string>
     <string name="head">Head</string>
@@ -192,6 +196,7 @@
     <string name="shoulders">Shoulders</string>
     <string name="arms">Arms</string>
     <string name="hands">Hands</string>
+    <string name="finger">Finger</string>
     <string name="finger1">Finger 1</string>
     <string name="finger2">Finger 2</string>
     <string name="feet">Feet</string>

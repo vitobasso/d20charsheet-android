@@ -29,7 +29,7 @@ import static com.vituel.dndplayer.util.ActivityUtil.inflate;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 import static com.vituel.dndplayer.util.ActivityUtil.readInt;
 import static com.vituel.dndplayer.util.ActivityUtil.readString;
-import static com.vituel.dndplayer.util.ActivityUtil.validateField;
+import static com.vituel.dndplayer.util.ActivityUtil.validateText;
 
 /**
  * Created by Victor on 28/02/14.
@@ -252,17 +252,17 @@ public class EditCharBasicFragment extends PagerFragment<Object, EditCharActivit
 
     @Override
     public boolean onValidate(){
-        boolean allValid = validateField(root, R.id.name);
-        allValid &= validateField(root, R.id.race);
-        allValid &= validateField(root, R.id.classField);
-        allValid &= validateField(root, R.id.level);
-        allValid &= validateField(root, R.id.hp);
-        allValid &= validateField(root, R.id.str);
-        allValid &= validateField(root, R.id.dex);
-        allValid &= validateField(root, R.id.con);
-        allValid &= validateField(root, R.id.attr_int);
-        allValid &= validateField(root, R.id.wis);
-        allValid &= validateField(root, R.id.cha);
+        boolean allValid = validateText(root, R.id.name);
+        allValid &= validateText(root, R.id.race);
+        allValid &= validateText(root, R.id.classField);
+        allValid &= validateText(root, R.id.level);
+        allValid &= validateText(root, R.id.hp);
+        allValid &= validateText(root, R.id.str);
+        allValid &= validateText(root, R.id.dex);
+        allValid &= validateText(root, R.id.con);
+        allValid &= validateText(root, R.id.attr_int);
+        allValid &= validateText(root, R.id.wis);
+        allValid &= validateText(root, R.id.cha);
         return allValid;
     }
 
