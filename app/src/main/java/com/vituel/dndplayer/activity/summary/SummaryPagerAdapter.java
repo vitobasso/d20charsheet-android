@@ -56,7 +56,7 @@ public class SummaryPagerAdapter extends FragmentPagerAdapter {
                 resId = R.string.traits;
                 break;
             case PAGE_TEMP_EFFECTS:
-                resId = R.string.summary_temp;
+                resId = R.string.temps;
                 break;
             default:
                 return super.getPageTitle(position);

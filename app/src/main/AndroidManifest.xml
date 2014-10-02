@@ -30,7 +30,7 @@
 
         <activity
             android:name=".activity.SelectClassActivity"
-            android:label="@string/class_manage"/>
+            android:label="@string/class_select"/>
 
         <activity
             android:name=".activity.EditClassActivity"

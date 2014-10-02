@@ -10,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.EffectPopulator;
@@ -21,7 +20,6 @@ import com.vituel.dndplayer.model.Character;
 import com.vituel.dndplayer.model.ClassLevel;
 import com.vituel.dndplayer.model.Race;
 import com.vituel.dndplayer.model.Trait;
-import com.vituel.dndplayer.util.ActivityUtil;
 import com.vituel.dndplayer.util.gui.SingleColExpListAdapter;
 
 import java.util.List;
@@ -30,6 +28,7 @@ import java.util.TreeMap;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
+import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 
 /**
  * Created by Victor on 21/03/14.
@@ -122,8 +121,8 @@ public class SummaryTraitsFragment extends PagerFragment<com.vituel.dndplayer.mo
                 convertView = infalInflater.inflate(groupLayout, null);
             }
 
-            TextView textView = ActivityUtil.findView(convertView, R.id.text);
-            textView.setText(groups.get(groupPosition));
+            populateTextView(convertView, R.id.text, groups.get(groupPosition));
+
             return convertView;
         }
 
