@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.AbstractEffect;
 import com.vituel.dndplayer.model.Modifier;
+import com.vituel.dndplayer.util.ActivityUtil;
 import com.vituel.dndplayer.util.i18n.ModifierStringConverter;
 
 /**
@@ -24,8 +25,7 @@ public class EffectPopulator {
     }
 
     public void populate(AbstractEffect effect, ViewGroup group){
-        TextView nameView = (TextView) group.findViewById(R.id.name);
-        nameView.setText(effect.getName());
+        ActivityUtil.populateTextView(context, R.id.name, effect.getName());
 
         TextView[] modViews = new TextView[6];
         modViews[0] = (TextView) group.findViewById(R.id.mod1);

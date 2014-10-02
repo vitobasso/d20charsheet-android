@@ -72,7 +72,7 @@ public class CharBase extends AbstractEntity {
 
     public void createStandardAttacks() {
         //full attack
-        AttackRound fullAtk = new AttackRound("Standard Attack"); //TODO i18n
+        AttackRound fullAtk = new AttackRound("$standard_attack");
         int[] bonuses = AttackUtil.fullAttackPenalties(getBaseAttack());
         for (int bonus : bonuses) {
             Attack attack = new Attack(bonus, MAIN_HAND);
@@ -104,7 +104,7 @@ public class CharBase extends AbstractEntity {
     }
 
     public String getDescription(){
-        return MessageFormat.format("{0}, level {1} {2} {3}", //TODO i18n
+        return MessageFormat.format("{0}, $lvl {1} {2} {3}",
                 name, getExperienceLevel(), getMulticlassString(), race.name);
     }
 

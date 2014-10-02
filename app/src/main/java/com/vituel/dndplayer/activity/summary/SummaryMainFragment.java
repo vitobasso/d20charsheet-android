@@ -153,9 +153,7 @@ public class SummaryMainFragment extends PagerFragment<com.vituel.dndplayer.mode
         for (int i = 0; i < character.getAttacks().size(); i++) {
             AttackRound attackRound = character.getAttacks().get(i);;
             ViewGroup atkGroup = inflate(activity, atkParent, R.layout.summary_main_attack);
-
-            TextView nameView = (TextView) atkGroup.findViewById(R.id.name);
-            nameView.setText(attackRound.getName());
+            populateTextView(atkGroup, R.id.name, attackRound.getName());
 
             Map<Attack,String> grouped = AttackUtil.groupBonusByWeapon(attackRound.getAttacks());
             if(!grouped.isEmpty()){

@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 
+import static com.vituel.dndplayer.util.ActivityUtil.internationalize;
+
 /**
  * Created by Victor on 27/09/2014.
  */
@@ -30,7 +32,9 @@ public class CharJsonParser {
     public void exportChar(CharBase charBase) {
         try {
             File dir = context.getExternalFilesDir(null); //TODO file chooser
-            File file = new File(dir, charBase.getDescription());
+            String fileName = charBase.getDescription();
+            fileName = internationalize(fileName, context);
+            File file = new File(dir, fileName);
 
             ObjectMapper parser = buildParser();
             parser.writeValue(file, charBase);

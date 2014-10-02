@@ -17,8 +17,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.inflate;
+import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 
 /**
  * Created by Victor on 26/04/14.
@@ -138,10 +138,9 @@ public class BreakdownDialogInflater {
 
     public ViewGroup appendRow(ViewGroup parentView, String value, String source, int color) {
         ViewGroup row = inflate(activity, parentView, R.layout.summary_main_breakdown_row);
-        TextView valueView = findView(row, R.id.value);
-        valueView.setText(value);
-        TextView sourceView = findView(row, R.id.source);
-        sourceView.setText(source);
+
+        TextView valueView = populateTextView(row, R.id.value, value);
+        TextView sourceView = populateTextView(row, R.id.source, source);
 
         valueView.setTextColor(color);
         sourceView.setTextColor(color);

@@ -23,6 +23,8 @@ import com.vituel.dndplayer.util.gui.EnumI18nSpinnerAdapter;
 import com.vituel.dndplayer.util.gui.NoSelSpinnerAdapter;
 
 import java.security.InvalidParameterException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Victor on 07/03/14.
@@ -183,7 +185,8 @@ public class ActivityUtil {
     public static <T extends TextView> T populateTextView(Object root, int viewRes, Object value) {
         T view = findView(root, viewRes);
         if (view != null && value != null) {
-            view.setText(value.toString());
+            String str = internationalize(value.toString(), view.getContext());
+            view.setText(str);
             view.setError(null);
         }
         return view;
@@ -234,6 +237,26 @@ public class ActivityUtil {
             view.setError(null);
             return true;
         }
+    }
+
+    /**
+     * To be called before setting to GUI text containing "$resource_id".
+     * Ideally this would be called in central "populate" methods to avoid missing any strings.
+     * For now there's a populate method only for EditText views though, in some cases it will need
+     * to be called "manually" before setting text to GUI.
+     */
+    public static String internationalize(String input, Context context){
+        Pattern pattern = Pattern.compile("\\$(\\w+)");
+        Matcher matcher = pattern.matcher(input);
+        StringBuffer buffer = new StringBuffer();
+        while(matcher.find()){
+            String resName = matcher.group(1);
+            int resId = context.getResources().getIdentifier(resName, "string", context.getPackageName());
+            String replacement = resId > 0 ? context.getString(resId) : matcher.group();
+            matcher.appendReplacement(buffer, replacement);
+        }
+        matcher.appendTail(buffer);
+        return buffer.toString();
     }
 
 }

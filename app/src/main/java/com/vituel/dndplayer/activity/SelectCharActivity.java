@@ -29,6 +29,7 @@ import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
 import static com.vituel.dndplayer.util.ActivityUtil.defaultOnOptionsItemSelected;
+import static com.vituel.dndplayer.util.ActivityUtil.internationalize;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 
@@ -163,6 +164,7 @@ public class SelectCharActivity extends ListActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             TextView view = (TextView) super.getView(position, convertView, parent);
             String description = list.get(position).getDescription();
+            description = internationalize(description, SelectCharActivity.this);
             view.setText(description);
             return view;
         }
