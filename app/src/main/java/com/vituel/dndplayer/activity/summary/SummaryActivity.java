@@ -33,10 +33,10 @@ import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 
 public class SummaryActivity extends FragmentActivity implements ParentActivity<Character> {
 
-    Character character;
+    private Character character;
 
-    ViewPager pager;
-    ConditionGuiManager conditionsGuiManager;
+    private ViewPager pager;
+    private ConditionGuiManager conditionsGuiManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -144,7 +144,7 @@ public class SummaryActivity extends FragmentActivity implements ParentActivity<
         if (fragments != null) {
             for (Fragment frag : fragments) {
                 if (frag instanceof PagerFragment && ((PagerFragment) frag).isReadyToPopulate()) {
-                    ((PagerFragment<Character, ?>) frag).update(character);
+                    ((PagerFragment<Character, ?>) frag).update();
                 }
             }
         }

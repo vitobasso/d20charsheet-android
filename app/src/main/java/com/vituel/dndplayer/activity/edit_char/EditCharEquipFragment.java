@@ -12,7 +12,6 @@ import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.CharEquip;
 import com.vituel.dndplayer.model.EquipSlot;
 import com.vituel.dndplayer.model.Item;
-import com.vituel.dndplayer.util.ActivityUtil;
 
 import java.util.List;
 
@@ -20,6 +19,8 @@ import static android.app.Activity.RESULT_OK;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_TYPE;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
+import static com.vituel.dndplayer.util.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.ActivityUtil.inflate;
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 
@@ -28,20 +29,18 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
  */
 public class EditCharEquipFragment extends PagerFragment<CharBase, EditCharActivity> {
 
-    CharEquip equipment = new CharEquip();
-
-    LinearLayout itemsRoot;
+    private CharEquip equipment = new CharEquip();
+    private LinearLayout itemsRoot;
 
     @Override
-    protected int getLayout() {
+    protected int getLayoutResourceId() {
         return R.layout.edit_char_equip;
     }
 
     @Override
     protected void onPopulate() {
-        itemsRoot = ActivityUtil.findView(root, R.id.list);
-
-        equipment = activity.base.getEquipment().clone();
+        itemsRoot = findView(root, R.id.list);
+        equipment = data.getEquipment().clone();
         populate(equipment);
     }
 
@@ -50,9 +49,9 @@ public class EditCharEquipFragment extends PagerFragment<CharBase, EditCharActiv
         List<EquipSlot> list = equipment.listEquip();
         for (EquipSlot equipSlot : list) {
 
-            LinearLayout row = ActivityUtil.inflate(activity, itemsRoot, R.layout.edit_char_equip_row);
-            TextView slotView = ActivityUtil.findView(row, R.id.slot);
-            TextView itemView = ActivityUtil.findView(row, R.id.item);
+            LinearLayout row = inflate(activity, itemsRoot, R.layout.edit_char_equip_row);
+            TextView slotView = findView(row, R.id.slot);
+            TextView itemView = findView(row, R.id.item);
 
             slotView.setText(equipSlot.getName(activity));
 
@@ -67,7 +66,7 @@ public class EditCharEquipFragment extends PagerFragment<CharBase, EditCharActiv
 
     @Override
     public void onSaveToModel() {
-        activity.base.setEquipment(equipment);
+        data.setEquipment(equipment);
     }
 
     private class ItemListener implements View.OnClickListener {
@@ -81,8 +80,8 @@ public class EditCharEquipFragment extends PagerFragment<CharBase, EditCharActiv
         @Override
         public void onClick(View v) {
             Intent intent = new Intent(activity, SelectItemActivity.class);
-            intent.putExtra(ActivityUtil.EXTRA_TYPE, slot);
-            startActivityForResult(intent, ActivityUtil.REQUEST_SELECT);
+            intent.putExtra(EXTRA_TYPE, slot);
+            startActivityForResult(intent, REQUEST_SELECT);
         }
     }
 

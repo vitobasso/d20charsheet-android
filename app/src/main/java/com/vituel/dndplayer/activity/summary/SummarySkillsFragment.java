@@ -38,16 +38,26 @@ public class SummarySkillsFragment extends PagerFragment<Character, SummaryActiv
     List<CharSkill> skills;
 
     @Override
-    protected int getLayout() {
+    protected int getLayoutResourceId() {
         return R.layout.list;
     }
 
     @Override
     protected void onPopulate() {
-        setHasOptionsMenu(true);
-
-        update(data);
+        onUpdate();
         refreshUI();
+    }
+
+    @Override
+    public void onUpdate() {
+        this.skills = new ArrayList<>(data.getSkills().values());
+        Collections.sort(skills);
+        refreshUI();
+    }
+
+    private void refreshUI() {
+        List<CharSkill> list = new ArrayList<>(skills);
+        ((ListView) root).setAdapter(new Adapter(list));
     }
 
     @Override
@@ -63,7 +73,7 @@ public class SummarySkillsFragment extends PagerFragment<Character, SummaryActiv
 
                 //edit opened character
                 Intent intent = new Intent(activity, EditCharActivity.class);
-                intent.putExtra(EXTRA_EDITED, activity.character.getBase());
+                intent.putExtra(EXTRA_EDITED, data.getBase());
                 intent.putExtra(EXTRA_PAGE, EditCharPagerAdapter.PAGE_SKILLS);
                 activity.startActivityForResult(intent, REQUEST_EDIT);
 
@@ -73,19 +83,7 @@ public class SummarySkillsFragment extends PagerFragment<Character, SummaryActiv
         }
     }
 
-    @Override
-    public void update(Character character) {
-        this.skills = new ArrayList<>(character.getSkills().values());
-        Collections.sort(skills);
-        refreshUI();
-    }
-
-    private void refreshUI() {
-        List<CharSkill> list = new ArrayList<>(skills);
-        ((ListView) root).setAdapter(new Adapter(list));
-    }
-
-   private class Adapter extends ArrayAdapter<CharSkill> {
+    private class Adapter extends ArrayAdapter<CharSkill> {
 
         public Adapter(List<CharSkill> objects) {
             super(activity, R.layout.summary_skill_row, R.id.skill, objects);
@@ -103,7 +101,7 @@ public class SummarySkillsFragment extends PagerFragment<Character, SummaryActiv
             group.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    new BreakdownDialog(activity, activity.character).buildDialog(SKILL, skillName).show();
+                    new BreakdownDialog(activity, data).buildDialog(SKILL, skillName).show();
                 }
             });
 
@@ -112,7 +110,7 @@ public class SummarySkillsFragment extends PagerFragment<Character, SummaryActiv
 
             TextView bonusView = ActivityUtil.findView(group, R.id.bonus);
             bonusView.setText("" + skill.getScore());
-            int color = new AppCommons(activity).getValueColor(activity.character.getBase(), SKILL, skillName);
+            int color = new AppCommons(activity).getValueColor(data.getBase(), SKILL, skillName);
             bonusView.setTextColor(color);
 
             return group;

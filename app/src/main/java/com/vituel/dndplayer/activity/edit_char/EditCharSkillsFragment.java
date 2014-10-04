@@ -35,22 +35,33 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
  */
 public class EditCharSkillsFragment extends PagerFragment<CharBase, EditCharActivity> {
 
-    List<CharSkill> skills;
+    private List<CharSkill> skills;
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        activity.updateFragment(this);
-    }
-
-    @Override
-    protected int getLayout() {
+    protected int getLayoutResourceId() {
         return R.layout.list;
     }
 
     @Override
     protected void onPopulate() {
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onUpdate() {
+        this.skills = data.getSkills();
+        refreshUI();
+    }
+
+    private void refreshUI() {
+        List<CharSkill> list = new ArrayList<>(skills);
+        ((ListView) root).setAdapter(new Adapter(list));
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        activity.updateFragment(this); //TODO remove?
     }
 
     @Override
@@ -88,17 +99,6 @@ public class EditCharSkillsFragment extends PagerFragment<CharBase, EditCharActi
                         refreshUI();
                 }
         }
-    }
-
-    @Override
-    public void update(CharBase base) {
-        this.skills = base.getSkills();
-        refreshUI();
-    }
-
-    private void refreshUI() {
-        List<CharSkill> list = new ArrayList<>(skills);
-        ((ListView) root).setAdapter(new Adapter(list));
     }
 
     private class Adapter extends ArrayAdapter<CharSkill> {
@@ -151,6 +151,6 @@ public class EditCharSkillsFragment extends PagerFragment<CharBase, EditCharActi
             }
         }
 
-        activity.base.setSkills(skills);
+        data.setSkills(skills);
     }
 }

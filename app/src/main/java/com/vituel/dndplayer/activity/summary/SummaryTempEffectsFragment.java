@@ -36,15 +36,13 @@ public class SummaryTempEffectsFragment extends PagerFragment<Character, Summary
     Map<TempEffect, Boolean> tempEffects;
 
     @Override
-    protected int getLayout() {
+    protected int getLayoutResourceId() {
         return R.layout.list;
     }
 
     @Override
     protected void onPopulate() {
-        setHasOptionsMenu(true);
-
-        update(data);
+        onUpdate();
         refreshUI();
     }
 
@@ -84,8 +82,8 @@ public class SummaryTempEffectsFragment extends PagerFragment<Character, Summary
     }
 
     @Override
-    public void update(Character character) {
-        this.tempEffects = character.getBase().getTempEffects();
+    public void onUpdate() {
+        this.tempEffects = data.getBase().getTempEffects();
         refreshUI();
     }
 
@@ -100,7 +98,7 @@ public class SummaryTempEffectsFragment extends PagerFragment<Character, Summary
 
         //update db
         TempEffectActivityDao dataSource = new TempEffectActivityDao(activity);
-        dataSource.updateForChar(tempEffects, activity.character.getBase().getId());
+        dataSource.updateForChar(tempEffects, data.getBase().getId());
         dataSource.close();
 
         //update activity

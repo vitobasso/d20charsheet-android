@@ -49,6 +49,33 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
     private int selectedIndex = -1;
 
     @Override
+    protected int getLayoutResourceId() {
+        return R.layout.list;
+    }
+
+    @Override
+    protected void onPopulate() {
+    }
+
+    @Override
+    public void onUpdate() {
+        this.attackRounds = data.getAttacks();
+        refreshUI();
+    }
+
+    @Override
+    public void onSaveToModel() {
+        data.setAttacks(attackRounds);
+    }
+
+    private void refreshUI() {
+        List<AttackRound> list = new ArrayList<>(attackRounds);
+        ListView listView = (ListView) root;
+        listView.setAdapter(new Adapter(list));
+        listView.setOnItemClickListener(new ClickListener());
+    }
+
+    @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         if (savedInstanceState != null) {
@@ -56,17 +83,7 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
         }
 
         i18n = new EnumI18n(activity);
-        activity.updateFragment(this);
-    }
-
-    @Override
-    protected int getLayout() {
-        return R.layout.list;
-    }
-
-    @Override
-    protected void onPopulate() {
-        setHasOptionsMenu(true);
+        activity.updateFragment(this); //TODO remove?
     }
 
     @Override
@@ -89,12 +106,12 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
         switch (resultCode) {
             case RESULT_OK:
 
-                AttackRound edited = (AttackRound) data.getSerializableExtra(EXTRA_EDITED);
+                AttackRound edited = (AttackRound) intent.getSerializableExtra(EXTRA_EDITED);
                 switch (requestCode) {
                     case REQUEST_CREATE:
                         attackRounds.add(edited);
@@ -107,26 +124,13 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
 
                 //save
                 AttackRoundDao dao = new AttackRoundDao(activity);
-                dao.save(edited, activity.base.getId());
+                dao.save(edited, data.getId());
                 dao.close();
 
                 //update activity and ui
                 onSaveToModel();
                 refreshUI();
         }
-    }
-
-    @Override
-    public void update(CharBase base) {
-        this.attackRounds = base.getAttacks();
-        refreshUI();
-    }
-
-    private void refreshUI() {
-        List<AttackRound> list = new ArrayList<>(attackRounds);
-        ListView listView = (ListView) root;
-        listView.setAdapter(new Adapter(list));
-        listView.setOnItemClickListener(new ClickListener());
     }
 
     private class Adapter extends ArrayAdapter<AttackRound> {
@@ -169,12 +173,6 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
             return view;
         }
     }
-
-    @Override
-    public void onSaveToModel() {
-        activity.base.setAttacks(attackRounds);
-    }
-
 
     private class ClickListener implements AdapterView.OnItemClickListener {
 

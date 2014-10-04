@@ -36,26 +36,23 @@ import static com.vituel.dndplayer.util.ActivityUtil.validateText;
  */
 public class EditCharBasicFragment extends PagerFragment<CharBase, EditCharActivity> {
 
-    Race race;
-    List<ClassLevel> classes;
-
-    int lastClassClicked;
+    private Race race;
+    private List<ClassLevel> classes;
+    private int lastClassClicked;
 
     @Override
-    protected int getLayout() {
+    protected int getLayoutResourceId() {
         return R.layout.edit_char_basic;
     }
 
     @Override
     protected void onPopulate() {
-        CharBase base = activity.base;
+        populateTextView(root, R.id.name, data.getName());
 
-        populateTextView(root, R.id.name, base.getName());
-
-        race = base.getRace();
+        race = data.getRace();
         populateRace(race);
 
-        classes = new ArrayList<>(base.getClassLevels());
+        classes = new ArrayList<>(data.getClassLevels());
         if(classes.isEmpty()){
             ClassLevel classLevel = new ClassLevel();
             classLevel.setLevel(1);
@@ -63,15 +60,53 @@ public class EditCharBasicFragment extends PagerFragment<CharBase, EditCharActiv
         }
         populateClasses(classes);
 
-        populateTextView(root, R.id.hp, base.getHitPoints());
-        populateTextView(root, R.id.str, base.getStrength());
-        populateTextView(root, R.id.dex, base.getDexterity());
-        populateTextView(root, R.id.con, base.getConstitution());
-        populateTextView(root, R.id.attr_int, base.getIntelligence());
-        populateTextView(root, R.id.wis, base.getWisdom());
-        populateTextView(root, R.id.cha, base.getCharisma());
+        populateTextView(root, R.id.hp, data.getHitPoints());
+        populateTextView(root, R.id.str, data.getStrength());
+        populateTextView(root, R.id.dex, data.getDexterity());
+        populateTextView(root, R.id.con, data.getConstitution());
+        populateTextView(root, R.id.attr_int, data.getIntelligence());
+        populateTextView(root, R.id.wis, data.getWisdom());
+        populateTextView(root, R.id.cha, data.getCharisma());
+    }
 
-        setHasOptionsMenu(true);
+    @Override
+    public void onSaveToModel() {
+        data.setName(readString(root, R.id.name));
+
+        data.setRace(race);
+
+        //update levels (classes are updated at the time of user action)
+        ViewGroup classesRoot = findView(R.id.classList);
+        for (int i = 0; i < classes.size(); i++) {
+            ViewGroup group = (ViewGroup) classesRoot.getChildAt(i);
+            int lvl = readInt(group, R.id.level);
+            classes.get(i).setLevel(lvl);
+        }
+        data.setClassLevels(classes);
+
+        data.setHitPoints(readInt(root, R.id.hp));
+        data.setStrength(readInt(root, R.id.str));
+        data.setDexterity(readInt(root, R.id.dex));
+        data.setConstitution(readInt(root, R.id.con));
+        data.setIntelligence(readInt(root, R.id.attr_int));
+        data.setWisdom(readInt(root, R.id.wis));
+        data.setCharisma(readInt(root, R.id.cha));
+    }
+
+    @Override
+    public boolean onValidate(){
+        boolean allValid = validateText(root, R.id.name);
+        allValid &= validateText(root, R.id.race);
+        allValid &= validateText(root, R.id.classField);
+        allValid &= validateText(root, R.id.level);
+        allValid &= validateText(root, R.id.hp);
+        allValid &= validateText(root, R.id.str);
+        allValid &= validateText(root, R.id.dex);
+        allValid &= validateText(root, R.id.con);
+        allValid &= validateText(root, R.id.attr_int);
+        allValid &= validateText(root, R.id.wis);
+        allValid &= validateText(root, R.id.cha);
+        return allValid;
     }
 
     @Override
@@ -92,7 +127,6 @@ public class EditCharBasicFragment extends PagerFragment<CharBase, EditCharActiv
                 return super.onOptionsItemSelected(item);
         }
     }
-
 
     private void populateRace(Race race) {
         EditText raceView = findView(R.id.race);
@@ -222,48 +256,6 @@ public class EditCharBasicFragment extends PagerFragment<CharBase, EditCharActiv
                 }
                 break;
         }
-    }
-
-    @Override
-    public void onSaveToModel() {
-        CharBase base = activity.base;
-
-        base.setName(readString(root, R.id.name));
-
-        base.setRace(race);
-
-        //update levels (classes are updated at the time of user action)
-        ViewGroup classesRoot = findView(R.id.classList);
-        for (int i = 0; i < classes.size(); i++) {
-            ViewGroup group = (ViewGroup) classesRoot.getChildAt(i);
-            int lvl = readInt(group, R.id.level);
-            classes.get(i).setLevel(lvl);
-        }
-        base.setClassLevels(classes);
-
-        base.setHitPoints(readInt(root, R.id.hp));
-        base.setStrength(readInt(root, R.id.str));
-        base.setDexterity(readInt(root, R.id.dex));
-        base.setConstitution(readInt(root, R.id.con));
-        base.setIntelligence(readInt(root, R.id.attr_int));
-        base.setWisdom(readInt(root, R.id.wis));
-        base.setCharisma(readInt(root, R.id.cha));
-    }
-
-    @Override
-    public boolean onValidate(){
-        boolean allValid = validateText(root, R.id.name);
-        allValid &= validateText(root, R.id.race);
-        allValid &= validateText(root, R.id.classField);
-        allValid &= validateText(root, R.id.level);
-        allValid &= validateText(root, R.id.hp);
-        allValid &= validateText(root, R.id.str);
-        allValid &= validateText(root, R.id.dex);
-        allValid &= validateText(root, R.id.con);
-        allValid &= validateText(root, R.id.attr_int);
-        allValid &= validateText(root, R.id.wis);
-        allValid &= validateText(root, R.id.cha);
-        return allValid;
     }
 
     private <T extends View> T findView(int... ids) {

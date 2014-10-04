@@ -68,14 +68,12 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 public class SummaryMainFragment extends PagerFragment<Character, SummaryActivity> {
 
     @Override
-    protected int getLayout() {
+    protected int getLayoutResourceId() {
         return R.layout.summary_main;
     }
 
     @Override
     protected void onPopulate() {
-        setHasOptionsMenu(true);
-
         populateViews();
     }
 
@@ -106,8 +104,7 @@ public class SummaryMainFragment extends PagerFragment<Character, SummaryActivit
     }
 
     @Override
-    public void update(Character character) {
-        this.data = character;
+    public void onUpdate() {
         populateViews();
 
         setFontRecursively(activity, root, MAIN_FONT);

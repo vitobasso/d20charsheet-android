@@ -37,15 +37,19 @@ public class SummaryTraitsFragment extends PagerFragment<Character, SummaryActiv
     TreeMap<String, List<Trait>> traitGroups;
 
     @Override
-    protected int getLayout() {
+    protected int getLayoutResourceId() {
         return R.layout.expandable_list;
     }
 
     @Override
     protected void onPopulate() {
-        setHasOptionsMenu(true);
+        onUpdate();
+        refreshUI();
+    }
 
-        update(data);
+    @Override
+    public void onUpdate() {
+        traitGroups = organizeTraits(data);
         refreshUI();
     }
 
@@ -62,7 +66,7 @@ public class SummaryTraitsFragment extends PagerFragment<Character, SummaryActiv
 
                 //edit opened character
                 Intent intent = new Intent(activity, EditCharActivity.class);
-                intent.putExtra(EXTRA_EDITED, activity.character.getBase());
+                intent.putExtra(EXTRA_EDITED, data.getBase());
                 intent.putExtra(EXTRA_PAGE, EditCharPagerAdapter.PAGE_FEATS);
                 activity.startActivityForResult(intent, REQUEST_EDIT);
 
@@ -70,12 +74,6 @@ public class SummaryTraitsFragment extends PagerFragment<Character, SummaryActiv
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    public void update(Character character) {
-        traitGroups = organizeTraits(character);
-        refreshUI();
     }
 
     private void refreshUI() {

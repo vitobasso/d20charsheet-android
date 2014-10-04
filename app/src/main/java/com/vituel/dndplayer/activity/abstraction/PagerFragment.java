@@ -27,10 +27,11 @@ public abstract class PagerFragment<T, A extends Activity & ParentActivity<T>> e
 
     @Override
     public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        root = (ViewGroup) inflater.inflate(getLayout(), container, false);
+        root = (ViewGroup) inflater.inflate(getLayoutResourceId(), container, false);
         data = activity.getData();
-        onPopulate();
 
+        setHasOptionsMenu(true);
+        onPopulate();
         setFontRecursively(activity, root, MAIN_FONT);
 
         return root;
@@ -43,14 +44,18 @@ public abstract class PagerFragment<T, A extends Activity & ParentActivity<T>> e
     public void onSaveToModel() {
     }
 
-    public void update(T parameter) {
+    public final void update() {
+        data = activity.getData();
+        onUpdate();
     }
 
-    protected abstract int getLayout();
+    protected void onUpdate(){}
+
+    protected abstract int getLayoutResourceId();
 
     protected abstract void onPopulate();
 
-    public boolean isReadyToPopulate(){
+    public final boolean isReadyToPopulate(){
         return root != null;
     }
 

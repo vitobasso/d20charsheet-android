@@ -16,87 +16,82 @@ import static com.vituel.dndplayer.util.ActivityUtil.setSpinnerSelection;
  */
 public class EditCharPersonalFragment extends PagerFragment<CharBase, EditCharActivity> {
 
-
     @Override
-    protected int getLayout() {
+    protected int getLayoutResourceId() {
         return R.layout.edit_char_personal;
     }
 
     @Override
     protected void onPopulate() {
-        CharBase base = activity.base;
-
         Spinner moral = findView(R.id.moral);
-        setSpinnerSelection(moral, base.getTendencyMoral());
+        setSpinnerSelection(moral, data.getTendencyMoral());
 
         Spinner loyalty = findView(R.id.loyalty);
-        setSpinnerSelection(loyalty, base.getTendencyLoyality());
+        setSpinnerSelection(loyalty, data.getTendencyLoyality());
 
         EditText divinity = findView(R.id.divinityValue);
-        divinity.setText(base.getDivinity());
+        divinity.setText(data.getDivinity());
 
         Spinner gender = findView(R.id.genderValue);
-        setSpinnerSelection(gender, base.getGender());
+        setSpinnerSelection(gender, data.getGender());
 
         EditText age = findView(R.id.ageValue);
-        age.setText("" + base.getAge());
+        age.setText("" + data.getAge());
 
         EditText height = findView(R.id.heightValue);
-        height.setText("" + base.getHeight());
+        height.setText("" + data.getHeight());
 
         EditText weight = findView(R.id.weightValue);
-        weight.setText("" + base.getWeight());
+        weight.setText("" + data.getWeight());
 
         EditText player = findView(R.id.playerValue);
-        player.setText(base.getPlayer());
+        player.setText(data.getPlayer());
 
         EditText dm = findView(R.id.dmValue);
-        dm.setText(base.getDungeonMaster());
+        dm.setText(data.getDungeonMaster());
 
         EditText campaign = findView(R.id.campaignValue);
-        campaign.setText(base.getCampaign());
+        campaign.setText(data.getCampaign());
 
         EditText creation = findView(R.id.creationValue);
-        creation.setText(base.getCreationDate());
+        creation.setText(data.getCreationDate());
 
     }
 
     @Override
     public void onSaveToModel() {
-        CharBase base = activity.base;
-
         Spinner tendencyMoral = findView(R.id.tendencyValue, R.id.moral);
-        base.setTendencyMoral(tendencyMoral.getSelectedItem().toString());
+        data.setTendencyMoral(tendencyMoral.getSelectedItem().toString());
 
         Spinner tendencyLoyalty = findView(R.id.tendencyValue, R.id.loyalty);
-        base.setTendencyLoyality(tendencyLoyalty.getSelectedItem().toString());
+        data.setTendencyLoyality(tendencyLoyalty.getSelectedItem().toString());
 
         EditText divinity = findView(R.id.divinityValue);
-        base.setDivinity(divinity.getText().toString());
+        data.setDivinity(divinity.getText().toString());
 
         Spinner gender = findView(R.id.genderValue);
-        base.setGender(gender.getSelectedItem().toString());
+        data.setGender(gender.getSelectedItem().toString());
 
         EditText age = findView(R.id.ageValue);
-        base.setAge(Integer.valueOf(age.getText().toString()));
+        data.setAge(Integer.valueOf(age.getText().toString()));
 
         EditText height = findView(R.id.heightValue);
-        base.setHeight(Double.valueOf(height.getText().toString()));
+        data.setHeight(Double.valueOf(height.getText().toString()));
 
         EditText weight = findView(R.id.weightValue);
-        base.setWeight(Double.valueOf(weight.getText().toString()));
+        data.setWeight(Double.valueOf(weight.getText().toString()));
 
         EditText player = findView(R.id.playerValue);
-        base.setPlayer(player.getText().toString());
+        data.setPlayer(player.getText().toString());
 
         EditText dm = findView(R.id.dmValue);
-        base.setDungeonMaster(dm.getText().toString());
+        data.setDungeonMaster(dm.getText().toString());
 
         EditText campaign = findView(R.id.campaignValue);
-        base.setCampaign(campaign.getText().toString());
+        data.setCampaign(campaign.getText().toString());
 
         EditText creation = findView(R.id.creationValue);
-        base.setCreationDate(creation.getText().toString());
+        data.setCreationDate(creation.getText().toString());
 
     }
 

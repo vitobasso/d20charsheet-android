@@ -25,7 +25,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
  */
 public class EditCharActivity extends FragmentActivity implements ParentActivity<CharBase>{
 
-    CharBase base;
+    private CharBase base;
 
     private ViewPager pager;
     private int currentPage;
@@ -111,8 +111,9 @@ public class EditCharActivity extends FragmentActivity implements ParentActivity
         return base;
     }
 
+    //TODO remove?
     public void updateFragment(PagerFragment<CharBase, EditCharActivity> fragment){
-        fragment.update(base);
+        fragment.update();
     }
 
     @Override
