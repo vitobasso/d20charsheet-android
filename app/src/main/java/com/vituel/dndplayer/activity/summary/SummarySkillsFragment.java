@@ -1,7 +1,6 @@
 package com.vituel.dndplayer.activity.summary;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -12,7 +11,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.activity.PagerFragment;
+import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
 import com.vituel.dndplayer.model.CharSkill;
@@ -34,7 +33,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 /**
  * Created by Victor on 21/03/14.
  */
-public class SummarySkillsFragment extends PagerFragment<com.vituel.dndplayer.model.Character, SummaryActivity> {
+public class SummarySkillsFragment extends PagerFragment<Character, SummaryActivity> {
 
     List<CharSkill> skills;
 
@@ -44,18 +43,11 @@ public class SummarySkillsFragment extends PagerFragment<com.vituel.dndplayer.mo
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        activity.findCharacterToOpen(); //must be called in the last fragment?
-    }
-
-    @Override
     protected void onPopulate() {
         setHasOptionsMenu(true);
 
-        if(skills != null) {
-            refreshUI();
-        }
+        update(data);
+        refreshUI();
     }
 
     @Override

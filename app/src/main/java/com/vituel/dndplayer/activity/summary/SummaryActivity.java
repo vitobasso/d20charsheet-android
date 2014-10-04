@@ -10,8 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.activity.PagerFragment;
 import com.vituel.dndplayer.activity.SelectCharActivity;
+import com.vituel.dndplayer.activity.abstraction.PagerFragment;
+import com.vituel.dndplayer.activity.abstraction.ParentActivity;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.dao.CharDao;
 import com.vituel.dndplayer.model.CharBase;
@@ -30,9 +31,9 @@ import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 
-public class SummaryActivity extends FragmentActivity {
+public class SummaryActivity extends FragmentActivity implements ParentActivity<Character> {
 
-    com.vituel.dndplayer.model.Character character;
+    Character character;
 
     ViewPager pager;
     ConditionGuiManager conditionsGuiManager;
@@ -50,6 +51,7 @@ public class SummaryActivity extends FragmentActivity {
         pager.setOnPageChangeListener(new SummaryPagerListener(this));
 
         AppUtil.onLaunch(this);
+        findCharacterToOpen();
     }
 
     @Override
@@ -138,9 +140,12 @@ public class SummaryActivity extends FragmentActivity {
         conditionsGuiManager.populate(character);
 
         //update fragments
-        for (Fragment frag : getSupportFragmentManager().getFragments()) {
-            if (frag instanceof PagerFragment) {
-                ((PagerFragment<Character, ?>) frag).update(character);
+        List<Fragment> fragments = getSupportFragmentManager().getFragments();
+        if (fragments != null) {
+            for (Fragment frag : fragments) {
+                if (frag instanceof PagerFragment && ((PagerFragment) frag).isReadyToPopulate()) {
+                    ((PagerFragment<Character, ?>) frag).update(character);
+                }
             }
         }
 
@@ -165,4 +170,8 @@ public class SummaryActivity extends FragmentActivity {
         }
     }
 
+    @Override
+    public Character getData() {
+        return character;
+    }
 }

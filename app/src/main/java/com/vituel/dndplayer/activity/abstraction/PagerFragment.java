@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.activity;
+package com.vituel.dndplayer.activity.abstraction;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -13,9 +13,10 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 /**
  * Created by Victor on 28/02/14.
  */
-public abstract class PagerFragment<T, A extends Activity> extends Fragment {
+public abstract class PagerFragment<T, A extends Activity & ParentActivity<T>> extends Fragment {
 
     protected A activity;
+    protected T data;
     protected ViewGroup root;
 
     @Override
@@ -27,6 +28,7 @@ public abstract class PagerFragment<T, A extends Activity> extends Fragment {
     @Override
     public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = (ViewGroup) inflater.inflate(getLayout(), container, false);
+        data = activity.getData();
         onPopulate();
 
         setFontRecursively(activity, root, MAIN_FONT);
@@ -47,5 +49,9 @@ public abstract class PagerFragment<T, A extends Activity> extends Fragment {
     protected abstract int getLayout();
 
     protected abstract void onPopulate();
+
+    public boolean isReadyToPopulate(){
+        return root != null;
+    }
 
 }

@@ -5,7 +5,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.activity.PagerFragment;
+import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.util.ActivityUtil;
 
@@ -14,7 +14,7 @@ import static com.vituel.dndplayer.util.ActivityUtil.setSpinnerSelection;
 /**
  * Created by Victor on 28/02/14.
  */
-public class EditCharPersonalFragment extends PagerFragment<Object, EditCharActivity> {
+public class EditCharPersonalFragment extends PagerFragment<CharBase, EditCharActivity> {
 
 
     @Override

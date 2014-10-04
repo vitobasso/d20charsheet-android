@@ -6,8 +6,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.activity.PagerFragment;
 import com.vituel.dndplayer.activity.SelectItemActivity;
+import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.CharEquip;
 import com.vituel.dndplayer.model.EquipSlot;

@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.activity.PagerFragment;
+import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
 import com.vituel.dndplayer.model.Attack;
@@ -65,9 +65,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 /**
  * Created by Victor on 21/03/14.
  */
-public class SummaryMainFragment extends PagerFragment<com.vituel.dndplayer.model.Character, SummaryActivity> {
-
-    Character character;
+public class SummaryMainFragment extends PagerFragment<Character, SummaryActivity> {
 
     @Override
     protected int getLayout() {
@@ -78,9 +76,7 @@ public class SummaryMainFragment extends PagerFragment<com.vituel.dndplayer.mode
     protected void onPopulate() {
         setHasOptionsMenu(true);
 
-        if (character != null) {
-            populateViews();
-        }
+        populateViews();
     }
 
     @Override
@@ -93,7 +89,7 @@ public class SummaryMainFragment extends PagerFragment<com.vituel.dndplayer.mode
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_edit:
-                CharBase base = character.getBase();
+                CharBase base = data.getBase();
 
                 //edit opened character
                 Intent intent = new Intent(activity, EditCharActivity.class);
@@ -111,7 +107,7 @@ public class SummaryMainFragment extends PagerFragment<com.vituel.dndplayer.mode
 
     @Override
     public void update(Character character) {
-        this.character = character;
+        this.data = character;
         populateViews();
 
         setFontRecursively(activity, root, MAIN_FONT);
@@ -120,38 +116,38 @@ public class SummaryMainFragment extends PagerFragment<com.vituel.dndplayer.mode
 
     public void populateViews() {
 
-        DamageGuiManager dmgGui = new DamageGuiManager(activity, character);
+        DamageGuiManager dmgGui = new DamageGuiManager(activity, data);
 
-        String hpValue = MessageFormat.format("{0}/{1}", character.getCurrentHitPoints(), character.getHitPoints());
+        String hpValue = MessageFormat.format("{0}/{1}", data.getCurrentHitPoints(), data.getHitPoints());
         setField(R.id.hit_points, R.string.hp, R.string.hit_points, hpValue, HP, dmgGui);
-        String drValue = MessageFormat.format("{0}/-", character.getDamageReduction());
-        setField(R.id.damage_reduction, R.string.dr, R.string.damage_reduction, drValue, DR, character.getDamageReduction());
+        String drValue = MessageFormat.format("{0}/-", data.getDamageReduction());
+        setField(R.id.damage_reduction, R.string.dr, R.string.damage_reduction, drValue, DR, data.getDamageReduction());
 
-        setField(R.id.strength, R.string.str, R.string.strength, formatAbility(character.getStrength(), STR), STR);
-        setField(R.id.dexterity, R.string.dex, R.string.dexterity, formatAbility(character.getDexterity(), DEX), DEX);
-        setField(R.id.constitution, R.string.con, R.string.constitution, formatAbility(character.getConstitution(), CON), CON);
-        setField(R.id.intelligence, R.string.int_ability, R.string.intelligence, formatAbility(character.getIntelligence(), INT), INT);
-        setField(R.id.wisdom, R.string.wis, R.string.wisdom, formatAbility(character.getWisdom(), WIS), WIS);
-        setField(R.id.charisma, R.string.cha, R.string.charisma, formatAbility(character.getCharisma(), CHA), CHA);
+        setField(R.id.strength, R.string.str, R.string.strength, formatAbility(data.getStrength(), STR), STR);
+        setField(R.id.dexterity, R.string.dex, R.string.dexterity, formatAbility(data.getDexterity(), DEX), DEX);
+        setField(R.id.constitution, R.string.con, R.string.constitution, formatAbility(data.getConstitution(), CON), CON);
+        setField(R.id.intelligence, R.string.int_ability, R.string.intelligence, formatAbility(data.getIntelligence(), INT), INT);
+        setField(R.id.wisdom, R.string.wis, R.string.wisdom, formatAbility(data.getWisdom(), WIS), WIS);
+        setField(R.id.charisma, R.string.cha, R.string.charisma, formatAbility(data.getCharisma(), CHA), CHA);
 
-        setField(R.id.armor_class, R.string.ac, R.string.armor_class, "" + character.getArmorClass(), AC);
-        setField(R.id.spell_resistance, R.string.sr, R.string.spell_resistance, "" + character.getMagicResistance(), MR, character.getMagicResistance());
-        String concealValue = MessageFormat.format("{0}%", character.getConcealment());
+        setField(R.id.armor_class, R.string.ac, R.string.armor_class, "" + data.getArmorClass(), AC);
+        setField(R.id.spell_resistance, R.string.sr, R.string.spell_resistance, "" + data.getMagicResistance(), MR, data.getMagicResistance());
+        String concealValue = MessageFormat.format("{0}%", data.getConcealment());
 
-        setField(R.id.fortitude, R.string.fort, R.string.empty, "" + character.getFortitude(), FORT);
-        setField(R.id.reflex, R.string.refl, R.string.empty, "" + character.getReflex(), REFL);
-        setField(R.id.will, R.string.will, R.string.empty, "" + character.getWill(), WILL);
+        setField(R.id.fortitude, R.string.fort, R.string.empty, "" + data.getFortitude(), FORT);
+        setField(R.id.reflex, R.string.refl, R.string.empty, "" + data.getReflex(), REFL);
+        setField(R.id.will, R.string.will, R.string.empty, "" + data.getWill(), WILL);
 
-        setField(R.id.concealment, R.string.conceal, R.string.empty, concealValue, CONCEAL, character.getConcealment());
+        setField(R.id.concealment, R.string.conceal, R.string.empty, concealValue, CONCEAL, data.getConcealment());
 
-        setField(R.id.initiative, R.string.init, R.string.empty, "" + character.getInitiative(), INIT);
-        setField(R.id.speed, R.string.speed, R.string.empty, "" + character.getSpeed(), SPEED);
+        setField(R.id.initiative, R.string.init, R.string.empty, "" + data.getInitiative(), INIT);
+        setField(R.id.speed, R.string.speed, R.string.empty, "" + data.getSpeed(), SPEED);
 
         //attacks
         ViewGroup atkParent = findView(R.id.attacks_root);
         atkParent.removeAllViews();
-        for (int i = 0; i < character.getAttacks().size(); i++) {
-            AttackRound attackRound = character.getAttacks().get(i);;
+        for (int i = 0; i < data.getAttacks().size(); i++) {
+            AttackRound attackRound = data.getAttacks().get(i);;
             ViewGroup atkGroup = inflate(activity, atkParent, R.layout.summary_main_attack);
             populateTextView(atkGroup, R.id.name, attackRound.getName());
 
@@ -237,11 +233,11 @@ public class SummaryMainFragment extends PagerFragment<com.vituel.dndplayer.mode
     }
 
     private void showBreakdownDialog(ModifierTarget target, Integer attackIndex, WeaponReferenceType weaponRef, GuiInflater guiInflater) {
-        new BreakdownDialog(activity, character).buildDialog(target, null, attackIndex, weaponRef, guiInflater).show();
+        new BreakdownDialog(activity, data).buildDialog(target, null, attackIndex, weaponRef, guiInflater).show();
     }
 
     private void setFieldColor(TextView view, ModifierTarget target) {
-        int color = getValueColor(activity, character, target);
+        int color = getValueColor(activity, data, target);
         view.setTextColor(color);
     }
 
@@ -250,7 +246,7 @@ public class SummaryMainFragment extends PagerFragment<com.vituel.dndplayer.mode
     }
 
     private String formatAbility(int value, ModifierTarget target) {
-        int modifier = character.getAbilityModifier(target);
+        int modifier = data.getAbilityModifier(target);
         String modifierStr = modifier < 0 ? "" + modifier : "+" + modifier;
         return MessageFormat.format("{0} ({1})", value, modifierStr);
     }

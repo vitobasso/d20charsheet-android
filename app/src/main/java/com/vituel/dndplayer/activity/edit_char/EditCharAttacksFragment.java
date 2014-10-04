@@ -13,7 +13,7 @@ import android.widget.ListView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.EditAttackRoundActivity;
-import com.vituel.dndplayer.activity.PagerFragment;
+import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.dao.AttackRoundDao;
 import com.vituel.dndplayer.model.Attack;
 import com.vituel.dndplayer.model.AttackRound;

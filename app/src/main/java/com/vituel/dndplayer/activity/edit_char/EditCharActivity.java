@@ -8,7 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.activity.PagerFragment;
+import com.vituel.dndplayer.activity.abstraction.PagerFragment;
+import com.vituel.dndplayer.activity.abstraction.ParentActivity;
 import com.vituel.dndplayer.dao.CharDao;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.util.ActivityUtil;
@@ -22,7 +23,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 /**
  * Created by Victor on 27/02/14.
  */
-public class EditCharActivity extends FragmentActivity {
+public class EditCharActivity extends FragmentActivity implements ParentActivity<CharBase>{
 
     CharBase base;
 
@@ -114,13 +115,18 @@ public class EditCharActivity extends FragmentActivity {
         fragment.update(base);
     }
 
+    @Override
+    public CharBase getData() {
+        return base;
+    }
+
     private class PagerListener extends ViewPager.SimpleOnPageChangeListener {
         @Override
         public void onPageSelected(int position) {
             PagerFragment fragment = (PagerFragment) ActivityUtil.findFragment(EditCharActivity.this, pager, currentPage);
             if (fragment == null) {
-                //do nothing
                 //should fall here only when being called from onCreate
+                currentPage = position; //go ahead
             } else if (fragment.onValidate()) {
                 fragment.onSaveToModel();
                 currentPage = position; //go ahead

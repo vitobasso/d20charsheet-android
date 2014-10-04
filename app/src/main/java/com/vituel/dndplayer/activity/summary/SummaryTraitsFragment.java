@@ -2,7 +2,6 @@ package com.vituel.dndplayer.activity.summary;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,7 +12,7 @@ import android.widget.ExpandableListView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.EffectPopulator;
-import com.vituel.dndplayer.activity.PagerFragment;
+import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
 import com.vituel.dndplayer.model.Character;
@@ -33,7 +32,7 @@ import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 /**
  * Created by Victor on 21/03/14.
  */
-public class SummaryTraitsFragment extends PagerFragment<com.vituel.dndplayer.model.Character, SummaryActivity> {
+public class SummaryTraitsFragment extends PagerFragment<Character, SummaryActivity> {
 
     TreeMap<String, List<Trait>> traitGroups;
 
@@ -43,18 +42,11 @@ public class SummaryTraitsFragment extends PagerFragment<com.vituel.dndplayer.mo
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        activity.findCharacterToOpen();
-    }
-
-    @Override
     protected void onPopulate() {
         setHasOptionsMenu(true);
 
-        if (traitGroups != null) {
-            refreshUI();
-        }
+        update(data);
+        refreshUI();
     }
 
     @Override

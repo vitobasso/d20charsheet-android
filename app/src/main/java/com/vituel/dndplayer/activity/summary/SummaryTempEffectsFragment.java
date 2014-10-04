@@ -11,8 +11,8 @@ import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.EffectArrayAdapter;
-import com.vituel.dndplayer.activity.PagerFragment;
 import com.vituel.dndplayer.activity.SelectTempEffectActivity;
+import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.dao.TempEffectActivityDao;
 import com.vituel.dndplayer.model.Character;
 import com.vituel.dndplayer.model.TempEffect;
@@ -31,7 +31,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 /**
  * Created by Victor on 21/03/14.
  */
-public class SummaryTempEffectsFragment extends PagerFragment<com.vituel.dndplayer.model.Character, SummaryActivity> {
+public class SummaryTempEffectsFragment extends PagerFragment<Character, SummaryActivity> {
 
     Map<TempEffect, Boolean> tempEffects;
 
@@ -44,9 +44,8 @@ public class SummaryTempEffectsFragment extends PagerFragment<com.vituel.dndplay
     protected void onPopulate() {
         setHasOptionsMenu(true);
 
-        if (tempEffects != null) {
-            refreshUI();
-        }
+        update(data);
+        refreshUI();
     }
 
     @Override

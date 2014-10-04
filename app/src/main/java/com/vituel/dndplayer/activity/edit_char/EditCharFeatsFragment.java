@@ -11,8 +11,8 @@ import android.widget.ListView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.EffectArrayAdapter;
-import com.vituel.dndplayer.activity.PagerFragment;
 import com.vituel.dndplayer.activity.SelectTraitActivity;
+import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.Trait;
 
