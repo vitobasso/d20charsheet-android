@@ -74,45 +74,6 @@ public class SummaryMainFragment extends PagerFragment<Character, SummaryActivit
 
     @Override
     protected void onPopulate() {
-        populateViews();
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.summary_main, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_edit:
-                CharBase base = data.getBase();
-
-                //edit opened character
-                Intent intent = new Intent(activity, EditCharActivity.class);
-                intent.putExtra(EXTRA_EDITED, base);
-                int page = base.getRace() == null || base.getClassLevels().isEmpty() || base.getExperienceLevel() == 0 ?
-                        EditCharPagerAdapter.PAGE_BASIC : EditCharPagerAdapter.PAGE_EQUIP;
-                intent.putExtra(EXTRA_PAGE, page);
-                activity.startActivityForResult(intent, REQUEST_EDIT);
-
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onUpdate() {
-        populateViews();
-
-        setFontRecursively(activity, root, MAIN_FONT);
-        setFontToLabels();
-    }
-
-    public void populateViews() {
-
         DamageGuiManager dmgGui = new DamageGuiManager(activity, data);
 
         String hpValue = MessageFormat.format("{0}/{1}", data.getCurrentHitPoints(), data.getHitPoints());
@@ -156,7 +117,40 @@ public class SummaryMainFragment extends PagerFragment<Character, SummaryActivit
                 setField(atkGroup, R.id.critical, attack.getWeapon().getCritical().toString(), CRIT_MULT, i, attack.getReferenceType());
             }
         }
+    }
 
+    @Override
+    public void onUpdate() {
+        onPopulate();
+
+        setFontRecursively(activity, root, MAIN_FONT);
+        setFontToLabels();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.summary_main, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_edit:
+                CharBase base = data.getBase();
+
+                //edit opened character
+                Intent intent = new Intent(activity, EditCharActivity.class);
+                intent.putExtra(EXTRA_EDITED, base);
+                int page = base.getRace() == null || base.getClassLevels().isEmpty() || base.getExperienceLevel() == 0 ?
+                        EditCharPagerAdapter.PAGE_BASIC : EditCharPagerAdapter.PAGE_EQUIP;
+                intent.putExtra(EXTRA_PAGE, page);
+                activity.startActivityForResult(intent, REQUEST_EDIT);
+
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private ViewGroup getGroup(int viewGroupId, final ModifierTarget target) {

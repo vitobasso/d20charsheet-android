@@ -37,26 +37,25 @@ public abstract class PagerFragment<T, A extends Activity & ParentActivity<T>> e
         return root;
     }
 
-    public boolean onValidate(){
-        return true;
-    }
-
-    public void onSaveToModel() {
-    }
-
     public final void update() {
         data = activity.getData();
         onUpdate();
     }
 
-    protected void onUpdate(){}
+    public final boolean isReadyToPopulate(){
+        return root != null;
+    }
 
     protected abstract int getLayoutResourceId();
 
     protected abstract void onPopulate();
 
-    public final boolean isReadyToPopulate(){
-        return root != null;
+    protected void onUpdate(){}
+
+    public boolean onValidate(){
+        return true;
     }
+
+    public void onSave() {}
 
 }

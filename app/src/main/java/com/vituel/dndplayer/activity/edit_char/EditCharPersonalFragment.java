@@ -47,7 +47,7 @@ public class EditCharPersonalFragment extends PagerFragment<CharBase, EditCharAc
     }
 
     @Override
-    public void onSaveToModel() {
+    public void onSave() {
         Spinner tendencyMoral = findView(R.id.tendencyValue, R.id.moral);
         data.setTendencyMoral(tendencyMoral.getSelectedItem().toString());
 

@@ -44,7 +44,6 @@ public class SummaryTraitsFragment extends PagerFragment<Character, SummaryActiv
     @Override
     protected void onPopulate() {
         onUpdate();
-        refreshUI();
     }
 
     @Override

@@ -63,7 +63,7 @@ public class EditCharActivity extends FragmentActivity implements ParentActivity
                 //copy fields from fragments
                 PagerFragment fragment = (PagerFragment) ActivityUtil.findFragment(EditCharActivity.this, pager, currentPage);
                 if (fragment.onValidate()) {
-                    fragment.onSaveToModel();
+                    fragment.onSave();
                 }else{
                     return true;
                 }
@@ -129,7 +129,7 @@ public class EditCharActivity extends FragmentActivity implements ParentActivity
                 //should fall here only when being called from onCreate
                 currentPage = position; //go ahead
             } else if (fragment.onValidate()) {
-                fragment.onSaveToModel();
+                fragment.onSave();
                 currentPage = position; //go ahead
             } else {
                 pager.setCurrentItem(currentPage); //stay in page

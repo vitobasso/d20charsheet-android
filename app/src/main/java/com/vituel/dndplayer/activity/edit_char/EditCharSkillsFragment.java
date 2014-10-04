@@ -74,7 +74,7 @@ public class EditCharSkillsFragment extends PagerFragment<CharBase, EditCharActi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
-                onSaveToModel();
+                onSave();
                 Intent intent = new Intent(activity, SelectSkillActivity.class);
                 startActivityForResult(intent, REQUEST_SELECT);
                 return true;
@@ -139,7 +139,7 @@ public class EditCharSkillsFragment extends PagerFragment<CharBase, EditCharActi
     }
 
     @Override
-    public void onSaveToModel() {
+    public void onSave() {
 
         for (int i = 0; i < root.getChildCount(); i++) {
             ViewGroup group = (ViewGroup) root.getChildAt(i);

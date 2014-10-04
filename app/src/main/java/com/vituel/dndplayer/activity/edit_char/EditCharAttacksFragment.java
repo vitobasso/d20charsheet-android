@@ -64,7 +64,7 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
     }
 
     @Override
-    public void onSaveToModel() {
+    public void onSave() {
         data.setAttacks(attackRounds);
     }
 
@@ -96,7 +96,7 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                onSaveToModel();
+                onSave();
                 Intent intent = new Intent(activity, EditAttackRoundActivity.class);
                 startActivityForResult(intent, REQUEST_CREATE);
                 return true;
@@ -128,7 +128,7 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
                 dao.close();
 
                 //update activity and ui
-                onSaveToModel();
+                onSave();
                 refreshUI();
         }
     }
@@ -178,7 +178,7 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            onSaveToModel();
+            onSave();
             selectedIndex = position;
 
             Intent intent = new Intent(activity, EditAttackRoundActivity.class);

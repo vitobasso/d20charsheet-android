@@ -65,7 +65,7 @@ public class EditCharEquipFragment extends PagerFragment<CharBase, EditCharActiv
     }
 
     @Override
-    public void onSaveToModel() {
+    public void onSave() {
         data.setEquipment(equipment);
     }
 

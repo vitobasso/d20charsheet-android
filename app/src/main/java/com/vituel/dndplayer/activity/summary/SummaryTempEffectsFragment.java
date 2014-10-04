@@ -43,7 +43,30 @@ public class SummaryTempEffectsFragment extends PagerFragment<Character, Summary
     @Override
     protected void onPopulate() {
         onUpdate();
+    }
+
+    @Override
+    public void onUpdate() {
+        this.tempEffects = data.getBase().getTempEffects();
         refreshUI();
+    }
+
+    private void refreshUI() {
+        List<TempEffect> list = new ArrayList<>(tempEffects.keySet());
+        ((ListView) root).setAdapter(new Adapter(list));
+    }
+
+    private void refresh() {
+        //update ui
+        refreshUI();
+
+        //update db
+        TempEffectActivityDao dataSource = new TempEffectActivityDao(activity);
+        dataSource.updateForChar(tempEffects, data.getBase().getId());
+        dataSource.close();
+
+        //update activity
+        activity.refreshUI();
     }
 
     @Override
@@ -79,30 +102,6 @@ public class SummaryTempEffectsFragment extends PagerFragment<Character, Summary
                         refresh();
                 }
         }
-    }
-
-    @Override
-    public void onUpdate() {
-        this.tempEffects = data.getBase().getTempEffects();
-        refreshUI();
-    }
-
-    private void refreshUI() {
-        List<TempEffect> list = new ArrayList<>(tempEffects.keySet());
-        ((ListView) root).setAdapter(new Adapter(list));
-    }
-
-    private void refresh() {
-        //update ui
-        refreshUI();
-
-        //update db
-        TempEffectActivityDao dataSource = new TempEffectActivityDao(activity);
-        dataSource.updateForChar(tempEffects, data.getBase().getId());
-        dataSource.close();
-
-        //update activity
-        activity.refreshUI();
     }
 
     private class Adapter extends EffectArrayAdapter<TempEffect> {

@@ -56,7 +56,7 @@ public class EditCharFeatsFragment extends PagerFragment<CharBase, EditCharActiv
     }
 
     @Override
-    public void onSaveToModel() {
+    public void onSave() {
         data.setFeats(feats);
     }
 
@@ -104,7 +104,7 @@ public class EditCharFeatsFragment extends PagerFragment<CharBase, EditCharActiv
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_search:
-                onSaveToModel();
+                onSave();
                 Intent intent = new Intent(activity, SelectTraitActivity.class);
                 intent.putExtra(EXTRA_TYPE, Trait.Type.FEAT);
                 startActivityForResult(intent, REQUEST_SELECT);

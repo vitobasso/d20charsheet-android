@@ -70,7 +70,7 @@ public class EditCharBasicFragment extends PagerFragment<CharBase, EditCharActiv
     }
 
     @Override
-    public void onSaveToModel() {
+    public void onSave() {
         data.setName(readString(root, R.id.name));
 
         data.setRace(race);
