@@ -1,6 +1,5 @@
 package com.vituel.dndplayer.activity.summary;
 
-import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -26,10 +25,10 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
  */
 public class DamageGuiManager implements GuiInflater {
 
-    private Activity activity;
+    private SummaryActivity activity;
     private com.vituel.dndplayer.model.Character character;
 
-    public DamageGuiManager(Activity activity, Character character) {
+    public DamageGuiManager(SummaryActivity activity, Character character) {
         this.activity = activity;
         this.character = character;
     }
@@ -147,7 +146,7 @@ public class DamageGuiManager implements GuiInflater {
         charDao.close();
 
         //refresh activity UI
-        ((SummaryActivity) activity).refreshUI();
+        activity.refreshUI();
     }
 
     private String getString(int resId) {

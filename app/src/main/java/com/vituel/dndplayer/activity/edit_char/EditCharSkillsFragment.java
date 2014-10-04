@@ -44,7 +44,6 @@ public class EditCharSkillsFragment extends PagerFragment<CharBase, EditCharActi
 
     @Override
     protected void onPopulate() {
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -61,7 +60,7 @@ public class EditCharSkillsFragment extends PagerFragment<CharBase, EditCharActi
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        activity.updateFragment(this); //TODO remove?
+        onUpdate();
     }
 
     @Override

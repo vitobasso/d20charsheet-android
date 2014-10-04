@@ -41,7 +41,7 @@ public class EditCharFeatsFragment extends PagerFragment<CharBase, EditCharActiv
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        activity.updateFragment(this); //TODO remove?
+        onUpdate();
     }
 
     @Override

@@ -111,11 +111,6 @@ public class EditCharActivity extends FragmentActivity implements ParentActivity
         return base;
     }
 
-    //TODO remove?
-    public void updateFragment(PagerFragment<CharBase, EditCharActivity> fragment){
-        fragment.update();
-    }
-
     @Override
     public CharBase getData() {
         return base;

@@ -135,11 +135,11 @@ public class SummaryActivity extends FragmentActivity implements ParentActivity<
     }
 
     public void refreshUI() {
-        character = new Character(this, character.getBase());
+        character = new Character(this, character.getBase()); //TODO replace by a "re-calculate" so the reference doesn't change
         setActionbarTitle(this, BOLD_FONT, character.getBase().getName());
         conditionsGuiManager.populate(character);
 
-        //update fragments
+        //update fragments (only the ones already loaded)
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
         if (fragments != null) {
             for (Fragment frag : fragments) {

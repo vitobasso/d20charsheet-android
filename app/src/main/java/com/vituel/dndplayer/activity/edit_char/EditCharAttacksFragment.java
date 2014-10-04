@@ -83,7 +83,7 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
         }
 
         i18n = new EnumI18n(activity);
-        activity.updateFragment(this); //TODO remove?
+        onUpdate();
     }
 
     @Override

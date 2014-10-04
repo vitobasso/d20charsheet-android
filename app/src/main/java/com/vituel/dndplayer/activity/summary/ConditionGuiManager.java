@@ -23,6 +23,7 @@ import static android.view.MotionEvent.ACTION_UP;
 import static com.vituel.dndplayer.model.Condition.Predicate;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.inflate;
+import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 
@@ -61,8 +62,7 @@ public class ConditionGuiManager {
             Set<Condition> conds = referencedConds.get(pred);
             ViewGroup predGroup = inflate(activity, list, R.layout.cond_group);
 
-            TextView predView = findView(predGroup, R.id.pred);
-            predView.setText(i18n.get(pred));
+            populateTextView(predGroup, R.id.pred, i18n.get(pred));
 
             //conditions
             for (int i = 0; i < conds.size(); i++) {
@@ -103,11 +103,6 @@ public class ConditionGuiManager {
         ViewGroup root = findView(activity, R.id.conditions);
         int visibility = visible ? View.VISIBLE : View.GONE;
         root.setVisibility(visibility);
-    }
-
-    public void show(){
-        ViewGroup root = findView(activity, R.id.conditions);
-        root.setVisibility(View.VISIBLE);
     }
 
     private class ClickListener implements View.OnClickListener {
