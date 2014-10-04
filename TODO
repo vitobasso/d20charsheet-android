@@ -1,8 +1,5 @@
 IMPROVEMENTS
 
-#open char
-- when removing char, others' descriptions goes away
-
 #summary
 - fix representative attack/weapon on summary
 - ability damage

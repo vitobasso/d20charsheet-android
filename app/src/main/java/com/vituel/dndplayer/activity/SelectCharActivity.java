@@ -48,7 +48,7 @@ public class SelectCharActivity extends ListActivity {
         CharDao dataSource = new CharDao(this);
         list = dataSource.listAll();
 
-        setListAdapter(new Adapter(this, android.R.layout.simple_list_item_1, list));
+        updateUI();
 
         ListView listView = (ListView) findViewById(android.R.id.list);
         listView.setOnItemClickListener(new ClickListener());
@@ -57,6 +57,10 @@ public class SelectCharActivity extends ListActivity {
         dataSource.close();
 
         setActionbarTitle(this, BOLD_FONT, getTitle());
+    }
+
+    private void updateUI() {
+        setListAdapter(new Adapter(this, android.R.layout.simple_list_item_1, list));
     }
 
     @Override
@@ -95,7 +99,7 @@ public class SelectCharActivity extends ListActivity {
 
                         //update ui
                         list.add(base);
-                        setListAdapter(new ArrayAdapter<>(SelectCharActivity.this, android.R.layout.simple_list_item_1, list));
+                        updateUI();
 
                 }
                 break;
@@ -148,7 +152,7 @@ public class SelectCharActivity extends ListActivity {
                     //update ui
                     dialog.dismiss();
                     list.remove(pos);
-                    setListAdapter(new ArrayAdapter<>(SelectCharActivity.this, android.R.layout.simple_list_item_1, list));
+                    updateUI();
                     break;
             }
         }
