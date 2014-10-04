@@ -44,7 +44,6 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
 
     private static final String KEY_SELECTED_INDEX = "INDEX";
 
-    private EnumI18n i18n;
     private List<AttackRound> attackRounds;
     private int selectedIndex = -1;
 
@@ -55,21 +54,8 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
 
     @Override
     protected void onPopulate() {
-    }
-
-    @Override
-    public void onUpdate() {
         this.attackRounds = data.getAttacks();
-        refreshUI();
-    }
-
-    @Override
-    public void onSave() {
-        data.setAttacks(attackRounds);
-    }
-
-    private void refreshUI() {
-        List<AttackRound> list = new ArrayList<>(attackRounds);
+        List<AttackRound> list = new ArrayList<>(attackRounds); //TODO use list directly in adapter?
         ListView listView = (ListView) root;
         listView.setAdapter(new Adapter(list));
         listView.setOnItemClickListener(new ClickListener());
@@ -81,9 +67,6 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
         if (savedInstanceState != null) {
             selectedIndex = savedInstanceState.getInt(KEY_SELECTED_INDEX, -1);
         }
-
-        i18n = new EnumI18n(activity);
-        onUpdate();
     }
 
     @Override
@@ -96,7 +79,6 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_add:
-                onSave();
                 Intent intent = new Intent(activity, EditAttackRoundActivity.class);
                 startActivityForResult(intent, REQUEST_CREATE);
                 return true;
@@ -128,15 +110,17 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
                 dao.close();
 
                 //update activity and ui
-                onSave();
-                refreshUI();
+                update();
         }
     }
 
     private class Adapter extends ArrayAdapter<AttackRound> {
 
+        private final EnumI18n i18n;
+
         public Adapter(List<AttackRound> objects) {
             super(activity, R.layout.edit_attack_list_round_row, R.id.name, objects);
+            i18n = new EnumI18n(activity);
         }
 
         @Override
@@ -165,7 +149,7 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
                     AttackRound cond = attackRounds.get(position);
                     attackRounds.remove(cond);
 
-                    refreshUI();
+                    update();
                 }
             });
 
@@ -178,7 +162,6 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            onSave();
             selectedIndex = position;
 
             Intent intent = new Intent(activity, EditAttackRoundActivity.class);

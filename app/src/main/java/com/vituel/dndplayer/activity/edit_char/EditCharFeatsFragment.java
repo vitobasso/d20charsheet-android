@@ -1,7 +1,6 @@
 package com.vituel.dndplayer.activity.edit_char;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -39,29 +38,9 @@ public class EditCharFeatsFragment extends PagerFragment<CharBase, EditCharActiv
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        onUpdate();
-    }
-
-    @Override
-    protected void onPopulate() {
-        setHasOptionsMenu(true);
-    }
-
-    @Override
-    public void onUpdate() {
+    public void onPopulate() {
         this.feats = data.getFeats();
-        refreshUI();
-    }
-
-    @Override
-    public void onSave() {
-        data.setFeats(feats);
-    }
-
-    private void refreshUI() {
-        List<Trait> list = new ArrayList<>(feats);
+        List<Trait> list = new ArrayList<>(feats); //TODO use list directly in adapter?
         ((ListView) root).setAdapter(new Adapter(list));
     }
 
@@ -85,7 +64,7 @@ public class EditCharFeatsFragment extends PagerFragment<CharBase, EditCharActiv
                     Trait cond = feats.get(position);
                     feats.remove(cond);
 
-                    refreshUI();
+                    update();
                 }
             });
 
@@ -126,7 +105,7 @@ public class EditCharFeatsFragment extends PagerFragment<CharBase, EditCharActiv
                         //update list
                         feats.add(selected);
 
-                        refreshUI();
+                        update();
                 }
         }
     }

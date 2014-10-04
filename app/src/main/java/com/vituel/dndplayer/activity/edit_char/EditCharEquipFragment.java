@@ -21,16 +21,14 @@ import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_TYPE;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.inflate;
-import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
-import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 
 /**
  * Created by Victor on 17/03/14.
  */
 public class EditCharEquipFragment extends PagerFragment<CharBase, EditCharActivity> {
 
-    private CharEquip equipment = new CharEquip();
     private LinearLayout itemsRoot;
+    private CharEquip equipment;
 
     @Override
     protected int getLayoutResourceId() {
@@ -40,11 +38,8 @@ public class EditCharEquipFragment extends PagerFragment<CharBase, EditCharActiv
     @Override
     protected void onPopulate() {
         itemsRoot = findView(root, R.id.list);
-        equipment = data.getEquipment().clone();
-        populate(equipment);
-    }
-
-    private void populate(CharEquip equipment) {
+        itemsRoot.removeAllViews();
+        equipment = data.getEquipment();
 
         List<EquipSlot> list = equipment.listEquip();
         for (EquipSlot equipSlot : list) {
@@ -61,7 +56,6 @@ public class EditCharEquipFragment extends PagerFragment<CharBase, EditCharActiv
             }
             itemView.setOnClickListener(new ItemListener(equipSlot));
         }
-
     }
 
     @Override
@@ -94,16 +88,14 @@ public class EditCharEquipFragment extends PagerFragment<CharBase, EditCharActiv
 
                         //get selected item
                         Item item = (Item) data.getSerializableExtra(EXTRA_SELECTED);
-                        EquipSlot slot = (EquipSlot) data.getSerializableExtra(EXTRA_TYPE);
+                        EquipSlot selectedSlot = (EquipSlot) data.getSerializableExtra(EXTRA_TYPE);
 
                         //update memory
-                        EquipSlot memSlot = equipment.getByName(slot.getNameRes());
+                        EquipSlot memSlot = equipment.getByName(selectedSlot.getNameRes()); //TODO can set selectedSlot directlly?
                         memSlot.setItem(item);
 
                         //update UI
-                        itemsRoot.removeAllViews();
-                        populate(equipment);
-                        setFontRecursively(activity, root, MAIN_FONT);
+                        update();
                         break;
                 }
                 break;

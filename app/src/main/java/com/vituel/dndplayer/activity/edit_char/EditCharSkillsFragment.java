@@ -1,7 +1,6 @@
 package com.vituel.dndplayer.activity.edit_char;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,7 +17,6 @@ import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.CharSkill;
 import com.vituel.dndplayer.model.Skill;
-import com.vituel.dndplayer.util.ActivityUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +25,8 @@ import static android.app.Activity.RESULT_OK;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.ActivityUtil.readInt;
+import static com.vituel.dndplayer.util.ActivityUtil.validateText;
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 
@@ -44,23 +44,28 @@ public class EditCharSkillsFragment extends PagerFragment<CharBase, EditCharActi
 
     @Override
     protected void onPopulate() {
-    }
-
-    @Override
-    public void onUpdate() {
         this.skills = data.getSkills();
-        refreshUI();
-    }
-
-    private void refreshUI() {
-        List<CharSkill> list = new ArrayList<>(skills);
+        List<CharSkill> list = new ArrayList<>(skills); //TODO use list directly in adapter?
         ((ListView) root).setAdapter(new Adapter(list));
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        onUpdate();
+    public boolean onValidate() {
+        boolean allValid = true;
+        for (int i = 0; i < root.getChildCount(); i++) {
+            ViewGroup group = (ViewGroup) root.getChildAt(i);
+            allValid &= validateText(group, R.id.value);
+        }
+        return allValid;
+    }
+
+    @Override
+    public void onSave() {
+        for (int i = 0; i < root.getChildCount(); i++) {
+            ViewGroup group = (ViewGroup) root.getChildAt(i);
+            int grad = readInt(group, R.id.value);
+            skills.get(i).setScore(grad);
+        }
     }
 
     @Override
@@ -95,7 +100,7 @@ public class EditCharSkillsFragment extends PagerFragment<CharBase, EditCharActi
                         CharSkill charSkill = new CharSkill(selected);
                         skills.add(charSkill);
 
-                        refreshUI();
+                        update();
                 }
         }
     }
@@ -128,7 +133,7 @@ public class EditCharSkillsFragment extends PagerFragment<CharBase, EditCharActi
                     CharSkill cond = skills.get(position);
                     skills.remove(cond);
 
-                    refreshUI();
+                    update();
                 }
             });
 
@@ -137,19 +142,4 @@ public class EditCharSkillsFragment extends PagerFragment<CharBase, EditCharActi
         }
     }
 
-    @Override
-    public void onSave() {
-
-        for (int i = 0; i < root.getChildCount(); i++) {
-            ViewGroup group = (ViewGroup) root.getChildAt(i);
-            EditText gradView = ActivityUtil.findView(group, R.id.value);
-            String gradStr = gradView.getText().toString().trim();
-            if(!gradStr.isEmpty()) {
-                int grad = Integer.valueOf(gradStr);
-                skills.get(i).setScore(grad);
-            }
-        }
-
-        data.setSkills(skills);
-    }
 }
