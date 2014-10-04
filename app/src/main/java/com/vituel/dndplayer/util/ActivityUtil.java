@@ -206,6 +206,11 @@ public class ActivityUtil {
         return Integer.valueOf(view.getText().toString().trim());
     }
 
+    public static float readFloat(Object root, int viewRes) {
+        TextView view = findView(root, viewRes);
+        return Float.valueOf(view.getText().toString().trim());
+    }
+
     public static DiceRoll readDice(Object root, int viewRes) {
         TextView view = findView(root, viewRes);
         return view.getText().length() > 0 ? new DiceRoll(view.getText().toString()) : null;
