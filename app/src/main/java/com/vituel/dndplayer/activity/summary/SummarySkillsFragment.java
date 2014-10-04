@@ -35,7 +35,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
  */
 public class SummarySkillsFragment extends PagerFragment<Character, SummaryActivity> {
 
-    List<CharSkill> skills;
+    private List<CharSkill> skills;
 
     @Override
     protected int getLayoutResourceId() {
@@ -44,20 +44,9 @@ public class SummarySkillsFragment extends PagerFragment<Character, SummaryActiv
 
     @Override
     protected void onPopulate() {
-        onUpdate();
-        refreshUI();
-    }
-
-    @Override
-    public void onUpdate() {
         this.skills = new ArrayList<>(data.getSkills().values());
         Collections.sort(skills);
-        refreshUI();
-    }
-
-    private void refreshUI() {
-        List<CharSkill> list = new ArrayList<>(skills);
-        ((ListView) root).setAdapter(new Adapter(list));
+        ((ListView) root).setAdapter(new Adapter(skills));
     }
 
     @Override

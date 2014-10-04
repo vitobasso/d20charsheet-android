@@ -33,7 +33,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
  */
 public class SummaryTempEffectsFragment extends PagerFragment<Character, SummaryActivity> {
 
-    Map<TempEffect, Boolean> tempEffects;
+    private Map<TempEffect, Boolean> tempEffects;
 
     @Override
     protected int getLayoutResourceId() {
@@ -42,24 +42,12 @@ public class SummaryTempEffectsFragment extends PagerFragment<Character, Summary
 
     @Override
     protected void onPopulate() {
-        onUpdate();
-    }
-
-    @Override
-    public void onUpdate() {
         this.tempEffects = data.getBase().getTempEffects();
-        refreshUI();
-    }
-
-    private void refreshUI() {
         List<TempEffect> list = new ArrayList<>(tempEffects.keySet());
         ((ListView) root).setAdapter(new Adapter(list));
     }
 
-    private void refresh() {
-        //update ui
-        refreshUI();
-
+    public void save() {
         //update db
         TempEffectActivityDao dataSource = new TempEffectActivityDao(activity);
         dataSource.updateForChar(tempEffects, data.getBase().getId());
@@ -94,12 +82,12 @@ public class SummaryTempEffectsFragment extends PagerFragment<Character, Summary
             case REQUEST_SELECT:
                 switch (resultCode) {
                     case RESULT_OK:
-                        TempEffect selected = (TempEffect) data.getSerializableExtra(EXTRA_SELECTED);
 
                         //update list
+                        TempEffect selected = (TempEffect) data.getSerializableExtra(EXTRA_SELECTED);
                         tempEffects.put(selected, true);
 
-                        refresh();
+                        save();
                 }
         }
     }
@@ -128,7 +116,7 @@ public class SummaryTempEffectsFragment extends PagerFragment<Character, Summary
                     boolean active = !tempEffects.get(cond);
                     tempEffects.put(cond, active);
 
-                    refresh();
+                    save();
                 }
             });
 
@@ -141,7 +129,7 @@ public class SummaryTempEffectsFragment extends PagerFragment<Character, Summary
                     TempEffect cond = JavaUtil.findByIndex(tempEffects.keySet(), position);
                     tempEffects.remove(cond);
 
-                    refresh();
+                    save();
                 }
             });
 

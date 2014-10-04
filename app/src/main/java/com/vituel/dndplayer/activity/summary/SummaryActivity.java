@@ -128,7 +128,7 @@ public class SummaryActivity extends FragmentActivity implements ParentActivity<
 
     @SuppressWarnings("unchecked")
     private void open(CharBase base) {
-        this.character = new Character(this, base);
+        this.character = new Character(this, base); //TODO replace by a "re-calculate" so the reference doesn't change
         SharedPreferences pref = getSharedPreferences(PREF, MODE_PRIVATE);
         pref.edit().putLong(PREF_OPENED_CHARACTER, character.getBase().getId()).commit();
         refreshUI();

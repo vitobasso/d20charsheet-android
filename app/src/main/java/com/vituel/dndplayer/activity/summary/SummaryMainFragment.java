@@ -59,8 +59,6 @@ import static com.vituel.dndplayer.util.ActivityUtil.inflate;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLDER_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
-import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
-import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 
 /**
  * Created by Victor on 21/03/14.
@@ -121,9 +119,6 @@ public class SummaryMainFragment extends PagerFragment<Character, SummaryActivit
 
     @Override
     public void onUpdate() {
-        onPopulate();
-
-        setFontRecursively(activity, root, MAIN_FONT);
         setFontToLabels();
     }
 

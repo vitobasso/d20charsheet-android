@@ -1,8 +1,6 @@
 package com.vituel.dndplayer.util.gui;
 
 import android.app.Activity;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 
 import java.util.ArrayList;
@@ -16,31 +14,31 @@ public abstract class SingleColExpListAdapter<G, I> extends BaseExpandableListAd
 
 
     protected Activity activity;
-    protected TreeMap<G, List<I>> data;
     protected List<G> groups;
+    protected TreeMap<G, List<I>> children;
     protected int groupLayout;
     protected int childLayout;
 
     /**
-     * @param data should not be modified otherwise the "groups" list will get inconsistent.
+     * @param children should not be modified otherwise the "groups" list will get inconsistent.
      */
-    public SingleColExpListAdapter(Activity activity, TreeMap<G, List<I>> data, int groupLayout, int childLayout) {
+    public SingleColExpListAdapter(Activity activity, TreeMap<G, List<I>> children, int groupLayout, int childLayout) {
         this.activity = activity;
-        this.data = data;
-        this.groups = new ArrayList<>(data.keySet());
+        this.children = children;
+        this.groups = new ArrayList<>(children.keySet());
         this.groupLayout = groupLayout;
         this.childLayout = childLayout;
     }
 
     @Override
     public int getGroupCount() {
-        return data.size();
+        return children.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
         G group = (G) getGroup(groupPosition);
-        return data.get(group).size();
+        return children.get(group).size();
     }
 
     @Override
@@ -51,7 +49,7 @@ public abstract class SingleColExpListAdapter<G, I> extends BaseExpandableListAd
     @Override
     public Object getChild(int groupPosition, int childPosition) {
         G group = (G) getGroup(groupPosition);
-        return data.get(group).get(childPosition);
+        return children.get(group).get(childPosition);
     }
 
     @Override

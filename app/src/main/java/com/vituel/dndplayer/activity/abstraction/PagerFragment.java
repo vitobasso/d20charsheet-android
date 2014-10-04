@@ -2,6 +2,7 @@ package com.vituel.dndplayer.activity.abstraction;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,18 +29,21 @@ public abstract class PagerFragment<T, A extends Activity & ParentActivity<T>> e
     @Override
     public final View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         root = (ViewGroup) inflater.inflate(getLayoutResourceId(), container, false);
-        data = activity.getData();
-
-        setHasOptionsMenu(true);
-        onPopulate();
-        setFontRecursively(activity, root, MAIN_FONT);
-
         return root;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        setHasOptionsMenu(true);
+        update();
     }
 
     public final void update() {
         data = activity.getData();
         onUpdate();
+        onPopulate();
+        setFontRecursively(activity, root, MAIN_FONT);
     }
 
     public final boolean isReadyToPopulate(){

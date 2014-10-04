@@ -34,8 +34,6 @@ import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
  */
 public class SummaryTraitsFragment extends PagerFragment<Character, SummaryActivity> {
 
-    TreeMap<String, List<Trait>> traitGroups;
-
     @Override
     protected int getLayoutResourceId() {
         return R.layout.expandable_list;
@@ -43,13 +41,26 @@ public class SummaryTraitsFragment extends PagerFragment<Character, SummaryActiv
 
     @Override
     protected void onPopulate() {
-        onUpdate();
+        Adapter adapter = new Adapter(organizeTraits(data));
+        ((ExpandableListView) root).setAdapter(adapter);
     }
 
-    @Override
-    public void onUpdate() {
-        traitGroups = organizeTraits(data);
-        refreshUI();
+    private TreeMap<String, List<Trait>> organizeTraits(Character character) {
+        TreeMap<String, List<Trait>> traitsMap = new TreeMap<>();
+
+        List<Trait> feats = character.getBase().getFeats();
+        traitsMap.put(activity.getResources().getString(R.string.feats), feats);
+
+        Race race = character.getBase().getRace();
+        List<Trait> raceTraits = race.getTraits();
+        traitsMap.put(race.getName(), raceTraits);
+
+        for (ClassLevel classLevel : character.getBase().getClassLevels()) {
+            List<Trait> classTraits = classLevel.getTraits();
+            traitsMap.put(classLevel.getName(), classTraits);
+        }
+
+        return traitsMap;
     }
 
     @Override
@@ -73,28 +84,6 @@ public class SummaryTraitsFragment extends PagerFragment<Character, SummaryActiv
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    private void refreshUI() {
-        ((ExpandableListView) root).setAdapter(new Adapter(traitGroups));
-    }
-
-    private TreeMap<String, List<Trait>> organizeTraits(Character character) {
-        TreeMap<String, List<Trait>> traitsMap = new TreeMap<>();
-
-        List<Trait> feats = character.getBase().getFeats();
-        traitsMap.put(activity.getResources().getString(R.string.feats), feats);
-
-        Race race = character.getBase().getRace();
-        List<Trait> raceTraits = race.getTraits();
-        traitsMap.put(race.getName(), raceTraits);
-
-        for (ClassLevel classLevel : character.getBase().getClassLevels()) {
-            List<Trait> classTraits = classLevel.getTraits();
-            traitsMap.put(classLevel.getName(), classTraits);
-        }
-
-        return traitsMap;
     }
 
     private class Adapter extends SingleColExpListAdapter<String, Trait> {
@@ -123,7 +112,7 @@ public class SummaryTraitsFragment extends PagerFragment<Character, SummaryActiv
             }
 
             String group = groups.get(groupPosition);
-            Trait effect = data.get(group).get(childPosition);
+            Trait effect = children.get(group).get(childPosition);
 
             EffectPopulator populator = new EffectPopulator(activity);
             populator.populate(effect, (ViewGroup)convertView);
