@@ -70,6 +70,28 @@ public class EditCharBasicFragment extends PagerFragment<CharBase, EditCharActiv
     }
 
     @Override
+    public boolean onValidate(){
+        boolean allValid = validateText(root, R.id.name);
+        allValid &= validateText(root, R.id.race);
+
+        ViewGroup classesRoot = findView(R.id.classList);
+        for (int i = 0; i < classes.size(); i++) {
+            ViewGroup group = (ViewGroup) classesRoot.getChildAt(i);
+            allValid &= validateText(group, R.id.classField);
+            allValid &= validateText(group, R.id.level);
+        }
+
+        allValid &= validateText(root, R.id.hp);
+        allValid &= validateText(root, R.id.str);
+        allValid &= validateText(root, R.id.dex);
+        allValid &= validateText(root, R.id.con);
+        allValid &= validateText(root, R.id.attr_int);
+        allValid &= validateText(root, R.id.wis);
+        allValid &= validateText(root, R.id.cha);
+        return allValid;
+    }
+
+    @Override
     public void onSave() {
         data.setName(readString(root, R.id.name));
 
@@ -91,22 +113,6 @@ public class EditCharBasicFragment extends PagerFragment<CharBase, EditCharActiv
         data.setIntelligence(readInt(root, R.id.attr_int));
         data.setWisdom(readInt(root, R.id.wis));
         data.setCharisma(readInt(root, R.id.cha));
-    }
-
-    @Override
-    public boolean onValidate(){
-        boolean allValid = validateText(root, R.id.name);
-        allValid &= validateText(root, R.id.race);
-        allValid &= validateText(root, R.id.classField);
-        allValid &= validateText(root, R.id.level);
-        allValid &= validateText(root, R.id.hp);
-        allValid &= validateText(root, R.id.str);
-        allValid &= validateText(root, R.id.dex);
-        allValid &= validateText(root, R.id.con);
-        allValid &= validateText(root, R.id.attr_int);
-        allValid &= validateText(root, R.id.wis);
-        allValid &= validateText(root, R.id.cha);
-        return allValid;
     }
 
     @Override
