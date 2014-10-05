@@ -258,11 +258,6 @@ public class EditCharBasicFragment extends PagerFragment<CharBase, EditCharActiv
         }
     }
 
-    private <T extends View> T findView(int... ids) {
-        return ActivityUtil.findView(root, ids);
-    }
-
-
     private class RemoveClickListener implements View.OnClickListener {
 
         private int position;
@@ -278,4 +273,10 @@ public class EditCharBasicFragment extends PagerFragment<CharBase, EditCharActiv
             classes.remove(position);
         }
     }
+
+    //TODO move to PageFragment
+    private <T extends View> T findView(int... ids) {
+        return ActivityUtil.findView(root, ids);
+    }
+
 }

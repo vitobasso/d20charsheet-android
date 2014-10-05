@@ -15,7 +15,6 @@ import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.Trait;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -40,8 +39,7 @@ public class EditCharFeatsFragment extends PagerFragment<CharBase, EditCharActiv
     @Override
     public void onPopulate() {
         this.feats = data.getFeats();
-        List<Trait> list = new ArrayList<>(feats); //TODO use list directly in adapter?
-        ((ListView) root).setAdapter(new Adapter(list));
+        ((ListView) root).setAdapter(new Adapter(feats));
     }
 
     private class Adapter extends EffectArrayAdapter<Trait> {

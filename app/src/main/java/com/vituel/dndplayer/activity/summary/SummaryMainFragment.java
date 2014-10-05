@@ -115,10 +115,7 @@ public class SummaryMainFragment extends PagerFragment<Character, SummaryActivit
                 setField(atkGroup, R.id.critical, attack.getWeapon().getCritical().toString(), CRIT_MULT, i, attack.getReferenceType());
             }
         }
-    }
 
-    @Override
-    public void onUpdate() {
         setFontToLabels();
     }
 
@@ -255,6 +252,7 @@ public class SummaryMainFragment extends PagerFragment<Character, SummaryActivit
         fontChange.recursiveCall(rootView);
     }
 
+    //TODO move to PageFragment
     private <T extends View> T findView(int... ids) {
         return ActivityUtil.findView(root, ids);
     }

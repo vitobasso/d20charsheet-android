@@ -18,7 +18,6 @@ import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.CharSkill;
 import com.vituel.dndplayer.model.Skill;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
@@ -45,8 +44,7 @@ public class EditCharSkillsFragment extends PagerFragment<CharBase, EditCharActi
     @Override
     protected void onPopulate() {
         this.skills = data.getSkills();
-        List<CharSkill> list = new ArrayList<>(skills); //TODO use list directly in adapter?
-        ((ListView) root).setAdapter(new Adapter(list));
+        ((ListView) root).setAdapter(new Adapter(skills));
     }
 
     @Override

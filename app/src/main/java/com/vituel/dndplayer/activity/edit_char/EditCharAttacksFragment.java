@@ -22,7 +22,6 @@ import com.vituel.dndplayer.util.ActivityUtil;
 import com.vituel.dndplayer.util.AttackUtil;
 import com.vituel.dndplayer.util.i18n.EnumI18n;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -55,9 +54,8 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
     @Override
     protected void onPopulate() {
         this.attackRounds = data.getAttacks();
-        List<AttackRound> list = new ArrayList<>(attackRounds); //TODO use list directly in adapter?
         ListView listView = (ListView) root;
-        listView.setAdapter(new Adapter(list));
+        listView.setAdapter(new Adapter(attackRounds));
         listView.setOnItemClickListener(new ClickListener());
     }
 

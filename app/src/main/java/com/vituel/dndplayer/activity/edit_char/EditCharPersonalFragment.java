@@ -67,6 +67,7 @@ public class EditCharPersonalFragment extends PagerFragment<CharBase, EditCharAc
         data.setCreationDate(readString(root, R.id.creationValue));
     }
 
+    //TODO move to PageFragment
     private <T extends View> T findView(int... ids) {
         return ActivityUtil.findView(root, ids);
     }
