@@ -10,8 +10,7 @@ import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
 import com.vituel.dndplayer.model.Attack;
 import com.vituel.dndplayer.model.AttackRound;
 
-import static com.vituel.dndplayer.model.Attack.WeaponReferenceType;
-import static com.vituel.dndplayer.model.Attack.WeaponReferenceType.MAIN_HAND;
+import static com.vituel.dndplayer.model.Attack.WeaponReference.MAIN_HAND;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.inflate;
 import static com.vituel.dndplayer.util.ActivityUtil.populateSpinnerWithEnum;
@@ -48,7 +47,7 @@ public class EditAttackRoundActivity extends AbstractEditActivity<AttackRound> {
     private void populateAttack(ViewGroup listRoot, Attack attack) {
         ViewGroup group = inflate(this, listRoot, R.layout.edit_attack_round_row);
         populateTextView(group, R.id.penalty, attack.getAttackBonus());
-        populateSpinnerWithEnum(this, group, R.id.weapon, WeaponReferenceType.values(), attack.getReferenceType(), null);
+        populateSpinnerWithEnum(this, group, R.id.weapon, Attack.WeaponReference.values(), attack.getWeaponReference(), null);
 
         View removeBtn = findView(group, R.id.remove);
         removeBtn.setOnClickListener(new ClickRemove(group));
@@ -64,7 +63,7 @@ public class EditAttackRoundActivity extends AbstractEditActivity<AttackRound> {
         ViewGroup effectsRoot = findView(this, R.id.list);
         for (int i = 0; i < effectsRoot.getChildCount(); i++) {
             ViewGroup group = (ViewGroup) effectsRoot.getChildAt(i);
-            WeaponReferenceType weaponRef = readSpinner(group, R.id.weapon);
+            Attack.WeaponReference weaponRef = readSpinner(group, R.id.weapon);
             int penalty = readInt(group, R.id.penalty);
             Attack attack = new Attack(name, penalty, weaponRef);
             entity.addAttack(attack);

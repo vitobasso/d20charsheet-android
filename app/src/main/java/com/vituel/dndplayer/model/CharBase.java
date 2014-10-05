@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import static com.vituel.dndplayer.model.Attack.WeaponReferenceType.MAIN_HAND;
+import static com.vituel.dndplayer.model.Attack.WeaponReference.MAIN_HAND;
 
 /**
  * Persisted data inherent to the character. Values before calculation of bonus from items, traits and spells.

@@ -10,8 +10,7 @@ import com.vituel.dndplayer.model.Attack;
 import java.text.MessageFormat;
 import java.util.List;
 
-import static com.vituel.dndplayer.model.Attack.WeaponReferenceType;
-import static com.vituel.dndplayer.model.Attack.WeaponReferenceType.valueOf;
+import static com.vituel.dndplayer.model.Attack.WeaponReference.valueOf;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 
 /**
@@ -70,7 +69,7 @@ public class AttackDao extends AbstractDao<Attack> {
         ContentValues values = new ContentValues();
         values.put(COLUMN_ATTACK_ROUND_ID, roundId);
         values.put(COLUMN_PENALTY, attack.getAttackBonus());
-        values.put(COLUMN_WEAPON_REF_TYPE, attack.getReferenceType().toString());
+        values.put(COLUMN_WEAPON_REF_TYPE, attack.getWeaponReference().toString());
 
         long id = database.insert(tableName(), null, values);
         attack.setId(id);
@@ -80,7 +79,7 @@ public class AttackDao extends AbstractDao<Attack> {
     protected Attack fromCursor(Cursor cursor) {
 
         int penalty = cursor.getInt(1);
-        WeaponReferenceType refType = valueOf(cursor.getString(2));
+        Attack.WeaponReference refType = valueOf(cursor.getString(2));
 
         return new Attack(penalty, refType);
     }

@@ -133,7 +133,7 @@ public class EditCharAttacksFragment extends PagerFragment<CharBase, EditCharAct
             for (Attack attack : attackGroups.keySet()) {
                 ViewGroup group = inflate(activity, listRoot, R.layout.edit_attack_list_group_row);
                 populateTextView(group, R.id.penalties, attackGroups.get(attack));
-                String weaponType = i18n.get(attack.getReferenceType()).toString();
+                String weaponType = i18n.get(attack.getWeaponReference()).toString();
                 populateTextView(group, R.id.weapon, weaponType);
             }
 

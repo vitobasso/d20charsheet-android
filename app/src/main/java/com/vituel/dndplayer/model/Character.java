@@ -18,8 +18,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static com.vituel.dndplayer.model.Attack.WeaponReferenceType.MAIN_HAND;
-import static com.vituel.dndplayer.model.Attack.WeaponReferenceType.OFFHAND;
+import static com.vituel.dndplayer.model.Attack.WeaponReference;
 import static com.vituel.dndplayer.model.ModifierTarget.AC;
 import static com.vituel.dndplayer.model.ModifierTarget.CHA;
 import static com.vituel.dndplayer.model.ModifierTarget.CON;
@@ -109,20 +108,30 @@ public class Character {
         setReferencedConditions(new HashSet<Condition>());
     }
 
+    /**
+     * Uses the same modeling classes (Attack, WeaponProperties) as CharBase but clones them to
+     * allow independent application of modifiers.
+     */
     private void initAttacks() {
-        WeaponProperties mainWeapon = getWeapon(getBase().getEquipment().getMainHand());
-        WeaponProperties offhandWeapon = getWeapon(getBase().getEquipment().getOffhand());
-
         Kryo cloner = new Kryo();
         setAttacks(cloner.copy(getBase().getAttacks())); //cloned objects will be modified by magic bonuses, etc
         for (AttackRound attackRound : getAttacks()) {
             for (Attack attack : attackRound.getAttacks()) {
-                if (attack.getReferenceType() == MAIN_HAND) {
-                    attack.setWeapon(cloner.copy(mainWeapon));
-                } else if (attack.getReferenceType() == OFFHAND) {
-                    attack.setWeapon(cloner.copy(offhandWeapon));
-                }
+                WeaponProperties weaponBase = getWeapon(attack.getWeaponReference());
+                attack.setWeapon(cloner.copy(weaponBase));
             }
+        }
+    }
+
+    public WeaponProperties getWeapon(WeaponReference weaponReference) {
+        CharEquip equipment = getBase().getEquipment();
+        switch (weaponReference){
+            case MAIN_HAND:
+                return getWeapon(equipment.getMainHand());
+            case OFFHAND:
+                return getWeapon(equipment.getOffhand());
+            default:
+                throw new InvalidParameterException();
         }
     }
 
@@ -137,7 +146,6 @@ public class Character {
     }
 
     public List<Modifier> getBaseModifiers() {
-        //TODO make CharBase extend Effect with name "Base"
         List<Modifier> modifiers = new ArrayList<>();
 
         //hp and ac
@@ -161,7 +169,6 @@ public class Character {
     }
 
     public Map<Modifier, String> getAbilityModifiers() {
-        //TODO make Character extend Effect with name "Base"
         int lvl = getBase().getExperienceLevel();
         int strMod = getAbilityModifier(STR);
         int dexMod = getAbilityModifier(DEX);

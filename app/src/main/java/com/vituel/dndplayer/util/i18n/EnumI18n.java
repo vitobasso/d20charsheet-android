@@ -21,8 +21,8 @@ public class EnumI18n {
     }
 
     public <T extends Enum> CharSequence get(T value) {
-        if (value instanceof Attack.WeaponReferenceType) {
-            return new WeaponRefStringConverter(ctx).toString((Attack.WeaponReferenceType) value);
+        if (value instanceof Attack.WeaponReference) {
+            return new WeaponRefStringConverter(ctx).toString((Attack.WeaponReference) value);
         } else if (value instanceof Condition.Predicate) {
             return new ConditionPredicateStringConverter(ctx).toString((Condition.Predicate) value);
         } else if (value instanceof ModifierType) {

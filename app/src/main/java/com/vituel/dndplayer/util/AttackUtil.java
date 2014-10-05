@@ -11,8 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.vituel.dndplayer.model.Attack.WeaponReferenceType;
-
 /**
  * Created by Victor on 13/09/14.
  */
@@ -26,6 +24,12 @@ public class AttackUtil {
         return values;
     }
 
+    /**
+     * Groups Attacks by weapon and builds the bonus sequence string for each weapon.
+     *
+     * @param attacks All attacks in an attack round
+     * @return Map with representative Attacks as key and the bonuses string as values
+     */
     public static Map<Attack, String> groupBonusByWeapon(List<Attack> attacks) {
         Map<Attack, String> grouped = new HashMap<>();
         for (Attack attack : attacks) {
@@ -74,16 +78,16 @@ public class AttackUtil {
     }
 
     private static boolean isSameWeapon(Attack attack1, Attack attack2){
-        return attack1.getReferenceType() == attack2.getReferenceType();
+        return attack1.getWeaponReference() == attack2.getWeaponReference();
     }
 
     public static WeaponProperties unnarmedStrike(){
         return new WeaponProperties("$unnarmed_strike", new DiceRoll("1d6"), new Critical(1, 2), 1); //TODO monk dmg
     }
 
-    public static WeaponProperties getRepresentativeWeapon(AttackRound round, WeaponReferenceType refType){
+    public static WeaponProperties getRepresentativeWeapon(AttackRound round, Attack.WeaponReference refType){
         for (Attack attack : round.getAttacks()) {
-            if(attack.getReferenceType() == refType){
+            if(attack.getWeaponReference() == refType){
                 return attack.getWeapon();
             }
         }

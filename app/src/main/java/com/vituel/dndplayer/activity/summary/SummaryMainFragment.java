@@ -32,7 +32,6 @@ import java.util.Map;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
-import static com.vituel.dndplayer.model.Attack.WeaponReferenceType;
 import static com.vituel.dndplayer.model.ModifierTarget.AC;
 import static com.vituel.dndplayer.model.ModifierTarget.CHA;
 import static com.vituel.dndplayer.model.ModifierTarget.CON;
@@ -103,16 +102,16 @@ public class SummaryMainFragment extends PagerFragment<Character, SummaryActivit
         ViewGroup atkParent = findView(R.id.attacks_root);
         atkParent.removeAllViews();
         for (int i = 0; i < data.getAttacks().size(); i++) {
-            AttackRound attackRound = data.getAttacks().get(i);;
+            AttackRound attackRound = data.getAttacks().get(i);
             ViewGroup atkGroup = inflate(activity, atkParent, R.layout.summary_main_attack);
             populateTextView(atkGroup, R.id.name, attackRound.getName());
 
             Map<Attack,String> grouped = AttackUtil.groupBonusByWeapon(attackRound.getAttacks());
             if(!grouped.isEmpty()){
                 Attack attack = new ArrayList<>(grouped.keySet()).get(0);
-                setField(atkGroup, R.id.attack, grouped.get(attack), HIT, i, attack.getReferenceType());
-                setField(atkGroup, R.id.damage, attack.getWeapon().getDamage().toString(), DAMAGE, i, attack.getReferenceType());
-                setField(atkGroup, R.id.critical, attack.getWeapon().getCritical().toString(), CRIT_MULT, i, attack.getReferenceType());
+                setField(atkGroup, R.id.attack, grouped.get(attack), HIT, i, attack.getWeaponReference());
+                setField(atkGroup, R.id.damage, attack.getWeapon().getDamage().toString(), DAMAGE, i, attack.getWeaponReference());
+                setField(atkGroup, R.id.critical, attack.getWeapon().getCritical().toString(), CRIT_MULT, i, attack.getWeaponReference());
             }
         }
 
@@ -166,7 +165,7 @@ public class SummaryMainFragment extends PagerFragment<Character, SummaryActivit
     }
 
     private ViewGroup getGroup(int viewGroupId, final ModifierTarget target, final Integer attackIndex,
-                               final WeaponReferenceType weaponRef, final GuiInflater guiInflater) {
+                               final Attack.WeaponReference weaponRef, final GuiInflater guiInflater) {
         ViewGroup viewGroup = findView(viewGroupId);
         viewGroup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -178,12 +177,12 @@ public class SummaryMainFragment extends PagerFragment<Character, SummaryActivit
     }
 
     private void setField(ViewGroup parentView, int textViewId, String value, final ModifierTarget target, final Integer attackIndex,
-                          final WeaponReferenceType weaponRef) {
+                          final Attack.WeaponReference weaponRef) {
         setField(parentView, textViewId, value, target, attackIndex, weaponRef, null);
     }
 
     private void setField(ViewGroup parentView, int textViewId, String value,
-                          final ModifierTarget target, final Integer attackIndex, final WeaponReferenceType weaponRef,
+                          final ModifierTarget target, final Integer attackIndex, final Attack.WeaponReference weaponRef,
                           final GuiInflater guiInflater) {
         TextView textView = populateTextView(parentView, textViewId, value);
         setFieldColor(textView, target);
@@ -220,7 +219,7 @@ public class SummaryMainFragment extends PagerFragment<Character, SummaryActivit
         setFieldColor(valueView, target);
     }
 
-    private void showBreakdownDialog(ModifierTarget target, Integer attackIndex, WeaponReferenceType weaponRef, GuiInflater guiInflater) {
+    private void showBreakdownDialog(ModifierTarget target, Integer attackIndex, Attack.WeaponReference weaponRef, GuiInflater guiInflater) {
         new BreakdownDialog(activity, data).buildDialog(target, null, attackIndex, weaponRef, guiInflater).show();
     }
 

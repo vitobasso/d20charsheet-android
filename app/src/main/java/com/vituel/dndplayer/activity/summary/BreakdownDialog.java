@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
+import com.vituel.dndplayer.model.Attack;
 import com.vituel.dndplayer.model.AttackRound;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.Character;
@@ -21,7 +22,6 @@ import com.vituel.dndplayer.util.gui.GuiInflater;
 import com.vituel.dndplayer.util.i18n.ModifierStringConverter;
 
 import static android.view.View.GONE;
-import static com.vituel.dndplayer.model.Attack.WeaponReferenceType;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
@@ -43,7 +43,7 @@ public class BreakdownDialog {
         return buildDialog(target, variation, null, null, null);
     }
 
-    public Dialog buildDialog(ModifierTarget target, String variation, Integer attackRoundIndex, WeaponReferenceType weaponRef, GuiInflater delegate) {
+    public Dialog buildDialog(ModifierTarget target, String variation, Integer attackRoundIndex, Attack.WeaponReference weaponRef, GuiInflater delegate) {
         BreakdownDialogInflater bdi = new BreakdownDialogInflater(activity, character, target, variation);
         ViewGroup rootView = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.summary_main_breakdown, null);
         CharBase base = character.getBase();

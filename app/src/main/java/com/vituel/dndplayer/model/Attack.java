@@ -9,30 +9,30 @@ public class Attack extends AbstractEntity {
         this.attackBonus = attackBonus;
     }
 
-    public void setReferenceType(WeaponReferenceType referenceType) {
-        this.referenceType = referenceType;
+    public void setWeaponReference(WeaponReference weaponReference) {
+        this.weaponReference = weaponReference;
     }
 
-    public enum WeaponReferenceType {
+    public enum WeaponReference {
         MAIN_HAND, OFFHAND
     }
 
     private int attackBonus;
     private WeaponProperties weapon;
-    private WeaponReferenceType referenceType;
+    private WeaponReference weaponReference;
 
     public Attack() {
     }
 
-    public Attack(int attackBonus, WeaponReferenceType referenceType) {
+    public Attack(int attackBonus, WeaponReference weaponReference) {
         this.setAttackBonus(attackBonus);
-        this.setReferenceType(referenceType);
+        this.setWeaponReference(weaponReference);
     }
 
-    public Attack(String name, int attackBonus, WeaponReferenceType referenceType) {
+    public Attack(String name, int attackBonus, WeaponReference weaponReference) {
         this.name = name;
         this.setAttackBonus(attackBonus);
-        this.setReferenceType(referenceType);
+        this.setWeaponReference(weaponReference);
     }
 
     void applyModifier(Modifier modifier) {
@@ -67,8 +67,8 @@ public class Attack extends AbstractEntity {
         return weapon;
     }
 
-    public WeaponReferenceType getReferenceType() {
-        return referenceType;
+    public WeaponReference getWeaponReference() {
+        return weaponReference;
     }
 
     public void setWeapon(WeaponProperties weapon) {
