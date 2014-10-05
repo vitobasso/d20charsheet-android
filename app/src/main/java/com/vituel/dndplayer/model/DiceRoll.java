@@ -59,15 +59,15 @@ public class DiceRoll implements Serializable {
         String str = "";
 
         for (int faces : dice.keySet()) {
-            if (!str.isEmpty()) {
+            if (!str.isEmpty() && faces >= 0) {
                 str += "+";
             }
             str += dice.get(faces) + "d" + faces;
         }
 
-        if (!str.isEmpty() && fixedValue != 0) {
+        if (!str.isEmpty() && fixedValue > 0) {
             str += "+" + fixedValue;
-        } else if (str.isEmpty()) {
+        } else if (str.isEmpty() || fixedValue < 0) {
             str += fixedValue;
         }
 
