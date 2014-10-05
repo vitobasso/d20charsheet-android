@@ -25,10 +25,10 @@ public class TempEffectParser extends AbstractParser<TempEffect> {
         result.setName(read(split, 0));
 
         ModifierParser modParser = new ModifierParser(result);
-        readModifier(modParser, split, 1, result);
         readModifier(modParser, split, 2, result);
         readModifier(modParser, split, 3, result);
         readModifier(modParser, split, 4, result);
+        readModifier(modParser, split, 5, result);
 
         return result;
     }
