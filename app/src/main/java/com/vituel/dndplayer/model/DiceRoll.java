@@ -36,7 +36,6 @@ public class DiceRoll implements Serializable {
         while (m.find()) {
             String str = m.group(1);
 
-
             String[] parts = str.split("d");
             int count = Integer.valueOf(parts[0]);
             int faces = 0;
@@ -53,7 +52,6 @@ public class DiceRoll implements Serializable {
             } else {
                 fixedValue += count;
             }
-
         }
     }
 
@@ -135,22 +133,6 @@ public class DiceRoll implements Serializable {
         copy.fixedValue = fixedValue;
         copy.dice = new HashMap<>(dice);
         return copy;
-    }
-
-    public Map<Integer, Integer> getDice() {
-        return dice;
-    }
-
-    public void setDice(Map<Integer, Integer> dice) {
-        this.dice = dice;
-    }
-
-    public int getFixedValue() {
-        return fixedValue;
-    }
-
-    public void setFixedValue(int fixedValue) {
-        this.fixedValue = fixedValue;
     }
 
 }

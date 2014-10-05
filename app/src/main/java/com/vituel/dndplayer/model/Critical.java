@@ -1,6 +1,10 @@
 package com.vituel.dndplayer.model;
 
+import junit.framework.Assert;
+
 import java.io.Serializable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by Victor on 16/08/14.
@@ -16,6 +20,10 @@ public class Critical implements Serializable {
     public Critical(int range, int multiplier) {
         this.setRange(range);
         this.setMultiplier(multiplier);
+    }
+
+    public Critical(String expression){
+        decode(expression);
     }
 
     public void addRange(int value) {
@@ -42,13 +50,34 @@ public class Critical implements Serializable {
         this.multiplier = multiplier;
     }
 
+    private void decode(String expression){
+        Assert.assertNotNull(expression);
+        Assert.assertFalse(expression.isEmpty());
+
+        Pattern p = Pattern.compile("((\\d{1,2})\\-20/)?(x|×)(\\d{1,2})");
+        Matcher m = p.matcher(expression);
+
+        if(m.find()){
+            String rangeStr = m.group(2);
+            String multStr = m.group(4);
+            int range = rangeStr == null ? 1 : 21 - Integer.valueOf(rangeStr);
+            int multiplier = Integer.valueOf(multStr);
+            Assert.assertTrue("Invalid critical range", range > 0 && range < 20);
+            Assert.assertTrue("Invalid critical multiplier", multiplier > 0);
+            this.range = range;
+            this.multiplier = multiplier;
+        }else {
+            Assert.fail("Can't match critical expression pattern");
+        }
+    }
+
     @Override
     public String toString() {
-        assert getRange() > 0 && getRange() < 20;
+        Assert.assertTrue("Invalid critical range", getRange() > 0 && getRange() < 20);
         if (getRange() == 1) {
-            return "x" + getMultiplier();
+            return "×" + getMultiplier();
         } else {
-            return 21 - getRange() + "-20/x" + getMultiplier();
+            return 21 - getRange() + "-20/×" + getMultiplier();
         }
     }
 

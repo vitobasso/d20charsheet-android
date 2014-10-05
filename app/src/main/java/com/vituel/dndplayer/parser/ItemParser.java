@@ -1,26 +1,33 @@
 package com.vituel.dndplayer.parser;
 
 import android.content.Context;
-import com.vituel.dndplayer.model.Modifier;
-import com.vituel.dndplayer.model.ModifierType;
+import android.util.Log;
+
+import com.vituel.dndplayer.model.Critical;
 import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Item;
+import com.vituel.dndplayer.model.Modifier;
+import com.vituel.dndplayer.model.ModifierType;
 import com.vituel.dndplayer.model.WeaponItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.vituel.dndplayer.model.Item.ItemType.ARMOR;
+import static com.vituel.dndplayer.model.Item.ItemType.SHIELD;
+import static com.vituel.dndplayer.model.Item.ItemType.WEAPON;
 import static com.vituel.dndplayer.model.ModifierTarget.AC;
 import static com.vituel.dndplayer.model.ModifierTarget.MAX_DEX;
-import static com.vituel.dndplayer.util.JavaUtil.equal;
-import static com.vituel.dndplayer.model.Item.ItemType.*;
 import static com.vituel.dndplayer.model.SlotType.BODY;
 import static com.vituel.dndplayer.model.SlotType.HELD;
+import static com.vituel.dndplayer.util.JavaUtil.equal;
 
 /**
  * Created by Victor on 26/03/14.
  */
 public class ItemParser extends AbstractParser<Item> {
+
+    private static final String TAG = ItemParser.class.getSimpleName();
 
     public ItemParser(Context ctx) {
         super(ctx);
@@ -36,6 +43,7 @@ public class ItemParser extends AbstractParser<Item> {
         int weight = 0;
         String type = null;
         DiceRoll dmg = null;
+        Critical crit = null;
         int ac = 0;
         int maxDex = Integer.MAX_VALUE;
 
@@ -44,36 +52,52 @@ public class ItemParser extends AbstractParser<Item> {
             name = split[0];
             try {
                 price = Integer.valueOf(split[2]);
-            } catch (NumberFormatException e) {
+            } catch (Throwable e) {
                 // price not set
             }
             try {
                 weight = Integer.valueOf(split[3]);
-            } catch (NumberFormatException e) {
+            } catch (Throwable e) {
                 // weight not set
             }
             try {
                 type = split[4];
-            } catch (IllegalArgumentException e) {
+            } catch (Throwable e) {
                 // not an equipable item
             }
+            String dmgStr = split[7];
             try {
-                dmg = new DiceRoll(split[7]);
-            } catch (RuntimeException e) {
-                // funny format
+                dmg = new DiceRoll(dmgStr);
+            } catch (Throwable e) {
+                dmg = new DiceRoll();
+                if (dmgStr.isEmpty()) {
+                    // dmg not set (not a weapon?)
+                }else{
+                    Log.w(TAG, "Failed to decode damage: " + dmgStr);
+                }
             }
-            //TODO parse critical
+            String critStr = split[8];
+            try{
+                crit = new Critical(critStr);
+            } catch (Throwable e) {
+                crit = new Critical();
+                if (critStr.isEmpty()) {
+                    // crit not set (not a weapon?)
+                } else {
+                    Log.w(TAG, "Failed to decode critical: " + critStr);
+                }
+            }
             try {
                 ac = Integer.valueOf(split[11]);
-            } catch (NumberFormatException e) {
+            } catch (Throwable e) {
                 // ac not set
             }
             try {
                 maxDex = Integer.valueOf(split[12]);
-            } catch (NumberFormatException e) {
+            } catch (Throwable e) {
                 // maxDex not set
             }
-        } catch (IndexOutOfBoundsException e) {
+        } catch (Throwable e) {
             // no more columns defined from this point
         }
 
@@ -83,6 +107,7 @@ public class ItemParser extends AbstractParser<Item> {
             WeaponItem w = new WeaponItem();
             w.getWeaponProperties().setName(name);
             w.getWeaponProperties().setDamage(dmg);
+            w.getWeaponProperties().setCritical(crit);
             result = w;
 
             result.setSlotType(HELD);
