@@ -65,7 +65,7 @@ public class NoSelSpinnerAdapter implements SpinnerAdapter {
         } else {
             v = (TextView) base.getView(position - 1, convertView, parent);
         }
-        setFontRecursively(context, v, MAIN_FONT);
+        setFontRecursively(context, v, MAIN_FONT); //TODO move to setText ?
         return v;
     }
 
@@ -78,7 +78,7 @@ public class NoSelSpinnerAdapter implements SpinnerAdapter {
         } else {
             v = (TextView) base.getDropDownView(position - 1, convertView, parent);
         }
-        setFontRecursively(context, v, MAIN_FONT);
+        setFontRecursively(context, v, MAIN_FONT); //TODO move to setText ?
         return v;
     }
 

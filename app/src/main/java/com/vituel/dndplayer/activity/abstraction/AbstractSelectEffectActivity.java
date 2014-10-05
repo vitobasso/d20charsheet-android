@@ -1,7 +1,8 @@
-package com.vituel.dndplayer.activity;
+package com.vituel.dndplayer.activity.abstraction;
 
 import android.os.Bundle;
 
+import com.vituel.dndplayer.activity.EffectArrayAdapter;
 import com.vituel.dndplayer.model.AbstractEffect;
 
 /**

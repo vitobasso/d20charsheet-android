@@ -3,6 +3,7 @@ package com.vituel.dndplayer.activity;
 import android.view.ViewGroup;
 
 import com.vituel.dndplayer.R;
+import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
 import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierTarget;

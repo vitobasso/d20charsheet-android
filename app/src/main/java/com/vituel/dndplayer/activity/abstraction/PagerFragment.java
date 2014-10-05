@@ -14,7 +14,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 /**
  * Created by Victor on 28/02/14.
  */
-public abstract class PagerFragment<T, A extends Activity & ParentActivity<T>> extends Fragment {
+public abstract class PagerFragment<T, A extends Activity & PagerActivity<T>> extends Fragment {
 
     protected A activity;
     protected T data;

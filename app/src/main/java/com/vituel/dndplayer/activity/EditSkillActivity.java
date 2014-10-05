@@ -5,6 +5,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.vituel.dndplayer.R;
+import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.Skill;
 

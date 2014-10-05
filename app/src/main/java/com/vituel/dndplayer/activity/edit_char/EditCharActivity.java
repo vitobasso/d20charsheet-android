@@ -8,8 +8,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.vituel.dndplayer.R;
+import com.vituel.dndplayer.activity.abstraction.PagerActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
-import com.vituel.dndplayer.activity.abstraction.ParentActivity;
 import com.vituel.dndplayer.dao.CharDao;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.util.ActivityUtil;
@@ -23,7 +23,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 /**
  * Created by Victor on 27/02/14.
  */
-public class EditCharActivity extends FragmentActivity implements ParentActivity<CharBase>{
+public class EditCharActivity extends FragmentActivity implements PagerActivity<CharBase> {
 
     private CharBase base;
 

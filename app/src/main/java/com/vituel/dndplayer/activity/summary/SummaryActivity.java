@@ -11,8 +11,8 @@ import android.view.MenuItem;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.SelectCharActivity;
+import com.vituel.dndplayer.activity.abstraction.PagerActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
-import com.vituel.dndplayer.activity.abstraction.ParentActivity;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.dao.CharDao;
 import com.vituel.dndplayer.model.CharBase;
@@ -31,7 +31,7 @@ import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 
-public class SummaryActivity extends FragmentActivity implements ParentActivity<Character> {
+public class SummaryActivity extends FragmentActivity implements PagerActivity<Character> {
 
     private Character character;
 

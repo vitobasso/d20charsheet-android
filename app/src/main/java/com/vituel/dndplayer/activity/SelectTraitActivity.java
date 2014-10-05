@@ -1,5 +1,7 @@
 package com.vituel.dndplayer.activity;
 
+import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
+import com.vituel.dndplayer.activity.abstraction.AbstractSelectEffectActivity;
 import com.vituel.dndplayer.dao.AbstractEntityDao;
 import com.vituel.dndplayer.dao.TraitDao;
 import com.vituel.dndplayer.model.Trait;

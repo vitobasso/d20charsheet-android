@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vituel.dndplayer.R;
+import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
 import com.vituel.dndplayer.model.Attack;
 import com.vituel.dndplayer.model.AttackRound;
 

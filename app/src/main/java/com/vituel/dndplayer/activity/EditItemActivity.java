@@ -6,6 +6,7 @@ import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import com.vituel.dndplayer.R;
+import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
 import com.vituel.dndplayer.dao.ItemDao;
 import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Item;
