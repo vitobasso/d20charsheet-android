@@ -14,7 +14,7 @@ import com.vituel.dndplayer.activity.EffectArrayAdapter;
 import com.vituel.dndplayer.activity.SelectTempEffectActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.dao.TempEffectActivityDao;
-import com.vituel.dndplayer.model.Character;
+import com.vituel.dndplayer.model.CharSummary;
 import com.vituel.dndplayer.model.TempEffect;
 import com.vituel.dndplayer.util.JavaUtil;
 
@@ -31,7 +31,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 /**
  * Created by Victor on 21/03/14.
  */
-public class SummaryTempEffectsFragment extends PagerFragment<Character, SummaryActivity> {
+public class SummaryTempEffectsFragment extends PagerFragment<CharSummary, SummaryActivity> {
 
     private Map<TempEffect, Boolean> tempEffects;
 

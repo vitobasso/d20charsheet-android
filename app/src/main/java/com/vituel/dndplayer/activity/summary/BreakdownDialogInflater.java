@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.AbstractEffect;
-import com.vituel.dndplayer.model.Character;
+import com.vituel.dndplayer.model.CharSummary;
 import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierTarget;
@@ -25,16 +25,16 @@ import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
  */
 public class BreakdownDialogInflater {
 
-    Activity activity;
-    com.vituel.dndplayer.model.Character character;
+    private Activity activity;
+    private CharSummary charSummary;
     public final int black, green, red;
 
     private ModifierTarget target;
     private String variation;
 
-    public BreakdownDialogInflater(Activity activity, Character character, ModifierTarget target, String variation) {
+    public BreakdownDialogInflater(Activity activity, CharSummary charSummary, ModifierTarget target, String variation) {
         this.activity = activity;
-        this.character = character;
+        this.charSummary = charSummary;
         this.target = target;
         this.variation = variation;
 
@@ -118,7 +118,7 @@ public class BreakdownDialogInflater {
     }
 
     public boolean modifierApplies(Modifier modifier) {
-        return AppCommons.modifierApplies(modifier, target, variation, character.getBase().getActiveConditions());
+        return AppCommons.modifierApplies(modifier, target, variation, charSummary.getBase().getActiveConditions());
     }
 
     public ViewGroup  appendRow(ViewGroup parentView, DiceRoll value, String source, int colorRes) {

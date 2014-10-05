@@ -7,7 +7,7 @@ import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.ActiveConditionDao;
-import com.vituel.dndplayer.model.Character;
+import com.vituel.dndplayer.model.CharSummary;
 import com.vituel.dndplayer.model.Condition;
 import com.vituel.dndplayer.util.JavaUtil;
 import com.vituel.dndplayer.util.i18n.EnumI18n;
@@ -32,21 +32,21 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
  */
 public class ConditionGuiManager {
 
-    SummaryActivity activity;
-    EnumI18n i18n;
+    private SummaryActivity activity;
+    private EnumI18n i18n;
 
-    Character character;
+    private CharSummary charSummary;
 
     public ConditionGuiManager(SummaryActivity activity) {
         this.activity = activity;
         this.i18n = new EnumI18n(activity);
     }
 
-    public void populate(Character character) {
-        this.character = character;
+    public void populate(CharSummary charSummary) {
+        this.charSummary = charSummary;
         final int cols = 3;
-        Set<Condition> activeConds = character.getBase().getActiveConditions();
-        Map<Predicate, Set<Condition>> referencedConds = organizeConditions(character.getReferencedConditions());
+        Set<Condition> activeConds = charSummary.getBase().getActiveConditions();
+        Map<Predicate, Set<Condition>> referencedConds = organizeConditions(charSummary.getReferencedConditions());
         ViewGroup root = findView(activity, R.id.conditions);
         ViewGroup list = findView(root, R.id.list);
 
@@ -127,7 +127,7 @@ public class ConditionGuiManager {
 
             //update conditions on DB
             ActiveConditionDao condDao = new ActiveConditionDao(activity);
-            condDao.save(activeConds, character.getBase().getId());
+            condDao.save(activeConds, charSummary.getBase().getId());
             condDao.close();
 
             activity.refreshUI();

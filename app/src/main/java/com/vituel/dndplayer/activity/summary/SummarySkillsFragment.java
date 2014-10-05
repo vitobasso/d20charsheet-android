@@ -15,7 +15,7 @@ import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
 import com.vituel.dndplayer.model.CharSkill;
-import com.vituel.dndplayer.model.Character;
+import com.vituel.dndplayer.model.CharSummary;
 import com.vituel.dndplayer.util.AppCommons;
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 /**
  * Created by Victor on 21/03/14.
  */
-public class SummarySkillsFragment extends PagerFragment<Character, SummaryActivity> {
+public class SummarySkillsFragment extends PagerFragment<CharSummary, SummaryActivity> {
 
     private List<CharSkill> skills;
 

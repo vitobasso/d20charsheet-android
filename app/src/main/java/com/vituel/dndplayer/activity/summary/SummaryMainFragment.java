@@ -17,7 +17,7 @@ import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
 import com.vituel.dndplayer.model.Attack;
 import com.vituel.dndplayer.model.AttackRound;
 import com.vituel.dndplayer.model.CharBase;
-import com.vituel.dndplayer.model.Character;
+import com.vituel.dndplayer.model.CharSummary;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.util.ActivityUtil;
 import com.vituel.dndplayer.util.AppCommons;
@@ -62,7 +62,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 /**
  * Created by Victor on 21/03/14.
  */
-public class SummaryMainFragment extends PagerFragment<Character, SummaryActivity> {
+public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActivity> {
 
     @Override
     protected int getLayoutResourceId() {
@@ -228,8 +228,8 @@ public class SummaryMainFragment extends PagerFragment<Character, SummaryActivit
         view.setTextColor(color);
     }
 
-    public static int getValueColor(Context ctx, Character character, ModifierTarget target) {
-        return new AppCommons(ctx).getValueColor(character.getBase(), target, null);
+    public static int getValueColor(Context ctx, CharSummary charSummary, ModifierTarget target) {
+        return new AppCommons(ctx).getValueColor(charSummary.getBase(), target, null);
     }
 
     private String formatAbility(int value, ModifierTarget target) {

@@ -15,7 +15,7 @@ import com.vituel.dndplayer.activity.EffectPopulator;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
-import com.vituel.dndplayer.model.Character;
+import com.vituel.dndplayer.model.CharSummary;
 import com.vituel.dndplayer.model.ClassLevel;
 import com.vituel.dndplayer.model.Race;
 import com.vituel.dndplayer.model.Trait;
@@ -34,7 +34,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 /**
  * Created by Victor on 21/03/14.
  */
-public class SummaryTraitsFragment extends PagerFragment<Character, SummaryActivity> {
+public class SummaryTraitsFragment extends PagerFragment<CharSummary, SummaryActivity> {
 
     @Override
     protected int getLayoutResourceId() {
@@ -47,17 +47,17 @@ public class SummaryTraitsFragment extends PagerFragment<Character, SummaryActiv
         ((ExpandableListView) root).setAdapter(adapter);
     }
 
-    private TreeMap<String, List<Trait>> organizeTraits(Character character) {
+    private TreeMap<String, List<Trait>> organizeTraits(CharSummary charSummary) {
         TreeMap<String, List<Trait>> traitsMap = new TreeMap<>();
 
-        List<Trait> feats = character.getBase().getFeats();
+        List<Trait> feats = charSummary.getBase().getFeats();
         traitsMap.put(activity.getResources().getString(R.string.feats), feats);
 
-        Race race = character.getBase().getRace();
+        Race race = charSummary.getBase().getRace();
         List<Trait> raceTraits = race.getTraits();
         traitsMap.put(race.getName(), raceTraits);
 
-        for (ClassLevel classLevel : character.getBase().getClassLevels()) {
+        for (ClassLevel classLevel : charSummary.getBase().getClassLevels()) {
             List<Trait> classTraits = classLevel.getTraits();
             traitsMap.put(classLevel.getName(), classTraits);
         }

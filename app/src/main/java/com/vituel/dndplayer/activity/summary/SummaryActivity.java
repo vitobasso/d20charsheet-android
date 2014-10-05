@@ -16,7 +16,7 @@ import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.dao.CharDao;
 import com.vituel.dndplayer.model.CharBase;
-import com.vituel.dndplayer.model.Character;
+import com.vituel.dndplayer.model.CharSummary;
 import com.vituel.dndplayer.util.ActivityUtil;
 import com.vituel.dndplayer.util.AppUtil;
 
@@ -31,9 +31,9 @@ import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 
-public class SummaryActivity extends FragmentActivity implements PagerActivity<Character> {
+public class SummaryActivity extends FragmentActivity implements PagerActivity<CharSummary> {
 
-    private Character character;
+    private CharSummary charSummary;
 
     private ViewPager pager;
     private ConditionGuiManager conditionsGuiManager;
@@ -128,23 +128,23 @@ public class SummaryActivity extends FragmentActivity implements PagerActivity<C
 
     @SuppressWarnings("unchecked")
     private void open(CharBase base) {
-        this.character = new Character(this, base); //TODO replace by a "re-calculate" so the reference doesn't change
+        this.charSummary = new CharSummary(this, base); //TODO replace by a "re-calculate" so the reference doesn't change
         SharedPreferences pref = getSharedPreferences(PREF, MODE_PRIVATE);
-        pref.edit().putLong(PREF_OPENED_CHARACTER, character.getBase().getId()).commit();
+        pref.edit().putLong(PREF_OPENED_CHARACTER, charSummary.getBase().getId()).commit();
         refreshUI();
     }
 
     public void refreshUI() {
-        character = new Character(this, character.getBase()); //TODO replace by a "re-calculate" so the reference doesn't change
-        setActionbarTitle(this, BOLD_FONT, character.getBase().getName());
-        conditionsGuiManager.populate(character);
+        charSummary = new CharSummary(this, charSummary.getBase()); //TODO replace by a "re-calculate" so the reference doesn't change
+        setActionbarTitle(this, BOLD_FONT, charSummary.getBase().getName());
+        conditionsGuiManager.populate(charSummary);
 
         //update fragments (only the ones already loaded)
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
         if (fragments != null) {
             for (Fragment frag : fragments) {
                 if (frag instanceof PagerFragment && ((PagerFragment) frag).isReadyToPopulate()) {
-                    ((PagerFragment<Character, ?>) frag).update();
+                    ((PagerFragment<CharSummary, ?>) frag).update();
                 }
             }
         }
@@ -171,7 +171,7 @@ public class SummaryActivity extends FragmentActivity implements PagerActivity<C
     }
 
     @Override
-    public Character getData() {
-        return character;
+    public CharSummary getData() {
+        return charSummary;
     }
 }

@@ -41,7 +41,7 @@ import static com.vituel.dndplayer.model.Size.MEDIUM;
  * <p/>
  * Created by Victor on 25/02/14.
  */
-public class Character {
+public class CharSummary {
 
     private Context context;
     private ModifierStringConverter modStr;
@@ -69,7 +69,7 @@ public class Character {
     private List<AttackRound> attacks;
     private Set<Condition> referencedConditions;
 
-    public Character(Context context, CharBase base) {
+    public CharSummary(Context context, CharBase base) {
         this.context = context;
         this.modStr = new ModifierStringConverter(context);
         this.setBase(base);

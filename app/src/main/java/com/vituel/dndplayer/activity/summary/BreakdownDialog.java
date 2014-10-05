@@ -11,7 +11,7 @@ import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.Attack;
 import com.vituel.dndplayer.model.AttackRound;
 import com.vituel.dndplayer.model.CharBase;
-import com.vituel.dndplayer.model.Character;
+import com.vituel.dndplayer.model.CharSummary;
 import com.vituel.dndplayer.model.ClassLevel;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.Race;
@@ -31,12 +31,12 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
  */
 public class BreakdownDialog {
 
-    Activity activity;
-    com.vituel.dndplayer.model.Character character;
+    private Activity activity;
+    private CharSummary charSummary;
 
-    public BreakdownDialog(Activity activity, Character character) {
+    public BreakdownDialog(Activity activity, CharSummary charSummary) {
         this.activity = activity;
-        this.character = character;
+        this.charSummary = charSummary;
     }
 
     public Dialog buildDialog(ModifierTarget target, String variation) {
@@ -44,9 +44,9 @@ public class BreakdownDialog {
     }
 
     public Dialog buildDialog(ModifierTarget target, String variation, Integer attackRoundIndex, Attack.WeaponReference weaponRef, GuiInflater delegate) {
-        BreakdownDialogInflater bdi = new BreakdownDialogInflater(activity, character, target, variation);
+        BreakdownDialogInflater bdi = new BreakdownDialogInflater(activity, charSummary, target, variation);
         ViewGroup rootView = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.summary_main_breakdown, null);
-        CharBase base = character.getBase();
+        CharBase base = charSummary.getBase();
 
         //title
         ModifierStringConverter modConv = new ModifierStringConverter(activity);
@@ -60,11 +60,11 @@ public class BreakdownDialog {
             ViewGroup baseGroup = findView(rootView, R.id.base);
 
             //base
-            int count = bdi.appendRows(baseGroup, character.getBaseModifiers(), "Base");
+            int count = bdi.appendRows(baseGroup, charSummary.getBaseModifiers(), "Base");
 
             //attack specific
             if (attackRoundIndex != null) {
-                AttackRound attackRound = character.getAttacks().get(attackRoundIndex);
+                AttackRound attackRound = charSummary.getAttacks().get(attackRoundIndex);
                 if (target == ModifierTarget.HIT) {
                     count += bdi.appendRows(baseGroup, attackRound.getBaseModifiers(), attackRound.getName());
                 } else if (weaponRef != null) {
@@ -74,10 +74,10 @@ public class BreakdownDialog {
             }
 
             //size
-            count += bdi.appendRows(baseGroup, character.getSizeModifiers(), "Size");
+            count += bdi.appendRows(baseGroup, charSummary.getSizeModifiers(), "Size");
 
             //attributes
-            count += bdi.appendRows(baseGroup, character.getAbilityModifiers());
+            count += bdi.appendRows(baseGroup, charSummary.getAbilityModifiers());
 
             //feats
             count += bdi.appendRows(rootView, base.getFeats(), false);

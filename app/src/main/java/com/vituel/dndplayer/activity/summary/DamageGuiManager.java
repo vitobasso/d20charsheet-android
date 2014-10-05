@@ -7,7 +7,7 @@ import android.widget.NumberPicker;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.CharDao;
-import com.vituel.dndplayer.model.Character;
+import com.vituel.dndplayer.model.CharSummary;
 import com.vituel.dndplayer.model.DamageTaken;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.util.ActivityUtil;
@@ -26,18 +26,18 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 public class DamageGuiManager implements GuiInflater {
 
     private SummaryActivity activity;
-    private com.vituel.dndplayer.model.Character character;
+    private CharSummary charSummary;
 
-    public DamageGuiManager(SummaryActivity activity, Character character) {
+    public DamageGuiManager(SummaryActivity activity, CharSummary charSummary) {
         this.activity = activity;
-        this.character = character;
+        this.charSummary = charSummary;
     }
 
     public void inflate(final ViewGroup parentView) {
-        BreakdownDialogInflater bdi = new BreakdownDialogInflater(activity, character, ModifierTarget.HP, null);
+        BreakdownDialogInflater bdi = new BreakdownDialogInflater(activity, charSummary, ModifierTarget.HP, null);
         ViewGroup root = ActivityUtil.inflate(activity, null, R.layout.summary_main_breakdown_hp);
         root.setId(R.id.damage);
-        final DamageTaken dmg = character.getBase().getDamageTaken();
+        final DamageTaken dmg = charSummary.getBase().getDamageTaken();
 
         inflateBreakdownItems(root, dmg);
         populateDamageUI(root, dmg);
@@ -46,7 +46,7 @@ public class DamageGuiManager implements GuiInflater {
     }
 
     private void inflateBreakdownItems(ViewGroup root, DamageTaken dmg) {
-        BreakdownDialogInflater bdi = new BreakdownDialogInflater(activity, character, ModifierTarget.HP, null);
+        BreakdownDialogInflater bdi = new BreakdownDialogInflater(activity, charSummary, ModifierTarget.HP, null);
 
         ViewGroup listGroup = findView(root, R.id.list);
         listGroup.removeAllViews();
@@ -142,7 +142,7 @@ public class DamageGuiManager implements GuiInflater {
 
         //update DB
         CharDao charDao = new CharDao(activity);
-        charDao.save(character.getBase());
+        charDao.save(charSummary.getBase());
         charDao.close();
 
         //refresh activity UI
