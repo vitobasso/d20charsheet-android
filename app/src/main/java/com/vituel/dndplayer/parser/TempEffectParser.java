@@ -2,6 +2,7 @@ package com.vituel.dndplayer.parser;
 
 import android.content.Context;
 import android.util.Log;
+
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.TempEffect;
 
@@ -22,13 +23,12 @@ public class TempEffectParser extends AbstractParser<TempEffect> {
         String split[] = line.split("\t");
         TempEffect result = new TempEffect();
         result.setName(read(split, 0));
-        result.setTempEffectType(TempEffect.Type.valueOf(read(split, 1)));
 
         ModifierParser modParser = new ModifierParser(result);
+        readModifier(modParser, split, 1, result);
         readModifier(modParser, split, 2, result);
         readModifier(modParser, split, 3, result);
         readModifier(modParser, split, 4, result);
-        readModifier(modParser, split, 5, result);
 
         return result;
     }

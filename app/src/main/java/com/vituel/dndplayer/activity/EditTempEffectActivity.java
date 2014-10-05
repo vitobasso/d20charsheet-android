@@ -36,7 +36,6 @@ public class EditTempEffectActivity extends AbstractEditActivity<TempEffect> {
 
         //basic fields
         populateTextView(this, R.id.name, entity.getName());
-        populateSpinnerWithEnum(this, null, R.id.type, TempEffect.Type.values(), entity.getTempEffectType(), null);
 
         //modifiers
         ViewGroup effectsRoot = findView(this, R.id.effectsList);
@@ -68,7 +67,6 @@ public class EditTempEffectActivity extends AbstractEditActivity<TempEffect> {
 
         //basic fields
         entity.setName(readString(this, R.id.name));
-        entity.setTempEffectType((TempEffect.Type) readSpinner(this, R.id.type));
 
         //modifiers
         entity.getModifiers().clear();

@@ -7,10 +7,10 @@ IMPROVEMENTS
 
 #summary breakdown
 - breakdown of composite attributes (critical, speed, damage, damage reduction)
-- show dialog as balloon (http://www.londatiga.net/it/how-to-create-quickaction-dialog-in-android/)
 - show conditions on breakdown
 - show inactive conditions faded on breakdown
 - show race/class traits on breakdown
+- show dialog as balloon (http://www.londatiga.net/it/how-to-create-quickaction-dialog-in-android/)
 
 #edit
 - filter type options upon selecting target
@@ -23,8 +23,6 @@ IMPROVEMENTS
 - touch to hide/show
 
 #temp effects
-- remove type (SPELL vs COMBAT_MODIFIER etc)?
-- tabs to filter by type (SPELL vs COMBAT_MODIFIER etc)?
 - field for skill name on "edit temp effect"
 
 #items

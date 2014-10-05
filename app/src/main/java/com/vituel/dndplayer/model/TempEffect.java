@@ -10,22 +10,8 @@ import static com.vituel.dndplayer.model.AbstractEffect.Type.TEMPORARY;
  */
 public class TempEffect extends AbstractEffect {
 
-    public enum Type{
-        CONSUMABLE_ITEM, SPELL, ACTIVATION, COMBAT_MODIFIER
-    }
-
-    private Type tempEffectType;
-
     public TempEffect() {
         super(TEMPORARY);
-    }
-
-    public Type getTempEffectType() {
-        return tempEffectType;
-    }
-
-    public void setTempEffectType(Type tempEffectType) {
-        this.tempEffectType = tempEffectType;
     }
 
 }
