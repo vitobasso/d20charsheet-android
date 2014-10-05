@@ -32,6 +32,9 @@ IMPROVEMENTS
 - weapon status modifier on edit screen
 - filter by weapon vs sheld, 1 vs 2handed, melee vs ranged
 
+#attacks
+- 2h weapons
+
 #others
 - parse modifiers w/ comma separated conditions
 - mutually excluding conditions

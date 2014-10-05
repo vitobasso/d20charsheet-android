@@ -114,7 +114,6 @@
     <string name="trained_skills">Trained Skills</string>
     <string name="crit_range">Crit Range</string>
     <string name="crit_mult">Crit Mult</string>
-    <string name="standard_attack">Standard Attack</string>
     <string name="unnarmed_strike">Unnarmed Strike</string>
 
     <!-- modifier targets -->

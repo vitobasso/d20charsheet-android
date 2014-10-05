@@ -111,7 +111,6 @@
     <string name="trained_skills">Perícias Treinadas</string>
     <string name="crit_range">Margem de Crítico</string>
     <string name="crit_mult">Multiplicador do Crítico</string>
-    <string name="standard_attack">Ataque Padrão</string>
     <string name="unnarmed_strike">Ataque Desarmado</string>
 
     <!-- modifier targets -->
