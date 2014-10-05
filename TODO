@@ -52,7 +52,6 @@ BUGS
 - temp HP effect
 - Barkskin doesn't parse
 - when coming back to an effect list, after create/edit, mods don't show
-- summary: bold font changes when comming back from last page
 - when has 2+ classes, class fields change when moving away from EditCharBasicFragment and back
 
 

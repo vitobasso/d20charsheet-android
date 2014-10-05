@@ -54,9 +54,7 @@ public class EditCharBasicFragment extends PagerFragment<CharBase, EditCharActiv
 
         classes = new ArrayList<>(data.getClassLevels());
         if(classes.isEmpty()){
-            ClassLevel classLevel = new ClassLevel();
-            classLevel.setLevel(1);
-            classes.add(classLevel);
+            classes.add(new ClassLevel());
         }
         populateClasses(classes);
 
@@ -127,7 +125,7 @@ public class EditCharBasicFragment extends PagerFragment<CharBase, EditCharActiv
             case R.id.action_add:
                 ViewGroup classesRoot = findView(R.id.classList);
                 inflateClassRow(classesRoot, classesRoot.getChildCount());
-                classes.add(null);
+                classes.add(new ClassLevel());
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -163,6 +161,7 @@ public class EditCharBasicFragment extends PagerFragment<CharBase, EditCharActiv
 
     private void populateClasses(List<ClassLevel> classes) {
         ViewGroup classesRoot = findView(R.id.classList);
+        classesRoot.removeAllViews();
         for (int i = 0; i == 0 || i < classes.size(); i++) {
             ViewGroup group = inflateClassRow(classesRoot, i);
 

@@ -14,6 +14,7 @@ public class ClassLevel extends AbstractEffect {
 
     public ClassLevel() {
         super(Type.CLASS);
+        level = 1;
     }
 
     public int getBaseAttack() {
@@ -64,4 +65,8 @@ public class ClassLevel extends AbstractEffect {
         }
     }
 
+    @Override
+    public String toString() {
+        return clazz.getName() + " " + level;
+    }
 }
