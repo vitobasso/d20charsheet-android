@@ -1,11 +1,7 @@
 package com.vituel.dndplayer.activity;
 
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
-import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
@@ -14,13 +10,17 @@ import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.ModifierType;
 import com.vituel.dndplayer.model.Trait;
-import com.vituel.dndplayer.util.gui.NoSelectionSpinnerAdapter;
 
-import java.util.Arrays;
 import java.util.List;
 
+import static com.vituel.dndplayer.model.Trait.Type.FEAT;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.inflate;
+import static com.vituel.dndplayer.util.ActivityUtil.populateSpinnerWithEnum;
+import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.ActivityUtil.readDice;
+import static com.vituel.dndplayer.util.ActivityUtil.readSpinner;
+import static com.vituel.dndplayer.util.ActivityUtil.readString;
 
 /**
  * Created by Victor on 30/03/14.
@@ -41,39 +41,21 @@ public class EditTraitActivity extends AbstractEditActivity<Trait> {
         name.setText(entity.getName());
 
         //modifiers
-        SpinnerAdapter targetAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, Arrays.asList(ModifierTarget.values()));
-        targetAdapter = new NoSelectionSpinnerAdapter(this, targetAdapter);
-        SpinnerAdapter typeAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, Arrays.asList(ModifierType.values()));
-        typeAdapter = new NoSelectionSpinnerAdapter(this, typeAdapter);
-
         ViewGroup effectsRoot = findView(this, R.id.effectsList);
         List<Modifier> modifiers = entity.getModifiers();
         for (Modifier modifier : modifiers) {
             ViewGroup group = inflate(this, effectsRoot, R.layout.edit_modifier);
 
-            Spinner targetSpinner = findView(group, R.id.target);
-            targetSpinner.setAdapter(targetAdapter);
-            targetSpinner.setSelection(modifier.getTarget().ordinal() + 1); // +1 to compensate for the "no selection" position
-
-            EditText amtField = findView(group, R.id.amount);
-            amtField.setText("" + modifier.getAmount());
-
-            Spinner typeSpinner = findView(group, R.id.type);
-            typeSpinner.setAdapter(typeAdapter);
-            typeSpinner.setSelection(modifier.getType().ordinal() + 1); // +1 to compensate for the "no selection" position
+            populateSpinnerWithEnum(this, group, R.id.target, ModifierTarget.values(), modifier.getTarget(), null);
+            populateTextView(group, R.id.amount, modifier.getAmount());
+            populateSpinnerWithEnum(this, group, R.id.type, ModifierType.values(), modifier.getType(), null);
         }
 
         //remaining empty modifiers
         for (int i = modifiers.size(); i < NUM_EFFECTS; i++) {
             ViewGroup group = inflate(this, effectsRoot, R.layout.edit_modifier);
-
-            Spinner targetSpinner = findView(group, R.id.target);
-            targetSpinner.setAdapter(targetAdapter);
-
-            Spinner typeSpinner = findView(group, R.id.type);
-            typeSpinner.setAdapter(typeAdapter);
+            populateSpinnerWithEnum(this, group, R.id.target, ModifierTarget.values(), null, null);
+            populateSpinnerWithEnum(this, group, R.id.type, ModifierType.values(), null, null);
         }
 
     }
@@ -82,21 +64,17 @@ public class EditTraitActivity extends AbstractEditActivity<Trait> {
     protected Trait save() {
 
         //basic fields
-        EditText nameView = (EditText) findViewById(R.id.name);
-        entity.setName(nameView.getText().toString().trim());
+        entity.setName(readString(this, R.id.name));
+        entity.setTraitType(FEAT);
 
         //modifiers
         entity.getModifiers().clear();
         ViewGroup effectsRoot = findView(this, R.id.effectsList);
         for (int i = 0; i < effectsRoot.getChildCount(); i++) {
             ViewGroup group = (ViewGroup) effectsRoot.getChildAt(i);
-            Spinner targetSpinner = findView(group, R.id.target);
-            TextView amountValue = findView(group, R.id.amount);
-            Spinner typeSpinner = findView(group, R.id.type);
-
-            ModifierTarget target = (ModifierTarget) targetSpinner.getSelectedItem();
-            DiceRoll amount = amountValue.getText().length() > 0 ? new DiceRoll(amountValue.getText().toString()) : null;
-            ModifierType type = (ModifierType) typeSpinner.getSelectedItem();
+            ModifierTarget target = readSpinner(group, R.id.target);
+            DiceRoll amount = readDice(group, R.id.amount);
+            ModifierType type = readSpinner(group, R.id.type);
 
             if (target != null && amount != null) {
                 Modifier modifier = new Modifier(target, amount, type, entity);

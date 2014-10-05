@@ -120,12 +120,12 @@ public class EditCharActivity extends FragmentActivity implements PagerActivity<
         @Override
         public void onPageSelected(int position) {
             PagerFragment fragment = (PagerFragment) ActivityUtil.findFragment(EditCharActivity.this, pager, currentPage);
-            if (fragment == null) {
+            if (fragment == null || !fragment.isReadyToPopulate()) {
                 //should fall here only when being called from onCreate
-                currentPage = position; //go ahead
+                currentPage = position;
             } else if (fragment.onValidate()) {
                 fragment.onSave();
-                currentPage = position; //go ahead
+                currentPage = position;
             } else {
                 pager.setCurrentItem(currentPage); //stay in page
             }
