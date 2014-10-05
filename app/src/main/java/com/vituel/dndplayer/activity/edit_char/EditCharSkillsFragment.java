@@ -116,7 +116,7 @@ public class EditCharSkillsFragment extends PagerFragment<CharBase, EditCharActi
 
             CharSkill charSkill = skills.get(position);
 
-            TextView nameView = findView(v, R.id.name);
+            TextView nameView = findView(v, R.id.name); //TODO use ActivityUtil.populateTextView
             nameView.setText(charSkill.getSkill().getName());
 
             EditText gradView = findView(v, R.id.value);

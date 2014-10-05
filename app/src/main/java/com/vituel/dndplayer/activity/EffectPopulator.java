@@ -8,8 +8,10 @@ import android.widget.TextView;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.AbstractEffect;
 import com.vituel.dndplayer.model.Modifier;
-import com.vituel.dndplayer.util.ActivityUtil;
 import com.vituel.dndplayer.util.i18n.ModifierStringConverter;
+
+import static com.vituel.dndplayer.util.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 
 /**
  * Created by Victor on 06/09/14.
@@ -25,15 +27,15 @@ public class EffectPopulator {
     }
 
     public void populate(AbstractEffect effect, ViewGroup group){
-        ActivityUtil.populateTextView(context, R.id.name, effect.getName());
+        populateTextView(group, R.id.name, effect.getName());
 
         TextView[] modViews = new TextView[6];
-        modViews[0] = (TextView) group.findViewById(R.id.mod1);
-        modViews[1] = (TextView) group.findViewById(R.id.mod2);
-        modViews[2] = (TextView) group.findViewById(R.id.mod3);
-        modViews[3] = (TextView) group.findViewById(R.id.mod4);
-        modViews[4] = (TextView) group.findViewById(R.id.mod5);
-        modViews[5] = (TextView) group.findViewById(R.id.mod6);
+        modViews[0] = findView(group, R.id.mod1);
+        modViews[1] = findView(group, R.id.mod2);
+        modViews[2] = findView(group, R.id.mod3);
+        modViews[3] = findView(group, R.id.mod4);
+        modViews[4] = findView(group, R.id.mod5);
+        modViews[5] = findView(group, R.id.mod6);
 
         //populate mods
         for (int i = 0; i < effect.getModifiers().size() && i < modViews.length; i++) {
