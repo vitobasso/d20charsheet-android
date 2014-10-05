@@ -2,6 +2,7 @@ package com.vituel.dndplayer.model;
 
 import com.vituel.dndplayer.util.AttackUtil;
 
+import java.security.InvalidParameterException;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -69,6 +70,28 @@ public class CharBase extends AbstractEntity {
         }
         return sum;
     }
+
+    public WeaponProperties getWeapon(Attack.WeaponReference weaponReference) {
+        switch (weaponReference){
+            case MAIN_HAND:
+                return getWeapon(equipment.getMainHand());
+            case OFFHAND:
+                return getWeapon(equipment.getOffhand());
+            default:
+                throw new InvalidParameterException();
+        }
+    }
+
+    private WeaponProperties getWeapon(EquipSlot slot) {
+        Item item = slot.getItem();
+        if (item != null && item instanceof WeaponItem) {
+            return ((WeaponItem) item).getWeaponProperties();
+        } else {
+            return AttackUtil.unnarmedStrike();
+        }
+        //TODO shield attack
+    }
+
 
     public void createStandardAttacks() {
         //full attack

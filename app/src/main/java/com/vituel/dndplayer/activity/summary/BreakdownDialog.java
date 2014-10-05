@@ -16,7 +16,6 @@ import com.vituel.dndplayer.model.ClassLevel;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.Race;
 import com.vituel.dndplayer.model.WeaponProperties;
-import com.vituel.dndplayer.util.AttackUtil;
 import com.vituel.dndplayer.util.font.FontUtil;
 import com.vituel.dndplayer.util.gui.GuiInflater;
 import com.vituel.dndplayer.util.i18n.ModifierStringConverter;
@@ -43,8 +42,8 @@ public class BreakdownDialog {
         return buildDialog(target, variation, null, null, null);
     }
 
-    public Dialog buildDialog(ModifierTarget target, String variation, Integer attackRoundIndex, Attack.WeaponReference weaponRef, GuiInflater delegate) {
-        BreakdownDialogInflater bdi = new BreakdownDialogInflater(activity, charSummary, target, variation);
+    public Dialog buildDialog(ModifierTarget target, String variation, Integer attackRoundIndex, Attack.WeaponReference weaponReference, GuiInflater delegate) {
+        BreakdownDialogInflater inflater = new BreakdownDialogInflater(activity, charSummary, target, variation);
         ViewGroup rootView = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.summary_main_breakdown, null);
         CharBase base = charSummary.getBase();
 
@@ -60,27 +59,27 @@ public class BreakdownDialog {
             ViewGroup baseGroup = findView(rootView, R.id.base);
 
             //base
-            int count = bdi.appendRows(baseGroup, charSummary.getBaseModifiers(), "Base");
+            int count = inflater.appendRows(baseGroup, charSummary.getBaseModifiers(), "Base");
 
             //attack specific
             if (attackRoundIndex != null) {
                 AttackRound attackRound = charSummary.getAttacks().get(attackRoundIndex);
                 if (target == ModifierTarget.HIT) {
-                    count += bdi.appendRows(baseGroup, attackRound.getBaseModifiers(), attackRound.getName());
-                } else if (weaponRef != null) {
-                    WeaponProperties weapon = AttackUtil.getRepresentativeWeapon(attackRound, weaponRef);
-                    count += bdi.appendRows(baseGroup, weapon.getAsModifiers(), weapon.getName());
+                    count += inflater.appendRows(baseGroup, attackRound.getBaseModifiers(), attackRound.getName());
+                } else if (weaponReference != null) {
+                    WeaponProperties weapon = base.getWeapon(weaponReference);
+                    count += inflater.appendRows(baseGroup, weapon.getAsModifiers(), weapon.getName());
                 }
             }
 
             //size
-            count += bdi.appendRows(baseGroup, charSummary.getSizeModifiers(), "Size");
+            count += inflater.appendRows(baseGroup, charSummary.getSizeModifiers(), "Size");
 
             //attributes
-            count += bdi.appendRows(baseGroup, charSummary.getAbilityModifiers());
+            count += inflater.appendRows(baseGroup, charSummary.getAbilityModifiers());
 
             //feats
-            count += bdi.appendRows(rootView, base.getFeats(), false);
+            count += inflater.appendRows(rootView, base.getFeats(), false);
 
             if (count == 0) {
                 baseGroup.setVisibility(GONE);
@@ -94,9 +93,9 @@ public class BreakdownDialog {
             ViewGroup raceGroup = findView(rootView, R.id.race);
 
             Race race = base.getRace();
-            int count = bdi.appendRows(raceGroup, race, false);
+            int count = inflater.appendRows(raceGroup, race, false);
             if (race != null) {
-                count += bdi.appendRows(raceGroup, race.getTraits(), race.getName());
+                count += inflater.appendRows(raceGroup, race.getTraits(), race.getName());
             }
 
             if (count == 0) {
@@ -111,10 +110,10 @@ public class BreakdownDialog {
             View classTitle = findView(rootView, R.id.classTitle);
             ViewGroup classGroup = findView(rootView, R.id.clazz);
 
-            int count = bdi.appendRows(classGroup, base.getClassLevels(), false);
+            int count = inflater.appendRows(classGroup, base.getClassLevels(), false);
             for (ClassLevel classLevel : base.getClassLevels()) {
                 String source = classLevel.getClazz().getName() + " " + classLevel.getLevel();
-                count += bdi.appendRows(classGroup, classLevel.getTraits(), source);
+                count += inflater.appendRows(classGroup, classLevel.getTraits(), source);
             }
 
             if (count == 0) {
@@ -129,7 +128,7 @@ public class BreakdownDialog {
             View equipTitle = findView(rootView, R.id.equipTitle);
             ViewGroup equipGroup = findView(rootView, R.id.equip);
 
-            int count = bdi.appendRows(equipGroup, base.getEquipmentItems(), false);
+            int count = inflater.appendRows(equipGroup, base.getEquipmentItems(), false);
 
             if (count == 0) {
                 equipTitle.setVisibility(GONE);
@@ -143,7 +142,7 @@ public class BreakdownDialog {
             View tempTitle = findView(rootView, R.id.tempTitle);
             ViewGroup tempGroup = findView(rootView, R.id.temp);
 
-            int count = bdi.appendRows(tempGroup, base.getActiveTempEffects(), true);
+            int count = inflater.appendRows(tempGroup, base.getActiveTempEffects(), true);
 
             if (count == 0) {
                 tempTitle.setVisibility(GONE);

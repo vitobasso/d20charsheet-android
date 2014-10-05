@@ -6,7 +6,6 @@ import android.util.Log;
 import com.esotericsoftware.kryo.Kryo;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.SkillDao;
-import com.vituel.dndplayer.util.AttackUtil;
 import com.vituel.dndplayer.util.i18n.ModifierStringConverter;
 
 import java.security.InvalidParameterException;
@@ -18,7 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static com.vituel.dndplayer.model.Attack.WeaponReference;
 import static com.vituel.dndplayer.model.ModifierTarget.AC;
 import static com.vituel.dndplayer.model.ModifierTarget.CHA;
 import static com.vituel.dndplayer.model.ModifierTarget.CON;
@@ -117,32 +115,10 @@ public class CharSummary {
         setAttacks(cloner.copy(getBase().getAttacks())); //cloned objects will be modified by magic bonuses, etc
         for (AttackRound attackRound : getAttacks()) {
             for (Attack attack : attackRound.getAttacks()) {
-                WeaponProperties weaponBase = getWeapon(attack.getWeaponReference());
+                WeaponProperties weaponBase = base.getWeapon(attack.getWeaponReference());
                 attack.setWeapon(cloner.copy(weaponBase));
             }
         }
-    }
-
-    public WeaponProperties getWeapon(WeaponReference weaponReference) {
-        CharEquip equipment = getBase().getEquipment();
-        switch (weaponReference){
-            case MAIN_HAND:
-                return getWeapon(equipment.getMainHand());
-            case OFFHAND:
-                return getWeapon(equipment.getOffhand());
-            default:
-                throw new InvalidParameterException();
-        }
-    }
-
-    private WeaponProperties getWeapon(EquipSlot slot) {
-        Item item = slot.getItem();
-        if (item != null && item instanceof WeaponItem) {
-            return ((WeaponItem) item).getWeaponProperties();
-        } else {
-            return AttackUtil.unnarmedStrike();
-        }
-        //TODO shield attack
     }
 
     public List<Modifier> getBaseModifiers() {
