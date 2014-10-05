@@ -7,9 +7,10 @@ import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.WeaponProperties;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by Victor on 13/09/14.
@@ -29,9 +30,21 @@ public class AttackUtil {
      *
      * @param attacks All attacks in an attack round
      * @return Map with representative Attacks as key and the bonuses string as values
+     *
+     * TODO decide if it's necessary to have independent damage or critical values
+     * on different attacks of same weapon in the same attack round.
+     * If so, group them based on an "equals" test.
+     *
      */
     public static Map<Attack, String> groupBonusByWeapon(List<Attack> attacks) {
-        Map<Attack, String> grouped = new HashMap<>();
+        Map<Attack, String> grouped = new TreeMap<>(new Comparator<Attack>() {
+            @Override
+            public int compare(Attack lhs, Attack rhs) {
+                //order according to the enum definition
+                return lhs.getWeaponReference().compareTo(rhs.getWeaponReference());
+            }
+        });
+
         for (Attack attack : attacks) {
 
             // check if this one is part of a group already picked

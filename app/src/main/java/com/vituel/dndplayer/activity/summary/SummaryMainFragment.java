@@ -27,11 +27,11 @@ import com.vituel.dndplayer.util.gui.GuiInflater;
 import com.vituel.dndplayer.util.gui.RecursiveViewCaller;
 
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Map;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static com.vituel.dndplayer.model.Attack.WeaponReference;
 import static com.vituel.dndplayer.model.ModifierTarget.AC;
 import static com.vituel.dndplayer.model.ModifierTarget.CHA;
 import static com.vituel.dndplayer.model.ModifierTarget.CON;
@@ -103,15 +103,18 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
         atkParent.removeAllViews();
         for (int i = 0; i < data.getAttacks().size(); i++) {
             AttackRound attackRound = data.getAttacks().get(i);
-            ViewGroup atkGroup = inflate(activity, atkParent, R.layout.summary_main_attack);
-            populateTextView(atkGroup, R.id.name, attackRound.getName());
+            ViewGroup roundGroup = inflate(activity, atkParent, R.layout.summary_main_attack_round);
+            populateTextView(roundGroup, R.id.name, attackRound.getName());
 
+            //TODO decide if it's necessary to have independent damage or critical values
+            //on different attacks of same weapon in the same attack round.
+            //If so, group them based on an "equals" test.
             Map<Attack,String> grouped = AttackUtil.groupBonusByWeapon(attackRound.getAttacks());
-            if(!grouped.isEmpty()){
-                Attack attack = new ArrayList<>(grouped.keySet()).get(0);
-                setField(atkGroup, R.id.attack, grouped.get(attack), HIT, i, attack.getWeaponReference());
-                setField(atkGroup, R.id.damage, attack.getWeapon().getDamage().toString(), DAMAGE, i, attack.getWeaponReference());
-                setField(atkGroup, R.id.critical, attack.getWeapon().getCritical().toString(), CRIT_MULT, i, attack.getWeaponReference());
+            for (Attack attack : grouped.keySet()) {
+                ViewGroup groupGroup = inflate(activity, roundGroup, R.layout.summary_main_attack_group);
+                setField(groupGroup, R.id.attack, grouped.get(attack), HIT, i, attack.getWeaponReference());
+                setField(groupGroup, R.id.damage, attack.getWeapon().getDamage().toString(), DAMAGE, i, attack.getWeaponReference());
+                setField(groupGroup, R.id.critical, attack.getWeapon().getCritical().toString(), CRIT_MULT, i, attack.getWeaponReference());
             }
         }
 
@@ -165,7 +168,7 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
     }
 
     private ViewGroup getGroup(int viewGroupId, final ModifierTarget target, final Integer attackIndex,
-                               final Attack.WeaponReference weaponRef, final GuiInflater guiInflater) {
+                               final WeaponReference weaponRef, final GuiInflater guiInflater) {
         ViewGroup viewGroup = findView(viewGroupId);
         viewGroup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -177,12 +180,12 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
     }
 
     private void setField(ViewGroup parentView, int textViewId, String value, final ModifierTarget target, final Integer attackIndex,
-                          final Attack.WeaponReference weaponRef) {
+                          final WeaponReference weaponRef) {
         setField(parentView, textViewId, value, target, attackIndex, weaponRef, null);
     }
 
     private void setField(ViewGroup parentView, int textViewId, String value,
-                          final ModifierTarget target, final Integer attackIndex, final Attack.WeaponReference weaponRef,
+                          final ModifierTarget target, final Integer attackIndex, final WeaponReference weaponRef,
                           final GuiInflater guiInflater) {
         TextView textView = populateTextView(parentView, textViewId, value);
         setFieldColor(textView, target);
@@ -219,7 +222,7 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
         setFieldColor(valueView, target);
     }
 
-    private void showBreakdownDialog(ModifierTarget target, Integer attackIndex, Attack.WeaponReference weaponRef, GuiInflater guiInflater) {
+    private void showBreakdownDialog(ModifierTarget target, Integer attackIndex, WeaponReference weaponRef, GuiInflater guiInflater) {
         new BreakdownDialog(activity, data).buildDialog(target, null, attackIndex, weaponRef, guiInflater).show();
     }
 

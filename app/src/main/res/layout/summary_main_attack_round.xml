@@ -47,33 +47,9 @@
     </LinearLayout>
 
     <LinearLayout
+            android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-        <TextView
-                android:layout_width="0dp"
-                android:layout_weight="3"
-                android:layout_height="wrap_content"
-                style="@style/summary_value_text"
-                android:id="@+id/attack"/>
-
-        <TextView
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="wrap_content"
-                style="@style/summary_value_text"
-                android:id="@+id/damage"
-                android:layout_marginLeft="24dp"/>
-
-        <TextView
-                android:layout_width="0dp"
-                android:layout_weight="2"
-                android:layout_height="wrap_content"
-                style="@style/summary_value_text"
-                android:id="@+id/critical"
-                android:layout_marginLeft="24dp"/>
-
-    </LinearLayout>
+            android:orientation="vertical" />
 
 </LinearLayout>
