@@ -357,7 +357,7 @@ public class CharSummary {
     }
 
     private int getAbilityModifier(int attributeValue) {
-        return (attributeValue - 10) / 2;
+        return (int) Math.floor((attributeValue - 10) / 2f);
     }
 
 
