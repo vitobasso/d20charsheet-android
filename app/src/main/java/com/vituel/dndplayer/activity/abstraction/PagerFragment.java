@@ -42,7 +42,7 @@ public abstract class PagerFragment<T, A extends Activity & ParentActivity<T>> e
     public final void update() {
         data = activity.getData();
         onPopulate();
-        setFontRecursively(activity, root, MAIN_FONT);
+        onSetFont();
     }
 
     public final boolean isReadyToPopulate(){
@@ -52,6 +52,10 @@ public abstract class PagerFragment<T, A extends Activity & ParentActivity<T>> e
     protected abstract int getLayoutResourceId();
 
     protected abstract void onPopulate();
+
+    protected void onSetFont(){
+        setFontRecursively(activity, root, MAIN_FONT);
+    }
 
     public boolean onValidate(){
         return true;

@@ -49,8 +49,6 @@ IMPROVEMENTS
 
 BUGS
 
-- traits not showing properly on summary
-- mods disappearing in "select temp effects" after rolling around (check Invisible)
 - skill list in Summary rolls to top when toggling conditions
 - can add the same skill twice
 - can add the same feat twice

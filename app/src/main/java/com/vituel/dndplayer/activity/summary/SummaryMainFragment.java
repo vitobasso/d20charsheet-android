@@ -116,6 +116,11 @@ public class SummaryMainFragment extends PagerFragment<Character, SummaryActivit
             }
         }
 
+    }
+
+    @Override
+    protected void onSetFont() {
+        super.onSetFont();
         setFontToLabels();
     }
 
