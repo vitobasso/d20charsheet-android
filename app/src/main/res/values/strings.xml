@@ -147,6 +147,7 @@
     <string name="size">Size</string>
     <string name="saves">Saves</string>
     <string name="max_dex">Dex Limit</string>
+    <string name="max_dexterity">Maximum Dexterity</string>
     <string name="immune">Immune</string>
 
     <!-- modifier types -->

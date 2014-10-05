@@ -49,7 +49,7 @@ public class BreakdownDialog {
 
         //title
         ModifierStringConverter modConv = new ModifierStringConverter(activity);
-        CharSequence title = modConv.getTargetShort(target, variation);
+        CharSequence title = modConv.getTargetLong(target, variation);
         TextView titleView = findView(rootView, R.id.title);
         titleView.setText(FontUtil.toBold(title));
 

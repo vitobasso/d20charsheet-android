@@ -69,6 +69,54 @@ public class ModifierStringConverter {
                 return getString(R.string.cha);
             case AC:
                 return getString(R.string.ac);
+            case MAX_DEX:
+                return getString(R.string.max_dex);
+            case MR:
+                return getString(R.string.sr);
+            case DR:
+                return getString(R.string.dr);
+            case SAVES:
+            case FORT:
+            case REFL:
+            case WILL:
+            case SPEED:
+            case SPEED_MULT:
+            case INIT:
+            case HIT:
+            case DAMAGE:
+            case DAMAGE_MULT:
+            case CRIT_RANGE:
+            case CRIT_MULT:
+            case SIZE:
+            case CONCEAL:
+            case IMMUNE:
+                return getTargetLong(target, variation);
+            case SKILL:
+                return variation;
+            default:
+                Log.w(getClass().getSimpleName(), "Couldn't convert string: " + target.toString());
+                return target.toString();
+        }
+    }
+
+    public CharSequence getTargetLong(ModifierTarget target, String variation) {
+        switch (target) {
+            case HP:
+                return getString(R.string.hit_points);
+            case STR:
+                return getString(R.string.strength);
+            case DEX:
+                return getString(R.string.dexterity);
+            case CON:
+                return getString(R.string.constitution);
+            case INT:
+                return getString(R.string.intelligence);
+            case WIS:
+                return getString(R.string.wisdom);
+            case CHA:
+                return getString(R.string.char_class);
+            case AC:
+                return getString(R.string.armor_class);
             case SAVES:
                 return getString(R.string.saves);
             case FORT:
@@ -93,11 +141,11 @@ public class ModifierStringConverter {
             case SIZE:
                 return getString(R.string.size);
             case MAX_DEX:
-                return getString(R.string.max_dex);
+                return getString(R.string.max_dexterity);
             case MR:
-                return getString(R.string.sr);
+                return getString(R.string.spell_resistance);
             case DR:
-                return getString(R.string.dr);
+                return getString(R.string.damage_reduction);
             case CONCEAL:
                 return getString(R.string.concealment);
             case IMMUNE:

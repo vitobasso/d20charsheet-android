@@ -144,6 +144,7 @@
     <string name="size">Tamanho</string>
     <string name="saves">Resistências</string>
     <string name="max_dex">Max Des</string>
+    <string name="max_dexterity">Destreza Máxima</string>
     <string name="immune">Imune</string>
 
     <!-- modifier types -->
