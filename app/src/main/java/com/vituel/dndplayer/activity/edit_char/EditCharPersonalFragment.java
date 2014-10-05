@@ -1,18 +1,18 @@
 package com.vituel.dndplayer.activity.edit_char;
 
 import android.view.View;
-import android.widget.Spinner;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.util.ActivityUtil;
 
+import static com.vituel.dndplayer.util.ActivityUtil.populateStaticSpinner;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 import static com.vituel.dndplayer.util.ActivityUtil.readFloat;
 import static com.vituel.dndplayer.util.ActivityUtil.readInt;
+import static com.vituel.dndplayer.util.ActivityUtil.readSpinner;
 import static com.vituel.dndplayer.util.ActivityUtil.readString;
-import static com.vituel.dndplayer.util.ActivityUtil.setSpinnerSelection;
 
 /**
  * Created by Victor on 28/02/14.
@@ -27,15 +27,9 @@ public class EditCharPersonalFragment extends PagerFragment<CharBase, EditCharAc
     @Override
     protected void onPopulate() {
 
-        Spinner moral = findView(R.id.moral);
-        setSpinnerSelection(moral, data.getTendencyMoral());
-
-        Spinner loyalty = findView(R.id.loyalty);
-        setSpinnerSelection(loyalty, data.getTendencyLoyality());
-
-        Spinner gender = findView(R.id.genderValue);
-        setSpinnerSelection(gender, data.getGender());
-
+        populateStaticSpinner(activity, null, R.id.moral, data.getTendencyMoral());
+        populateStaticSpinner(activity, null, R.id.loyalty, data.getTendencyLoyality());
+        populateStaticSpinner(activity, null, R.id.genderValue, data.getGender());
         populateTextView(root, R.id.divinityValue, data.getDivinity());
         populateTextView(root, R.id.ageValue, data.getAge());
         populateTextView(root, R.id.heightValue, data.getHeight());
@@ -48,15 +42,10 @@ public class EditCharPersonalFragment extends PagerFragment<CharBase, EditCharAc
 
     @Override
     public void onSave() {
-        Spinner tendencyMoral = findView(R.id.tendencyValue, R.id.moral);
-        data.setTendencyMoral(tendencyMoral.getSelectedItem().toString());
 
-        Spinner tendencyLoyalty = findView(R.id.tendencyValue, R.id.loyalty);
-        data.setTendencyLoyality(tendencyLoyalty.getSelectedItem().toString());
-
-        Spinner gender = findView(R.id.genderValue);
-        data.setGender(gender.getSelectedItem().toString());
-
+        data.setTendencyMoral((String) readSpinner(activity, R.id.moral));
+        data.setTendencyLoyality((String) readSpinner(activity, R.id.loyalty));
+        data.setGender((String) readSpinner(activity, R.id.genderValue));
         data.setDivinity(readString(root, R.id.divinityValue));
         data.setAge(readInt(root, R.id.ageValue));
         data.setHeight(readFloat(root, R.id.heightValue));

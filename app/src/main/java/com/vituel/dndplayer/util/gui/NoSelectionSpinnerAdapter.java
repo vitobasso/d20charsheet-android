@@ -1,7 +1,6 @@
 package com.vituel.dndplayer.util.gui;
 
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SpinnerAdapter;
@@ -15,21 +14,18 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
  *
  * Created by Victor on 08/03/14.
  */
-public class NoSelSpinnerAdapter implements SpinnerAdapter {
+public class NoSelectionSpinnerAdapter extends SpinnerAdapterWrapper {
 
-    private Context context;
-    private SpinnerAdapter base;
     private final String defaultValue;
 
-    public NoSelSpinnerAdapter(Context context, SpinnerAdapter base) {
-        this.context = context;
-        this.base = base;
+    public NoSelectionSpinnerAdapter(Context context, SpinnerAdapter base) {
+        super(context, base);
         this.defaultValue = "";
     }
 
     @Override
     public int getCount() {
-        return base.getCount() + 1;
+        return super.getCount() + 1;
     }
 
     @Override
@@ -37,7 +33,7 @@ public class NoSelSpinnerAdapter implements SpinnerAdapter {
         if (position == 0 || position == -1) {
             return null;
         }
-        return base.getItem(position - 1);
+        return super.getItem(position - 1);
     }
 
     @Override
@@ -45,7 +41,7 @@ public class NoSelSpinnerAdapter implements SpinnerAdapter {
         if (position == 0 || position == -1) {
             return -1;
         }
-        return base.getItemId(position - 1);
+        return super.getItemId(position - 1);
     }
 
     @Override
@@ -53,7 +49,7 @@ public class NoSelSpinnerAdapter implements SpinnerAdapter {
         if (position == 0 || position == -1) {
             return -1;
         }
-        return base.getItemViewType(position - 1);
+        return super.getItemViewType(position - 1);
     }
 
     @Override
@@ -65,7 +61,7 @@ public class NoSelSpinnerAdapter implements SpinnerAdapter {
         } else {
             v = (TextView) base.getView(position - 1, convertView, parent);
         }
-        setFontRecursively(context, v, MAIN_FONT); //TODO move to setText ?
+        setFontRecursively(context, v, MAIN_FONT);
         return v;
     }
 
@@ -78,33 +74,8 @@ public class NoSelSpinnerAdapter implements SpinnerAdapter {
         } else {
             v = (TextView) base.getDropDownView(position - 1, convertView, parent);
         }
-        setFontRecursively(context, v, MAIN_FONT); //TODO move to setText ?
+        setFontRecursively(context, v, MAIN_FONT);
         return v;
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return base.getViewTypeCount();
-    }
-
-    @Override
-    public boolean hasStableIds() {
-        return base.hasStableIds();
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return base.isEmpty();
-    }
-
-    @Override
-    public void registerDataSetObserver(DataSetObserver observer) {
-        base.registerDataSetObserver(observer);
-    }
-
-    @Override
-    public void unregisterDataSetObserver(DataSetObserver observer) {
-        base.unregisterDataSetObserver(observer);
     }
 
 }

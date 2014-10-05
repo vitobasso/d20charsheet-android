@@ -14,7 +14,7 @@ import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.ModifierType;
 import com.vituel.dndplayer.model.Trait;
-import com.vituel.dndplayer.util.gui.NoSelSpinnerAdapter;
+import com.vituel.dndplayer.util.gui.NoSelectionSpinnerAdapter;
 
 import java.util.Arrays;
 import java.util.List;
@@ -43,10 +43,10 @@ public class EditTraitActivity extends AbstractEditActivity<Trait> {
         //modifiers
         SpinnerAdapter targetAdapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, Arrays.asList(ModifierTarget.values()));
-        targetAdapter = new NoSelSpinnerAdapter(this, targetAdapter);
+        targetAdapter = new NoSelectionSpinnerAdapter(this, targetAdapter);
         SpinnerAdapter typeAdapter = new ArrayAdapter<>(
                 this, android.R.layout.simple_spinner_item, Arrays.asList(ModifierType.values()));
-        typeAdapter = new NoSelSpinnerAdapter(this, typeAdapter);
+        typeAdapter = new NoSelectionSpinnerAdapter(this, typeAdapter);
 
         ViewGroup effectsRoot = findView(this, R.id.effectsList);
         List<Modifier> modifiers = entity.getModifiers();

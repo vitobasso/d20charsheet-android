@@ -19,8 +19,9 @@ import android.widget.TextView;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.summary.SummaryActivity;
 import com.vituel.dndplayer.model.DiceRoll;
+import com.vituel.dndplayer.util.gui.CustomFontSpinnerAdapter;
 import com.vituel.dndplayer.util.gui.EnumI18nSpinnerAdapter;
-import com.vituel.dndplayer.util.gui.NoSelSpinnerAdapter;
+import com.vituel.dndplayer.util.gui.NoSelectionSpinnerAdapter;
 
 import java.security.InvalidParameterException;
 import java.util.regex.Matcher;
@@ -153,7 +154,7 @@ public class ActivityUtil {
         //set adapter
         SpinnerAdapter adapter = new EnumI18nSpinnerAdapter(
                 activity, android.R.layout.simple_spinner_item, enumValues);
-        adapter = new NoSelSpinnerAdapter(activity, adapter);
+        adapter = new NoSelectionSpinnerAdapter(activity, adapter);
         spinner.setAdapter(adapter);
 
         //set selection
@@ -177,7 +178,25 @@ public class ActivityUtil {
         }
     }
 
-    public static <T> T readSpinner(Object root, int viewRes) {
+    public static Spinner populateStaticSpinner(Activity activity, ViewGroup ancestor, int spinnerRes, String selection){
+
+        //find spinner
+        Spinner spinner;
+        if (ancestor != null) {
+            spinner = findView(ancestor, spinnerRes);
+        } else {
+            spinner = findView(activity, spinnerRes);
+        }
+
+        //setup
+        CustomFontSpinnerAdapter adapter = new CustomFontSpinnerAdapter(activity, spinner.getAdapter());
+        spinner.setAdapter(adapter);
+        setSpinnerSelection(spinner, selection);
+
+        return spinner;
+    }
+
+    public static <T> T readSpinner(Object root, int... viewRes) {
         Spinner spinner = findView(root, viewRes);
         return (T) spinner.getSelectedItem();
     }
@@ -196,27 +215,27 @@ public class ActivityUtil {
         return populateTextView(root, viewRes, "" + value);
     }
 
-    public static String readString(Object root, int viewRes) {
+    public static String readString(Object root, int... viewRes) {
         TextView view = findView(root, viewRes);
         return view.getText().toString().trim();
     }
 
-    public static int readInt(Object root, int viewRes) {
+    public static int readInt(Object root, int... viewRes) {
         TextView view = findView(root, viewRes);
         return Integer.valueOf(view.getText().toString().trim());
     }
 
-    public static float readFloat(Object root, int viewRes) {
+    public static float readFloat(Object root, int... viewRes) {
         TextView view = findView(root, viewRes);
         return Float.valueOf(view.getText().toString().trim());
     }
 
-    public static DiceRoll readDice(Object root, int viewRes) {
+    public static DiceRoll readDice(Object root, int... viewRes) {
         TextView view = findView(root, viewRes);
         return view.getText().length() > 0 ? new DiceRoll(view.getText().toString()) : null;
     }
 
-    public static boolean validateText(Object root, int viewRes) {
+    public static boolean validateText(Object root, int... viewRes) {
         TextView view = findView(root, viewRes);
         String str = view.getText().toString().trim();
         if (str.isEmpty()) {
@@ -229,7 +248,7 @@ public class ActivityUtil {
         }
     }
 
-    public static boolean validateSpinner(Object root, int viewRes) {
+    public static boolean validateSpinner(Object root, int... viewRes) {
         Spinner spinner = findView(root, viewRes);
         Object selection = spinner.getSelectedItem();
         if (selection == null) {
