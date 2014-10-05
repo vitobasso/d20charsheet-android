@@ -16,7 +16,6 @@ import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
 import com.vituel.dndplayer.model.CharSkill;
 import com.vituel.dndplayer.model.Character;
-import com.vituel.dndplayer.util.ActivityUtil;
 import com.vituel.dndplayer.util.AppCommons;
 
 import java.util.ArrayList;
@@ -27,6 +26,7 @@ import static com.vituel.dndplayer.model.ModifierTarget.SKILL;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
+import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 
@@ -85,8 +85,12 @@ public class SummarySkillsFragment extends PagerFragment<Character, SummaryActiv
 
             CharSkill skill = skills.get(position);
             final String skillName = skill.getSkill().getName();
+            populateTextView(group, R.id.skill, skillName);
 
-            setFontRecursively(activity, group, MAIN_FONT);
+            TextView bonusView = populateTextView(group, R.id.bonus, skill.getScore());
+            int color = new AppCommons(activity).getValueColor(data.getBase(), SKILL, skillName);
+            bonusView.setTextColor(color);
+
             group.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -94,14 +98,7 @@ public class SummarySkillsFragment extends PagerFragment<Character, SummaryActiv
                 }
             });
 
-            TextView skillView = ActivityUtil.findView(group, R.id.skill);
-            skillView.setText(skillName);
-
-            TextView bonusView = ActivityUtil.findView(group, R.id.bonus);
-            bonusView.setText("" + skill.getScore());
-            int color = new AppCommons(activity).getValueColor(data.getBase(), SKILL, skillName);
-            bonusView.setTextColor(color);
-
+            setFontRecursively(activity, group, MAIN_FONT); //TODO bring to supperclass or to setText
             return group;
         }
     }

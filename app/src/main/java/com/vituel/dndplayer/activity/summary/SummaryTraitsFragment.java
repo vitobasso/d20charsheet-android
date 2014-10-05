@@ -28,6 +28,8 @@ import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
+import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 
 /**
  * Created by Victor on 21/03/14.
@@ -101,6 +103,7 @@ public class SummaryTraitsFragment extends PagerFragment<Character, SummaryActiv
 
             populateTextView(convertView, R.id.text, groups.get(groupPosition));
 
+            setFontRecursively(activity, convertView, MAIN_FONT); //TODO bring to supperclass or to setText
             return convertView;
         }
 
@@ -117,6 +120,7 @@ public class SummaryTraitsFragment extends PagerFragment<Character, SummaryActiv
             EffectPopulator populator = new EffectPopulator(activity);
             populator.populate(effect, (ViewGroup)convertView);
 
+            setFontRecursively(activity, convertView, MAIN_FONT); //TODO bring to supperclass or to setText
             return convertView;
         }
     }

@@ -7,9 +7,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.SelectSkillActivity;
@@ -24,6 +22,7 @@ import static android.app.Activity.RESULT_OK;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 import static com.vituel.dndplayer.util.ActivityUtil.readInt;
 import static com.vituel.dndplayer.util.ActivityUtil.validateText;
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
@@ -116,11 +115,8 @@ public class EditCharSkillsFragment extends PagerFragment<CharBase, EditCharActi
 
             CharSkill charSkill = skills.get(position);
 
-            TextView nameView = findView(v, R.id.name); //TODO use ActivityUtil.populateTextView
-            nameView.setText(charSkill.getSkill().getName());
-
-            EditText gradView = findView(v, R.id.value);
-            gradView.setText("" + charSkill.getScore());
+            populateTextView(v, R.id.name, charSkill.getSkill().getName());
+            populateTextView(v, R.id.value, charSkill.getScore());
 
             View removeView = findView(v, R.id.remove);
             removeView.setOnClickListener(new View.OnClickListener() {
@@ -135,7 +131,7 @@ public class EditCharSkillsFragment extends PagerFragment<CharBase, EditCharActi
                 }
             });
 
-            setFontRecursively(activity, v, MAIN_FONT);
+            setFontRecursively(activity, v, MAIN_FONT); //TODO bring to supperclass or to setText
             return v;
         }
     }
