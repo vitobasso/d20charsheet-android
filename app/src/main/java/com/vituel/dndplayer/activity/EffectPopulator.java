@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.AbstractEffect;
 import com.vituel.dndplayer.model.Modifier;
+import com.vituel.dndplayer.util.AppCommons;
 import com.vituel.dndplayer.util.i18n.ModifierStringConverter;
 
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
@@ -20,10 +21,12 @@ public class EffectPopulator {
 
     private Context context;
     private ModifierStringConverter modConv;
+    private AppCommons appCommons;
 
     public EffectPopulator(Context context) {
         this.context = context;
         this.modConv = new ModifierStringConverter(context);
+        this.appCommons = new AppCommons(context);
     }
 
     public void populate(AbstractEffect effect, ViewGroup group){
@@ -43,9 +46,9 @@ public class EffectPopulator {
             Modifier mod = effect.getModifiers().get(i);
             modView.setText(modConv.getShortString(mod));
             if (mod.isBonus()) {
-                modView.setTextColor(context.getResources().getColor(android.R.color.holo_green_dark));
+                modView.setTextColor(appCommons.green);
             } else {
-                modView.setTextColor(context.getResources().getColor(android.R.color.holo_red_dark));
+                modView.setTextColor(appCommons.red);
             }
         }
 

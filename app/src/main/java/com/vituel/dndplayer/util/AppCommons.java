@@ -1,6 +1,7 @@
 package com.vituel.dndplayer.util;
 
 import android.content.Context;
+
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.Condition;
 import com.vituel.dndplayer.model.DiceRoll;
@@ -10,7 +11,12 @@ import com.vituel.dndplayer.model.TempEffect;
 
 import java.util.Collection;
 
-import static com.vituel.dndplayer.model.ModifierTarget.*;
+import static com.vituel.dndplayer.model.ModifierTarget.DEX;
+import static com.vituel.dndplayer.model.ModifierTarget.FORT;
+import static com.vituel.dndplayer.model.ModifierTarget.MAX_DEX;
+import static com.vituel.dndplayer.model.ModifierTarget.REFL;
+import static com.vituel.dndplayer.model.ModifierTarget.SAVES;
+import static com.vituel.dndplayer.model.ModifierTarget.WILL;
 
 /**
  * Created by Victor on 24/04/14.
@@ -23,8 +29,8 @@ public class AppCommons {
     public AppCommons(Context ctx) {
         this.ctx = ctx;
         this.black = ctx.getResources().getColor(android.R.color.black);
-        this.green = ctx.getResources().getColor(android.R.color.holo_green_dark);
-        this.red = ctx.getResources().getColor(android.R.color.holo_red_dark);
+        this.green = ctx.getResources().getColor(android.R.color.holo_green_light);
+        this.red = ctx.getResources().getColor(android.R.color.holo_red_light);
     }
 
     public static boolean modifierApplies(Modifier modifier, ModifierTarget target, String variation,
