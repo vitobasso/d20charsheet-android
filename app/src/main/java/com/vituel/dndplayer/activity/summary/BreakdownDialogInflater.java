@@ -7,7 +7,6 @@ import android.widget.TextView;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.AbstractEffect;
 import com.vituel.dndplayer.model.CharSummary;
-import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.ModifierType;
@@ -70,7 +69,7 @@ public class BreakdownDialogInflater {
             for (Modifier modifier : effect.getModifiers()) {
                 if (modifierApplies(modifier)) {
                     count++;
-                    appendRow(parentView, modifier.getAmount(), source, modifier.getType(), black);
+                    appendRow(parentView, modifier, source, modifier.getType(), black);
                 }
             }
         }
@@ -84,7 +83,7 @@ public class BreakdownDialogInflater {
                 if (modifierApplies(modifier)) {
                     count++;
                     int color = isColored ? modifier.isBonus() ? green : red : black;
-                    appendRow(parentView, modifier.getAmount(), effect.getName(), modifier.getType(), color);
+                    appendRow(parentView, modifier, effect.getName(), modifier.getType(), color);
                 }
             }
         }
@@ -97,7 +96,7 @@ public class BreakdownDialogInflater {
             for (Modifier modifier : modifiers.keySet()) {
                 if (modifierApplies(modifier)) {
                     count++;
-                    appendRow(parentView, modifier.getAmount(), modifiers.get(modifier), black);
+                    appendRow(parentView, modifier, modifiers.get(modifier), black);
                 }
             }
         }
@@ -110,26 +109,24 @@ public class BreakdownDialogInflater {
             for (Modifier modifier : modifiers) {
                 if (modifierApplies(modifier)) {
                     count++;
-                    appendRow(parentView, modifier.getAmount(), source, modifier.getType(), black);
+                    appendRow(parentView, modifier, source, modifier.getType(), black);
                 }
             }
         }
         return count;
     }
 
-    public boolean modifierApplies(Modifier modifier) {
-        return AppCommons.modifierApplies(modifier, target, variation, charSummary.getBase().getActiveConditions());
-    }
-
-    public ViewGroup  appendRow(ViewGroup parentView, DiceRoll value, String source, int colorRes) {
-        return appendRow(parentView, value.toString(), source, colorRes);
-    }
-
-    public ViewGroup  appendRow(ViewGroup parentView, DiceRoll value, String source, ModifierType type, int color) {
+    public ViewGroup  appendRow(ViewGroup parentView, Modifier modifier, String source, ModifierType type, int color) {
         if (type != null) {
             source = String.format("%s (%s)", source, type.toString());
         }
-        return appendRow(parentView, value.toString(), source, color);
+        String value = AppCommons.modifierString(modifier,  source);
+        return appendRow(parentView, value, source, color);
+    }
+
+    public ViewGroup  appendRow(ViewGroup parentView, Modifier modifier, String source, int colorRes) {
+        String value = AppCommons.modifierString(modifier, source);
+        return appendRow(parentView, value, source, colorRes);
     }
 
     public ViewGroup appendRow(ViewGroup parentView, int value, String source, int color) {
@@ -146,6 +143,10 @@ public class BreakdownDialogInflater {
         sourceView.setTextColor(color);
 
         return row;
+    }
+
+    public boolean modifierApplies(Modifier modifier) {
+        return AppCommons.modifierApplies(modifier, target, variation, charSummary.getBase().getActiveConditions());
     }
 
 }

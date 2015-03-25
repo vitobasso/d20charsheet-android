@@ -34,7 +34,7 @@ public class AppCommons {
     }
 
     public static boolean modifierApplies(Modifier modifier, ModifierTarget target, String variation,
-                                    Collection<Condition> activeConditions) {
+                                          Collection<Condition> activeConditions) {
 
         ModifierTarget modTarget = modifier.getTarget();
         String modVariation = modifier.getVariation();
@@ -49,6 +49,23 @@ public class AppCommons {
         boolean aggregateTarget = (target == FORT || target == REFL || target == WILL) && modTarget == SAVES;
 
         return ((targetMatches && variationMatches) || maxDexApplies || aggregateTarget) && satisfiesCondition && nonZero;
+    }
+
+    public static String modifierString(Modifier modifier, String source) {
+
+        ModifierTarget modTarget = modifier.getTarget();
+        DiceRoll amount = modifier.getAmount();
+
+        String prefix = "";
+        if (!"Base".equals(source)) {
+            if (modTarget == MAX_DEX) {
+                prefix = "<";
+            } else if (amount.isPositive()) {
+                prefix = "+";
+            }
+        }
+
+        return prefix + amount.toString();
     }
 
     public int getValueColor(CharBase base, ModifierTarget target, String variation) {
