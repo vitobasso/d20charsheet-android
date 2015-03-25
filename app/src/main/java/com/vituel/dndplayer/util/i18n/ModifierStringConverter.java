@@ -147,7 +147,7 @@ public class ModifierStringConverter {
             case DR:
                 return getString(R.string.damage_reduction);
             case CONCEAL:
-                return getString(R.string.concealment);
+                return getString(R.string.conceal);
             case IMMUNE:
                 return getString(R.string.immune);
             case SKILL:

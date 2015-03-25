@@ -61,7 +61,7 @@ public class ModifierTargetStringConverter extends AbstractEnumStringConverter<M
             case INIT:
                 return findResource(R.string.init);
             case CONCEAL:
-                return findResource(R.string.concealment);
+                return findResource(R.string.conceal);
             case DR:
                 return findResource(R.string.dr);
             case DR_TYPE:

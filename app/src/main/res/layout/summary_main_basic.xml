@@ -10,25 +10,26 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:paddingRight="@dimen/half_padding">
 
         <include
                 layout="@layout/summary_main_field_description"
                 android:id="@+id/hit_points"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"/>
 
         <include
                 layout="@layout/summary_main_field_description"
                 android:id="@+id/damage_reduction"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"/>
 
         <LinearLayout
                 android:orientation="vertical"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
             <include
@@ -75,41 +76,42 @@
             android:orientation="vertical"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/half_padding">
 
         <include
                 layout="@layout/summary_main_field_description"
                 android:id="@+id/armor_class"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"/>
 
         <include
                 layout="@layout/summary_main_field_description"
                 android:id="@+id/spell_resistance"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"/>
 
         <LinearLayout
                 android:orientation="vertical"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
             <include
-                    layout="@layout/summary_main_field_no_description"
+                    layout="@layout/summary_main_field_simple"
                     android:id="@+id/fortitude"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
             <include
-                    layout="@layout/summary_main_field_no_description"
+                    layout="@layout/summary_main_field_simple"
                     android:id="@+id/reflex"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
             <include
-                    layout="@layout/summary_main_field_no_description"
+                    layout="@layout/summary_main_field_simple"
                     android:id="@+id/will"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -118,23 +120,23 @@
         </LinearLayout>
 
         <include
-                layout="@layout/summary_main_field_no_description"
+                layout="@layout/summary_main_field_simple"
                 android:id="@+id/concealment"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"/>
 
         <include
-                layout="@layout/summary_main_field_no_description"
+                layout="@layout/summary_main_field_simple"
                 android:id="@+id/initiative"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"/>
 
         <include
-                layout="@layout/summary_main_field_no_description"
+                layout="@layout/summary_main_field_simple"
                 android:id="@+id/speed"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
     </LinearLayout>

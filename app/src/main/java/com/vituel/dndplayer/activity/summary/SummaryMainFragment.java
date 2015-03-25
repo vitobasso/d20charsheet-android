@@ -87,16 +87,16 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
 
         setField(R.id.armor_class, R.string.ac, R.string.armor_class, "" + data.getArmorClass(), AC);
         setField(R.id.spell_resistance, R.string.sr, R.string.spell_resistance, "" + data.getMagicResistance(), MR, data.getMagicResistance());
+
+        setField(R.id.fortitude, R.string.empty, R.string.fort, "" + data.getFortitude(), FORT);
+        setField(R.id.reflex, R.string.empty, R.string.refl, "" + data.getReflex(), REFL);
+        setField(R.id.will, R.string.empty, R.string.will, "" + data.getWill(), WILL);
+
         String concealValue = MessageFormat.format("{0}%", data.getConcealment());
+        setField(R.id.concealment, R.string.empty, R.string.conceal_short, concealValue, CONCEAL, data.getConcealment());
 
-        setField(R.id.fortitude, R.string.fort, R.string.empty, "" + data.getFortitude(), FORT);
-        setField(R.id.reflex, R.string.refl, R.string.empty, "" + data.getReflex(), REFL);
-        setField(R.id.will, R.string.will, R.string.empty, "" + data.getWill(), WILL);
-
-        setField(R.id.concealment, R.string.conceal, R.string.empty, concealValue, CONCEAL, data.getConcealment());
-
-        setField(R.id.initiative, R.string.init, R.string.empty, "" + data.getInitiative(), INIT);
-        setField(R.id.speed, R.string.speed, R.string.empty, "" + data.getSpeed(), SPEED);
+        setField(R.id.initiative, R.string.empty, R.string.init, "" + data.getInitiative(), INIT);
+        setField(R.id.speed, R.string.empty, R.string.speed_short, "" + data.getSpeed(), SPEED);
 
         //attacks
         ViewGroup atkParent = findView(R.id.attacks_root);

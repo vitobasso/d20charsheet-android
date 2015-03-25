@@ -4,12 +4,14 @@
               style="@style/summary_field_group">
 
     <LinearLayout
-            style="@style/summary_label_group">
+            style="@style/summary_label_group"
+            android:layout_width="0dp"
+            android:layout_weight="1">
 
         <TextView
                 style="@style/summary_title"
-                android:id="@+id/title"
-                android:textSize="18sp"/>
+                android:id="@+id/description"
+                android:textSize="16sp"/>
 
     </LinearLayout>
 
