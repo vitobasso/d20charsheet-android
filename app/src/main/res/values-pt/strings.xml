@@ -68,9 +68,11 @@
     <string name="ord_8">8º</string>
     <string name="ord_9">9º</string>
     <string name="ord_10">10º</string>
+    <string name="ord">#</string>
     <string name="penalty">Penalidade</string>
     <string name="penalties">Penalidades</string>
     <string name="weapon">Arma</string>
+    <string name="empty"></string>
     <string name="hit_points">Pontos de Vida</string>
     <string name="spell_resistance">Resistência à Magia</string>
     <string name="damage_reduction">Redução de Dano</string>

@@ -4,7 +4,6 @@
     <!-- UI -->
     <string name="app_name">D&amp;D Player</string>
     <string name="page_summary">Summary</string>
-    <string name="init_value">\?</string>
     <string name="create">Create</string>
     <string name="select">Select</string>
     <string name="remove">Remove</string>
