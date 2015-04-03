@@ -3,6 +3,8 @@ IMPROVEMENTS
 #summary
 - ability damage
 - touch AC
+- dex modifier to ranged weapons (what about weapon finesse? zen archery? make modifier-ability links customizable?
+    - flexible association between base effects and targets (with set of default associations).
 
 #summary breakdown
 - breakdown of composite attributes (critical, speed, damage, damage reduction)
@@ -53,6 +55,7 @@ BUGS
 - Barkskin doesn't parse
 - when coming back to an effect list, after create/edit, mods don't show
 - when has 2+ classes, class fields change when moving away from EditCharBasicFragment and back
+- nullpointer after renaming equiped weapon (at Attack.applyModifier, DAMAGE, getWeapon() is null)
 
 
 FEATURES

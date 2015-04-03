@@ -107,7 +107,7 @@ public class CharSummary {
     }
 
     /**
-     * Uses the same modeling classes (Attack, WeaponProperties) as CharBase but clones them to
+     * Uses the same model classes (Attack, WeaponProperties) as CharBase but clones them to
      * allow independent application of modifiers.
      */
     private void initAttacks() {
