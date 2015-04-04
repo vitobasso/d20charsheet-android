@@ -78,6 +78,7 @@ REFACTOR
 - unify attribute calculation (summary and breakdown)
 - organize BreakdownDialog
 - abstract EditCharFeatsFragment, SummaryTempEffectsFragment, EditCharSkillsFragment
+- ViewPager & Fragments without support library
 
 
 PROJECT
