@@ -17,8 +17,8 @@ import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
 import com.vituel.dndplayer.model.CharSummary;
 import com.vituel.dndplayer.model.ClassLevel;
+import com.vituel.dndplayer.model.Feat;
 import com.vituel.dndplayer.model.Race;
-import com.vituel.dndplayer.model.Trait;
 import com.vituel.dndplayer.util.gui.SingleColExpListAdapter;
 
 import java.util.List;
@@ -47,18 +47,18 @@ public class SummaryTraitsFragment extends PagerFragment<CharSummary, SummaryAct
         ((ExpandableListView) root).setAdapter(adapter);
     }
 
-    private TreeMap<String, List<Trait>> organizeTraits(CharSummary charSummary) {
-        TreeMap<String, List<Trait>> traitsMap = new TreeMap<>();
+    private TreeMap<String, List<Feat>> organizeTraits(CharSummary charSummary) {
+        TreeMap<String, List<Feat>> traitsMap = new TreeMap<>();
 
-        List<Trait> feats = charSummary.getBase().getFeats();
+        List<Feat> feats = charSummary.getBase().getFeats();
         traitsMap.put(activity.getResources().getString(R.string.feats), feats);
 
         Race race = charSummary.getBase().getRace();
-        List<Trait> raceTraits = race.getTraits();
+        List<Feat> raceTraits = race.getTraits();
         traitsMap.put(race.getName(), raceTraits);
 
         for (ClassLevel classLevel : charSummary.getBase().getClassLevels()) {
-            List<Trait> classTraits = classLevel.getTraits();
+            List<Feat> classTraits = classLevel.getTraits();
             traitsMap.put(classLevel.getName(), classTraits);
         }
 
@@ -88,9 +88,9 @@ public class SummaryTraitsFragment extends PagerFragment<CharSummary, SummaryAct
         }
     }
 
-    private class Adapter extends SingleColExpListAdapter<String, Trait> {
+    private class Adapter extends SingleColExpListAdapter<String, Feat> {
 
-        public Adapter(TreeMap<String, List<Trait>> data) {
+        public Adapter(TreeMap<String, List<Feat>> data) {
             super(SummaryTraitsFragment.this.activity, data, R.layout.expandable_list_group, R.layout.effect_row);
         }
 
@@ -115,7 +115,7 @@ public class SummaryTraitsFragment extends PagerFragment<CharSummary, SummaryAct
             }
 
             String group = groups.get(groupPosition);
-            Trait effect = children.get(group).get(childPosition);
+            Feat effect = children.get(group).get(childPosition);
 
             EffectPopulator populator = new EffectPopulator(activity);
             populator.populate(effect, (ViewGroup)convertView);

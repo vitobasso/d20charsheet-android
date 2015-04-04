@@ -5,19 +5,25 @@ import java.util.List;
 /**
  * Created by Victor on 30/03/14.
  */
-public class Race extends AbstractEffect {
+public class Race extends AbstractEntity {
 
-    private List<Trait> traits;
+    private Effect effect;
 
-    public Race() {
-        super(Type.RACE);
+    private List<Effect> traits;
+
+    public Effect getEffect() {
+        return effect;
     }
 
-    public List<Trait> getTraits() {
+    public void setEffect(Effect effect) {
+        this.effect = effect;
+    }
+
+    public List<Effect> getTraits() {
         return traits;
     }
 
-    public void setTraits(List<Trait> traits) {
+    public void setTraits(List<Effect> traits) {
         this.traits = traits;
     }
 }

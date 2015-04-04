@@ -61,11 +61,11 @@
             android:label="@string/race_edit"/>
 
         <activity
-            android:name=".activity.EditTraitActivity"
+            android:name=".activity.EditFeatActivity"
             android:label="@string/trait_edit"/>
 
         <activity
-            android:name=".activity.SelectTraitActivity"
+            android:name=".activity.SelectFeatActivity"
             android:label="@string/trait_select"/>
 
         <activity

@@ -4,18 +4,17 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.vituel.dndplayer.model.Clazz;
 import com.vituel.dndplayer.model.ClassTrait;
-import com.vituel.dndplayer.model.Trait;
+import com.vituel.dndplayer.model.Clazz;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.vituel.dndplayer.model.Clazz.AttackProgression;
 import static com.vituel.dndplayer.model.Clazz.ResistProgression;
+import static com.vituel.dndplayer.util.JavaUtil.getAndIfOverflowsCreate;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
-import static com.vituel.dndplayer.util.JavaUtil.getAndIfOverflowsCreate;
 
 
 public class ClassDao extends AbstractEntityDao<Clazz> {
@@ -36,6 +35,7 @@ public class ClassDao extends AbstractEntityDao<Clazz> {
             + COLUMN_WILL + " text not null"
             + ");";
 
+    private ClassTraitDao classTraitDao = new ClassTraitDao(context, database);;
 
     public ClassDao(Context context) {
         super(context);
@@ -75,26 +75,28 @@ public class ClassDao extends AbstractEntityDao<Clazz> {
     @Override
     protected Clazz fromCursor(Cursor cursor) {
 
-        Clazz c = new Clazz();
-        c.setId(cursor.getLong(0));
-        c.setName(cursor.getString(1));
-        c.setAttackProg(AttackProgression.valueOf(cursor.getString(2)));
-        c.setFortitudeProg(ResistProgression.valueOf(cursor.getString(3)));
-        c.setReflexProg(ResistProgression.valueOf(cursor.getString(4)));
-        c.setWillProg(ResistProgression.valueOf(cursor.getString(5)));
+        Clazz result = new Clazz();
+        result.setId(cursor.getLong(0));
+        result.setName(cursor.getString(1));
+        result.setAttackProg(AttackProgression.valueOf(cursor.getString(2)));
+        result.setFortitudeProg(ResistProgression.valueOf(cursor.getString(3)));
+        result.setReflexProg(ResistProgression.valueOf(cursor.getString(4)));
+        result.setWillProg(ResistProgression.valueOf(cursor.getString(5)));
 
         //traits
-        TraitLinkDao traitLinkDao = new TraitLinkDao(context, database);
-        List<Trait> traits = traitLinkDao.findByClass(c.getId());
+        List<ClassTrait> traits = classTraitDao.findByParent(result.getId());
 
         //organize traits by level
-        c.setTraits(new ArrayList<List<Trait>>());
-        for(Trait trait : traits){
-            ClassTrait cTrait = (ClassTrait) trait;
-            List<Trait> rightLevelList = getAndIfOverflowsCreate(c.getTraits(), cTrait.getLevel() - 1);
-            rightLevelList.add(trait);
+        result.setTraits(new ArrayList<List<ClassTrait>>());
+        for(ClassTrait trait : traits){
+            List<ClassTrait> listOfSpecificLevel = getAndIfOverflowsCreate(result.getTraits(), trait.getLevel() - 1);
+            listOfSpecificLevel.add(trait);
+
+            //set source name
+            String sourceName = result.getName() + " " + trait.getLevel();
+            trait.getEffect().setSourceName(sourceName);
         }
 
-        return c;
+        return result;
     }
 }

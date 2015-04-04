@@ -3,6 +3,7 @@ package com.vituel.dndplayer.dao;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import com.vituel.dndplayer.model.Condition;
@@ -13,7 +14,6 @@ import com.vituel.dndplayer.model.ModifierType;
 
 import java.util.List;
 
-import static com.vituel.dndplayer.model.AbstractEffect.Type;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 
 
@@ -21,8 +21,7 @@ public class ModifierDao extends AbstractEntityDao<Modifier> {
 
     public static final String TABLE = "modifier";
 
-    private static final String COLUMN_SOURCE_TYPE = "source_type"; //item, trait, temp effect
-    private static final String COLUMN_SOURCE_ID = "source_id";
+    private static final String COLUMN_EFFECT_ID = "effect_id";
     private static final String COLUMN_TARGET = "target";
     private static final String COLUMN_TARGET_VARIATION = "variation"; //specific skills are treated as variations of the "SKILL" target (because skills are dynamic)
     private static final String COLUMN_AMOUNT = "amount";
@@ -32,8 +31,7 @@ public class ModifierDao extends AbstractEntityDao<Modifier> {
 
     public static final String CREATE_TABLE = "create table " + TABLE + "("
             + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_SOURCE_TYPE + " text not null, "
-            + COLUMN_SOURCE_ID + " integer not null, "
+            + COLUMN_EFFECT_ID + " integer not null, "
             + COLUMN_TARGET + " text not null, "
             + COLUMN_TARGET_VARIATION + " text, "
             + COLUMN_AMOUNT + " text not null, "
@@ -47,6 +45,10 @@ public class ModifierDao extends AbstractEntityDao<Modifier> {
         super(context);
     }
 
+    public ModifierDao(Context context, SQLiteDatabase database) {
+        super(context, database);
+    }
+
     @Override
     protected String tableName() {
         return TABLE;
@@ -56,8 +58,7 @@ public class ModifierDao extends AbstractEntityDao<Modifier> {
     protected String[] allColumns() {
         return new String[]{
                 COLUMN_ID,
-                COLUMN_SOURCE_TYPE,
-                COLUMN_SOURCE_ID,
+                COLUMN_EFFECT_ID,
                 COLUMN_TARGET,
                 COLUMN_TARGET_VARIATION,
                 COLUMN_AMOUNT,
@@ -67,23 +68,22 @@ public class ModifierDao extends AbstractEntityDao<Modifier> {
         };
     }
 
-    public List<Modifier> save(List<Modifier> modifiers, Type sourceType, long sourceId) {
+    public List<Modifier> save(List<Modifier> modifiers, long effectId) {
         for (Modifier modifier : modifiers) {
             if (modifier == null || modifier.getTarget() == null || modifier.getAmount() == null) {
                 Log.w(getClass().getSimpleName(), "Empty modifier ignored.");
                 continue;
             }
 
-            save(modifier, sourceType, sourceId);
+            save(modifier, effectId);
         }
         return modifiers;
     }
 
-    public Modifier save(Modifier entity, Type sourceType, long sourceId) {
+    public Modifier save(Modifier entity, long effectId) {
 
         ContentValues values = new ContentValues();
-        values.put(COLUMN_SOURCE_TYPE, sourceType.toString());
-        values.put(COLUMN_SOURCE_ID, sourceId);
+        values.put(COLUMN_EFFECT_ID, effectId);
         values.put(COLUMN_TARGET, entity.getTarget().toString());
         values.put(COLUMN_TARGET_VARIATION, entity.getVariation());
         values.put(COLUMN_AMOUNT, entity.getAmount().toString());
@@ -100,16 +100,16 @@ public class ModifierDao extends AbstractEntityDao<Modifier> {
         return entity;
     }
 
-    public List<Modifier> listAll(Type sourceType, long sourceId) {
-        return listForQuery(query(sourceType, sourceId));
+    public List<Modifier> listAll(long effectId) {
+        return listForQuery(query(effectId));
     }
 
-    public void removeAllForEffect(Type sourceType, long sourceId) {
-        removeForQuery(query(sourceType, sourceId));
+    public void removeAllForEffect(long effectId) {
+        removeForQuery(query(effectId));
     }
 
-    private String query(Type sourceType, long sourceId) {
-        return String.format("%s='%s' and %s=%d", COLUMN_SOURCE_TYPE, sourceType, COLUMN_SOURCE_ID, sourceId);
+    private String query(long effectId) {
+        return String.format("%s=%d", COLUMN_EFFECT_ID, effectId);
     }
 
     @Override

@@ -54,7 +54,7 @@ public class CharJsonParser {
             ObjectMapper parser = buildParser();
             CharBase charBase = parser.readValue(file, CharBase.class);
 
-            //TODO insert into db, find dependencies by name
+            //TODO insertOrUpdate into db, find dependencies by name
 
         } catch (IOException e) {
             e.printStackTrace();

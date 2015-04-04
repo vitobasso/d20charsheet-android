@@ -1,7 +1,5 @@
 package com.vituel.dndplayer.model;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 /**
  * Created by Victor on 25/02/14.
  */
@@ -12,46 +10,39 @@ public class Modifier extends AbstractEntity {
     private DiceRoll amount;
     private ModifierType type;
     private Condition condition;
-    @JsonIgnore
-    private AbstractEffect source;
 
     public Modifier() {}
 
-    public Modifier(ModifierTarget target, String variation, DiceRoll amount, ModifierType type, Condition condition, AbstractEffect source) {
+    public Modifier(ModifierTarget target, String variation, DiceRoll amount, ModifierType type, Condition condition) {
         this.setTarget(target);
         this.setVariation(variation);
         this.setAmount(amount);
         this.setType(type);
-        this.setSource(source);
         this.setCondition(condition);
     }
 
-    public Modifier(ModifierTarget target, String variation, int amount, ModifierType type, Condition condition, AbstractEffect source) {
-        this(target, variation, new DiceRoll(amount), type, condition, source);
+    public Modifier(ModifierTarget target, String variation, int amount, ModifierType type, Condition condition) {
+        this(target, variation, new DiceRoll(amount), type, condition);
     }
 
     public Modifier(ModifierTarget target, String variation, int amount) {
-        this(target, variation, new DiceRoll(amount), null, null, null);
+        this(target, variation, new DiceRoll(amount), null, null);
     }
 
     public Modifier(ModifierTarget target, int amount) {
-        this(target, null, new DiceRoll(amount), null, null, null);
+        this(target, null, new DiceRoll(amount), null, null);
     }
 
-    public Modifier(ModifierTarget target, DiceRoll amount, ModifierType type, AbstractEffect source) {
-        this(target, null, amount, type, null, source);
+    public Modifier(ModifierTarget target, DiceRoll amount, ModifierType type) {
+        this(target, null, amount, type, null);
     }
 
-    public Modifier(ModifierTarget target, int amount, ModifierType type, AbstractEffect source) {
-        this(target, null, amount, type, null, source);
+    public Modifier(ModifierTarget target, int amount, ModifierType type) {
+        this(target, null, amount, type, null);
     }
 
-    public Modifier(ModifierTarget target, DiceRoll amount, AbstractEffect source) {
-        this(target, null, amount, null, null, source);
-    }
-
-    public Modifier(ModifierTarget target, int amount, AbstractEffect source) {
-        this(target, null, amount, null, null, source);
+    public Modifier(ModifierTarget target, DiceRoll amount) {
+        this(target, null, amount, null, null);
     }
 
     public boolean isBonus() {
@@ -129,11 +120,4 @@ public class Modifier extends AbstractEntity {
         this.condition = condition;
     }
 
-    public AbstractEffect getSource() {
-        return source;
-    }
-
-    public void setSource(AbstractEffect source) {
-        this.source = source;
-    }
 }

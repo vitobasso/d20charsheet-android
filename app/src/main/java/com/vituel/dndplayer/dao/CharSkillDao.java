@@ -9,13 +9,10 @@ import com.vituel.dndplayer.model.CharSkill;
 import com.vituel.dndplayer.model.Skill;
 import com.vituel.dndplayer.util.database.SQLiteHelper;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created by Victor on 06/03/14.
  */
-public class CharSkillDao {
+public class CharSkillDao extends AbstractAssociationDao<CharSkill> {
 
     public static final String TABLE = "char_skill";
 
@@ -32,77 +29,62 @@ public class CharSkillDao {
             + "FOREIGN KEY(" + COLUMN_SKILL_ID + ") REFERENCES " + SkillDao.TABLE + "(" + SQLiteHelper.COLUMN_ID + ")"
             + ");";
 
-    private static final String[] COLUMNS = new String[]{
-            SQLiteHelper.COLUMN_ID,
-            COLUMN_CHAR_ID,
-            COLUMN_SKILL_ID,
-            COLUMN_GRAD
-    };
-
-    protected Context context;
-    protected SQLiteDatabase database;
-    protected SQLiteHelper dbHelper;
+    public CharSkillDao(Context context) {
+        super(context);
+    }
 
     public CharSkillDao(Context context, SQLiteDatabase database) {
-        this.database = database;
+        super(context, database);
     }
 
-    public CharSkillDao(Context context) {
-        this.context = context;
-        this.dbHelper = new SQLiteHelper(context);
-        if (database == null) {
-            database = dbHelper.getWritableDatabase();
-        }
+    @Override
+    protected String tableName() {
+        return TABLE;
     }
 
-    public void close() {
-        dbHelper.close();
-        database = null;
+    @Override
+    protected String[] allColumns() {
+        return new String[]{
+                SQLiteHelper.COLUMN_ID,
+                COLUMN_CHAR_ID,
+                COLUMN_SKILL_ID,
+                COLUMN_GRAD
+        };
     }
 
-    public void saveForChar(long charId, List<CharSkill> skills) {
-        assert charId != 0;
-        for (CharSkill charSkill : skills) {
-
-            //gather values
-            ContentValues values = new ContentValues();
-            values.put(COLUMN_CHAR_ID, charId);
-            values.put(COLUMN_SKILL_ID, charSkill.getSkill().getId());
-            values.put(COLUMN_GRAD, charSkill.getScore());
-
-            database.insert(TABLE, null, values);
-        }
+    @Override
+    protected String parentColumn() {
+        return COLUMN_CHAR_ID;
     }
 
-    public List<CharSkill> findByChar(long charId) {
-        assert charId != 0;
-        List<CharSkill> charSkills = new ArrayList<>();
-
-        String query = String.format("%s=%d", COLUMN_CHAR_ID, charId);
-        Cursor cursor = database.query(TABLE, COLUMNS, query, null, null, null, null);
-        if (cursor.moveToFirst()) {
-            do {
-
-                //read from cursor
-                long id = cursor.getLong(2);
-
-                SkillDao skillDao = new SkillDao(context, database);
-                Skill skill = skillDao.findById(id);
-
-                CharSkill charSkill = new CharSkill(skill);
-                charSkill.setScore(cursor.getInt(3));
-
-                charSkills.add(charSkill);
-            } while (cursor.moveToNext());
-        }
-        cursor.close();
-
-        return charSkills;
+    @Override
+    protected String elementColumn() {
+        return COLUMN_SKILL_ID;
     }
 
-    public void removeAllForChar(long charId) {
-        String query = String.format("%s=%d", COLUMN_CHAR_ID, charId);
-        database.delete(TABLE, query, null);
+    @Override
+    protected CharSkill fromCursor(Cursor cursor) {
+        long id = cursor.getLong(2);
+
+        SkillDao skillDao = new SkillDao(context, database);
+        Skill skill = skillDao.findById(id);
+
+        CharSkill charSkill = new CharSkill(skill);
+        charSkill.setScore(cursor.getInt(3));
+
+        return charSkill;
+    }
+
+    @Override
+    public void save(long charId, CharSkill skill) {
+        long skillId = skill.getSkill().getId();
+
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CHAR_ID, charId);
+        values.put(COLUMN_SKILL_ID, skillId);
+        values.put(COLUMN_GRAD, skill.getScore());
+
+        insertOrUpdate(values, charId, skillId);
     }
 
 }

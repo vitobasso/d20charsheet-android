@@ -6,14 +6,14 @@ import android.widget.EditText;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
 import com.vituel.dndplayer.model.DiceRoll;
+import com.vituel.dndplayer.model.Feat;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.ModifierType;
-import com.vituel.dndplayer.model.Trait;
 
 import java.util.List;
 
-import static com.vituel.dndplayer.model.Trait.Type.FEAT;
+import static com.vituel.dndplayer.model.Feat.Type.FEAT;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.inflate;
 import static com.vituel.dndplayer.util.ActivityUtil.populateSpinnerWithEnum;
@@ -25,7 +25,7 @@ import static com.vituel.dndplayer.util.ActivityUtil.readString;
 /**
  * Created by Victor on 30/03/14.
  */
-public class EditTraitActivity extends AbstractEditActivity<Trait> {
+public class EditFeatActivity extends AbstractEditActivity<Feat> {
 
     private static final int NUM_EFFECTS = 5;
 
@@ -61,7 +61,7 @@ public class EditTraitActivity extends AbstractEditActivity<Trait> {
     }
 
     @Override
-    protected Trait save() {
+    protected Feat save() {
 
         //basic fields
         entity.setName(readString(this, R.id.name));

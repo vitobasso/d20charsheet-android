@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vituel.dndplayer.model.ActiveTempEffect;
+import com.vituel.dndplayer.model.CharTempEffect;
 import com.vituel.dndplayer.model.TempEffect;
 import com.vituel.dndplayer.util.database.SQLiteHelper;
 
@@ -15,29 +15,30 @@ import java.util.Map;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 
 
-public class TempEffectActivityDao extends AbstractEntityDao<ActiveTempEffect> {
+public class CharTempEffectDao extends AbstractEntityDao<CharTempEffect> {
 
     public static final String TABLE = "active_temp_effect";
 
     private static final String COLUMN_CHAR_ID = "char_id";
-    private static final String COLUMN_EFFECT_ID = "temp_effect_id";
+    private static final String COLUMN_TEMP_ID = "temp_effect_id";
     private static final String COLUMN_ACTIVE = "active";
 
     public static final String CREATE_TABLE = "create table " + TABLE + "("
             + COLUMN_ID + " integer primary key autoincrement, "
             + COLUMN_CHAR_ID + " integer not null, "
-            + COLUMN_EFFECT_ID + " integer not null, "
+            + COLUMN_TEMP_ID + " integer not null, "
             + COLUMN_ACTIVE + " integer not null, "
             + "FOREIGN KEY(" + COLUMN_CHAR_ID + ") REFERENCES " + CharDao.TABLE + "(" + SQLiteHelper.COLUMN_ID + "), "
-            + "FOREIGN KEY(" + COLUMN_EFFECT_ID + ") REFERENCES " + TempEffectDao.TABLE + "(" + SQLiteHelper.COLUMN_ID + ")"
+            + "FOREIGN KEY(" + COLUMN_TEMP_ID + ") REFERENCES " + TempEffectDao.TABLE + "(" + SQLiteHelper.COLUMN_ID + ")"
             + ");";
 
+    private TempEffectDao tempEffectDao = new TempEffectDao(context, database);
 
-    public TempEffectActivityDao(Context context) {
+    public CharTempEffectDao(Context context) {
         super(context);
     }
 
-    public TempEffectActivityDao(Context context, SQLiteDatabase database) {
+    public CharTempEffectDao(Context context, SQLiteDatabase database) {
         super(context, database);
     }
 
@@ -51,7 +52,7 @@ public class TempEffectActivityDao extends AbstractEntityDao<ActiveTempEffect> {
         return new String[]{
                 COLUMN_ID,
                 COLUMN_CHAR_ID,
-                COLUMN_EFFECT_ID,
+                COLUMN_TEMP_ID,
                 COLUMN_ACTIVE
         };
     }
@@ -66,18 +67,18 @@ public class TempEffectActivityDao extends AbstractEntityDao<ActiveTempEffect> {
     private void save(TempEffect cond, boolean active, long charId) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_CHAR_ID, charId);
-        values.put(COLUMN_EFFECT_ID, cond.getId());
+        values.put(COLUMN_TEMP_ID, cond.getId());
         values.put(COLUMN_ACTIVE, active);
 
         database.insert(tableName(), null, values);
     }
 
-    public List<ActiveTempEffect> listForChar(long charId) {
+    public List<CharTempEffect> listForChar(long charId) {
         return listForQuery(String.format("%s=%d", COLUMN_CHAR_ID, charId));
     }
 
     public void removeAllForEffect(long effectId) {
-        removeForQuery(String.format("%s=%d", COLUMN_EFFECT_ID, effectId));
+        removeForQuery(String.format("%s=%d", COLUMN_TEMP_ID, effectId));
     }
 
     private void removeAllForChar(long charId) {
@@ -85,23 +86,23 @@ public class TempEffectActivityDao extends AbstractEntityDao<ActiveTempEffect> {
     }
 
     @Override
-    protected ActiveTempEffect fromCursor(Cursor cursor) {
+    protected CharTempEffect fromCursor(Cursor cursor) {
 
         //basic fields
-        ActiveTempEffect result = new ActiveTempEffect();
+        CharTempEffect result = new CharTempEffect();
         result.setId(cursor.getLong(0));
         result.setActive(cursor.getInt(3) != 0);
 
-        //effect
-        long condId = cursor.getLong(2);
-        TempEffectDao condData = new TempEffectDao(context);
-        result.setTempEffect(condData.findById(condId));
+        //temp effect
+        TempEffect tempEffect = tempEffectDao.findById(cursor.getLong(2));
+        result.setName(tempEffect.getName());
+        result.setEffect(tempEffect.getEffect());
 
         return result;
     }
 
     @Override
-    public void save(ActiveTempEffect entity) {
+    public void save(CharTempEffect entity) {
         throw new UnsupportedOperationException("Use the one with ActiveConditionals and charId instead.");
     }
 

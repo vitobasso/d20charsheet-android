@@ -1,5 +1,7 @@
 package com.vituel.dndplayer.model;
 
+import android.support.annotation.NonNull;
+
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.io.Serializable;
@@ -7,12 +9,19 @@ import java.io.Serializable;
 /**
  * Created by Victor on 28/02/14.
  */
-public abstract class AbstractEntity implements Serializable {
+public abstract class AbstractEntity implements Comparable<AbstractEntity>, Serializable {
 
     @JsonIgnore
     protected long id;
 
     protected String name;
+
+    protected AbstractEntity() {
+    }
+
+    protected AbstractEntity(String name) {
+        this.name = name;
+    }
 
     public long getId() {
         return id;
@@ -28,6 +37,26 @@ public abstract class AbstractEntity implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public int hashCode() {
+        return name.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object another) {
+        if (another instanceof AbstractEntity) {
+            AbstractEntity anotherEntity = ((AbstractEntity) another);
+            return ((Object) this).getClass().equals(another.getClass())
+                    && name.equals(anotherEntity.name);
+        }
+        return false;
+    }
+
+    @Override
+    public int compareTo(@NonNull AbstractEntity another) {
+        return name.compareTo(another.name);
     }
 
     @Override

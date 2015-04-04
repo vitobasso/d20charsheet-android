@@ -7,13 +7,12 @@ import java.util.List;
 /**
  * Created by Victor on 31/03/14.
  */
-public class ClassLevel extends AbstractEffect {
+public class ClassLevel extends Effect {
 
     private Clazz clazz;
     private int level;
 
     public ClassLevel() {
-        super(Type.CLASS);
         level = 1;
     }
 
@@ -23,10 +22,10 @@ public class ClassLevel extends AbstractEffect {
 
     @Override
     public List<Modifier> getModifiers() {
-        Modifier fort = new Modifier(ModifierTarget.FORT, getClazz().getBaseFortitude(getLevel()), null, this);
-        Modifier refl = new Modifier(ModifierTarget.REFL, getClazz().getBaseReflex(getLevel()), null, this);
-        Modifier will = new Modifier(ModifierTarget.WILL, getClazz().getBaseWill(getLevel()), null, this);
-        Modifier attack = new Modifier(ModifierTarget.HIT, getClazz().getBaseAttack(getLevel()), null, this);
+        Modifier fort = new Modifier(ModifierTarget.FORT, getClazz().getBaseFortitude(getLevel()));
+        Modifier refl = new Modifier(ModifierTarget.REFL, getClazz().getBaseReflex(getLevel()));
+        Modifier will = new Modifier(ModifierTarget.WILL, getClazz().getBaseWill(getLevel()));
+        Modifier attack = new Modifier(ModifierTarget.HIT, getClazz().getBaseAttack(getLevel()));
 
         List<Modifier> result = new ArrayList<>();
         result.add(fort);
@@ -36,7 +35,7 @@ public class ClassLevel extends AbstractEffect {
         return result;
     }
 
-    public List<Trait> getTraits() {
+    public List<ClassTrait> getTraits() {
         return getClazz().getTraits(getLevel());
     }
 

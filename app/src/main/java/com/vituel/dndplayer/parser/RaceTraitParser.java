@@ -2,17 +2,18 @@ package com.vituel.dndplayer.parser;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.vituel.dndplayer.dao.RaceDao;
+import com.vituel.dndplayer.model.Feat;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.Race;
-import com.vituel.dndplayer.dao.RaceDao;
-import com.vituel.dndplayer.model.Trait;
 
 import java.text.ParseException;
 
 /**
  * Created by Victor on 26/03/14.
  */
-public class RaceTraitParser extends AbstractDependantParser<Trait, Race> {
+public class RaceTraitParser extends AbstractDependantParser<Feat, Race> {
 
     public RaceTraitParser(Context ctx) {
         super(ctx);
@@ -30,12 +31,12 @@ public class RaceTraitParser extends AbstractDependantParser<Trait, Race> {
     }
 
     @Override
-    protected Trait parseDependant(String line) {
+    protected Feat parseDependant(String line) {
         String split[] = line.split("\t");
 
-        Trait result = new Trait();
+        Feat result = new Feat();
         result.setName(split[1]);
-        result.setTraitType(Trait.Type.RACIAL);
+        result.setTraitType(Feat.Type.RACIAL);
 
         ModifierParser modParser = new ModifierParser(result);
         readModifier(modParser, split, 2, result);
@@ -45,7 +46,7 @@ public class RaceTraitParser extends AbstractDependantParser<Trait, Race> {
         return result;
     }
 
-    protected void readModifier(ModifierParser parser, String[] split, int index, Trait result) {
+    protected void readModifier(ModifierParser parser, String[] split, int index, Feat result) {
         if (split.length > index) {
             try {
                 String str = split[index];

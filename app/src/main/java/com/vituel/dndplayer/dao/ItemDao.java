@@ -6,16 +6,18 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.vituel.dndplayer.model.Effect;
 import com.vituel.dndplayer.model.Item;
 import com.vituel.dndplayer.model.SlotType;
 import com.vituel.dndplayer.model.WeaponItem;
+import com.vituel.dndplayer.model.WeaponProperties;
 
 import java.util.List;
 
-import static com.vituel.dndplayer.model.AbstractEffect.Type.EQUIP_MAGIC;
 import static com.vituel.dndplayer.model.Item.ItemType;
 import static com.vituel.dndplayer.model.Item.ItemType.WEAPON;
 import static com.vituel.dndplayer.model.Item.ItemType.valueOf;
+import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 
@@ -26,22 +28,24 @@ public class ItemDao extends AbstractEntityDao<Item> {
 
     private static final String COLUMN_SLOT_TYPE = "slot_type"; //held, head, torso, ring, etc
     private static final String COLUMN_ITEM_TYPE = "item_type"; //weapon, shield, armor
-    private static final String COLUMN_WEAPON_ID = "weapon_id"; //for weapons only
 
     public static final String CREATE_TABLE = "create table " + TABLE + "("
             + COLUMN_ID + " integer primary key autoincrement, "
             + COLUMN_NAME + " text not null, "
             + COLUMN_SLOT_TYPE + " text, "
             + COLUMN_ITEM_TYPE + " text, "
-            + COLUMN_WEAPON_ID + " integer"
+            + COLUMN_EFFECT_ID + " integer, "
+            + "FOREIGN KEY(" + COLUMN_EFFECT_ID + ") REFERENCES " + EffectDao.TABLE + "(" + COLUMN_ID + ")"
             + ");";
 
+    private WeaponDao weaponDao = new WeaponDao(context, database);
+    private EffectDao effectDao = new EffectDao(context, database);
 
     public ItemDao(Context context) {
         super(context);
     }
 
-    public ItemDao(Context context, SQLiteDatabase database) {
+    protected ItemDao(Context context, SQLiteDatabase database) {
         super(context, database);
     }
 
@@ -57,7 +61,7 @@ public class ItemDao extends AbstractEntityDao<Item> {
                 COLUMN_NAME,
                 COLUMN_SLOT_TYPE,
                 COLUMN_ITEM_TYPE,
-                COLUMN_WEAPON_ID
+                COLUMN_EFFECT_ID
         };
     }
 
@@ -78,20 +82,21 @@ public class ItemDao extends AbstractEntityDao<Item> {
             values.put(COLUMN_ITEM_TYPE, entity.getItemType().toString());
         }
 
-        //weapon properties
-        if (entity.getItemType() == WEAPON) {
-            WeaponDao weaponDao = new WeaponDao(context, database);
-            WeaponItem weapon = (WeaponItem) entity;
-            weaponDao.save(weapon.getWeaponProperties());
-            values.put(COLUMN_WEAPON_ID, weapon.getWeaponProperties().getId());
-        }
+        //effects
+        Effect effect = entity.getEffect();
+        effectDao.save(effect);
+        values.put(COLUMN_EFFECT_ID, effect.getId());
 
         long id = insertOrUpdate(values, entity.getId());
 
-        //magic bonuses
-        ModifierDao effectData = new ModifierDao(context);
-        effectData.removeAllForEffect(EQUIP_MAGIC, id);
-        effectData.save(entity.getModifiers(), EQUIP_MAGIC, id);
+        //weapon properties
+        if (entity.getItemType() == WEAPON) {
+            WeaponItem weaponItem = (WeaponItem) entity;
+            WeaponProperties weapon = weaponItem.getWeaponProperties();
+            if (weapon.getId() == 0) {
+                weaponDao.save(weapon);
+            }
+        }
 
         entity.setId(id);
     }
@@ -114,16 +119,17 @@ public class ItemDao extends AbstractEntityDao<Item> {
         item.setItemType(itemType);
         item.setSlotType(SlotType.valueOf(cursor.getString(2)));
 
+        //effect
+        Effect effect = effectDao.findById(cursor.getLong(4));
+        effect.setSourceName(item.getName());
+        item.setEffect(effect);
+
         //weapon fields
         if (itemType == WEAPON) {
-            WeaponDao weaponDao = new WeaponDao(context, database);
             WeaponItem w = (WeaponItem) item;
-            w.setWeaponProperties(weaponDao.findById(cursor.getLong(4)));
+            WeaponProperties weapon = weaponDao.findByItem(item.getId());
+            w.setWeaponProperties(weapon);
         }
-
-        //magic bonuses
-        ModifierDao effectData = new ModifierDao(context);
-        item.setModifiers(effectData.listAll(EQUIP_MAGIC, item.getId()));
 
         return item;
     }

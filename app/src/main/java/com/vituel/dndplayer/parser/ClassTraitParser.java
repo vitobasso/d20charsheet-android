@@ -2,18 +2,19 @@ package com.vituel.dndplayer.parser;
 
 import android.content.Context;
 import android.util.Log;
+
 import com.vituel.dndplayer.dao.ClassDao;
-import com.vituel.dndplayer.model.Clazz;
-import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ClassTrait;
-import com.vituel.dndplayer.model.Trait;
+import com.vituel.dndplayer.model.Clazz;
+import com.vituel.dndplayer.model.Feat;
+import com.vituel.dndplayer.model.Modifier;
 
 import java.text.ParseException;
 
 /**
  * Created by Victor on 26/03/14.
  */
-public class ClassTraitParser extends AbstractDependantParser<Trait, Clazz> {
+public class ClassTraitParser extends AbstractDependantParser<Feat, Clazz> {
 
     public ClassTraitParser(Context ctx) {
         super(ctx);
@@ -33,7 +34,7 @@ public class ClassTraitParser extends AbstractDependantParser<Trait, Clazz> {
     }
 
     @Override
-    protected Trait parseDependant(String line) {
+    protected Feat parseDependant(String line) {
         String split[] = line.split("\t");
 
         String lvlStr = read(split, 1);
@@ -43,7 +44,7 @@ public class ClassTraitParser extends AbstractDependantParser<Trait, Clazz> {
         //basic fields
         ClassTrait result = new ClassTrait();
         result.setName(traitName);
-        result.setTraitType(Trait.Type.CLASS);
+        result.setTraitType(Feat.Type.CLASS);
 
         //class trait fields
         int lvl = Integer.valueOf(lvlStr);
@@ -59,7 +60,7 @@ public class ClassTraitParser extends AbstractDependantParser<Trait, Clazz> {
         return result;
     }
 
-    protected void readModifier(ModifierParser parser, String[] split, int index, Trait result) {
+    protected void readModifier(ModifierParser parser, String[] split, int index, Feat result) {
         if (split.length > index) {
             try {
                 String str = split[index];

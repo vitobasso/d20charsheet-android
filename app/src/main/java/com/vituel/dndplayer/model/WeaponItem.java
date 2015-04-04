@@ -1,6 +1,5 @@
 package com.vituel.dndplayer.model;
 
-import static com.vituel.dndplayer.model.AbstractEffect.Type.EQUIP_MAGIC;
 import static com.vituel.dndplayer.model.Item.ItemType.WEAPON;
 import static com.vituel.dndplayer.model.SlotType.HELD;
 
@@ -12,7 +11,7 @@ public class WeaponItem extends Item {
     private WeaponProperties weaponProperties;
 
     public WeaponItem() {
-        super(EQUIP_MAGIC, null, HELD, WEAPON);
+        super(null, HELD, WEAPON);
         this.setWeaponProperties(new WeaponProperties());
     }
 

@@ -5,9 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.vituel.dndplayer.model.AbstractEntity;
-import com.vituel.dndplayer.model.ActiveTempEffect;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.CharEquip;
+import com.vituel.dndplayer.model.CharTempEffect;
 import com.vituel.dndplayer.model.DamageTaken;
 
 import java.util.HashSet;
@@ -234,18 +234,15 @@ public class CharDao extends AbstractEntityDao<CharBase> {
 
         //classes
         CharClassDao classDao = new CharClassDao(context, database);
-        classDao.removeAllForChar(id);
         classDao.save(id, entity.getClassLevels());
 
         //feats
-        TraitLinkDao traitLinkDao = new TraitLinkDao(context, database);
-        traitLinkDao.removeAllForChar(id);
-        traitLinkDao.saveForChar(id, entity.getFeats());
+        CharFeatDao charFeatDao = new CharFeatDao(context, database);
+        charFeatDao.save(id, entity.getFeats());
 
         //skills
         CharSkillDao charSkillDao = new CharSkillDao(context, database);
-        charSkillDao.removeAllForChar(id);
-        charSkillDao.saveForChar(id, entity.getSkills());
+        charSkillDao.save(id, entity.getSkills());
 
         //attacks
         AttackRoundDao attackRoundDao = new AttackRoundDao(context, database);
@@ -331,21 +328,21 @@ public class CharDao extends AbstractEntityDao<CharBase> {
 
         //load class
         CharClassDao classDao = new CharClassDao(context, database);
-        c.setClassLevels(classDao.findByChar(c.getId()));
+        c.setClassLevels(classDao.findByParent(c.getId()));
 
         //load feats
-        TraitLinkDao traitLinkDao = new TraitLinkDao(context, database);
-        c.setFeats(traitLinkDao.findByChar(c.getId()));
+        CharFeatDao charFeatDao = new CharFeatDao(context, database);
+        c.setFeats(charFeatDao.findByParent(c.getId()));
 
         //load skills
         CharSkillDao charSkillDao = new CharSkillDao(context, database);
-        c.setSkills(charSkillDao.findByChar(c.getId()));
+        c.setSkills(charSkillDao.findByParent(c.getId()));
 
         //load temporary effects
-        TempEffectActivityDao activeTempDao = new TempEffectActivityDao(context, database);
-        List<ActiveTempEffect> list = activeTempDao.listForChar(c.getId());
-        for (ActiveTempEffect acond : list) {
-            c.getTempEffects().put(acond.getTempEffect(), acond.isActive());
+        CharTempEffectDao activeTempDao = new CharTempEffectDao(context, database);
+        List<CharTempEffect> list = activeTempDao.listForChar(c.getId());
+        for (CharTempEffect acond : list) {
+            c.getTempEffects().put(acond, acond.isActive());
         }
 
         //load active conditions

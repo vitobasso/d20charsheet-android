@@ -17,6 +17,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static ch.lambdaj.Lambda.extract;
+import static ch.lambdaj.Lambda.on;
 import static com.vituel.dndplayer.model.ModifierTarget.AC;
 import static com.vituel.dndplayer.model.ModifierTarget.CHA;
 import static com.vituel.dndplayer.model.ModifierTarget.CON;
@@ -78,17 +80,17 @@ public class CharSummary {
 
         //effects from race, class, feats, equipment and effects
         applyModifiers(getBaseModifiers());
-        apply(base.getRace());
+        apply(base.getRace().getEffect());
         if (base.getRace() != null) {
-            applyEffects(base.getRace().getTraits());
+            applyEffects(extract(base.getRace().getTraits(), on(Feat.class).getEffect()));
         }
         applyEffects(base.getClassLevels());
         for (ClassLevel classLevel : base.getClassLevels()) {
-            applyEffects(classLevel.getTraits());
+            applyEffects(extract(classLevel.getTraits(), on(Feat.class).getEffect()));
         }
-        applyEffects(base.getFeats());
-        applyEffects(base.getEquipmentItems());
-        applyEffects(base.getActiveTempEffects());
+        applyEffects(extract(base.getFeats(), on(Feat.class).getEffect()));
+        applyEffects(extract(base.getEquipmentItems(), on(Item.class).getEffect()));
+        applyEffects(extract(base.getActiveTempEffects(), on(TempEffect.class).getEffect()));
 
         //effects from other attributes
         applyModifiers(getAbilityModifiers().keySet());
@@ -186,15 +188,15 @@ public class CharSummary {
         return modifiers;
     }
 
-    private void applyEffects(Collection<? extends AbstractEffect> effects) {
+    private void applyEffects(Collection<? extends Effect> effects) {
         if (effects != null) {
-            for (AbstractEffect effect : effects) {
+            for (Effect effect : effects) {
                 apply(effect);
             }
         }
     }
 
-    private void apply(AbstractEffect effect) {
+    private void apply(Effect effect) {
         if (effect != null) {
             for (Modifier modifier : effect.getModifiers()) {
                 apply(modifier);

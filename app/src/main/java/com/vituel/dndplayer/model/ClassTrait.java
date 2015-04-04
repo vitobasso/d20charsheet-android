@@ -3,28 +3,27 @@ package com.vituel.dndplayer.model;
 /**
  * Created by Victor on 05/04/14.
  */
-public class ClassTrait extends Trait {
+public class ClassTrait {
 
+    private String name;
+    private Effect effect;
     private int level;
     private String overridenTraitName;
 
-    public ClassTrait() {
-        setTraitType(Type.CLASS);
+    public String getName() {
+        return name;
     }
 
-    public ClassTrait(Trait trait) {
-        this();
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        //trait fields
-        this.setTraitType(trait.getTraitType());
+    public Effect getEffect() {
+        return effect;
+    }
 
-        //effect fields
-        this.setType(trait.getType());
-        this.setModifiers(trait.getModifiers());
-
-        //entity fields
-        this.id = trait.getId();
-        this.name = trait.getName();
+    public void setEffect(Effect effect) {
+        this.effect = effect;
     }
 
     public int getLevel() {

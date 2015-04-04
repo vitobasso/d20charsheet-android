@@ -11,15 +11,15 @@ import com.vituel.dndplayer.dao.AttackRoundDao;
 import com.vituel.dndplayer.dao.CharClassDao;
 import com.vituel.dndplayer.dao.CharDao;
 import com.vituel.dndplayer.dao.CharSkillDao;
+import com.vituel.dndplayer.dao.CharTempEffectDao;
 import com.vituel.dndplayer.dao.ClassDao;
+import com.vituel.dndplayer.dao.FeatDao;
 import com.vituel.dndplayer.dao.ItemDao;
 import com.vituel.dndplayer.dao.ModifierDao;
 import com.vituel.dndplayer.dao.RaceDao;
+import com.vituel.dndplayer.dao.RaceTraitDao;
 import com.vituel.dndplayer.dao.SkillDao;
-import com.vituel.dndplayer.dao.TempEffectActivityDao;
 import com.vituel.dndplayer.dao.TempEffectDao;
-import com.vituel.dndplayer.dao.TraitDao;
-import com.vituel.dndplayer.dao.TraitLinkDao;
 import com.vituel.dndplayer.dao.WeaponDao;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
@@ -29,6 +29,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     public static final String COLUMN_ID = "_id";
     public static final String COLUMN_NAME = "name";
+    public static final String COLUMN_EFFECT_ID = "effect_id";
 
     public SQLiteHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -43,9 +44,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         database.execSQL(ItemDao.CREATE_TABLE);
         database.execSQL(ModifierDao.CREATE_TABLE);
         database.execSQL(TempEffectDao.CREATE_TABLE);
-        database.execSQL(TempEffectActivityDao.CREATE_TABLE);
-        database.execSQL(TraitDao.CREATE_TABLE);
-        database.execSQL(TraitLinkDao.CREATE_TABLE);
+        database.execSQL(CharTempEffectDao.CREATE_TABLE);
+        database.execSQL(FeatDao.CREATE_TABLE);
+        database.execSQL(RaceTraitDao.CREATE_TABLE);
         database.execSQL(SkillDao.CREATE_TABLE);
         database.execSQL(CharSkillDao.CREATE_TABLE);
         database.execSQL(ActiveConditionDao.CREATE_TABLE);
@@ -68,9 +69,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + ItemDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + ModifierDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + TempEffectDao.TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + TempEffectActivityDao.TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + TraitDao.TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + TraitLinkDao.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + CharTempEffectDao.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + FeatDao.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + RaceTraitDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + SkillDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + CharSkillDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + ActiveConditionDao.TABLE);

@@ -12,7 +12,7 @@ public class Clazz extends AbstractEntity {
     private ResistProgression reflexProg;
     private ResistProgression fortitudeProg;
     private ResistProgression willProg;
-    private List<List<Trait>> traits;
+    private List<List<ClassTrait>> traits;
 
     public AttackProgression getAttackProg() {
         return attackProg;
@@ -30,7 +30,7 @@ public class Clazz extends AbstractEntity {
         return willProg;
     }
 
-    public List<List<Trait>> getTraits() {
+    public List<List<ClassTrait>> getTraits() {
         return traits;
     }
 
@@ -80,18 +80,18 @@ public class Clazz extends AbstractEntity {
         throw new AssertionError();
     }
 
-    public List<Trait> getTraits(int level) {
-        List<Trait> result = new ArrayList<>();
+    public List<ClassTrait> getTraits(int level) {
+        List<ClassTrait> result = new ArrayList<>();
         List<String> overridenList = new ArrayList<>();
         for (int i = level-1; i >= 0; i--) {
             if(getTraits().size() > i) {
-                for (Trait trait : getTraits().get(i)) {
+                for (ClassTrait trait : getTraits().get(i)) {
                     if (!overridenList.contains(trait.getName())) {
                         result.add(trait);
                     } else {
                         overridenList.remove(trait.getName());
                     }
-                    String overriden = ((ClassTrait) trait).getOverridenTraitName();
+                    String overriden = trait.getOverridenTraitName();
                     if (overriden != null) {
                         overridenList.add(overriden);
                     }
@@ -100,7 +100,6 @@ public class Clazz extends AbstractEntity {
         }
         return result;
     }
-
 
     @Override
     public long getId() {
@@ -141,7 +140,7 @@ public class Clazz extends AbstractEntity {
         this.willProg = willProg;
     }
 
-    public void setTraits(List<List<Trait>> traits) {
+    public void setTraits(List<List<ClassTrait>> traits) {
         this.traits = traits;
     }
 }

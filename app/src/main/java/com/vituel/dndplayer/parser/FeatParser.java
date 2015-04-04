@@ -2,27 +2,28 @@ package com.vituel.dndplayer.parser;
 
 import android.content.Context;
 import android.util.Log;
+
+import com.vituel.dndplayer.model.Feat;
 import com.vituel.dndplayer.model.Modifier;
-import com.vituel.dndplayer.model.Trait;
 
 import java.text.ParseException;
 
 /**
  * Created by Victor on 26/03/14.
  */
-public class FeatParser extends AbstractParser<Trait> {
+public class FeatParser extends AbstractParser<Feat> {
 
     public FeatParser(Context ctx) {
         super(ctx);
     }
 
     @Override
-    protected Trait parse(String line) {
+    protected Feat parse(String line) {
 
         String split[] = line.split("\t");
-        Trait result = new Trait();
+        Feat result = new Feat();
         result.setName(split[0]);
-        result.setTraitType(Trait.Type.FEAT);
+        result.setTraitType(Feat.Type.FEAT);
 
         ModifierParser modParser = new ModifierParser(result);
         readModifier(modParser, split, 1, result);
@@ -31,7 +32,7 @@ public class FeatParser extends AbstractParser<Trait> {
         return result;
     }
 
-    protected void readModifier(ModifierParser parser, String[] split, int index, Trait result) {
+    protected void readModifier(ModifierParser parser, String[] split, int index, Feat result) {
         if (split.length > index) {
             try {
                 String str = split[index];

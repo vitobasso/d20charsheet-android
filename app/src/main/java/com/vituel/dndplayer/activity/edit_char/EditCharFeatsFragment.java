@@ -10,16 +10,15 @@ import android.widget.ListView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.EffectArrayAdapter;
-import com.vituel.dndplayer.activity.SelectTraitActivity;
+import com.vituel.dndplayer.activity.SelectFeatActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.model.CharBase;
-import com.vituel.dndplayer.model.Trait;
+import com.vituel.dndplayer.model.Feat;
 
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_TYPE;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
@@ -29,7 +28,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
  */
 public class EditCharFeatsFragment extends PagerFragment<CharBase, EditCharActivity> {
 
-    private List<Trait> feats;
+    private List<Feat> feats;
 
     @Override
     protected int getLayoutResourceId() {
@@ -42,9 +41,9 @@ public class EditCharFeatsFragment extends PagerFragment<CharBase, EditCharActiv
         ((ListView) root).setAdapter(new Adapter(feats));
     }
 
-    private class Adapter extends EffectArrayAdapter<Trait> {
+    private class Adapter extends EffectArrayAdapter<Feat> {
 
-        public Adapter(List<Trait> objects) {
+        public Adapter(List<Feat> objects) {
             super(activity, R.layout.effect_row_removable, objects);
         }
 
@@ -59,7 +58,7 @@ public class EditCharFeatsFragment extends PagerFragment<CharBase, EditCharActiv
                 public void onClick(View v) {
 
                     //update list
-                    Trait cond = feats.get(position);
+                    Feat cond = feats.get(position);
                     feats.remove(cond);
 
                     update();
@@ -82,8 +81,7 @@ public class EditCharFeatsFragment extends PagerFragment<CharBase, EditCharActiv
         switch (item.getItemId()) {
             case R.id.action_search:
                 onSave();
-                Intent intent = new Intent(activity, SelectTraitActivity.class);
-                intent.putExtra(EXTRA_TYPE, Trait.Type.FEAT);
+                Intent intent = new Intent(activity, SelectFeatActivity.class);
                 startActivityForResult(intent, REQUEST_SELECT);
                 return true;
             default:
@@ -98,7 +96,7 @@ public class EditCharFeatsFragment extends PagerFragment<CharBase, EditCharActiv
             case REQUEST_SELECT:
                 switch (resultCode) {
                     case RESULT_OK:
-                        Trait selected = (Trait) data.getSerializableExtra(EXTRA_SELECTED);
+                        Feat selected = (Feat) data.getSerializableExtra(EXTRA_SELECTED);
 
                         //update list
                         feats.add(selected);

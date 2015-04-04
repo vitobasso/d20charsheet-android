@@ -1,5 +1,6 @@
 package com.vituel.dndplayer.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -22,12 +23,24 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
         super(context);
     }
 
-    public AbstractEntityDao(Context context, SQLiteDatabase database) {
+    protected AbstractEntityDao(Context context, SQLiteDatabase database) {
         super(context, database);
     }
 
+    public T findById(long id) {
+        Cursor cursor = database.query(tableName(), allColumns(), COLUMN_ID + " = " + id, null, null, null, null);
+        cursor.moveToFirst();
+        if (cursor.getCount() != 0) {
+            T result = fromCursor(cursor);
+            cursor.close();
+            return result;
+        } else {
+            return null;
+        }
+    }
+
     public T findByName(String name) {
-        String query = String.format("%s=\"%s\"", COLUMN_NAME, name);
+        String query = String.format("%s=\'%s\'", COLUMN_NAME, name);
         Cursor cursor = database.query(tableName(), allColumns(), query, null, null, null, null);
         cursor.moveToFirst();
         if (cursor.getCount() != 0) {
@@ -40,6 +53,15 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
             Log.w(getClass().getSimpleName(), msg);
             return null;
         }
+    }
+
+    protected long insertOrUpdate(ContentValues values, long id) {
+        if (id == 0) {
+            id = database.insert(tableName(), null, values);
+        } else {
+            database.update(tableName(), values, COLUMN_ID + " = " + id, null);
+        }
+        return id;
     }
 
     public void save(Collection<T> list) {

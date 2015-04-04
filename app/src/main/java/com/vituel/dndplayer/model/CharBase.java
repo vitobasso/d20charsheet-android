@@ -43,7 +43,7 @@ public class CharBase extends AbstractEntity {
 
     private Race race;
     private List<ClassLevel> classLevels = new ArrayList<>();
-    private List<Trait> feats = new ArrayList<>();
+    private List<Feat> feats = new ArrayList<>();
     private List<CharSkill> skills = new ArrayList<>(); //CharSkill objects store graduation values (not final bonus)
 
     private CharEquip equipment = new CharEquip();
@@ -306,11 +306,11 @@ public class CharBase extends AbstractEntity {
         this.classLevels = classLevels;
     }
 
-    public List<Trait> getFeats() {
+    public List<Feat> getFeats() {
         return feats;
     }
 
-    public void setFeats(List<Trait> feats) {
+    public void setFeats(List<Feat> feats) {
         this.feats = feats;
     }
 

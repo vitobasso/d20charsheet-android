@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.model.Effect;
-import com.vituel.dndplayer.model.TempEffect;
+import com.vituel.dndplayer.model.Feat;
 
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
@@ -15,25 +15,24 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 /**
  * Created by Victor on 30/03/14.
  */
-public class TempEffectDao extends AbstractEntityDao<TempEffect> {
+public class FeatDao extends AbstractEntityDao<Feat> {
 
-    public static final String TABLE = "temp_effect";
+    public static final String TABLE = "feat";
 
     public static final String CREATE_TABLE = "create table " + TABLE + "("
             + COLUMN_ID + " integer primary key autoincrement, "
             + COLUMN_NAME + " text not null, "
-            + COLUMN_EFFECT_ID + " integer not null, "
+            + COLUMN_EFFECT_ID + " integer, "
             + "FOREIGN KEY(" + COLUMN_EFFECT_ID + ") REFERENCES " + EffectDao.TABLE + "(" + COLUMN_ID + ")"
             + ");";
 
-    private EffectDao effectDao = new EffectDao(context, database);
-    private CharTempEffectDao charTempDao = new CharTempEffectDao(context, database);;
+    private EffectDao effectDao = new EffectDao(context);;
 
-    public TempEffectDao(Context context) {
+    public FeatDao(Context context) {
         super(context);
     }
 
-    protected TempEffectDao(Context context, SQLiteDatabase database) {
+    protected FeatDao(Context context, SQLiteDatabase database) {
         super(context, database);
     }
 
@@ -52,7 +51,7 @@ public class TempEffectDao extends AbstractEntityDao<TempEffect> {
     }
 
     @Override
-    public void save(TempEffect entity) {
+    public void save(Feat entity) {
 
         //basic data
         ContentValues values = new ContentValues();
@@ -68,10 +67,10 @@ public class TempEffectDao extends AbstractEntityDao<TempEffect> {
     }
 
     @Override
-    protected TempEffect fromCursor(Cursor cursor) {
+    protected Feat fromCursor(Cursor cursor) {
 
         //basic fields
-        TempEffect result = new TempEffect();
+        Feat result = new Feat();
         result.setId(cursor.getLong(0));
         result.setName(cursor.getString(1));
 
@@ -83,9 +82,4 @@ public class TempEffectDao extends AbstractEntityDao<TempEffect> {
         return result;
     }
 
-    @Override
-    public void remove(TempEffect e) {
-        super.remove(e);
-        charTempDao.removeAllForEffect(e.getId());
-    }
 }

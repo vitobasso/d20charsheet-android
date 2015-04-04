@@ -13,7 +13,7 @@ import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.EffectArrayAdapter;
 import com.vituel.dndplayer.activity.SelectTempEffectActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
-import com.vituel.dndplayer.dao.TempEffectActivityDao;
+import com.vituel.dndplayer.dao.CharTempEffectDao;
 import com.vituel.dndplayer.model.CharSummary;
 import com.vituel.dndplayer.model.TempEffect;
 import com.vituel.dndplayer.util.JavaUtil;
@@ -49,7 +49,7 @@ public class SummaryTempEffectsFragment extends PagerFragment<CharSummary, Summa
 
     public void save() {
         //update db
-        TempEffectActivityDao dataSource = new TempEffectActivityDao(activity);
+        CharTempEffectDao dataSource = new CharTempEffectDao(activity);
         dataSource.updateForChar(tempEffects, data.getBase().getId());
         dataSource.close();
 
