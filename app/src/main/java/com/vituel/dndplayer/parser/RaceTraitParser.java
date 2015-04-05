@@ -4,16 +4,19 @@ import android.content.Context;
 import android.util.Log;
 
 import com.vituel.dndplayer.dao.RaceDao;
-import com.vituel.dndplayer.model.Feat;
+import com.vituel.dndplayer.model.Effect;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.Race;
+import com.vituel.dndplayer.model.RaceTrait;
 
 import java.text.ParseException;
 
 /**
  * Created by Victor on 26/03/14.
  */
-public class RaceTraitParser extends AbstractDependantParser<Feat, Race> {
+public class RaceTraitParser extends AbstractDependantParser<RaceTrait, Race> {
+
+    private RaceDao raceDao = new RaceDao(ctx);
 
     public RaceTraitParser(Context ctx) {
         super(ctx);
@@ -23,7 +26,6 @@ public class RaceTraitParser extends AbstractDependantParser<Feat, Race> {
     protected Race parseOwner(String line) {
         String split[] = line.split("\t");
 
-        RaceDao raceDao = new RaceDao(ctx);
         Race race = raceDao.findByName(split[0]);
         raceDao.close();
 
@@ -31,28 +33,31 @@ public class RaceTraitParser extends AbstractDependantParser<Feat, Race> {
     }
 
     @Override
-    protected Feat parseDependant(String line) {
+    protected RaceTrait parseDependant(String line) {
         String split[] = line.split("\t");
 
-        Feat result = new Feat();
+        RaceTrait result = new RaceTrait();
         result.setName(split[1]);
-        result.setTraitType(Feat.Type.RACIAL);
 
-        ModifierParser modParser = new ModifierParser(result);
-        readModifier(modParser, split, 2, result);
-        readModifier(modParser, split, 3, result);
-        readModifier(modParser, split, 4, result);
+        Effect effect = new Effect();
+        effect.setSourceName(result.getName());
+        result.setEffect(effect);
+
+        ModifierParser modParser = new ModifierParser();
+        readModifier(modParser, split, 2, effect);
+        readModifier(modParser, split, 3, effect);
+        readModifier(modParser, split, 4, effect);
 
         return result;
     }
 
-    protected void readModifier(ModifierParser parser, String[] split, int index, Feat result) {
+    protected void readModifier(ModifierParser parser, String[] split, int index, Effect effect) {
         if (split.length > index) {
             try {
                 String str = split[index];
                 if (str != null && !str.isEmpty()) {
                     Modifier mod = parser.parse(str);
-                    result.addModifier(mod);
+                    effect.addModifier(mod);
                 }
             } catch (ParseException e) {
                 Log.w(this.getClass().getSimpleName(), e.getMessage());

@@ -5,13 +5,11 @@ import android.util.Log;
 
 import com.vituel.dndplayer.model.Critical;
 import com.vituel.dndplayer.model.DiceRoll;
+import com.vituel.dndplayer.model.Effect;
 import com.vituel.dndplayer.model.Item;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierType;
 import com.vituel.dndplayer.model.WeaponItem;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.vituel.dndplayer.model.Item.ItemType.ARMOR;
 import static com.vituel.dndplayer.model.Item.ItemType.SHIELD;
@@ -115,12 +113,12 @@ public class ItemParser extends AbstractParser<Item> {
 
         } else if (equal(type, "ARMOR") || equal(type, "SHIELD")) {
             result = new Item();
-            List<Modifier> mod = new ArrayList<>();
-            mod.add(new Modifier(AC, ac, ModifierType.ARMOR, result));
+            Effect effect = new Effect();
+            effect.addModifier(new Modifier(AC, ac, ModifierType.ARMOR));
             if (maxDex < Integer.MAX_VALUE) {
-                mod.add(new Modifier(MAX_DEX, maxDex, result));
+                effect.addModifier(new Modifier(MAX_DEX, maxDex));
             }
-            result.setModifiers(mod);
+            result.setEffect(effect);
 
             if (equal(type, "ARMOR")) {
                 result.setSlotType(BODY);

@@ -1,8 +1,7 @@
 package com.vituel.dndplayer.parser;
 
-import com.vituel.dndplayer.model.AbstractEffect;
-import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Condition;
+import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.ModifierType;
@@ -17,12 +16,6 @@ import static com.vituel.dndplayer.model.Condition.Predicate;
  * Created by Victor on 31/03/14.
  */
 public class ModifierParser {
-
-    AbstractEffect source;
-
-    public ModifierParser(AbstractEffect source) {
-        this.source = source;
-    }
 
     public Modifier parse(String line) throws ParseException {
         // TARGET(variation) amount type [condition]
@@ -55,7 +48,7 @@ public class ModifierParser {
                 DiceRoll amount = new DiceRoll(amountStr);
                 Condition cond = parseCondition(conditionStr, target);
 
-                return new Modifier(target, variationStr, amount, type, cond, source);
+                return new Modifier(target, variationStr, amount, type, cond);
 
             } catch (IllegalArgumentException e) {
                 throw new ParseException("Unknown modifier format: " + line, 0);

@@ -1,5 +1,6 @@
 package com.vituel.dndplayer.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,8 +12,11 @@ public class Effect extends AbstractEntity {
 
     private List<Modifier> modifiers;
 
-    public void addModifier(Modifier modifier){
-        getModifiers().add(modifier);
+    public void addModifier(Modifier modifier) {
+        if (modifiers == null) {
+            modifiers = new ArrayList<>();
+        }
+        modifiers.add(modifier);
     }
 
     public List<Modifier> getModifiers() {

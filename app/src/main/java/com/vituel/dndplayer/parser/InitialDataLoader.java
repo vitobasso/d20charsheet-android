@@ -3,16 +3,19 @@ package com.vituel.dndplayer.parser;
 import android.content.Context;
 
 import com.vituel.dndplayer.dao.ClassDao;
+import com.vituel.dndplayer.dao.ClassTraitDao;
 import com.vituel.dndplayer.dao.FeatDao;
 import com.vituel.dndplayer.dao.ItemDao;
 import com.vituel.dndplayer.dao.RaceDao;
 import com.vituel.dndplayer.dao.RaceTraitDao;
 import com.vituel.dndplayer.dao.SkillDao;
 import com.vituel.dndplayer.dao.TempEffectDao;
+import com.vituel.dndplayer.model.ClassTrait;
 import com.vituel.dndplayer.model.Clazz;
 import com.vituel.dndplayer.model.Feat;
 import com.vituel.dndplayer.model.Item;
 import com.vituel.dndplayer.model.Race;
+import com.vituel.dndplayer.model.RaceTrait;
 import com.vituel.dndplayer.model.Skill;
 import com.vituel.dndplayer.model.TempEffect;
 
@@ -31,25 +34,24 @@ public class InitialDataLoader {
         raceDao.save(races);
         raceDao.close();
 
-        Map<Feat, Race> raceTraits = new RaceTraitParser(ctx).loadFile("data/race_traits.txt");
-        FeatDao featDao = new FeatDao(ctx);
-        featDao.save(raceTraits.keySet());
-        featDao.close();
-        RaceTraitDao traitLinkDao = new RaceTraitDao(ctx);
-        traitLinkDao.saveForRaces(raceTraits);
-        traitLinkDao.close();
+        Map<RaceTrait, Race> raceTraits = new RaceTraitParser(ctx).loadFile("data/race_traits.txt");
+        RaceTraitDao raceTraitDao = new RaceTraitDao(ctx);
+        for (Map.Entry<RaceTrait, Race> entry : raceTraits.entrySet()) {
+            raceTraitDao.save(entry.getValue().getId(), entry.getKey());
+        }
+        raceTraitDao.close();
 
         List<Clazz> classes = new ClassParser(ctx).loadFile("data/classes.txt");
         ClassDao classDao = new ClassDao(ctx);
         classDao.save(classes);
         classDao.close();
 
-        Map<Feat, Clazz> classTraits = new ClassTraitParser(ctx).loadFile("data/class_traits.txt");
-        featDao = new FeatDao(ctx);
-        featDao.save(classTraits.keySet());
-        featDao.close();
-        traitLinkDao = new RaceTraitDao(ctx);
-        traitLinkDao.saveForClasses(classTraits);
+        Map<ClassTrait, Clazz> classTraits = new ClassTraitParser(ctx).loadFile("data/class_traits.txt");
+        ClassTraitDao classTraitDao = new ClassTraitDao(ctx);
+        for (Map.Entry<ClassTrait, Clazz> entry : classTraits.entrySet()) {
+            classTraitDao.save(entry.getValue().getId(), entry.getKey());
+        }
+        classTraitDao.close();
 
         List<Feat> feats = new FeatParser(ctx).loadFile("data/feats.txt");
         new FeatDao(ctx).save(feats);
