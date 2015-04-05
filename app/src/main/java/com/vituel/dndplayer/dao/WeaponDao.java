@@ -77,8 +77,10 @@ public class WeaponDao extends AbstractEntityDao<WeaponProperties> {
         int criticalMultiplier = cursor.getInt(4);
         Critical critical = new Critical(criticalRange, criticalMultiplier);
 
-        WeaponProperties weapon = new WeaponProperties(damage, critical);
+        WeaponProperties weapon = new WeaponProperties();
         weapon.setId(id);
+        weapon.setDamage(damage);
+        weapon.setCritical(critical);
         return weapon;
     }
 

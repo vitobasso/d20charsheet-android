@@ -5,8 +5,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.model.AbstractEffect;
 import com.vituel.dndplayer.model.CharSummary;
+import com.vituel.dndplayer.model.EffectSource;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.ModifierType;
@@ -43,47 +43,47 @@ public class BreakdownDialogInflater {
         this.red = commons.red;
     }
 
-    public int appendRows(ViewGroup parentView, Collection<? extends AbstractEffect> effects, String source) {
+    public int appendRows(ViewGroup parentView, Collection<? extends EffectSource> sources, String sourceName) {
         int count = 0;
-        for (AbstractEffect effect : effects) {
-            if (effect != null) {
-                count += appendRows(parentView, effect, source);
+        for (EffectSource source : sources) {
+            if (source != null) {
+                count += appendRows(parentView, source, sourceName);
             }
         }
         return count;
     }
 
-    public int appendRows(ViewGroup parentView, Collection<? extends AbstractEffect> effects, boolean isColored) {
+    public int appendRows(ViewGroup parentView, Collection<? extends EffectSource> effects, boolean isColored) {
         int count = 0;
-        for (AbstractEffect effect : effects) {
-            if (effect != null) {
-                count += appendRows(parentView, effect, isColored);
+        for (EffectSource source : effects) {
+            if (source != null) {
+                count += appendRows(parentView, source, isColored);
             }
         }
         return count;
     }
 
-    public int appendRows(ViewGroup parentView, AbstractEffect effect, String source) {
+    public int appendRows(ViewGroup parentView, EffectSource source, String sourceName) {
         int count = 0;
-        if (effect != null) {
-            for (Modifier modifier : effect.getModifiers()) {
+        if (source != null) {
+            for (Modifier modifier : source.getEffect().getModifiers()) {
                 if (modifierApplies(modifier)) {
                     count++;
-                    appendRow(parentView, modifier, source, modifier.getType(), black);
+                    appendRow(parentView, modifier, sourceName, modifier.getType(), black);
                 }
             }
         }
         return count;
     }
 
-    public int appendRows(ViewGroup parentView, AbstractEffect effect, boolean isColored) {
+    public int appendRows(ViewGroup parentView, EffectSource source, boolean isColored) {
         int count = 0;
-        if (effect != null) {
-            for (Modifier modifier : effect.getModifiers()) {
+        if (source != null) {
+            for (Modifier modifier : source.getEffect().getModifiers()) {
                 if (modifierApplies(modifier)) {
                     count++;
                     int color = isColored ? modifier.isBonus() ? green : red : black;
-                    appendRow(parentView, modifier, effect.getName(), modifier.getType(), color);
+                    appendRow(parentView, modifier, source.getName(), modifier.getType(), color);
                 }
             }
         }
@@ -103,41 +103,41 @@ public class BreakdownDialogInflater {
         return count;
     }
 
-    public int appendRows(ViewGroup parentView, List<Modifier> modifiers, String source) {
+    public int appendRows(ViewGroup parentView, List<Modifier> modifiers, String sourceName) {
         int count = 0;
         if (modifiers != null) {
             for (Modifier modifier : modifiers) {
                 if (modifierApplies(modifier)) {
                     count++;
-                    appendRow(parentView, modifier, source, modifier.getType(), black);
+                    appendRow(parentView, modifier, sourceName, modifier.getType(), black);
                 }
             }
         }
         return count;
     }
 
-    public ViewGroup  appendRow(ViewGroup parentView, Modifier modifier, String source, ModifierType type, int color) {
+    public ViewGroup  appendRow(ViewGroup parentView, Modifier modifier, String sourceName, ModifierType type, int color) {
         if (type != null) {
-            source = String.format("%s (%s)", source, type.toString());
+            sourceName = String.format("%s (%s)", sourceName, type.toString());
         }
-        String value = AppCommons.modifierString(modifier,  source);
-        return appendRow(parentView, value, source, color);
+        String value = AppCommons.modifierString(modifier,  sourceName);
+        return appendRow(parentView, value, sourceName, color);
     }
 
-    public ViewGroup  appendRow(ViewGroup parentView, Modifier modifier, String source, int colorRes) {
-        String value = AppCommons.modifierString(modifier, source);
-        return appendRow(parentView, value, source, colorRes);
+    public ViewGroup  appendRow(ViewGroup parentView, Modifier modifier, String sourceName, int colorRes) {
+        String value = AppCommons.modifierString(modifier, sourceName);
+        return appendRow(parentView, value, sourceName, colorRes);
     }
 
-    public ViewGroup appendRow(ViewGroup parentView, int value, String source, int color) {
-        return appendRow(parentView, "" + value, source, color);
+    public ViewGroup appendRow(ViewGroup parentView, int value, String sourceName, int color) {
+        return appendRow(parentView, "" + value, sourceName, color);
     }
 
-    public ViewGroup appendRow(ViewGroup parentView, String value, String source, int color) {
+    public ViewGroup appendRow(ViewGroup parentView, String value, String sourceName, int color) {
         ViewGroup row = inflate(activity, parentView, R.layout.summary_main_breakdown_row);
 
         TextView valueView = populateTextView(row, R.id.value, value);
-        TextView sourceView = populateTextView(row, R.id.source, source);
+        TextView sourceView = populateTextView(row, R.id.source, sourceName);
 
         valueView.setTextColor(color);
         sourceView.setTextColor(color);

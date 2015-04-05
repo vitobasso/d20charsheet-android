@@ -21,12 +21,6 @@ public class WeaponProperties extends AbstractEntity {
         this.setCritical(new Critical(1, 2));
     }
 
-    public WeaponProperties(DiceRoll damage, Critical critical) {
-        this();
-        this.setDamage(damage);
-        this.setCritical(critical);
-    }
-
     public DiceRoll getDamage() {
         return damage;
     }

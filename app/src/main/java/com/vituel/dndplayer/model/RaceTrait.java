@@ -1,12 +1,13 @@
 package com.vituel.dndplayer.model;
 
 /**
- * Created by Victor on 25/02/14.
+ * Created by Victor on 04/04/2015.
  */
-public class Feat extends AbstractEntity implements EffectSource {
+public class RaceTrait extends AbstractEntity implements EffectSource {
 
     private Effect effect;
 
+    @Override
     public Effect getEffect() {
         return effect;
     }
@@ -14,4 +15,5 @@ public class Feat extends AbstractEntity implements EffectSource {
     public void setEffect(Effect effect) {
         this.effect = effect;
     }
+
 }

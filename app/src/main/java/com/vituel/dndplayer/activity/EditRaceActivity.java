@@ -44,7 +44,7 @@ public class EditRaceActivity extends AbstractEditActivity<Race> {
         sizeSpinner.setSelection(initValue.ordinal());
 
         //modifiers
-        List<Modifier> modifiers = entity.getModifiers();
+        List<Modifier> modifiers = entity.getEffect().getModifiers();
         for (Modifier modifier : modifiers) {
             switch (modifier.getTarget()) {
                 case STR:
@@ -90,7 +90,8 @@ public class EditRaceActivity extends AbstractEditActivity<Race> {
         entity.setName(nameView.getText().toString().trim());
 
         //modifiers
-        entity.getModifiers().clear();
+        List<Modifier> modifiers = entity.getEffect().getModifiers();
+        modifiers.clear();
         readFromEditText(R.id.str, ModifierTarget.STR);
         readFromEditText(R.id.dex, ModifierTarget.DEX);
         readFromEditText(R.id.con, ModifierTarget.CON);
@@ -101,8 +102,8 @@ public class EditRaceActivity extends AbstractEditActivity<Race> {
 
         Spinner sizeSpinner = findView(R.id.size);
         Size size = (Size) sizeSpinner.getSelectedItem();
-        Modifier modifier = new Modifier(ModifierTarget.SIZE, size.getIndex(), RACIAL, entity);
-        entity.getModifiers().add(modifier);
+        Modifier modifier = new Modifier(ModifierTarget.SIZE, size.getIndex(), RACIAL);
+        modifiers.add(modifier);
 
         return entity;
     }
@@ -111,9 +112,10 @@ public class EditRaceActivity extends AbstractEditActivity<Race> {
         EditText view = findView(res);
         DiceRoll amount = view.getText().length() > 0 ? new DiceRoll(view.getText().toString().trim()) : null;
 
+        List<Modifier> modifiers = entity.getEffect().getModifiers();
         if (target != null && amount != null) {
-            Modifier modifier = new Modifier(target, amount, RACIAL, entity);
-            entity.getModifiers().add(modifier);
+            Modifier modifier = new Modifier(target, amount, RACIAL);
+            modifiers.add(modifier);
         }
     }
 

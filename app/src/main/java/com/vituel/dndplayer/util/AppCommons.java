@@ -77,7 +77,7 @@ public class AppCommons {
         Collection<TempEffect> temps = base.getActiveTempEffects();
         externalLoop:
         for (TempEffect temp : temps) {
-            for (Modifier mod : temp.getModifiers()) {
+            for (Modifier mod : temp.getEffect().getModifiers()) {
                 if (AppCommons.modifierApplies(mod, target, variation, base.getActiveConditions())) {
                     color = green;
                     if (!mod.isBonus()) {

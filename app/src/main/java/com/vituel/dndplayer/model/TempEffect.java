@@ -6,7 +6,7 @@ package com.vituel.dndplayer.model;
  * <p/>
  * Created by Victor on 21/03/14.
  */
-public class TempEffect extends AbstractEntity {
+public class TempEffect extends AbstractEntity implements EffectSource {
 
     private Effect effect;
 

@@ -39,7 +39,7 @@ public class EditTempEffectActivity extends AbstractEditActivity<TempEffect> {
 
         //modifiers
         ViewGroup effectsRoot = findView(this, R.id.effectsList);
-        List<Modifier> modifiers = entity.getModifiers();
+        List<Modifier> modifiers = entity.getEffect().getModifiers();
         for (Modifier modifier : modifiers) {
             ViewGroup group = inflate(this, effectsRoot, R.layout.edit_modifier);
             populateSpinnerWithEnum(this, group, R.id.target, ModifierTarget.values(), modifier.getTarget(), null);
@@ -69,7 +69,8 @@ public class EditTempEffectActivity extends AbstractEditActivity<TempEffect> {
         entity.setName(readString(this, R.id.name));
 
         //modifiers
-        entity.getModifiers().clear();
+        List<Modifier> modifiers = entity.getEffect().getModifiers();
+        modifiers.clear();
         ViewGroup effectsRoot = findView(this, R.id.effectsList);
         for (int i = 0; i < effectsRoot.getChildCount(); i++) {
             ViewGroup group = (ViewGroup) effectsRoot.getChildAt(i);
@@ -78,8 +79,8 @@ public class EditTempEffectActivity extends AbstractEditActivity<TempEffect> {
             ModifierType modType = readSpinner(group, R.id.type);
 
             if (target != null && amount != null) {
-                Modifier modifier = new Modifier(target, amount, modType, entity);
-                entity.getModifiers().add(modifier);
+                Modifier modifier = new Modifier(target, amount, modType);
+                modifiers.add(modifier);
             }
         }
 

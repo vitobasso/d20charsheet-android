@@ -3,7 +3,7 @@ package com.vituel.dndplayer.model;
 /**
  * Created by Victor on 25/02/14.
  */
-public class Item extends AbstractEntity {
+public class Item extends AbstractEntity implements EffectSource {
 
     public enum ItemType {
         WEAPON, SHIELD, ARMOR

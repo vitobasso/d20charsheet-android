@@ -7,13 +7,16 @@ import java.util.List;
 /**
  * Created by Victor on 31/03/14.
  */
-public class ClassLevel extends Effect {
+public class ClassLevel extends AbstractEntity implements EffectSource {
 
     private Clazz clazz;
     private int level;
 
+    private Effect effect;
+
     public ClassLevel() {
         level = 1;
+        effect = buildEffect();
     }
 
     public int getBaseAttack() {
@@ -21,18 +24,39 @@ public class ClassLevel extends Effect {
     }
 
     @Override
-    public List<Modifier> getModifiers() {
+    public String getName() {
+        if (getClazz() != null) {
+            return MessageFormat.format("{0} $lvl {1}", getClazz().getName(), getLevel());
+        } else {
+            return null;
+        }
+    }
+
+    private Effect buildEffect() {
         Modifier fort = new Modifier(ModifierTarget.FORT, getClazz().getBaseFortitude(getLevel()));
         Modifier refl = new Modifier(ModifierTarget.REFL, getClazz().getBaseReflex(getLevel()));
         Modifier will = new Modifier(ModifierTarget.WILL, getClazz().getBaseWill(getLevel()));
         Modifier attack = new Modifier(ModifierTarget.HIT, getClazz().getBaseAttack(getLevel()));
 
-        List<Modifier> result = new ArrayList<>();
-        result.add(fort);
-        result.add(refl);
-        result.add(will);
-        result.add(attack);
-        return result;
+        List<Modifier> modifiers = new ArrayList<>();
+        modifiers.add(fort);
+        modifiers.add(refl);
+        modifiers.add(will);
+        modifiers.add(attack);
+
+        Effect effect = new Effect();
+        effect.setModifiers(modifiers);
+        return effect;
+    }
+
+    @Override
+    public Effect getEffect() {
+        return effect;
+    }
+
+    @Override
+    public void setEffect(Effect effect) {
+        this.effect = effect;
     }
 
     public List<ClassTrait> getTraits() {
@@ -53,15 +77,6 @@ public class ClassLevel extends Effect {
 
     public void setLevel(int level) {
         this.level = level;
-    }
-
-    @Override
-    public String getName() {
-        if (getClazz() != null) {
-            return MessageFormat.format("{0} $lvl {1}", getClazz().getName(), getLevel());
-        } else {
-            return null;
-        }
     }
 
     @Override

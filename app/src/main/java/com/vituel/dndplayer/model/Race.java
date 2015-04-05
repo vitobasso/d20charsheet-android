@@ -5,11 +5,11 @@ import java.util.List;
 /**
  * Created by Victor on 30/03/14.
  */
-public class Race extends AbstractEntity {
+public class Race extends AbstractEntity implements EffectSource {
 
     private Effect effect;
 
-    private List<Effect> traits;
+    private List<RaceTrait> traits;
 
     public Effect getEffect() {
         return effect;
@@ -19,11 +19,11 @@ public class Race extends AbstractEntity {
         this.effect = effect;
     }
 
-    public List<Effect> getTraits() {
+    public List<RaceTrait> getTraits() {
         return traits;
     }
 
-    public void setTraits(List<Effect> traits) {
+    public void setTraits(List<RaceTrait> traits) {
         this.traits = traits;
     }
 }

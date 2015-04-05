@@ -75,6 +75,7 @@ public class ClassTraitDao extends AbstractAssociationDao<ClassTrait> {
     public void save(long classId, ClassTrait trait) {
 
         ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, trait.getName());
         values.put(COLUMN_CLASS_ID, classId);
         values.put(COLUMN_LEVEL, trait.getLevel());
 
@@ -94,6 +95,7 @@ public class ClassTraitDao extends AbstractAssociationDao<ClassTrait> {
     protected ClassTrait fromCursor(Cursor cursor) {
 
         ClassTrait classTrait = new ClassTrait();
+        classTrait.setId(cursor.getLong(0));
         classTrait.setName(cursor.getString(1));
         classTrait.setLevel(cursor.getInt(4));
         classTrait.setOverridenTraitName(cursor.getString(5));

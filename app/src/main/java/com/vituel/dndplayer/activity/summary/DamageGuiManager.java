@@ -34,7 +34,6 @@ public class DamageGuiManager implements GuiInflater {
     }
 
     public void inflate(final ViewGroup parentView) {
-        BreakdownDialogInflater bdi = new BreakdownDialogInflater(activity, charSummary, ModifierTarget.HP, null);
         ViewGroup root = ActivityUtil.inflate(activity, null, R.layout.summary_main_breakdown_hp);
         root.setId(R.id.damage);
         final DamageTaken dmg = charSummary.getBase().getDamageTaken();

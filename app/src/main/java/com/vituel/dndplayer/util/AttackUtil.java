@@ -95,7 +95,12 @@ public class AttackUtil {
     }
 
     public static WeaponProperties unnarmedStrike(){
-        return new WeaponProperties("$unnarmed_strike", new DiceRoll("1d6"), new Critical(1, 2), 1); //TODO monk dmg
+        //TODO monk dmg
+        WeaponProperties weapon = new WeaponProperties();
+        weapon.setName("$unnarmed_strike");
+        weapon.setDamage(new DiceRoll("1d6"));
+        weapon.setCritical(new Critical(1, 2));
+        return weapon;
     }
 
     public static WeaponProperties getRepresentativeWeapon(AttackRound round, Attack.WeaponReference refType){

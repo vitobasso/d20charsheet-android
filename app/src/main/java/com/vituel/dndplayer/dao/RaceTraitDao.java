@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.model.Effect;
+import com.vituel.dndplayer.model.RaceTrait;
 
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
@@ -14,7 +15,7 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 /**
  * Created by Victor on 06/03/14.
  */
-public class RaceTraitDao extends AbstractAssociationDao<Effect> {
+public class RaceTraitDao extends AbstractAssociationDao<RaceTrait> {
 
     public static final String TABLE = "race_trait";
 
@@ -65,22 +66,31 @@ public class RaceTraitDao extends AbstractAssociationDao<Effect> {
     }
 
     @Override
-    public void save(long parentId, Effect effect) {
+    public void save(long parentId, RaceTrait raceTrait) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, effect.getName());
+        values.put(COLUMN_NAME, raceTrait.getName());
         values.put(COLUMN_RACE_ID, parentId);
 
         //effect
+        Effect effect = raceTrait.getEffect();
         effectDao.save(effect);
         values.put(COLUMN_EFFECT_ID, effect.getId());
 
-        insertOrUpdate(values, parentId, effect.getId());
+        insertOrUpdate(values, parentId, raceTrait.getId());
     }
 
     @Override
-    protected Effect fromCursor(Cursor cursor) {
-        //TODO name not used
-        return effectDao.findById(cursor.getLong(3)); // source name set in RaceDao
+    protected RaceTrait fromCursor(Cursor cursor) {
+        RaceTrait raceTrait = new RaceTrait();
+        raceTrait.setId(cursor.getLong(0));
+        raceTrait.setName(cursor.getString(1));
+
+        //effect
+        Effect effect = effectDao.findById(cursor.getLong(3));
+        effect.setSourceName(raceTrait.getName());
+        raceTrait.setEffect(effect);
+
+        return raceTrait;
     }
 
 }

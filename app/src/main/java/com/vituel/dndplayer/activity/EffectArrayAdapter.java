@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.model.AbstractEffect;
+import com.vituel.dndplayer.model.EffectSource;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 /**
  * Created by Victor on 20/04/14.
  */
-public class EffectArrayAdapter<T extends AbstractEffect> extends ArrayAdapter<T> {
+public class EffectArrayAdapter<T extends EffectSource> extends ArrayAdapter<T> {
 
     public EffectArrayAdapter(Context context, List<T> objects) {
         super(context, R.layout.effect_row, R.id.name, objects);
@@ -30,10 +30,10 @@ public class EffectArrayAdapter<T extends AbstractEffect> extends ArrayAdapter<T
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewGroup group = (ViewGroup) super.getView(position, convertView, parent);
         assert group != null;
-        AbstractEffect effect = getItem(position);
+        EffectSource source = getItem(position);
 
         EffectPopulator populator = new EffectPopulator(getContext());
-        populator.populate(effect, group);
+        populator.populate(source, group);
 
         setFontRecursively(getContext(), group, MAIN_FONT);
         return group;

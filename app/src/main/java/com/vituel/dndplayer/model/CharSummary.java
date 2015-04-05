@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static ch.lambdaj.Lambda.extract;
-import static ch.lambdaj.Lambda.on;
 import static com.vituel.dndplayer.model.ModifierTarget.AC;
 import static com.vituel.dndplayer.model.ModifierTarget.CHA;
 import static com.vituel.dndplayer.model.ModifierTarget.CON;
@@ -82,15 +80,15 @@ public class CharSummary {
         applyModifiers(getBaseModifiers());
         apply(base.getRace().getEffect());
         if (base.getRace() != null) {
-            applyEffects(extract(base.getRace().getTraits(), on(Feat.class).getEffect()));
+            applyEffects(base.getRace().getTraits());
         }
         applyEffects(base.getClassLevels());
         for (ClassLevel classLevel : base.getClassLevels()) {
-            applyEffects(extract(classLevel.getTraits(), on(Feat.class).getEffect()));
+            applyEffects(classLevel.getTraits());
         }
-        applyEffects(extract(base.getFeats(), on(Feat.class).getEffect()));
-        applyEffects(extract(base.getEquipmentItems(), on(Item.class).getEffect()));
-        applyEffects(extract(base.getActiveTempEffects(), on(TempEffect.class).getEffect()));
+        applyEffects(base.getFeats());
+        applyEffects(base.getEquipmentItems());
+        applyEffects(base.getActiveTempEffects());
 
         //effects from other attributes
         applyModifiers(getAbilityModifiers().keySet());
@@ -188,10 +186,10 @@ public class CharSummary {
         return modifiers;
     }
 
-    private void applyEffects(Collection<? extends Effect> effects) {
-        if (effects != null) {
-            for (Effect effect : effects) {
-                apply(effect);
+    private void applyEffects(Collection<? extends EffectSource> effectSources) {
+        if (effectSources != null) {
+            for (EffectSource source : effectSources) {
+                apply(source.getEffect());
             }
         }
     }

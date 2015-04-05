@@ -6,10 +6,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.model.AbstractEffect;
+import com.vituel.dndplayer.model.EffectSource;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.util.AppCommons;
 import com.vituel.dndplayer.util.i18n.ModifierStringConverter;
+
+import java.util.List;
 
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
@@ -19,18 +21,16 @@ import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
  */
 public class EffectPopulator {
 
-    private Context context;
     private ModifierStringConverter modConv;
     private AppCommons appCommons;
 
     public EffectPopulator(Context context) {
-        this.context = context;
         this.modConv = new ModifierStringConverter(context);
         this.appCommons = new AppCommons(context);
     }
 
-    public void populate(AbstractEffect effect, ViewGroup group){
-        populateTextView(group, R.id.name, effect.getName());
+    public void populate(EffectSource source, ViewGroup group){
+        populateTextView(group, R.id.name, source.getName());
 
         TextView[] modViews = new TextView[6];
         modViews[0] = findView(group, R.id.mod1);
@@ -41,9 +41,10 @@ public class EffectPopulator {
         modViews[5] = findView(group, R.id.mod6);
 
         //populate mods
-        for (int i = 0; i < effect.getModifiers().size() && i < modViews.length; i++) {
+        List<Modifier> modifiers = source.getEffect().getModifiers();
+        for (int i = 0; i < modifiers.size() && i < modViews.length; i++) {
             TextView modView = modViews[i];
-            Modifier mod = effect.getModifiers().get(i);
+            Modifier mod = modifiers.get(i);
             modView.setText(modConv.getShortString(mod));
             if (mod.isBonus()) {
                 modView.setTextColor(appCommons.green);
@@ -53,15 +54,15 @@ public class EffectPopulator {
         }
 
         //clear empty views
-        for (int i = effect.getModifiers().size(); i < modViews.length; i++) {
+        for (int i = modifiers.size(); i < modViews.length; i++) {
             modViews[i].setText("");
         }
 
         //show necessary rows, hide excess ones
         View row2 = group.findViewById(R.id.row2);
-        row2.setVisibility(effect.getModifiers().size() <= 3 ? View.GONE : View.VISIBLE);
+        row2.setVisibility(modifiers.size() <= 3 ? View.GONE : View.VISIBLE);
         View row1 = group.findViewById(R.id.row1);
-        row1.setVisibility(effect.getModifiers().isEmpty() ? View.GONE : View.VISIBLE);
+        row1.setVisibility(modifiers.isEmpty() ? View.GONE : View.VISIBLE);
     }
 
 }

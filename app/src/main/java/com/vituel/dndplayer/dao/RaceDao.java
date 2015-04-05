@@ -7,10 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.model.Effect;
 import com.vituel.dndplayer.model.Race;
+import com.vituel.dndplayer.model.RaceTrait;
 
 import java.util.List;
 
-import static ch.lambdaj.Lambda.forEach;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
@@ -84,8 +84,7 @@ public class RaceDao extends AbstractEntityDao<Race> {
         result.setEffect(effect);
 
         //racial traits
-        List<Effect> traits = raceTraitDao.findByParent(result.getId());
-        forEach(traits).setSourceName(result.getName());
+        List<RaceTrait> traits = raceTraitDao.findByParent(result.getId());
         result.setTraits(traits);
 
         return result;

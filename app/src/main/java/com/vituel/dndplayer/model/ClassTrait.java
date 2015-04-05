@@ -3,20 +3,11 @@ package com.vituel.dndplayer.model;
 /**
  * Created by Victor on 05/04/14.
  */
-public class ClassTrait {
+public class ClassTrait extends AbstractEntity implements EffectSource {
 
-    private String name;
     private Effect effect;
     private int level;
     private String overridenTraitName;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public Effect getEffect() {
         return effect;

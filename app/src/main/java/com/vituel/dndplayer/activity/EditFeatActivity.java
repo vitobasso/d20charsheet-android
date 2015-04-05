@@ -13,7 +13,6 @@ import com.vituel.dndplayer.model.ModifierType;
 
 import java.util.List;
 
-import static com.vituel.dndplayer.model.Feat.Type.FEAT;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.inflate;
 import static com.vituel.dndplayer.util.ActivityUtil.populateSpinnerWithEnum;
@@ -42,7 +41,7 @@ public class EditFeatActivity extends AbstractEditActivity<Feat> {
 
         //modifiers
         ViewGroup effectsRoot = findView(this, R.id.effectsList);
-        List<Modifier> modifiers = entity.getModifiers();
+        List<Modifier> modifiers = entity.getEffect().getModifiers();
         for (Modifier modifier : modifiers) {
             ViewGroup group = inflate(this, effectsRoot, R.layout.edit_modifier);
 
@@ -65,10 +64,10 @@ public class EditFeatActivity extends AbstractEditActivity<Feat> {
 
         //basic fields
         entity.setName(readString(this, R.id.name));
-        entity.setTraitType(FEAT);
 
         //modifiers
-        entity.getModifiers().clear();
+        List<Modifier> modifiers = entity.getEffect().getModifiers();
+        modifiers.clear();
         ViewGroup effectsRoot = findView(this, R.id.effectsList);
         for (int i = 0; i < effectsRoot.getChildCount(); i++) {
             ViewGroup group = (ViewGroup) effectsRoot.getChildAt(i);
@@ -77,8 +76,8 @@ public class EditFeatActivity extends AbstractEditActivity<Feat> {
             ModifierType type = readSpinner(group, R.id.type);
 
             if (target != null && amount != null) {
-                Modifier modifier = new Modifier(target, amount, type, entity);
-                entity.getModifiers().add(modifier);
+                Modifier modifier = new Modifier(target, amount, type);
+                modifiers.add(modifier);
             }
         }
 
