@@ -25,7 +25,7 @@ public class ClassLevel extends AbstractEntity implements EffectSource {
     @Override
     public String getName() {
         if (getClazz() != null) {
-            return MessageFormat.format("{0} $lvl {1}", getClazz().getName(), getLevel());
+            return MessageFormat.format("{0} {1}", getClazz().getName(), getLevel());
         } else {
             return null;
         }

@@ -74,7 +74,6 @@ FEATURES
 
 REFACTOR
 
-- abstract DAOs of dependant entities
 - unify attribute calculation (summary and breakdown)
 - organize BreakdownDialog
 - abstract EditCharFeatsFragment, SummaryTempEffectsFragment, EditCharSkillsFragment

@@ -393,11 +393,6 @@ public class CharSummary {
         return context.getResources().getString(res);
     }
 
-    @Override
-    public String toString() {
-        return getBase().getName();
-    }
-
     public void setBase(CharBase base) {
         this.base = base;
     }
@@ -564,5 +559,10 @@ public class CharSummary {
 
     public void setReferencedConditions(Set<Condition> referencedConditions) {
         this.referencedConditions = referencedConditions;
+    }
+
+    @Override
+    public String toString() {
+        return getBase().getName();
     }
 }
