@@ -10,9 +10,12 @@ import com.vituel.dndplayer.dao.AttackDao;
 import com.vituel.dndplayer.dao.AttackRoundDao;
 import com.vituel.dndplayer.dao.CharClassDao;
 import com.vituel.dndplayer.dao.CharDao;
+import com.vituel.dndplayer.dao.CharFeatDao;
 import com.vituel.dndplayer.dao.CharSkillDao;
 import com.vituel.dndplayer.dao.CharTempEffectDao;
 import com.vituel.dndplayer.dao.ClassDao;
+import com.vituel.dndplayer.dao.ClassTraitDao;
+import com.vituel.dndplayer.dao.EffectDao;
 import com.vituel.dndplayer.dao.FeatDao;
 import com.vituel.dndplayer.dao.ItemDao;
 import com.vituel.dndplayer.dao.ModifierDao;
@@ -37,22 +40,29 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
-        database.execSQL(CharDao.CREATE_TABLE);
+
+        //library
         database.execSQL(RaceDao.CREATE_TABLE);
-        database.execSQL(ClassDao.CREATE_TABLE);
-        database.execSQL(CharClassDao.CREATE_TABLE);
-        database.execSQL(ItemDao.CREATE_TABLE);
-        database.execSQL(ModifierDao.CREATE_TABLE);
-        database.execSQL(TempEffectDao.CREATE_TABLE);
-        database.execSQL(CharTempEffectDao.CREATE_TABLE);
-        database.execSQL(FeatDao.CREATE_TABLE);
         database.execSQL(RaceTraitDao.CREATE_TABLE);
+        database.execSQL(ClassDao.CREATE_TABLE);
+        database.execSQL(ClassTraitDao.CREATE_TABLE);
+        database.execSQL(ItemDao.CREATE_TABLE);
+        database.execSQL(WeaponDao.CREATE_TABLE);
+        database.execSQL(FeatDao.CREATE_TABLE);
+        database.execSQL(TempEffectDao.CREATE_TABLE);
+        database.execSQL(EffectDao.CREATE_TABLE);
+        database.execSQL(ModifierDao.CREATE_TABLE);
         database.execSQL(SkillDao.CREATE_TABLE);
+
+        //char
+        database.execSQL(CharDao.CREATE_TABLE);
+        database.execSQL(CharClassDao.CREATE_TABLE);
+        database.execSQL(CharFeatDao.CREATE_TABLE);
+        database.execSQL(CharTempEffectDao.CREATE_TABLE);
         database.execSQL(CharSkillDao.CREATE_TABLE);
         database.execSQL(ActiveConditionDao.CREATE_TABLE);
         database.execSQL(AttackRoundDao.CREATE_TABLE);
         database.execSQL(AttackDao.CREATE_TABLE);
-        database.execSQL(WeaponDao.CREATE_TABLE);
     }
 
     @Override
@@ -61,23 +71,28 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 "Upgrading database from version " + oldVersion + " to "
                         + newVersion + ", which will destroy all old data");
 
-        //reset db
-        db.execSQL("DROP TABLE IF EXISTS " + CharDao.TABLE);
+        //library
         db.execSQL("DROP TABLE IF EXISTS " + RaceDao.TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + ClassDao.TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + CharClassDao.TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + ItemDao.TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + ModifierDao.TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + TempEffectDao.TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + CharTempEffectDao.TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + FeatDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + RaceTraitDao.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + ClassDao.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + ClassTraitDao.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + ItemDao.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + WeaponDao.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + FeatDao.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + TempEffectDao.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + EffectDao.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + ModifierDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + SkillDao.TABLE);
+
+        //char
+        db.execSQL("DROP TABLE IF EXISTS " + CharDao.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + CharClassDao.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + CharFeatDao.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + CharTempEffectDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + CharSkillDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + ActiveConditionDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + AttackRoundDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + AttackDao.TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + WeaponDao.TABLE);
         onCreate(db);
 
     }

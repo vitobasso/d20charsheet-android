@@ -10,6 +10,7 @@ import com.vituel.dndplayer.model.Item;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierType;
 import com.vituel.dndplayer.model.WeaponItem;
+import com.vituel.dndplayer.util.JavaUtil;
 
 import static com.vituel.dndplayer.model.Item.ItemType.ARMOR;
 import static com.vituel.dndplayer.model.Item.ItemType.SHIELD;
@@ -18,7 +19,6 @@ import static com.vituel.dndplayer.model.ModifierTarget.AC;
 import static com.vituel.dndplayer.model.ModifierTarget.MAX_DEX;
 import static com.vituel.dndplayer.model.SlotType.BODY;
 import static com.vituel.dndplayer.model.SlotType.HELD;
-import static com.vituel.dndplayer.util.JavaUtil.equal;
 
 /**
  * Created by Victor on 26/03/14.
@@ -101,7 +101,7 @@ public class ItemParser extends AbstractParser<Item> {
 
         //build item
         Item result;
-        if (equal(type, "WEAPON")) {
+        if (JavaUtil.equals(type, "WEAPON")) {
             WeaponItem w = new WeaponItem();
             w.getWeaponProperties().setName(name);
             w.getWeaponProperties().setDamage(dmg);
@@ -111,7 +111,7 @@ public class ItemParser extends AbstractParser<Item> {
             result.setSlotType(HELD);
             result.setItemType(WEAPON);
 
-        } else if (equal(type, "ARMOR") || equal(type, "SHIELD")) {
+        } else if (JavaUtil.equals(type, "ARMOR") || JavaUtil.equals(type, "SHIELD")) {
             result = new Item();
             Effect effect = new Effect();
             effect.addModifier(new Modifier(AC, ac, ModifierType.ARMOR));
@@ -120,7 +120,7 @@ public class ItemParser extends AbstractParser<Item> {
             }
             result.setEffect(effect);
 
-            if (equal(type, "ARMOR")) {
+            if (JavaUtil.equals(type, "ARMOR")) {
                 result.setSlotType(BODY);
                 result.setItemType(ARMOR);
             } else {

@@ -2,6 +2,8 @@ package com.vituel.dndplayer.model;
 
 import android.support.annotation.NonNull;
 
+import com.vituel.dndplayer.util.JavaUtil;
+
 import org.codehaus.jackson.annotate.JsonIgnore;
 
 import java.io.Serializable;
@@ -41,7 +43,7 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Seri
 
     @Override
     public int hashCode() {
-        return name.hashCode();
+        return JavaUtil.hash(name);
     }
 
     @Override

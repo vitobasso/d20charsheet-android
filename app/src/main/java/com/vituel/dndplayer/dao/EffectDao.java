@@ -6,8 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.model.Effect;
+import com.vituel.dndplayer.model.EffectSource;
 
+import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
+import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 
 /**
  * Created by Victor on 30/03/14.
@@ -64,9 +67,38 @@ public class EffectDao extends AbstractEntityDao<Effect> {
         result.setId(cursor.getLong(0));
 
         //modifiers
-        result.setModifiers(modifierDao.listAll(result.getId()));
+        result.setModifiers(modifierDao.listAllForEffect(result.getId()));
 
         return result;
+    }
+
+    public ContentValues preSaveEffectSource(EffectSource source) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_NAME, source.getName());
+
+        Effect effect = source.getEffect();
+        if (effect != null) {
+            save(effect);
+            values.put(COLUMN_EFFECT_ID, effect.getId());
+        }
+
+        return values;
+    }
+
+    public <T extends EffectSource> T loadEffectSource(Cursor cursor, T newEntity, int idCol, int nameCol, int effectCol) {
+
+        //basic fields
+        newEntity.setId(cursor.getLong(idCol));
+        newEntity.setName(cursor.getString(nameCol));
+
+        //effect
+        Effect effect = findById(cursor.getLong(effectCol));
+        if (effect != null) {
+            effect.setSourceName(newEntity.getName());
+            newEntity.setEffect(effect);
+        }
+
+        return newEntity;
     }
 
 }

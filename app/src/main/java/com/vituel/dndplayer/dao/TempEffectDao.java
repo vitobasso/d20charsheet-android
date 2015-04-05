@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vituel.dndplayer.model.Effect;
 import com.vituel.dndplayer.model.TempEffect;
 
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
@@ -27,7 +26,6 @@ public class TempEffectDao extends AbstractEntityDao<TempEffect> {
             + ");";
 
     private EffectDao effectDao = new EffectDao(context, database);
-    private CharTempEffectDao charTempDao = new CharTempEffectDao(context, database);;
 
     public TempEffectDao(Context context) {
         super(context);
@@ -53,39 +51,23 @@ public class TempEffectDao extends AbstractEntityDao<TempEffect> {
 
     @Override
     public void save(TempEffect entity) {
-
-        //basic data
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, entity.getName());
-
-        //effect
-        Effect effect = entity.getEffect();
-        effectDao.save(effect);
-        values.put(COLUMN_EFFECT_ID, effect.getId());
-
+        ContentValues values = effectDao.preSaveEffectSource(entity);
         long id = insertOrUpdate(values, entity.getId());
         entity.setId(id);
     }
 
     @Override
     protected TempEffect fromCursor(Cursor cursor) {
-
-        //basic fields
-        TempEffect result = new TempEffect();
-        result.setId(cursor.getLong(0));
-        result.setName(cursor.getString(1));
-
-        //effect
-        Effect effect = effectDao.findById(cursor.getLong(2));
-        effect.setSourceName(result.getName());
-        result.setEffect(effect);
-
-        return result;
+        return effectDao.loadEffectSource(cursor, new TempEffect(), 0, 1, 2);
     }
 
     @Override
     public void remove(TempEffect e) {
         super.remove(e);
+
+        CharTempEffectDao charTempDao = new CharTempEffectDao(context, database);
+        //not created in constructor to avoid cyclic reference
         charTempDao.removeAllForEffect(e.getId());
+        charTempDao.close();
     }
 }

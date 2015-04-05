@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vituel.dndplayer.model.Effect;
 import com.vituel.dndplayer.model.Feat;
 
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
@@ -52,34 +51,14 @@ public class FeatDao extends AbstractEntityDao<Feat> {
 
     @Override
     public void save(Feat entity) {
-
-        //basic data
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, entity.getName());
-
-        //effect
-        Effect effect = entity.getEffect();
-        effectDao.save(effect);
-        values.put(COLUMN_EFFECT_ID, effect.getId());
-
+        ContentValues values = effectDao.preSaveEffectSource(entity);
         long id = insertOrUpdate(values, entity.getId());
         entity.setId(id);
     }
 
     @Override
     protected Feat fromCursor(Cursor cursor) {
-
-        //basic fields
-        Feat result = new Feat();
-        result.setId(cursor.getLong(0));
-        result.setName(cursor.getString(1));
-
-        //effect
-        Effect effect = effectDao.findById(cursor.getLong(2));
-        effect.setSourceName(result.getName());
-        result.setEffect(effect);
-
-        return result;
+        return effectDao.loadEffectSource(cursor, new Feat(), 0, 1, 2);
     }
 
 }

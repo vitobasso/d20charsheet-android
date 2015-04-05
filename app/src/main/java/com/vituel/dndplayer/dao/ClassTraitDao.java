@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.model.ClassTrait;
-import com.vituel.dndplayer.model.Effect;
 
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
@@ -73,37 +72,20 @@ public class ClassTraitDao extends AbstractAssociationDao<ClassTrait> {
 
     @Override
     public void save(long classId, ClassTrait trait) {
-
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, trait.getName());
+        ContentValues values = effectDao.preSaveEffectSource(trait);
         values.put(COLUMN_CLASS_ID, classId);
         values.put(COLUMN_LEVEL, trait.getLevel());
-
-        //effect
-        Effect effect = trait.getEffect();
-        effectDao.save(effect);
-        values.put(COLUMN_EFFECT_ID, effect.getId());
-
         if (trait.getOverridenTraitName() != null) {
             values.put(COLUMN_OVERRIDES, trait.getOverridenTraitName());
         }
-
-        insertOrUpdate(values, classId, effect.getId());
+        insertOrUpdate(values, classId, trait.getId());
     }
 
     @Override
     protected ClassTrait fromCursor(Cursor cursor) {
-
-        ClassTrait classTrait = new ClassTrait();
-        classTrait.setId(cursor.getLong(0));
-        classTrait.setName(cursor.getString(1));
+        ClassTrait classTrait = effectDao.loadEffectSource(cursor, new ClassTrait(), 0, 1, 3);
         classTrait.setLevel(cursor.getInt(4));
         classTrait.setOverridenTraitName(cursor.getString(5));
-
-        //effect
-        Effect effect = effectDao.findById(cursor.getLong(3)); //source name set in ClassDao
-        classTrait.setEffect(effect);
-
         return classTrait;
     }
 

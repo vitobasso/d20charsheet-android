@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vituel.dndplayer.model.Effect;
 import com.vituel.dndplayer.model.Race;
 import com.vituel.dndplayer.model.RaceTrait;
 
@@ -24,7 +23,7 @@ public class RaceDao extends AbstractEntityDao<Race> {
 
     public static final String CREATE_TABLE = "create table " + TABLE + "("
             + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_NAME + " text not null"
+            + COLUMN_NAME + " text not null, "
             + COLUMN_EFFECT_ID + " integer not null, "
             + "FOREIGN KEY(" + COLUMN_EFFECT_ID + ") REFERENCES " + EffectDao.TABLE + "(" + COLUMN_ID + ")"
             + ");";
@@ -56,32 +55,14 @@ public class RaceDao extends AbstractEntityDao<Race> {
 
     @Override
     public void save(Race entity) {
-
-        //basic data
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, entity.getName());
-
-        //effect
-        Effect effect = entity.getEffect();
-        effectDao.save(effect);
-        values.put(COLUMN_EFFECT_ID, effect.getId());
-
+        ContentValues values = effectDao.preSaveEffectSource(entity);
         long id = insertOrUpdate(values, entity.getId());
         entity.setId(id);
     }
 
     @Override
     protected Race fromCursor(Cursor cursor) {
-
-        //basic fields
-        Race result = new Race();
-        result.setId(cursor.getLong(0));
-        result.setName(cursor.getString(1));
-
-        //effect
-        Effect effect = effectDao.findById(cursor.getLong(2));
-        effect.setSourceName(result.getName());
-        result.setEffect(effect);
+        Race result = effectDao.loadEffectSource(cursor, new Race(), 0, 1, 2);
 
         //racial traits
         List<RaceTrait> traits = raceTraitDao.findByParent(result.getId());

@@ -16,20 +16,17 @@ import java.text.ParseException;
  */
 public class RaceTraitParser extends AbstractDependantParser<RaceTrait, Race> {
 
-    private RaceDao raceDao = new RaceDao(ctx);
+    private RaceDao raceDao;
 
-    public RaceTraitParser(Context ctx) {
+    public RaceTraitParser(Context ctx, RaceDao raceDao) {
         super(ctx);
+        this.raceDao = raceDao;
     }
 
     @Override
     protected Race parseOwner(String line) {
         String split[] = line.split("\t");
-
-        Race race = raceDao.findByName(split[0]);
-        raceDao.close();
-
-        return race;
+        return raceDao.findByName(split[0]);
     }
 
     @Override

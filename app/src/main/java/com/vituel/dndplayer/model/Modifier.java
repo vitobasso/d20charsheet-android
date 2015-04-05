@@ -1,5 +1,7 @@
 package com.vituel.dndplayer.model;
 
+import com.vituel.dndplayer.util.JavaUtil;
+
 /**
  * Created by Victor on 25/02/14.
  */
@@ -91,6 +93,24 @@ public class Modifier extends AbstractEntity {
         return variation;
     }
 
+    public void setVariation(String variation) {
+        this.variation = variation;
+    }
+
+    public void setCondition(Condition condition) {
+        this.condition = condition;
+    }
+
+    @Override
+    public int hashCode() {
+        return JavaUtil.hash(target, variation, amount);
+    }
+
+    @Override
+    public boolean equals(Object another) {
+        return this == another;
+    }
+
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
@@ -111,13 +131,4 @@ public class Modifier extends AbstractEntity {
 
         return str.toString();
     }
-
-    public void setVariation(String variation) {
-        this.variation = variation;
-    }
-
-    public void setCondition(Condition condition) {
-        this.condition = condition;
-    }
-
 }

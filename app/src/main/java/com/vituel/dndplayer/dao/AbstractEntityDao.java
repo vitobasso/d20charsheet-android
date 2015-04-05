@@ -18,7 +18,6 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
  */
 public abstract class AbstractEntityDao<T extends AbstractEntity> extends AbstractDao<T> {
 
-
     public AbstractEntityDao(Context context) {
         super(context);
     }
@@ -43,21 +42,20 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
         String query = String.format("%s=\'%s\'", COLUMN_NAME, name);
         Cursor cursor = database.query(tableName(), allColumns(), query, null, null, null, null);
         cursor.moveToFirst();
+        T result = null;
         if (cursor.getCount() != 0) {
-            T result = fromCursor(cursor);
-            cursor.close();
-            return result;
+            result = fromCursor(cursor);
         } else {
-            cursor.close();
             String msg = String.format("Couldn't find name '%s' in table '%s'", name, tableName());
             Log.w(getClass().getSimpleName(), msg);
-            return null;
         }
+        cursor.close();
+        return result;
     }
 
     protected long insertOrUpdate(ContentValues values, long id) {
         if (id == 0) {
-            id = database.insert(tableName(), null, values);
+            id = database.insert(tableName(), "_id", values);
         } else {
             database.update(tableName(), values, COLUMN_ID + " = " + id, null);
         }

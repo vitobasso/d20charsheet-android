@@ -16,22 +16,18 @@ import java.text.ParseException;
  */
 public class ClassTraitParser extends AbstractDependantParser<ClassTrait, Clazz> {
 
-    private ClassDao classDao = new ClassDao(ctx);
+    private ClassDao classDao;
 
-    public ClassTraitParser(Context ctx) {
+    public ClassTraitParser(Context ctx, ClassDao classDao) {
         super(ctx);
+        this.classDao = classDao;
     }
 
     @Override
     protected Clazz parseOwner(String line) {
         String split[] = line.split("\t");
-
         String className = read(split, 0);
-
-        Clazz clazz = classDao.findByName(className);
-        classDao.close();
-
-        return clazz;
+        return classDao.findByName(className);
     }
 
     @Override

@@ -100,7 +100,7 @@ public class ModifierDao extends AbstractEntityDao<Modifier> {
         return entity;
     }
 
-    public List<Modifier> listAll(long effectId) {
+    public List<Modifier> listAllForEffect(long effectId) {
         return listForQuery(query(effectId));
     }
 
@@ -117,18 +117,18 @@ public class ModifierDao extends AbstractEntityDao<Modifier> {
 
         Modifier e = new Modifier();
         e.setId(cursor.getLong(0));
-        e.setTarget(ModifierTarget.valueOf(cursor.getString(3)));
-        e.setVariation(cursor.getString(4));
-        e.setAmount(new DiceRoll(cursor.getString(5)));
-        String typeStr = cursor.getString(6);
+        e.setTarget(ModifierTarget.valueOf(cursor.getString(2)));
+        e.setVariation(cursor.getString(3));
+        e.setAmount(new DiceRoll(cursor.getString(4)));
+        String typeStr = cursor.getString(5);
         if (typeStr != null) {
             e.setType(ModifierType.valueOf(typeStr));
         }
 
         //condition
         Condition cond = new Condition();
-        cond.setName(cursor.getString(7));
-        String predStr = cursor.getString(8);
+        cond.setName(cursor.getString(6));
+        String predStr = cursor.getString(7);
         if(predStr != null) {
             cond.setPredicate(Condition.Predicate.valueOf(predStr));
         }

@@ -30,6 +30,8 @@ public class AttackRoundDao extends AbstractDao<AttackRound> {
             + "FOREIGN KEY(" + COLUMN_CHAR_ID + ") REFERENCES " + CharDao.TABLE + "(" + COLUMN_ID + ")"
             + ");";
 
+    private AttackDao attackDao = new AttackDao(context, database);
+
     public AttackRoundDao(Context context) {
         super(context);
     }
@@ -67,7 +69,6 @@ public class AttackRoundDao extends AbstractDao<AttackRound> {
         round.setId(id);
         assert id > 0;
 
-        AttackDao attackDao = new AttackDao(context, database);
         attackDao.removeAllForAttackRound(id);
         attackDao.save(round.getAttacks(), id);
     }
@@ -79,12 +80,10 @@ public class AttackRoundDao extends AbstractDao<AttackRound> {
 
     @Override
     protected AttackRound fromCursor(Cursor cursor) {
-        AttackDao groupDao = new AttackDao(context, database);
-
         int id = cursor.getInt(0);
         String name = cursor.getString(2);
         assert id > 0;
-        List<Attack> attacks = groupDao.findByAttackRound(id);
+        List<Attack> attacks = attackDao.findByAttackRound(id);
 
         AttackRound round = new AttackRound(name);
         round.setId(id);
@@ -94,18 +93,16 @@ public class AttackRoundDao extends AbstractDao<AttackRound> {
     }
 
     public void remove(long id) {
-        AttackDao groupDao = new AttackDao(context, database);
-        groupDao.removeAllForAttackRound(id);
+        attackDao.removeAllForAttackRound(id);
 
         String removeQuery = MessageFormat.format("{0}={1}", COLUMN_ID, id);
         removeForQuery(removeQuery);
     }
 
     public void removeAllForChar(long charId) {
-        AttackDao groupDao = new AttackDao(context, database);
         List<AttackRound> rounds = listForChar(charId);
         for (AttackRound round : rounds) {
-            groupDao.removeAllForAttackRound(round.getId());
+            attackDao.removeAllForAttackRound(round.getId());
         }
 
         String removeQuery = MessageFormat.format("{0}={1}", COLUMN_CHAR_ID, charId);

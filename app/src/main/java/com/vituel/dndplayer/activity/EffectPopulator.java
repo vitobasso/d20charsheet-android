@@ -11,6 +11,7 @@ import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.util.AppCommons;
 import com.vituel.dndplayer.util.i18n.ModifierStringConverter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
@@ -41,7 +42,7 @@ public class EffectPopulator {
         modViews[5] = findView(group, R.id.mod6);
 
         //populate mods
-        List<Modifier> modifiers = source.getEffect().getModifiers();
+        List<Modifier> modifiers = source.getEffect() != null ? source.getEffect().getModifiers() : new ArrayList<Modifier>();
         for (int i = 0; i < modifiers.size() && i < modViews.length; i++) {
             TextView modView = modViews[i];
             Modifier mod = modifiers.get(i);

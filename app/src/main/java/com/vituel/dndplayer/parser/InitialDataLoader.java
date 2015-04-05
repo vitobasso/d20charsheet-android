@@ -32,26 +32,26 @@ public class InitialDataLoader {
         List<Race> races = new RaceParser(ctx).loadFile("data/races.txt");
         RaceDao raceDao = new RaceDao(ctx);
         raceDao.save(races);
-        raceDao.close();
 
-        Map<RaceTrait, Race> raceTraits = new RaceTraitParser(ctx).loadFile("data/race_traits.txt");
+        Map<RaceTrait, Race> raceTraits = new RaceTraitParser(ctx, raceDao).loadFile("data/race_traits.txt");
         RaceTraitDao raceTraitDao = new RaceTraitDao(ctx);
         for (Map.Entry<RaceTrait, Race> entry : raceTraits.entrySet()) {
             raceTraitDao.save(entry.getValue().getId(), entry.getKey());
         }
         raceTraitDao.close();
+        raceDao.close();
 
         List<Clazz> classes = new ClassParser(ctx).loadFile("data/classes.txt");
         ClassDao classDao = new ClassDao(ctx);
         classDao.save(classes);
-        classDao.close();
 
-        Map<ClassTrait, Clazz> classTraits = new ClassTraitParser(ctx).loadFile("data/class_traits.txt");
+        Map<ClassTrait, Clazz> classTraits = new ClassTraitParser(ctx, classDao).loadFile("data/class_traits.txt");
         ClassTraitDao classTraitDao = new ClassTraitDao(ctx);
         for (Map.Entry<ClassTrait, Clazz> entry : classTraits.entrySet()) {
             classTraitDao.save(entry.getValue().getId(), entry.getKey());
         }
         classTraitDao.close();
+        classDao.close();
 
         List<Feat> feats = new FeatParser(ctx).loadFile("data/feats.txt");
         new FeatDao(ctx).save(feats);

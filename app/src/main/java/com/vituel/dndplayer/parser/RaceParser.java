@@ -51,7 +51,7 @@ public class RaceParser extends AbstractParser<Race> {
         String str = split[index];
         if (str != null && !str.isEmpty()) {
             Modifier mod = new Modifier(target, Integer.valueOf(str));
-            effect.getModifiers().add(mod);
+            effect.addModifier(mod);
         }
     }
 

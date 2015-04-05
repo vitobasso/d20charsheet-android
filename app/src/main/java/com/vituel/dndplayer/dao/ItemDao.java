@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.vituel.dndplayer.model.Effect;
 import com.vituel.dndplayer.model.Item;
 import com.vituel.dndplayer.model.SlotType;
 import com.vituel.dndplayer.model.WeaponItem;
@@ -69,24 +68,17 @@ public class ItemDao extends AbstractEntityDao<Item> {
     public void save(Item entity) {
 
         if(entity.getName() == null) {
-            Log.e(getClass().getSimpleName(), "null");
+            Log.w(getClass().getSimpleName(), "null");
         }
 
         //basic data
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, entity.getName());
+        ContentValues values = effectDao.preSaveEffectSource(entity);
         if (entity.getSlotType() != null) {
             values.put(COLUMN_SLOT_TYPE, entity.getSlotType().toString());
         }
         if (entity.getItemType() != null) {
             values.put(COLUMN_ITEM_TYPE, entity.getItemType().toString());
         }
-
-        //effects
-        Effect effect = entity.getEffect();
-        effectDao.save(effect);
-        values.put(COLUMN_EFFECT_ID, effect.getId());
-
         long id = insertOrUpdate(values, entity.getId());
 
         //weapon properties
@@ -94,7 +86,7 @@ public class ItemDao extends AbstractEntityDao<Item> {
             WeaponItem weaponItem = (WeaponItem) entity;
             WeaponProperties weapon = weaponItem.getWeaponProperties();
             if (weapon.getId() == 0) {
-                weaponDao.save(weapon);
+                weaponDao.save(weapon, id);
             }
         }
 
@@ -114,15 +106,9 @@ public class ItemDao extends AbstractEntityDao<Item> {
 
         //basic fields
         Item item = itemType == WEAPON ? new WeaponItem() : new Item();
-        item.setId(cursor.getLong(0));
-        item.setName(cursor.getString(1));
+        effectDao.loadEffectSource(cursor, item, 0, 1, 4);
         item.setItemType(itemType);
         item.setSlotType(SlotType.valueOf(cursor.getString(2)));
-
-        //effect
-        Effect effect = effectDao.findById(cursor.getLong(4));
-        effect.setSourceName(item.getName());
-        item.setEffect(effect);
 
         //weapon fields
         if (itemType == WEAPON) {

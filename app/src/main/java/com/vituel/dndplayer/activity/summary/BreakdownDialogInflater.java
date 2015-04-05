@@ -78,7 +78,7 @@ public class BreakdownDialogInflater {
 
     public int appendRows(ViewGroup parentView, EffectSource source, boolean isColored) {
         int count = 0;
-        if (source != null) {
+        if (source != null && source.getEffect() != null) {
             for (Modifier modifier : source.getEffect().getModifiers()) {
                 if (modifierApplies(modifier)) {
                     count++;

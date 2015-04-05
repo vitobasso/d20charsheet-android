@@ -10,12 +10,9 @@ public class Effect extends AbstractEntity {
 
     private String sourceName;
 
-    private List<Modifier> modifiers;
+    private List<Modifier> modifiers = new ArrayList<>();
 
     public void addModifier(Modifier modifier) {
-        if (modifiers == null) {
-            modifiers = new ArrayList<>();
-        }
         modifiers.add(modifier);
     }
 

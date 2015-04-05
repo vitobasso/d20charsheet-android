@@ -29,6 +29,8 @@ public class CharClassDao extends AbstractAssociationDao<ClassLevel> {
             + "FOREIGN KEY(" + COLUMN_CLASS_ID + ") REFERENCES " + ClassDao.TABLE + "(" + COLUMN_ID + ")"
             + ");";
 
+    private ClassDao classDao = new ClassDao(context);
+
     public CharClassDao(Context context) {
         super(context);
     }
@@ -65,13 +67,9 @@ public class CharClassDao extends AbstractAssociationDao<ClassLevel> {
     @Override
     protected ClassLevel fromCursor(Cursor cursor) {
         ClassLevel classLevel = new ClassLevel();
-
         long classId = cursor.getLong(2);
         classLevel.setLevel(cursor.getInt(3));
-
-        ClassDao classData = new ClassDao(context);
-        classLevel.setClazz(classData.findById(classId));
-
+        classLevel.setClazz(classDao.findById(classId));
         return classLevel;
     }
 

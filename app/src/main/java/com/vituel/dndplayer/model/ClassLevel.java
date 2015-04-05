@@ -16,7 +16,6 @@ public class ClassLevel extends AbstractEntity implements EffectSource {
 
     public ClassLevel() {
         level = 1;
-        effect = buildEffect();
     }
 
     public int getBaseAttack() {
@@ -32,11 +31,11 @@ public class ClassLevel extends AbstractEntity implements EffectSource {
         }
     }
 
-    private Effect buildEffect() {
-        Modifier fort = new Modifier(ModifierTarget.FORT, getClazz().getBaseFortitude(getLevel()));
-        Modifier refl = new Modifier(ModifierTarget.REFL, getClazz().getBaseReflex(getLevel()));
-        Modifier will = new Modifier(ModifierTarget.WILL, getClazz().getBaseWill(getLevel()));
-        Modifier attack = new Modifier(ModifierTarget.HIT, getClazz().getBaseAttack(getLevel()));
+    private Effect buildEffect(Clazz clazz) {
+        Modifier fort = new Modifier(ModifierTarget.FORT, clazz.getBaseFortitude(getLevel()));
+        Modifier refl = new Modifier(ModifierTarget.REFL, clazz.getBaseReflex(getLevel()));
+        Modifier will = new Modifier(ModifierTarget.WILL, clazz.getBaseWill(getLevel()));
+        Modifier attack = new Modifier(ModifierTarget.HIT, clazz.getBaseAttack(getLevel()));
 
         List<Modifier> modifiers = new ArrayList<>();
         modifiers.add(fort);
@@ -73,6 +72,7 @@ public class ClassLevel extends AbstractEntity implements EffectSource {
 
     public void setClazz(Clazz clazz) {
         this.clazz = clazz;
+        this.effect = buildEffect(clazz);
     }
 
     public void setLevel(int level) {

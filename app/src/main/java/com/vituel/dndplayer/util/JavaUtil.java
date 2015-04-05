@@ -1,6 +1,7 @@
 package com.vituel.dndplayer.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -29,8 +30,12 @@ public class JavaUtil {
         return list.get(index);
     }
 
-    public static boolean equal(Object a, Object b){
+    public static boolean equals(Object a, Object b){
         return a == null ? b == null : a.equals(b);
+    }
+
+    public static int hash(Object... fields) {
+        return Arrays.hashCode(fields);
     }
 
 }

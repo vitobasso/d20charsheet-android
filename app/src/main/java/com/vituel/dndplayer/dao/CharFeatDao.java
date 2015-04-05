@@ -14,7 +14,7 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
  */
 public class CharFeatDao extends AbstractAssociationDao<Feat> {
 
-    public static final String TABLE = "char_skill";
+    public static final String TABLE = "char_feat";
 
     private static final String COLUMN_CHAR_ID = "char_id";
     private static final String COLUMN_FEAT_ID = "feat_id";
