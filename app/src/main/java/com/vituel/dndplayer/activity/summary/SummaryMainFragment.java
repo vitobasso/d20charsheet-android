@@ -18,6 +18,7 @@ import com.vituel.dndplayer.model.Attack;
 import com.vituel.dndplayer.model.AttackRound;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.CharSummary;
+import com.vituel.dndplayer.model.ModifierSource;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.util.ActivityUtil;
 import com.vituel.dndplayer.util.AppCommons;
@@ -78,12 +79,12 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
         String drValue = MessageFormat.format("{0}/-", data.getDamageReduction());
         setField(R.id.damage_reduction, R.string.dr, R.string.damage_reduction, drValue, DR, data.getDamageReduction());
 
-        setField(R.id.strength, R.string.str, R.string.strength, formatAbility(data.getStrength(), STR), STR);
-        setField(R.id.dexterity, R.string.dex, R.string.dexterity, formatAbility(data.getDexterity(), DEX), DEX);
-        setField(R.id.constitution, R.string.con, R.string.constitution, formatAbility(data.getConstitution(), CON), CON);
-        setField(R.id.intelligence, R.string.int_ability, R.string.intelligence, formatAbility(data.getIntelligence(), INT), INT);
-        setField(R.id.wisdom, R.string.wis, R.string.wisdom, formatAbility(data.getWisdom(), WIS), WIS);
-        setField(R.id.charisma, R.string.cha, R.string.charisma, formatAbility(data.getCharisma(), CHA), CHA);
+        setField(R.id.strength, R.string.str, R.string.strength, formatAbility(data.getStrength(), ModifierSource.STR), STR);
+        setField(R.id.dexterity, R.string.dex, R.string.dexterity, formatAbility(data.getDexterity(), ModifierSource.DEX), DEX);
+        setField(R.id.constitution, R.string.con, R.string.constitution, formatAbility(data.getConstitution(), ModifierSource.CON), CON);
+        setField(R.id.intelligence, R.string.int_ability, R.string.intelligence, formatAbility(data.getIntelligence(), ModifierSource.INT), INT);
+        setField(R.id.wisdom, R.string.wis, R.string.wisdom, formatAbility(data.getWisdom(), ModifierSource.WIS), WIS);
+        setField(R.id.charisma, R.string.cha, R.string.charisma, formatAbility(data.getCharisma(), ModifierSource.CHA), CHA);
 
         setField(R.id.armor_class, R.string.ac, R.string.armor_class, "" + data.getArmorClass(), AC);
         setField(R.id.spell_resistance, R.string.sr, R.string.spell_resistance, "" + data.getMagicResistance(), MR, data.getMagicResistance());
@@ -235,7 +236,7 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
         return new AppCommons(ctx).getValueColor(charSummary.getBase(), target, null);
     }
 
-    private String formatAbility(int value, ModifierTarget target) {
+    private String formatAbility(int value, ModifierSource target) {
         int modifier = data.getAbilityModifier(target);
         String modifierStr = modifier < 0 ? "" + modifier : "+" + modifier;
         return MessageFormat.format("{0} ({1})", value, modifierStr);

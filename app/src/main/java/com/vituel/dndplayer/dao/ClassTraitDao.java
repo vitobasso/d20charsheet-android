@@ -78,7 +78,7 @@ public class ClassTraitDao extends AbstractAssociationDao<ClassTrait> {
         if (trait.getOverridenTraitName() != null) {
             values.put(COLUMN_OVERRIDES, trait.getOverridenTraitName());
         }
-        insertOrUpdate(values, classId, trait.getId());
+        insert(values);
     }
 
     @Override

@@ -68,7 +68,7 @@ public class RaceTraitDao extends AbstractAssociationDao<RaceTrait> {
     public void save(long parentId, RaceTrait trait) {
         ContentValues values = effectDao.preSaveEffectSource(trait);
         values.put(COLUMN_RACE_ID, parentId);
-        insertOrUpdate(values, parentId, trait.getId());
+        insert(values);
     }
 
     @Override

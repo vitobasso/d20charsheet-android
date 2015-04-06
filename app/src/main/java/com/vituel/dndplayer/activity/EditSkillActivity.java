@@ -6,7 +6,7 @@ import android.widget.Spinner;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
-import com.vituel.dndplayer.model.ModifierTarget;
+import com.vituel.dndplayer.model.ModifierSource;
 import com.vituel.dndplayer.model.Skill;
 
 import static com.vituel.dndplayer.util.ActivityUtil.setSpinnerSelection;
@@ -46,7 +46,7 @@ public class EditSkillActivity extends AbstractEditActivity<Skill> {
 
         Spinner keyAbilityView = (Spinner) findViewById(R.id.keyAbility);
         String abilityStr = (String) keyAbilityView.getSelectedItem();
-        entity.setKeyAbility(ModifierTarget.valueOf(abilityStr.toUpperCase()));
+        entity.setKeyAbility(ModifierSource.valueOf(abilityStr.toUpperCase()));
 
         CheckBox armorPenalty = (CheckBox) findViewById(R.id.armorPenalty);
         entity.setArmorPenaltyApplies(armorPenalty.isChecked());

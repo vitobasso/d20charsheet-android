@@ -4,6 +4,11 @@ import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.vituel.dndplayer.model.ModifierTarget.FORT;
+import static com.vituel.dndplayer.model.ModifierTarget.HIT;
+import static com.vituel.dndplayer.model.ModifierTarget.REFL;
+import static com.vituel.dndplayer.model.ModifierTarget.WILL;
+
 /**
  * Created by Victor on 31/03/14.
  */
@@ -32,16 +37,11 @@ public class ClassLevel extends AbstractEntity implements EffectSource {
     }
 
     private Effect buildEffect(Clazz clazz) {
-        Modifier fort = new Modifier(ModifierTarget.FORT, clazz.getBaseFortitude(getLevel()));
-        Modifier refl = new Modifier(ModifierTarget.REFL, clazz.getBaseReflex(getLevel()));
-        Modifier will = new Modifier(ModifierTarget.WILL, clazz.getBaseWill(getLevel()));
-        Modifier attack = new Modifier(ModifierTarget.HIT, clazz.getBaseAttack(getLevel()));
-
         List<Modifier> modifiers = new ArrayList<>();
-        modifiers.add(fort);
-        modifiers.add(refl);
-        modifiers.add(will);
-        modifiers.add(attack);
+        modifiers.add(new Modifier(FORT, clazz.getBaseFortitude(getLevel())));
+        modifiers.add(new Modifier(REFL, clazz.getBaseReflex(getLevel())));
+        modifiers.add(new Modifier(WILL, clazz.getBaseWill(getLevel())));
+        modifiers.add(new Modifier(HIT, clazz.getBaseAttack(getLevel())));
 
         Effect effect = new Effect();
         effect.setModifiers(modifiers);

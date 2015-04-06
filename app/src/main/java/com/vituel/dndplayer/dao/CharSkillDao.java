@@ -84,7 +84,7 @@ public class CharSkillDao extends AbstractAssociationDao<CharSkill> {
         values.put(COLUMN_SKILL_ID, skillId);
         values.put(COLUMN_GRAD, skill.getScore());
 
-        insertOrUpdate(values, charId, skillId);
+        insert(values);
     }
 
 }

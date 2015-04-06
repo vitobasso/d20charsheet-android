@@ -7,11 +7,11 @@ import com.vituel.dndplayer.util.JavaUtil;
  */
 public class Modifier extends AbstractEntity {
 
-    private ModifierTarget target;
-    private String variation; //specific skills are treated as variations of the target SKILL (because skills are dynamic)
-    private DiceRoll amount;
-    private ModifierType type;
-    private Condition condition;
+    protected ModifierTarget target;
+    protected String variation; //specific skills are treated as variations of the target SKILL (because skills are dynamic)
+    protected DiceRoll amount;
+    protected ModifierType type;
+    protected Condition condition;
 
     public Modifier() {}
 

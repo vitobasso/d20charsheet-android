@@ -31,7 +31,8 @@ public abstract class AbstractAssociationDao<T> extends AbstractDao<T>{
         return cursorToList(cursor);
     }
 
-    public void save(long parentId, Collection<T> list) {
+    public void saveOverwrite(long parentId, Collection<T> list) {
+        removeAllForParent(parentId);
         for (T obj : list) {
             save(parentId, obj);
         }
@@ -39,15 +40,11 @@ public abstract class AbstractAssociationDao<T> extends AbstractDao<T>{
 
     public abstract void save(long parentId, T entity);
 
-    protected void insertOrUpdate(ContentValues values, long parentId, long elementId) {
-        if (parentId == 0 || elementId == 0) {
-            database.insert(tableName(), null, values);
-        } else {
-            database.update(tableName(), values, query(parentId, elementId), null);
-        }
+    protected void insert(ContentValues values) {
+        database.insert(tableName(), null, values);
     }
 
-    private void removeAllForParent(long parentId) {
+    protected void removeAllForParent(long parentId) {
         database.delete(tableName(), query(parentId), null);
     }
 

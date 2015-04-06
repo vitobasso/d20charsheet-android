@@ -20,17 +20,12 @@ import java.util.Set;
 import static com.vituel.dndplayer.model.ModifierTarget.AC;
 import static com.vituel.dndplayer.model.ModifierTarget.CHA;
 import static com.vituel.dndplayer.model.ModifierTarget.CON;
-import static com.vituel.dndplayer.model.ModifierTarget.DAMAGE;
 import static com.vituel.dndplayer.model.ModifierTarget.DEX;
-import static com.vituel.dndplayer.model.ModifierTarget.FORT;
 import static com.vituel.dndplayer.model.ModifierTarget.HIT;
 import static com.vituel.dndplayer.model.ModifierTarget.HP;
-import static com.vituel.dndplayer.model.ModifierTarget.INIT;
 import static com.vituel.dndplayer.model.ModifierTarget.INT;
-import static com.vituel.dndplayer.model.ModifierTarget.REFL;
 import static com.vituel.dndplayer.model.ModifierTarget.SKILL;
 import static com.vituel.dndplayer.model.ModifierTarget.STR;
-import static com.vituel.dndplayer.model.ModifierTarget.WILL;
 import static com.vituel.dndplayer.model.ModifierTarget.WIS;
 import static com.vituel.dndplayer.model.Size.MEDIUM;
 
@@ -78,12 +73,12 @@ public class CharSummary {
 
         //effects from race, class, feats, equipment and effects
         applyModifiers(getBaseModifiers());
-        apply(base.getRace().getEffect());
         if (base.getRace() != null) {
+            apply(base.getRace());
             applyEffects(base.getRace().getTraits());
         }
-        applyEffects(base.getClassLevels());
         for (ClassLevel classLevel : base.getClassLevels()) {
+            apply(classLevel);
             applyEffects(classLevel.getTraits());
         }
         applyEffects(base.getFeats());
@@ -145,38 +140,23 @@ public class CharSummary {
     }
 
     public Map<Modifier, String> getAbilityModifiers() {
+        Map<Modifier, String> result = new HashMap<>();
+
+        //hp = con * level
         int lvl = getBase().getExperienceLevel();
-        int strMod = getAbilityModifier(STR);
-        int dexMod = getAbilityModifier(DEX);
-        int conMod = getAbilityModifier(CON);
-        int wisMod = getAbilityModifier(WIS);
-        String strStr = getString(R.string.str);
-        String dexStr = getString(R.string.dex);
-        String conStr = getString(R.string.con);
-        String wisStr = getString(R.string.wis);
-        String lvlStr = getString(R.string.level);
+        int conMod = getAbilityModifier(ModifierSource.CON);
+        String conLvlLabel = String.format("%s × %s", getString(R.string.con), getString(R.string.level));
+        result.put(new Modifier(HP, lvl * conMod), conLvlLabel);
 
-        Map<Modifier, String> modifiers = new HashMap<>();
-        String hpStr = String.format("%s × %s", conStr, lvlStr);
-        modifiers.put(new Modifier(HP, lvl * conMod), hpStr);
-        modifiers.put(new Modifier(AC, dexMod), dexStr);
-        modifiers.put(new Modifier(FORT, conMod), conStr);
-        modifiers.put(new Modifier(REFL, dexMod), dexStr);
-        modifiers.put(new Modifier(WILL, wisMod), wisStr);
-        modifiers.put(new Modifier(HIT, strMod), strStr);
-        modifiers.put(new Modifier(DAMAGE, strMod), strStr);
-        modifiers.put(new Modifier(INIT, dexMod), dexStr);
-
-        //skills
-        for (String skillName : getSkills().keySet()) {
-            Skill skill = getSkills().get(skillName).getSkill();
-            ModifierTarget ability = skill.getKeyAbility();
-            int mod = getAbilityModifier(ability);
-            String abilityStr = (String) modStr.getTargetShort(ability, null);
-            modifiers.put(new Modifier(SKILL, skillName, mod), abilityStr);
+        //others
+        for (AbilityModifier mod : base.getAbilityMods()) {
+            int value = getAbilityModifier(mod.getAbility());
+            Modifier resultingMod = new Modifier(mod.target, mod.variation, value);
+            String label = mod.getAbility().getLabel(context);
+            result.put(resultingMod, label);
         }
 
-        return modifiers;
+        return result;
     }
 
     public List<Modifier> getSizeModifiers() {
@@ -192,6 +172,10 @@ public class CharSummary {
                 apply(source.getEffect());
             }
         }
+    }
+
+    private void apply(EffectSource effectSource) {
+        apply(effectSource.getEffect());
     }
 
     private void apply(Effect effect) {
@@ -361,7 +345,7 @@ public class CharSummary {
     }
 
 
-    public int getAbilityModifier(ModifierTarget ability) {
+    public int getAbilityModifier(ModifierSource ability) {
         switch (ability) {
             case STR:
                 return getAbilityModifier(getCurrentStrength());

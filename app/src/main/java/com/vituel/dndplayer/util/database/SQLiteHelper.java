@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.vituel.dndplayer.dao.AbilityModifierDao;
 import com.vituel.dndplayer.dao.ActiveConditionDao;
 import com.vituel.dndplayer.dao.AttackDao;
 import com.vituel.dndplayer.dao.AttackRoundDao;
@@ -63,6 +64,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         database.execSQL(ActiveConditionDao.CREATE_TABLE);
         database.execSQL(AttackRoundDao.CREATE_TABLE);
         database.execSQL(AttackDao.CREATE_TABLE);
+        database.execSQL(AbilityModifierDao.CREATE_TABLE);
     }
 
     @Override
@@ -93,6 +95,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + ActiveConditionDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + AttackRoundDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + AttackDao.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + AbilityModifierDao.TABLE);
         onCreate(db);
 
     }

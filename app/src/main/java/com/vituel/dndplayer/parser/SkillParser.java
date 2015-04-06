@@ -1,7 +1,8 @@
 package com.vituel.dndplayer.parser;
 
 import android.content.Context;
-import com.vituel.dndplayer.model.ModifierTarget;
+
+import com.vituel.dndplayer.model.ModifierSource;
 import com.vituel.dndplayer.model.Skill;
 
 /**
@@ -24,7 +25,7 @@ public class SkillParser extends AbstractParser<Skill> {
         String synergyStr = read(split, 3);
 
         Skill result = new Skill(name);
-        result.setKeyAbility(ModifierTarget.valueOf(abilityStr));
+        result.setKeyAbility(ModifierSource.valueOf(abilityStr));
         result.setArmorPenaltyApplies(penaltyStr != null && !penaltyStr.isEmpty());
 
         return result;

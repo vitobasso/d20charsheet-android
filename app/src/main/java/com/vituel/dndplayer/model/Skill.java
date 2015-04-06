@@ -5,7 +5,7 @@ package com.vituel.dndplayer.model;
  */
 public class Skill extends AbstractEntity {
 
-    private ModifierTarget keyAbility;
+    private ModifierSource keyAbility;
     private boolean armorPenaltyApplies;
 
     public Skill(){
@@ -16,11 +16,11 @@ public class Skill extends AbstractEntity {
         this.name = name;
     }
 
-    public ModifierTarget getKeyAbility() {
+    public ModifierSource getKeyAbility() {
         return keyAbility;
     }
 
-    public void setKeyAbility(ModifierTarget keyAbility) {
+    public void setKeyAbility(ModifierSource keyAbility) {
         this.keyAbility = keyAbility;
     }
 

@@ -4,7 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import com.vituel.dndplayer.model.ModifierTarget;
+
+import com.vituel.dndplayer.model.ModifierSource;
 import com.vituel.dndplayer.model.Skill;
 
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
@@ -69,7 +70,7 @@ public class SkillDao extends AbstractEntityDao<Skill> {
         //basic fields
         long id = cursor.getLong(0);
         String name = cursor.getString(1);
-        ModifierTarget ability = ModifierTarget.valueOf(cursor.getString(2));
+        ModifierSource ability = ModifierSource.valueOf(cursor.getString(2));
         boolean armorPenality = cursor.getInt(3) != 0;
 
         Skill result = new Skill(name);

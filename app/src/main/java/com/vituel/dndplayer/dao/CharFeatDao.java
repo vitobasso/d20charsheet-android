@@ -75,7 +75,7 @@ public class CharFeatDao extends AbstractAssociationDao<Feat> {
         values.put(COLUMN_CHAR_ID, charId);
         values.put(COLUMN_FEAT_ID, featId);
 
-        insertOrUpdate(values, charId, featId);
+        insert(values);
     }
 
 }

@@ -234,20 +234,25 @@ public class CharDao extends AbstractEntityDao<CharBase> {
 
         //classes
         CharClassDao classDao = new CharClassDao(context, database);
-        classDao.save(id, entity.getClassLevels());
+        classDao.saveOverwrite(id, entity.getClassLevels());
 
         //feats
         CharFeatDao charFeatDao = new CharFeatDao(context, database);
-        charFeatDao.save(id, entity.getFeats());
+        charFeatDao.saveOverwrite(id, entity.getFeats());
 
         //skills
         CharSkillDao charSkillDao = new CharSkillDao(context, database);
-        charSkillDao.save(id, entity.getSkills());
+        charSkillDao.saveOverwrite(id, entity.getSkills());
 
         //attacks
         AttackRoundDao attackRoundDao = new AttackRoundDao(context, database);
         attackRoundDao.removeAllForChar(id);
         attackRoundDao.save(entity.getAttacks(), id);
+
+        //ability modifiers
+        AbilityModifierDao abilityModDao = new AbilityModifierDao(context, database);
+        abilityModDao.removeAllForChar(id);
+        abilityModDao.save(entity.getAbilityMods(), id);
 
         //temp effects are saved directly on TempEffectActivityDao from SummaryTempEffectsFragment
         //active conditions are saved directly on ActiveConditionDao from SummaryActivity
@@ -317,6 +322,10 @@ public class CharDao extends AbstractEntityDao<CharBase> {
         c.getEquipment().getFinger1().setItem(itemDao.findById(cursor.getInt(42)));
         c.getEquipment().getFinger2().setItem(itemDao.findById(cursor.getInt(43)));
         c.getEquipment().getFeet().setItem(itemDao.findById(cursor.getInt(44)));
+
+        //ability modifiers
+        AbilityModifierDao abilityModDao = new AbilityModifierDao(context, database);
+        c.setAbilityMods(abilityModDao.listAllForChar(c.getId()));
 
         //attacks
         AttackRoundDao attacksDao = new AttackRoundDao(context, database);

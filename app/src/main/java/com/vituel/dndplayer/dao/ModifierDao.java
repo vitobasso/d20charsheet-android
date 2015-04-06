@@ -100,18 +100,6 @@ public class ModifierDao extends AbstractEntityDao<Modifier> {
         return entity;
     }
 
-    public List<Modifier> listAllForEffect(long effectId) {
-        return listForQuery(query(effectId));
-    }
-
-    public void removeAllForEffect(long effectId) {
-        removeForQuery(query(effectId));
-    }
-
-    private String query(long effectId) {
-        return String.format("%s=%d", COLUMN_EFFECT_ID, effectId);
-    }
-
     @Override
     protected Modifier fromCursor(Cursor cursor) {
 
@@ -137,6 +125,18 @@ public class ModifierDao extends AbstractEntityDao<Modifier> {
         }
 
         return e;
+    }
+
+    public List<Modifier> listAllForEffect(long effectId) {
+        return listForQuery(query(effectId));
+    }
+
+    public void removeAllForEffect(long effectId) {
+        removeForQuery(query(effectId));
+    }
+
+    private String query(long effectId) {
+        return String.format("%s=%d", COLUMN_EFFECT_ID, effectId);
     }
 
     @Override

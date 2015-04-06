@@ -82,7 +82,7 @@ public class CharClassDao extends AbstractAssociationDao<ClassLevel> {
         values.put(COLUMN_CLASS_ID, classId);
         values.put(COLUMN_LEVEL, classLevel.getLevel());
 
-        insertOrUpdate(values, charId, classId);
+        insert(values);
     }
 
 }

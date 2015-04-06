@@ -13,6 +13,14 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import static com.vituel.dndplayer.model.Attack.WeaponReference.MAIN_HAND;
+import static com.vituel.dndplayer.model.ModifierTarget.AC;
+import static com.vituel.dndplayer.model.ModifierTarget.DAMAGE;
+import static com.vituel.dndplayer.model.ModifierTarget.FORT;
+import static com.vituel.dndplayer.model.ModifierTarget.HIT;
+import static com.vituel.dndplayer.model.ModifierTarget.INIT;
+import static com.vituel.dndplayer.model.ModifierTarget.REFL;
+import static com.vituel.dndplayer.model.ModifierTarget.SKILL;
+import static com.vituel.dndplayer.model.ModifierTarget.WILL;
 
 /**
  * Persisted data inherent to the character. Values before calculation of bonus from items, traits and spells.
@@ -52,6 +60,7 @@ public class CharBase extends AbstractEntity {
     private Set<Condition> activeConditions = new HashSet<>();
 
     private List<AttackRound> attacks = new ArrayList<>();
+    private List<AbilityModifier> abilityMods = new ArrayList<>();
 
     private DamageTaken damageTaken = new DamageTaken();
 
@@ -92,6 +101,24 @@ public class CharBase extends AbstractEntity {
         //TODO shield attack
     }
 
+    public List<AbilityModifier> standardAbilityMods() {
+        List<AbilityModifier> modifiers = new ArrayList<>();
+        modifiers.add(new AbilityModifier(ModifierSource.DEX, AC));
+        modifiers.add(new AbilityModifier(ModifierSource.CON, FORT));
+        modifiers.add(new AbilityModifier(ModifierSource.DEX, REFL));
+        modifiers.add(new AbilityModifier(ModifierSource.WIS, WILL));
+        modifiers.add(new AbilityModifier(ModifierSource.STR, HIT));
+        modifiers.add(new AbilityModifier(ModifierSource.STR, DAMAGE));
+        modifiers.add(new AbilityModifier(ModifierSource.DEX, INIT));
+
+        //skills
+        for (CharSkill charSkill : getSkills()) {
+            Skill skill = charSkill.getSkill();
+            modifiers.add(new AbilityModifier(skill.getKeyAbility(), SKILL, skill.getName()));
+        }
+
+        return modifiers;
+    }
 
     public void createStandardAttacks() {
         //full attack
@@ -356,6 +383,14 @@ public class CharBase extends AbstractEntity {
 
     public void setAttacks(List<AttackRound> attacks) {
         this.attacks = attacks;
+    }
+
+    public List<AbilityModifier> getAbilityMods() {
+        return abilityMods;
+    }
+
+    public void setAbilityMods(List<AbilityModifier> abilityMods) {
+        this.abilityMods = abilityMods;
     }
 
     public DamageTaken getDamageTaken() {

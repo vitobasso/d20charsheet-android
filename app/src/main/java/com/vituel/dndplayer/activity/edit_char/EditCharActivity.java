@@ -68,6 +68,9 @@ public class EditCharActivity extends FragmentActivity implements PagerActivity<
                     return true;
                 }
 
+                //ability modifiers
+                base.setAbilityMods(base.standardAbilityMods());
+
                 //standard attack
                 if(base.getAttacks().isEmpty()){
                     base.createStandardAttacks();
