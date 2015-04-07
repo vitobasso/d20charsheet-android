@@ -151,6 +151,7 @@ public class CharSummary {
         //others
         for (AbilityModifier mod : base.getAbilityMods()) {
             int value = getAbilityModifier(mod.getAbility());
+            value = mod.getMultiplier().multiply(value);
             Modifier resultingMod = new Modifier(mod.target, mod.variation, value);
             String label = mod.getAbility().getLabel(context);
             result.put(resultingMod, label);

@@ -78,7 +78,11 @@
 
         <activity
             android:name=".activity.EditAttackRoundActivity"
-            android:label="@string/skill_select"/>
+            android:label="@string/attack_edit"/>
+
+        <activity
+            android:name=".activity.EditAbilityModActivity"
+            android:label="@string/modlink_edit"/>
 
     </application>
 

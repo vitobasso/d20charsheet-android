@@ -139,6 +139,17 @@ public class ActivityUtil {
         }
     }
 
+
+    public static <T extends Enum<T>> void populateSpinnerWithEnum(Activity activity, int spinnerRes,
+                                                                   T[] enumValues, T selection) {
+        populateSpinnerWithEnum(activity, null, spinnerRes, enumValues, selection, null);
+    }
+
+    public static <T extends Enum<T>> void populateSpinnerWithEnum(Activity activity, ViewGroup ancestor, int spinnerRes,
+                                                                   T[] enumValues, T selection) {
+        populateSpinnerWithEnum(activity, ancestor, spinnerRes, enumValues, selection, null);
+    }
+
     public static <T extends Enum<T>> void populateSpinnerWithEnum(Activity activity, ViewGroup ancestor, int spinnerRes,
                                                                    T[] enumValues, T selection,
                                                                    final AdapterView.OnItemSelectedListener listener) {

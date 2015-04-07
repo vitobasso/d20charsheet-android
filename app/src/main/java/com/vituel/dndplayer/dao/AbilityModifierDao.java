@@ -9,6 +9,7 @@ import android.util.Log;
 import com.vituel.dndplayer.model.AbilityModifier;
 import com.vituel.dndplayer.model.ModifierSource;
 import com.vituel.dndplayer.model.ModifierTarget;
+import com.vituel.dndplayer.model.Multiplier;
 
 import java.util.List;
 
@@ -92,7 +93,7 @@ public class AbilityModifierDao extends AbstractEntityDao<AbilityModifier> {
         AbilityModifier e = new AbilityModifier();
         e.setId(cursor.getLong(0));
         e.setAbility(ModifierSource.valueOf(cursor.getString(2)));
-        e.setMultiplier(AbilityModifier.Multiplier.valueOf(cursor.getString(3)));
+        e.setMultiplier(Multiplier.valueOf(cursor.getString(3)));
         e.setTarget(ModifierTarget.valueOf(cursor.getString(4)));
         e.setVariation(cursor.getString(5));
 

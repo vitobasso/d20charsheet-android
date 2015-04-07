@@ -101,7 +101,7 @@ public class CharBase extends AbstractEntity {
         //TODO shield attack
     }
 
-    public List<AbilityModifier> standardAbilityMods() {
+    public void setStandardAbilityMods() {
         List<AbilityModifier> modifiers = new ArrayList<>();
         modifiers.add(new AbilityModifier(ModifierSource.DEX, AC));
         modifiers.add(new AbilityModifier(ModifierSource.CON, FORT));
@@ -117,7 +117,7 @@ public class CharBase extends AbstractEntity {
             modifiers.add(new AbilityModifier(skill.getKeyAbility(), SKILL, skill.getName()));
         }
 
-        return modifiers;
+        setAbilityMods(modifiers);
     }
 
     public void createStandardAttacks() {

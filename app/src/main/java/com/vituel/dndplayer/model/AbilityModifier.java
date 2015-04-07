@@ -1,6 +1,9 @@
 package com.vituel.dndplayer.model;
 
+import android.content.Context;
+
 import com.vituel.dndplayer.util.JavaUtil;
+import com.vituel.dndplayer.util.i18n.EnumI18n;
 
 /**
  * Modifier based on an ability.
@@ -12,10 +15,6 @@ import com.vituel.dndplayer.util.JavaUtil;
  * Created by Victor on 05/04/2015.
  */
 public class AbilityModifier extends Modifier {
-
-    public static enum Multiplier {
-        HALF, ONE, ONE_AND_HALF, DOUBLE
-    }
 
     private ModifierSource ability;
     private Multiplier multiplier;
@@ -38,6 +37,29 @@ public class AbilityModifier extends Modifier {
     public AbilityModifier(ModifierSource ability, ModifierTarget target, String variation) {
         this(ability, target);
         this.variation = variation;
+    }
+
+    public String getTargetAsString() {
+        return variation == null ? target.toString() : variation;
+    }
+
+    public String getSourceAsString() {
+        return multiplier.toLabel() + ability;
+    }
+
+
+    public String getTargetLabel(Context ctx) {
+        EnumI18n i18n = new EnumI18n(ctx);
+        if (variation == null || "".equals(variation)) {
+            return i18n.get(target).toString();
+        } else {
+            return variation;
+        }
+    }
+
+    public String getSourceLabel(Context ctx) {
+        EnumI18n i18n = new EnumI18n(ctx);
+        return multiplier.toLabel() + i18n.get(ability);
     }
 
     @Override
@@ -73,10 +95,6 @@ public class AbilityModifier extends Modifier {
 
     @Override
     public String toString() {
-        StringBuilder str = new StringBuilder();
-        str.append(getVariation() == null ? getTarget().toString() : getVariation());
-        str.append(" ");
-        str.append(getAbility());
-        return str.toString();
+        return getTargetAsString() + " " + getSourceAsString();
     }
 }

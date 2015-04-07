@@ -68,9 +68,6 @@ public class EditCharActivity extends FragmentActivity implements PagerActivity<
                     return true;
                 }
 
-                //ability modifiers
-                base.setAbilityMods(base.standardAbilityMods());
-
                 //standard attack
                 if(base.getAttacks().isEmpty()){
                     base.createStandardAttacks();
@@ -111,6 +108,7 @@ public class EditCharActivity extends FragmentActivity implements PagerActivity<
         base.setGender("M");
         base.setTendencyLoyality("NEUTRAL");
         base.setTendencyMoral("NEUTRAL");
+        base.setStandardAbilityMods();
         return base;
     }
 

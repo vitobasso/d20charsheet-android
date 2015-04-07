@@ -20,7 +20,8 @@ public class EditCharPagerAdapter extends FragmentPagerAdapter {
     public static final int PAGE_SKILLS = 2;
     public static final int PAGE_EQUIP = 3;
     public static final int PAGE_ATTACKS = 4;
-    public static final int PAGE_PERSONAL = 5;
+    public static final int PAGE_MODIFIERS = 5;
+    public static final int PAGE_PERSONAL = 6;
 
     private Context ctx;
 
@@ -42,6 +43,8 @@ public class EditCharPagerAdapter extends FragmentPagerAdapter {
                 return new EditCharEquipFragment();
             case PAGE_ATTACKS:
                 return new EditCharAttacksFragment();
+            case PAGE_MODIFIERS:
+                return new EditCharAbilityModsFragment();
             case PAGE_PERSONAL:
                 return new EditCharPersonalFragment();
         }
@@ -67,6 +70,9 @@ public class EditCharPagerAdapter extends FragmentPagerAdapter {
             case PAGE_ATTACKS:
                 resId = R.string.attacks;
                 break;
+            case PAGE_MODIFIERS:
+                resId = R.string.modlinks;
+                break;
             case PAGE_PERSONAL:
                 resId = R.string.personality;
                 break;
@@ -78,6 +84,6 @@ public class EditCharPagerAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 6;
+        return 7;
     }
 }

@@ -45,6 +45,9 @@ IMPROVEMENTS
 #performance
 - avoid full queries when opening char
 
+#UI standards
+- unify remove behavior: some screens use rubbish bin icon, others use long press popup menu
+
 
 BUGS
 
@@ -76,8 +79,11 @@ REFACTOR
 
 - unify attribute calculation (summary and breakdown)
 - organize BreakdownDialog
-- abstract EditCharFeatsFragment, SummaryTempEffectsFragment, EditCharSkillsFragment
+- abstract
+    - EditCharFeatsFragment, SummaryTempEffectsFragment, EditCharSkillsFragment
+    - EditCharAbilityModsFragment, EditCharAttacksFragment
 - ViewPager & Fragments without support library
+- matar resources compostos "Select Char", "Edit Char". concatenar resources simples.
 
 
 PROJECT
