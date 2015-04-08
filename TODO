@@ -47,6 +47,9 @@ IMPROVEMENTS
 
 #UI standards
 - unify remove behavior: some screens use rubbish bin icon, others use long press popup menu
+    - swipe (nao combina com pager :/)
+        https://code.google.com/p/dashclock/source/browse/main/src/main/java/com/google/android/apps/dashclock/ui/SwipeDismissListViewTouchListener.java
+        https://github.com/47deg/android-swipelistview
 
 
 BUGS

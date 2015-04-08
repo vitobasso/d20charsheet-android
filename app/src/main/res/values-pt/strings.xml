@@ -29,6 +29,8 @@
     <string name="personality">Personalidade &amp; Campanha</string>
     <string name="value">Valor</string>
     <string name="source">Fonte</string>
+    <string name="bonus">Bônus</string>
+    <string name="multiplier">Multiplicador</string>
     <string name="summary_find_temp">Buscar Efeito</string>
     <string name="temp">Efeito Temporário</string>
     <string name="temps_select">Selecionar Efeito</string>

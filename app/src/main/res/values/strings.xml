@@ -29,6 +29,8 @@
     <string name="personality">Personality &amp; Campaign</string>
     <string name="value">Value</string>
     <string name="source">Source</string>
+    <string name="bonus">Bonus</string>
+    <string name="multiplier">Multiplier</string>
     <string name="summary_find_temp">Find Effect</string>
     <string name="temp">Temporary Effect</string>
     <string name="temps_select">Select Effect</string>
