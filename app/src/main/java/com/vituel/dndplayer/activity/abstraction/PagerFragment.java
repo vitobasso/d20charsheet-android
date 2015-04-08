@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.vituel.dndplayer.util.i18n.EnumI18n;
+
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 
@@ -19,11 +21,13 @@ public abstract class PagerFragment<T, A extends Activity & PagerActivity<T>> ex
     protected A activity;
     protected T data;
     protected ViewGroup root;
+    protected EnumI18n i18n;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = (A) activity;
+        this.i18n = new EnumI18n(activity);
     }
 
     @Override
