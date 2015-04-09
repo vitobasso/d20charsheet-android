@@ -62,6 +62,7 @@ BUGS
 - when coming back to an effect list, after create/edit, mods don't show
 - when has 2+ classes, class fields change when moving away from EditCharBasicFragment and back
 - nullpointer after renaming equiped weapon (at Attack.applyModifier, DAMAGE, getWeapon() is null)
+- can't remove trained skills (CAB + EditText bug)
 
 
 FEATURES

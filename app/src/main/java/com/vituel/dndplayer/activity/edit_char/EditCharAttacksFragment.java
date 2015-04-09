@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.EditAttackRoundActivity;
-import com.vituel.dndplayer.activity.abstraction.AbstractListPagerFragment;
+import com.vituel.dndplayer.activity.abstraction.AbstractSimpleListFragment;
 import com.vituel.dndplayer.dao.AttackRoundDao;
 import com.vituel.dndplayer.model.Attack;
 import com.vituel.dndplayer.model.AttackRound;
@@ -32,7 +32,7 @@ import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 /**
  * Created by Victor on 21/03/14.
  */
-public class EditCharAttacksFragment extends AbstractListPagerFragment<CharBase, EditCharActivity, AttackRound> {
+public class EditCharAttacksFragment extends AbstractSimpleListFragment<CharBase, EditCharActivity, AttackRound> {
 
     @Override
     protected int getRowLayoutResourceId() {

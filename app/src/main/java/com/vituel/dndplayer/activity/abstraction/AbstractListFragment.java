@@ -8,10 +8,9 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.vituel.dndplayer.R;
@@ -20,27 +19,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
-import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
-import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 
 /**
+ * Fragment with:
+ * - Contextual action bar w/ remove button.
+ * - Click listener on item (remembers clicked item index)
+ *
  * Created by Victor on 07/04/2015.
  */
-public abstract class AbstractListPagerFragment<T, A extends Activity & PagerActivity<T>, E> extends PagerFragment<T, A> {
+public abstract class AbstractListFragment<T, A extends Activity & PagerActivity<T>, E> extends PagerFragment<T, A> {
 
     protected List<E> listData;
-    private ListView listView;
+    protected ListView listView;
     protected int clickedIndex = -1;
 
     @Override
     protected int getLayoutResourceId() {
         return R.layout.list;
-    }
-
-    protected abstract int getRowLayoutResourceId();
-
-    protected int getRowTextViewResourceId() {
-        return R.id.name;
     }
 
     @Override
@@ -61,31 +56,15 @@ public abstract class AbstractListPagerFragment<T, A extends Activity & PagerAct
     protected void onPopulate() {
         this.listData = getListData();
         this.listView = (ListView) root;
-        listView.setAdapter(new Adapter(listData));
+        listView.setAdapter(createAdapter());
         listView.setOnItemClickListener(new ClickListener());
         listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(new ContextualActionBarListener());
     }
 
+    protected abstract ListAdapter createAdapter();
+
     protected abstract List<E> getListData();
-
-    private class Adapter extends ArrayAdapter<E> {
-
-        public Adapter(List<E> objects) {
-            super(activity, getRowLayoutResourceId(), getRowTextViewResourceId(), objects);
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            View view = super.getView(position, convertView, parent);
-            E element = listData.get(position);
-            onPopulateRow(view, element);
-            setFontRecursively(activity, view, MAIN_FONT);
-            return view;
-        }
-    }
-
-    protected abstract void onPopulateRow(View view, E element);
 
     private class ClickListener implements AdapterView.OnItemClickListener {
 

@@ -4,14 +4,12 @@ import android.content.Intent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.ListAdapter;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.EffectArrayAdapter;
 import com.vituel.dndplayer.activity.SelectFeatActivity;
-import com.vituel.dndplayer.activity.abstraction.PagerFragment;
+import com.vituel.dndplayer.activity.abstraction.AbstractListFragment;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.Feat;
 
@@ -20,54 +18,20 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
-import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
-import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 
 /**
  * Created by Victor on 21/03/14.
  */
-public class EditCharFeatsFragment extends PagerFragment<CharBase, EditCharActivity> {
-
-    private List<Feat> feats;
+public class EditCharFeatsFragment extends AbstractListFragment<CharBase, EditCharActivity, Feat> {
 
     @Override
-    protected int getLayoutResourceId() {
-        return R.layout.list;
+    protected List<Feat> getListData() {
+        return data.getFeats();
     }
 
     @Override
-    public void onPopulate() {
-        this.feats = data.getFeats();
-        ((ListView) root).setAdapter(new Adapter(feats));
-    }
-
-    private class Adapter extends EffectArrayAdapter<Feat> {
-
-        public Adapter(List<Feat> objects) {
-            super(activity, R.layout.effect_row_removable, objects);
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            View v = super.getView(position, convertView, parent);
-            assert v != null;
-
-            View removeView = v.findViewById(R.id.remove);
-            removeView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    //update list
-                    Feat cond = feats.get(position);
-                    feats.remove(cond);
-
-                    update();
-                }
-            });
-
-            setFontRecursively(activity, v, MAIN_FONT);
-            return v;
-        }
+    protected ListAdapter createAdapter() {
+        return new EffectArrayAdapter<>(activity, getListData());
     }
 
     @Override
@@ -99,7 +63,7 @@ public class EditCharFeatsFragment extends PagerFragment<CharBase, EditCharActiv
                         Feat selected = (Feat) data.getSerializableExtra(EXTRA_SELECTED);
 
                         //update list
-                        feats.add(selected);
+                        listData.add(selected);
 
                         update();
                 }

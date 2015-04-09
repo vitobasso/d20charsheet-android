@@ -6,12 +6,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.SelectSkillActivity;
-import com.vituel.dndplayer.activity.abstraction.PagerFragment;
+import com.vituel.dndplayer.activity.abstraction.AbstractSimpleListFragment;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.CharSkill;
 import com.vituel.dndplayer.model.Skill;
@@ -21,29 +19,30 @@ import java.util.List;
 import static android.app.Activity.RESULT_OK;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
-import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 import static com.vituel.dndplayer.util.ActivityUtil.readInt;
 import static com.vituel.dndplayer.util.ActivityUtil.validateText;
-import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
-import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 
 /**
  * Created by Victor on 21/03/14.
  */
-public class EditCharSkillsFragment extends PagerFragment<CharBase, EditCharActivity> {
+public class EditCharSkillsFragment extends AbstractSimpleListFragment<CharBase, EditCharActivity, CharSkill> {
 
-    private List<CharSkill> skills;
 
     @Override
-    protected int getLayoutResourceId() {
-        return R.layout.list;
+    protected List<CharSkill> getListData() {
+        return data.getSkills();
     }
 
     @Override
-    protected void onPopulate() {
-        this.skills = data.getSkills();
-        ((ListView) root).setAdapter(new Adapter(skills));
+    protected int getRowLayoutResourceId() {
+        return R.layout.edit_skill_row;
+    }
+
+    @Override
+    protected void onPopulateRow(View view, CharSkill charSkill) {
+        populateTextView(view, R.id.name, charSkill.getSkill().getName());
+        populateTextView(view, R.id.value, charSkill.getScore());
     }
 
     @Override
@@ -61,7 +60,7 @@ public class EditCharSkillsFragment extends PagerFragment<CharBase, EditCharActi
         for (int i = 0; i < root.getChildCount(); i++) {
             ViewGroup group = (ViewGroup) root.getChildAt(i);
             int grad = readInt(group, R.id.value);
-            skills.get(i).setScore(grad);
+            listData.get(i).setScore(grad);
         }
     }
 
@@ -95,44 +94,10 @@ public class EditCharSkillsFragment extends PagerFragment<CharBase, EditCharActi
 
                         //update list
                         CharSkill charSkill = new CharSkill(selected);
-                        skills.add(charSkill);
+                        listData.add(charSkill);
 
                         update();
                 }
-        }
-    }
-
-    private class Adapter extends ArrayAdapter<CharSkill> {
-
-        public Adapter(List<CharSkill> objects) {
-            super(activity, R.layout.edit_skill_row, R.id.name, objects);
-        }
-
-        @Override
-        public View getView(final int position, View convertView, ViewGroup parent) {
-            ViewGroup v = (ViewGroup) super.getView(position, convertView, parent);
-            assert v != null;
-
-            CharSkill charSkill = skills.get(position);
-
-            populateTextView(v, R.id.name, charSkill.getSkill().getName());
-            populateTextView(v, R.id.value, charSkill.getScore());
-
-            View removeView = findView(v, R.id.remove);
-            removeView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    //update list
-                    CharSkill cond = skills.get(position);
-                    skills.remove(cond);
-
-                    update();
-                }
-            });
-
-            setFontRecursively(activity, v, MAIN_FONT); //TODO bring to supperclass or to setText
-            return v;
         }
     }
 
