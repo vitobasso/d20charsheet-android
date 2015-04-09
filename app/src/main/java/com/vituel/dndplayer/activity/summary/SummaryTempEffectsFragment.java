@@ -6,51 +6,44 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.EffectArrayAdapter;
 import com.vituel.dndplayer.activity.SelectTempEffectActivity;
-import com.vituel.dndplayer.activity.abstraction.PagerFragment;
+import com.vituel.dndplayer.activity.abstraction.AbstractListFragment;
 import com.vituel.dndplayer.dao.CharTempEffectDao;
 import com.vituel.dndplayer.model.CharSummary;
+import com.vituel.dndplayer.model.CharTempEffect;
 import com.vituel.dndplayer.model.TempEffect;
-import com.vituel.dndplayer.util.JavaUtil;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static android.app.Activity.RESULT_OK;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
-import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
-import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 
 /**
  * Created by Victor on 21/03/14.
  */
-public class SummaryTempEffectsFragment extends PagerFragment<CharSummary, SummaryActivity> {
+public class SummaryTempEffectsFragment extends AbstractListFragment<CharSummary, SummaryActivity, CharTempEffect> {
 
-    private Map<TempEffect, Boolean> tempEffects;
 
     @Override
-    protected int getLayoutResourceId() {
-        return R.layout.list;
+    protected List<CharTempEffect> getListData() {
+        return data.getBase().getTempEffects();
     }
 
     @Override
-    protected void onPopulate() {
-        this.tempEffects = data.getBase().getTempEffects();
-        List<TempEffect> list = new ArrayList<>(tempEffects.keySet());
-        ((ListView) root).setAdapter(new Adapter(list));
+    protected ListAdapter createAdapter() {
+        return new Adapter(getListData());
     }
 
     public void save() {
         //update db
         CharTempEffectDao dataSource = new CharTempEffectDao(activity);
-        dataSource.updateForChar(tempEffects, data.getBase().getId());
+        dataSource.saveOverwrite(data.getBase().getId(), listData);
         dataSource.close();
 
         //update activity
@@ -85,63 +78,41 @@ public class SummaryTempEffectsFragment extends PagerFragment<CharSummary, Summa
 
                         //update list
                         TempEffect selected = (TempEffect) data.getSerializableExtra(EXTRA_SELECTED);
-                        tempEffects.put(selected, true);
+                        CharTempEffect charTempEffect = new CharTempEffect();
+                        charTempEffect.setTempEffect(selected);
+                        charTempEffect.setActive(true);
+                        listData.add(charTempEffect);
 
                         save();
                 }
         }
     }
 
-    private class Adapter extends EffectArrayAdapter<TempEffect> {
+    private class Adapter extends EffectArrayAdapter<CharTempEffect> {
 
-        public Adapter(List<TempEffect> objects) {
-            super(activity, R.layout.effect_row_removable, objects);
+        public Adapter(List<CharTempEffect> objects) {
+            super(activity, R.layout.effect_row, objects);
         }
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             ViewGroup group = (ViewGroup) super.getView(position, convertView, parent);
-            TempEffect effect = JavaUtil.findByIndex(tempEffects.keySet(), position);
+            CharTempEffect effect = listData.get(position);
 
             TextView textView = (TextView) group.findViewById(R.id.name);
             textView.setText(effect.getName());
 
-            assert group != null;
-            group.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    //toggle activated
-                    TempEffect cond = JavaUtil.findByIndex(tempEffects.keySet(), position);
-                    boolean active = !tempEffects.get(cond);
-                    tempEffects.put(cond, active);
-
-                    save();
-                }
-            });
-
-            View removeView = group.findViewById(R.id.remove);
-            removeView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    //update list
-                    TempEffect cond = JavaUtil.findByIndex(tempEffects.keySet(), position);
-                    tempEffects.remove(cond);
-
-                    save();
-                }
-            });
-
             //set transparency
-            boolean active = tempEffects.get(effect);
             View effectView = group.findViewById(R.id.effect);
-            effectView.setAlpha(active ? 1 : .3f);
-
-            setFontRecursively(activity, group, MAIN_FONT);
+            effectView.setAlpha(effect.isActive() ? 1 : .3f);
 
             return group;
         }
     }
 
+    @Override
+    protected void onClickRow(CharTempEffect element) {
+        element.toggleActive();
+        save();
+    }
 }

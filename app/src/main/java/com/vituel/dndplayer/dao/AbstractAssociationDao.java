@@ -48,6 +48,10 @@ public abstract class AbstractAssociationDao<T> extends AbstractDao<T>{
         database.delete(tableName(), query(parentId), null);
     }
 
+    public void removeAllForElement(long elementId) {
+        removeForQuery(String.format("%s=%d", elementColumn(), elementId));
+    }
+
     private String query(long parentId) {
         return String.format("%s=%d", parentColumn(), parentId);
     }

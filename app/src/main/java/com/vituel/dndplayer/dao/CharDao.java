@@ -349,9 +349,9 @@ public class CharDao extends AbstractEntityDao<CharBase> {
 
         //load temporary effects
         CharTempEffectDao activeTempDao = new CharTempEffectDao(context, database);
-        List<CharTempEffect> list = activeTempDao.listForChar(c.getId());
+        List<CharTempEffect> list = activeTempDao.findByParent(c.getId());
         for (CharTempEffect acond : list) {
-            c.getTempEffects().put(acond, acond.isActive());
+            c.getTempEffects().add(acond);
         }
 
         //load active conditions

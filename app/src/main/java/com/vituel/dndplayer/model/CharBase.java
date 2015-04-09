@@ -56,7 +56,7 @@ public class CharBase extends AbstractEntity {
 
     private CharEquip equipment = new CharEquip();
     private Map<Item, Integer> bag = new TreeMap<>();
-    private Map<TempEffect, Boolean> tempEffects = new TreeMap<>();
+    private List<CharTempEffect> tempEffects = new ArrayList<>();
     private Set<Condition> activeConditions = new HashSet<>();
 
     private List<AttackRound> attacks = new ArrayList<>();
@@ -145,10 +145,9 @@ public class CharBase extends AbstractEntity {
 
     public Collection<TempEffect> getActiveTempEffects() {
         List<TempEffect> result = new ArrayList<>();
-        for (TempEffect cond : getTempEffects().keySet()) {
-            boolean isActive = getTempEffects().get(cond);
-            if (isActive) {
-                result.add(cond);
+        for (CharTempEffect tempEffect : getTempEffects()) {
+            if (tempEffect.isActive()) {
+                result.add(tempEffect.getTempEffect());
             }
         }
         return result;
@@ -365,11 +364,11 @@ public class CharBase extends AbstractEntity {
         this.bag = bag;
     }
 
-    public Map<TempEffect, Boolean> getTempEffects() {
+    public List<CharTempEffect> getTempEffects() {
         return tempEffects;
     }
 
-    public void setTempEffects(Map<TempEffect, Boolean> tempEffects) {
+    public void setTempEffects(List<CharTempEffect> tempEffects) {
         this.tempEffects = tempEffects;
     }
 

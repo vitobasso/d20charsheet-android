@@ -67,7 +67,7 @@ public class TempEffectDao extends AbstractEntityDao<TempEffect> {
 
         CharTempEffectDao charTempDao = new CharTempEffectDao(context, database);
         //not created in constructor to avoid cyclic reference
-        charTempDao.removeAllForEffect(e.getId());
+        charTempDao.removeAllForElement(e.getId());
         charTempDao.close();
     }
 }

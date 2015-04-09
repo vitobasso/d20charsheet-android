@@ -9,13 +9,10 @@ import com.vituel.dndplayer.model.CharTempEffect;
 import com.vituel.dndplayer.model.TempEffect;
 import com.vituel.dndplayer.util.database.SQLiteHelper;
 
-import java.util.List;
-import java.util.Map;
-
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 
 
-public class CharTempEffectDao extends AbstractEntityDao<CharTempEffect> {
+public class CharTempEffectDao extends AbstractAssociationDao<CharTempEffect> {
 
     public static final String TABLE = "active_temp_effect";
 
@@ -57,32 +54,24 @@ public class CharTempEffectDao extends AbstractEntityDao<CharTempEffect> {
         };
     }
 
-    public void updateForChar(Map<TempEffect, Boolean> map, long charId){
-        removeAllForChar(charId);
-        for(TempEffect cond : map.keySet()){
-            save(cond, map.get(cond), charId);
-        }
+    @Override
+    protected String parentColumn() {
+        return COLUMN_CHAR_ID;
     }
 
-    private void save(TempEffect cond, boolean active, long charId) {
+    @Override
+    protected String elementColumn() {
+        return COLUMN_TEMP_ID;
+    }
+
+    @Override
+    public void save(long charId, CharTempEffect tempEffect) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_CHAR_ID, charId);
-        values.put(COLUMN_TEMP_ID, cond.getId());
-        values.put(COLUMN_ACTIVE, active);
+        values.put(COLUMN_TEMP_ID, tempEffect.getTempEffect().getId());
+        values.put(COLUMN_ACTIVE, tempEffect.isActive());
 
         database.insert(tableName(), null, values);
-    }
-
-    public List<CharTempEffect> listForChar(long charId) {
-        return listForQuery(String.format("%s=%d", COLUMN_CHAR_ID, charId));
-    }
-
-    public void removeAllForEffect(long effectId) {
-        removeForQuery(String.format("%s=%d", COLUMN_TEMP_ID, effectId));
-    }
-
-    private void removeAllForChar(long charId) {
-        removeForQuery(String.format("%s=%d", COLUMN_CHAR_ID, charId));
     }
 
     @Override
@@ -90,20 +79,13 @@ public class CharTempEffectDao extends AbstractEntityDao<CharTempEffect> {
 
         //basic fields
         CharTempEffect result = new CharTempEffect();
-        result.setId(cursor.getLong(0));
         result.setActive(cursor.getInt(3) != 0);
 
         //temp effect
         TempEffect tempEffect = tempEffectDao.findById(cursor.getLong(2));
-        result.setName(tempEffect.getName());
-        result.setEffect(tempEffect.getEffect());
+        result.setTempEffect(tempEffect);
 
         return result;
-    }
-
-    @Override
-    public void save(CharTempEffect entity) {
-        throw new UnsupportedOperationException("Use the one with ActiveConditionals and charId instead.");
     }
 
 }

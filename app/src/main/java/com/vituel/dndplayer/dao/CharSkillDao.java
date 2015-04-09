@@ -7,7 +7,8 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.model.CharSkill;
 import com.vituel.dndplayer.model.Skill;
-import com.vituel.dndplayer.util.database.SQLiteHelper;
+
+import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 
 /**
  * Created by Victor on 06/03/14.
@@ -21,12 +22,12 @@ public class CharSkillDao extends AbstractAssociationDao<CharSkill> {
     private static final String COLUMN_GRAD = "grad";
 
     public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + SQLiteHelper.COLUMN_ID + " integer primary key, "
+            + COLUMN_ID + " integer primary key, "
             + COLUMN_CHAR_ID + " integer not null, "
             + COLUMN_SKILL_ID + " integer not null, "
             + COLUMN_GRAD + " integer not null, "
-            + "FOREIGN KEY(" + COLUMN_CHAR_ID + ") REFERENCES " + CharDao.TABLE + "(" + SQLiteHelper.COLUMN_ID + "), "
-            + "FOREIGN KEY(" + COLUMN_SKILL_ID + ") REFERENCES " + SkillDao.TABLE + "(" + SQLiteHelper.COLUMN_ID + ")"
+            + "FOREIGN KEY(" + COLUMN_CHAR_ID + ") REFERENCES " + CharDao.TABLE + "(" + COLUMN_ID + "), "
+            + "FOREIGN KEY(" + COLUMN_SKILL_ID + ") REFERENCES " + SkillDao.TABLE + "(" + COLUMN_ID + ")"
             + ");";
 
     public CharSkillDao(Context context) {
@@ -45,7 +46,7 @@ public class CharSkillDao extends AbstractAssociationDao<CharSkill> {
     @Override
     protected String[] allColumns() {
         return new String[]{
-                SQLiteHelper.COLUMN_ID,
+                COLUMN_ID,
                 COLUMN_CHAR_ID,
                 COLUMN_SKILL_ID,
                 COLUMN_GRAD
