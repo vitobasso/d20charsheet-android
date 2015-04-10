@@ -3,8 +3,6 @@ IMPROVEMENTS
 #summary
 - ability damage
 - touch AC
-- dex modifier to ranged weapons (what about weapon finesse? zen archery? make modifier-ability links customizable?
-    - flexible association between base effects and targets (with set of default associations).
 
 #summary breakdown
 - breakdown of composite attributes (critical, speed, damage, damage reduction)
@@ -59,10 +57,10 @@ BUGS
 - can add the same feat twice
 - temp HP effect
 - Barkskin doesn't parse
-- when coming back to an effect list, after create/edit, mods don't show
 - when has 2+ classes, class fields change when moving away from EditCharBasicFragment and back
 - nullpointer after renaming equiped weapon (at Attack.applyModifier, DAMAGE, getWeapon() is null)
 - can't remove trained skills (CAB + EditText bug)
+- null pointer after deleting item/feat/etc used by char
 
 
 FEATURES
@@ -76,16 +74,13 @@ FEATURES
 - xp
 - animal companion, mount, followers
 - library
-- print
+- to pdf
 
 
 REFACTOR
 
 - unify attribute calculation (summary and breakdown)
 - organize BreakdownDialog
-- abstract
-    - EditCharFeatsFragment, SummaryTempEffectsFragment, EditCharSkillsFragment
-    - EditCharAbilityModsFragment, EditCharAttacksFragment
 - ViewPager & Fragments without support library
 - matar resources compostos "Select Char", "Edit Char". concatenar resources simples.
 

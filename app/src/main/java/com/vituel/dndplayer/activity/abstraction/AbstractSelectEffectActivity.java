@@ -1,10 +1,12 @@
 package com.vituel.dndplayer.activity.abstraction;
 
-import android.os.Bundle;
+import android.widget.ListAdapter;
 
 import com.vituel.dndplayer.activity.EffectArrayAdapter;
 import com.vituel.dndplayer.model.AbstractEntity;
 import com.vituel.dndplayer.model.EffectSource;
+
+import java.util.List;
 
 /**
  * Created by Victor on 21/04/14.
@@ -12,8 +14,7 @@ import com.vituel.dndplayer.model.EffectSource;
 public abstract class AbstractSelectEffectActivity<T extends AbstractEntity & EffectSource> extends AbstractSelectActivity<T> {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        listView.setAdapter(new EffectArrayAdapter<>(this, list));
+    protected ListAdapter createAdapter(List<T> list) {
+        return new EffectArrayAdapter<>(this, filteredList);
     }
 }

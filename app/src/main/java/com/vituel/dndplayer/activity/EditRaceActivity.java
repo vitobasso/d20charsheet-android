@@ -1,10 +1,8 @@
 package com.vituel.dndplayer.activity;
 
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
@@ -15,10 +13,11 @@ import com.vituel.dndplayer.model.Race;
 import com.vituel.dndplayer.model.Size;
 import com.vituel.dndplayer.util.ActivityUtil;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static com.vituel.dndplayer.model.ModifierType.RACIAL;
+import static com.vituel.dndplayer.util.ActivityUtil.populateSpinnerWithEnum;
+import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 
 /**
  * Created by Victor on 30/03/14.
@@ -33,53 +32,43 @@ public class EditRaceActivity extends AbstractEditActivity<Race> {
     @Override
     protected void populate() {
 
-        EditText name = (EditText) findViewById(R.id.name);
-        name.setText(entity.getName());
-
-        SpinnerAdapter sizeAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_spinner_item, Arrays.asList(Size.values()));
-        Spinner sizeSpinner = findView(R.id.size);
-        sizeSpinner.setAdapter(sizeAdapter);
-        Size initValue = Size.fromIndex(0);
-        sizeSpinner.setSelection(initValue.ordinal());
+        populateTextView(this, R.id.name, entity.getName());
+        populateSpinnerWithEnum(this, R.id.size, Size.values(), Size.fromIndex(0));
 
         //modifiers
-        List<Modifier> modifiers = entity.getEffect().getModifiers();
-        for (Modifier modifier : modifiers) {
-            switch (modifier.getTarget()) {
-                case STR:
-                    populateEditText(R.id.str, modifier);
-                    break;
-                case DEX:
-                    populateEditText(R.id.dex, modifier);
-                    break;
-                case CON:
-                    populateEditText(R.id.con, modifier);
-                    break;
-                case INT:
-                    populateEditText(R.id.attr_int, modifier);
-                    break;
-                case WIS:
-                    populateEditText(R.id.wis, modifier);
-                    break;
-                case CHA:
-                    populateEditText(R.id.cha, modifier);
-                    break;
-                case SPEED:
-                    populateEditText(R.id.speed, modifier);
-                    break;
-                case SIZE:
-                    Size value = Size.fromIndex(modifier.getAmount().toInt());
-                    sizeSpinner.setSelection(value.ordinal());
-                    break;
+        if (entity.getEffect() != null) {
+            List<Modifier> modifiers = entity.getEffect().getModifiers();
+            for (Modifier modifier : modifiers) {
+                switch (modifier.getTarget()) {
+                    case STR:
+                        populateTextView(this, R.id.str, modifier);
+                        break;
+                    case DEX:
+                        populateTextView(this, R.id.dex, modifier);
+                        break;
+                    case CON:
+                        populateTextView(this, R.id.con, modifier);
+                        break;
+                    case INT:
+                        populateTextView(this, R.id.attr_int, modifier);
+                        break;
+                    case WIS:
+                        populateTextView(this, R.id.wis, modifier);
+                        break;
+                    case CHA:
+                        populateTextView(this, R.id.cha, modifier);
+                        break;
+                    case SPEED:
+                        populateTextView(this, R.id.speed, modifier);
+                        break;
+                    case SIZE:
+//                        Size value = Size.fromIndex(modifier.getAmount().toInt());
+//                        sizeSpinner.setSelection(value.ordinal()); //TODO
+                        break;
+                }
             }
         }
 
-    }
-
-    private void populateEditText(int res, Modifier modifier) {
-        EditText view = findView(res);
-        view.setText(modifier.getAmount().toString());
     }
 
     @Override

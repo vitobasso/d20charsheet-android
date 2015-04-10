@@ -18,7 +18,7 @@ import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_TYPE;
  */
 public class SelectItemActivity extends AbstractSelectEffectActivity<Item> {
 
-    EquipSlot slot;
+    private EquipSlot slot;
 
     @Override
     protected AbstractEntityDao<Item> getDataSource() {

@@ -6,8 +6,6 @@ import com.vituel.dndplayer.dao.AbstractEntityDao;
 import com.vituel.dndplayer.dao.FeatDao;
 import com.vituel.dndplayer.model.Feat;
 
-import java.util.List;
-
 /**
  * Created by Victor on 30/03/14.
  */
@@ -23,8 +21,4 @@ public class SelectFeatActivity extends AbstractSelectEffectActivity<Feat> {
         return EditFeatActivity.class;
     }
 
-    @Override
-    protected List<Feat> onQueryDB(AbstractEntityDao<Feat> dataSource) {
-        return dataSource.listAll();
-    }
 }

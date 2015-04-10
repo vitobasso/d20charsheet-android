@@ -1,17 +1,19 @@
 package com.vituel.dndplayer.activity.abstraction;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
+import android.view.ActionMode;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SearchView;
 
@@ -43,7 +45,7 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
     protected int request;
 
     //data
-    protected List<T> list;
+    protected List<T> fullList, filteredList;
     protected String filter;
 
     //ui
@@ -64,8 +66,9 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
         refresh();
 
         searchView.setOnQueryTextListener(new SearchListener());
-        listView.setOnItemLongClickListener(new LongClickListener());
         listView.setOnItemClickListener(new ClickListener());
+        listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+        listView.setMultiChoiceModeListener(new ContextualActionBarListener());
 
         setActionbarTitle(this, BOLD_FONT, getTitle());
     }
@@ -99,61 +102,30 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
         }
     }
 
-    private class LongClickListener implements AdapterView.OnItemLongClickListener {
-
-        @Override
-        public boolean onItemLongClick(AdapterView<?> adapterView, View view, int pos, long l) {
-            final T selected = (T) listView.getItemAtPosition(pos);
-
-            AlertDialog.Builder builder = new AlertDialog.Builder(AbstractSelectActivity.this);
-            builder.setItems(R.array.edit_dialog_items, new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which) {
-                        case 0: //edit
-                            edit(selected);
-                            break;
-                        case 1: //remove
-                            remove(selected);
-                            dialog.dismiss();
-                            break;
-                    }
-                }
-            });
-
-            final Dialog dialog = builder.create();
-            dialog.show();
-            return false;
-        }
-
-    }
-
-    private void select(T selected) {
+    private void select(T element) {
         //send data back to caller activity
         Intent resultIntent = new Intent();
-        resultIntent.putExtra(EXTRA_SELECTED, selected);
+        resultIntent.putExtra(EXTRA_SELECTED, element);
         onPreFinish(resultIntent);
         setResult(RESULT_OK, resultIntent);
         finish();
     }
 
-    private void edit(T selected) {
+    private void edit(T element) {
         //call edit activity
         Intent intent = new Intent(AbstractSelectActivity.this, getEditActivityClass());
-        intent.putExtra(EXTRA_SELECTED, selected);
+        intent.putExtra(EXTRA_SELECTED, element);
         startActivityForResult(intent, REQUEST_CREATE);
     }
 
-    private void remove(T selected) {
+    private void remove(T element) {
         //deleteAll from db
         AbstractEntityDao<T> dataSource = getDataSource();
-        dataSource.remove(selected);
+        dataSource.remove(element);
         dataSource.close();
 
         //update ui
-        list.remove(selected);
-        updateUI();
+        fullList.remove(element);
     }
 
     @Override
@@ -199,7 +171,7 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
     private void refresh() {
         //update memory
         AbstractEntityDao<T> dataSource = getDataSource();
-        list = onQueryDB(dataSource);
+        fullList = onQueryDB(dataSource);
         dataSource.close();
 
         //update ui
@@ -207,33 +179,22 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
     }
 
     private void updateUI() {
-        List<T> filtered = filter();
-        display(filtered);
+        filteredList = filter();
+        listView.setAdapter(createAdapter(filteredList));
     }
 
     private List<T> filter() {
         if (filter == null || filter.isEmpty()) {
-            return list;
+            return fullList;
         } else {
             List<T> filtered = new ArrayList<T>();
-            for (T cond : list) {
-                if (cond.getName().toLowerCase().contains(filter.toLowerCase().trim())) {
-                    filtered.add(cond);
+            for (T element : fullList) {
+                if (element.getName().toLowerCase().contains(filter.toLowerCase().trim())) {
+                    filtered.add(element);
                 }
             }
             return filtered;
         }
-    }
-
-    private void display(List<T> list) {
-        listView.setAdapter(new ArrayAdapter<T>(this, android.R.layout.simple_list_item_1, list) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View v = super.getView(position, convertView, parent);
-                setFontRecursively(AbstractSelectActivity.this, v, MAIN_FONT);
-                return v;
-            }
-        });
     }
 
     protected abstract AbstractEntityDao<T> getDataSource();
@@ -248,6 +209,80 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
 
     protected List<T> onQueryDB(AbstractEntityDao<T> dataSource) {
         return dataSource.listAll();
+    }
+
+
+    private class ContextualActionBarListener implements AbsListView.MultiChoiceModeListener {
+
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            // Inflate the menu for the CAB
+            MenuInflater inflater = mode.getMenuInflater();
+            inflater.inflate(R.menu.remove, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.action_remove:
+                    removeSelected();
+                    mode.finish(); // Action picked, so close the CAB
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        @Override
+        public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
+            // Here you can do something when items are selected/de-selected,
+            // such as update the title in the CAB
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+            // Here you can perform updates to the CAB due to
+            // an invalidate() request
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            // Here you can make any necessary updates to the activity when
+            // the CAB is removed. By default, selected items are deselected/unchecked.
+        }
+    }
+
+    private void removeSelected() {
+        int len = listView.getCount();
+        SparseBooleanArray checked = listView.getCheckedItemPositions();
+
+        //choose elements for removal
+        List<T> toRemove = new ArrayList<>();
+        for (int i = 0; i < len; i++) {
+            if (checked.get(i)) {
+                toRemove.add(filteredList.get(i));
+            }
+        }
+
+        //actually remove elements
+        for (T element : toRemove) {
+            remove(element);
+        }
+
+        updateUI();
+    }
+
+    protected ListAdapter createAdapter(List<T> list){
+        return new ArrayAdapter<T>(this, R.layout.simple_row, R.id.name, list) {
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                View v = super.getView(position, convertView, parent);
+                setFontRecursively(AbstractSelectActivity.this, v, MAIN_FONT);
+                return v;
+            }
+        };
     }
 
 }

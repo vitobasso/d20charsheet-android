@@ -1,41 +1,30 @@
 package com.vituel.dndplayer.activity;
 
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
-import com.vituel.dndplayer.dao.ItemDao;
+import com.vituel.dndplayer.activity.abstraction.AbstractEditEffectActivity;
 import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Item;
-import com.vituel.dndplayer.model.Modifier;
-import com.vituel.dndplayer.model.ModifierTarget;
-import com.vituel.dndplayer.model.ModifierType;
 import com.vituel.dndplayer.model.SlotType;
 import com.vituel.dndplayer.model.WeaponItem;
 import com.vituel.dndplayer.model.WeaponProperties;
-
-import java.util.List;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.vituel.dndplayer.model.Item.ItemType;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
-import static com.vituel.dndplayer.util.ActivityUtil.inflate;
 import static com.vituel.dndplayer.util.ActivityUtil.populateSpinnerWithEnum;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
-import static com.vituel.dndplayer.util.ActivityUtil.readDice;
 import static com.vituel.dndplayer.util.ActivityUtil.readInt;
 import static com.vituel.dndplayer.util.ActivityUtil.readSpinner;
 import static com.vituel.dndplayer.util.ActivityUtil.readString;
 import static com.vituel.dndplayer.util.ActivityUtil.validateSpinner;
 import static com.vituel.dndplayer.util.ActivityUtil.validateText;
 
-public class EditItemActivity extends AbstractEditActivity<Item> {
-
-    private static final int NUM_EFFECTS = 5;
+public class EditItemActivity extends AbstractEditEffectActivity<Item> {
 
     @Override
     protected int getLayout() {
@@ -45,8 +34,10 @@ public class EditItemActivity extends AbstractEditActivity<Item> {
     @Override
     protected void populate() {
 
+        //effect fields
+        super.populate();
+
         //basic fields
-        populateTextView(this, R.id.name, entity.getName());
         populateSpinnerWithEnum(this, null, R.id.slot, SlotType.values(), entity.getSlotType(), new SlotSelectionListener());
         populateSpinnerWithEnum(this, null, R.id.itemType, ItemType.values(), entity.getItemType(), new ItemTypeSelectionListener());
 
@@ -63,29 +54,11 @@ public class EditItemActivity extends AbstractEditActivity<Item> {
             populateTextView(this, R.id.crit_mult, wp.getCritical().getMultiplier());
         }
 
-        //modifiers
-        ViewGroup effectsRoot = findView(this, R.id.effectsList);
-        List<Modifier> modifiers = entity.getEffect().getModifiers();
-        for (Modifier modifier : modifiers) {
-            ViewGroup group = inflate(this, effectsRoot, R.layout.edit_modifier);
-
-            populateSpinnerWithEnum(this, group, R.id.target, ModifierTarget.values(), modifier.getTarget(), null);
-            populateSpinnerWithEnum(this, group, R.id.type, ModifierType.values(), modifier.getType(), null);
-            populateTextView(group, R.id.amount, modifier.getAmount());
-
-        }
-
-        //remaining empty modifiers
-        for (int i = modifiers.size(); i < NUM_EFFECTS; i++) {
-            ViewGroup group = inflate(this, effectsRoot, R.layout.edit_modifier);
-            populateSpinnerWithEnum(this, group, R.id.target, ModifierTarget.values(), null, null);
-            populateSpinnerWithEnum(this, group, R.id.type, ModifierType.values(), null, null);
-        }
     }
 
     @Override
     protected boolean validate() {
-        boolean allValid = validateText(this, R.id.name);
+        boolean allValid = super.validate();
         allValid &= validateSpinner(this, R.id.slot);
 
         SlotType slotType = readSpinner(this, R.id.slot);
@@ -114,10 +87,12 @@ public class EditItemActivity extends AbstractEditActivity<Item> {
             entity.setId(id);
         }
 
+        //effect fields
+        super.save();
+
         //basic fields
-        entity.setName(readString(this, R.id.name));
         entity.setItemType(itemType);
-        entity.setSlotType((SlotType)readSpinner(this, R.id.slot));
+        entity.setSlotType((SlotType) readSpinner(this, R.id.slot));
 
         //weapon fields
         if (entity.getItemType() == ItemType.WEAPON) {
@@ -129,27 +104,6 @@ public class EditItemActivity extends AbstractEditActivity<Item> {
             wp.getCritical().setRange(readInt(this, R.id.crit_range));
             wp.getCritical().setMultiplier(readInt(this, R.id.crit_mult));
         }
-
-        //modifiers
-        List<Modifier> modifiers = entity.getEffect().getModifiers();
-        modifiers.clear();
-        ViewGroup effectsRoot = findView(this, R.id.effectsList);
-        for (int i = 0; i < effectsRoot.getChildCount(); i++) {
-            ViewGroup group = (ViewGroup) effectsRoot.getChildAt(i);
-            ModifierTarget target = readSpinner(group, R.id.target);
-            DiceRoll amount = readDice(group, R.id.amount);
-            ModifierType type = readSpinner(group, R.id.type);
-
-            if (target != null && amount != null) {
-                Modifier modifier = new Modifier(target, amount, type);
-                modifiers.add(modifier);
-            }
-        }
-
-        //save to db
-        ItemDao dataSource = new ItemDao(this);
-        dataSource.save(entity);
-        dataSource.close();
 
         return entity;
     }
