@@ -16,6 +16,7 @@ IMPROVEMENTS
 - show NumberPicker when touching EditTexts with a plain integer?
 - custom keyboard on fields: damage, critical?
 - create modifier w/ conditional
+- separar ataques e links em outro pager: config/tweak/ajustes
 
 #conditions
 - animate when hiding/showing

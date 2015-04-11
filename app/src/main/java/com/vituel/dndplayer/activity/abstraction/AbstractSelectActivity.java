@@ -102,32 +102,6 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
         }
     }
 
-    private void select(T element) {
-        //send data back to caller activity
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra(EXTRA_SELECTED, element);
-        onPreFinish(resultIntent);
-        setResult(RESULT_OK, resultIntent);
-        finish();
-    }
-
-    private void edit(T element) {
-        //call edit activity
-        Intent intent = new Intent(AbstractSelectActivity.this, getEditActivityClass());
-        intent.putExtra(EXTRA_SELECTED, element);
-        startActivityForResult(intent, REQUEST_CREATE);
-    }
-
-    private void remove(T element) {
-        //deleteAll from db
-        AbstractEntityDao<T> dataSource = getDataSource();
-        dataSource.remove(element);
-        dataSource.close();
-
-        //update ui
-        fullList.remove(element);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         switch (requestCode) {
@@ -218,17 +192,19 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
             // Inflate the menu for the CAB
             MenuInflater inflater = mode.getMenuInflater();
-            inflater.inflate(R.menu.remove, menu);
+            inflater.inflate(R.menu.list_selection, menu);
             return true;
         }
 
         @Override
         public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
             switch (item.getItemId()) {
+                case R.id.action_edit:
+                    editSelected();
+                    mode.finish();
                 case R.id.action_remove:
                     removeSelected();
                     mode.finish(); // Action picked, so close the CAB
-                    return true;
                 default:
                     return false;
             }
@@ -236,8 +212,9 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
 
         @Override
         public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked) {
-            // Here you can do something when items are selected/de-selected,
-            // such as update the title in the CAB
+            MenuItem item = mode.getMenu().findItem(R.id.action_edit);
+            item.setVisible(listView.getCheckedItemCount() == 1);
+            invalidateOptionsMenu();
         }
 
         @Override
@@ -251,6 +228,17 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
         public void onDestroyActionMode(ActionMode mode) {
             // Here you can make any necessary updates to the activity when
             // the CAB is removed. By default, selected items are deselected/unchecked.
+        }
+    }
+
+    private void editSelected() {
+        SparseBooleanArray checked = listView.getCheckedItemPositions();
+        for (int i = 0; i < checked.size(); i++) {
+            if (checked.get(i)) {
+                T element = filteredList.get(i);
+                edit(element);
+                break;
+            }
         }
     }
 
@@ -272,6 +260,32 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
         }
 
         updateUI();
+    }
+
+    private void select(T element) {
+        //send data back to caller activity
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(EXTRA_SELECTED, element);
+        onPreFinish(resultIntent);
+        setResult(RESULT_OK, resultIntent);
+        finish();
+    }
+
+    private void edit(T element) {
+        //call edit activity
+        Intent intent = new Intent(AbstractSelectActivity.this, getEditActivityClass());
+        intent.putExtra(EXTRA_SELECTED, element);
+        startActivityForResult(intent, REQUEST_CREATE);
+    }
+
+    private void remove(T element) {
+        //deleteAll from db
+        AbstractEntityDao<T> dataSource = getDataSource();
+        dataSource.remove(element);
+        dataSource.close();
+
+        //update ui
+        fullList.remove(element);
     }
 
     protected ListAdapter createAdapter(List<T> list){
