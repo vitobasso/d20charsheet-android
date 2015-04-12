@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.activity;
+package com.vituel.dndplayer.activity.edit;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.AbstractEditEffectActivity;

@@ -7,8 +7,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.activity.EditAbilityModActivity;
 import com.vituel.dndplayer.activity.abstraction.AbstractSimpleListFragment;
+import com.vituel.dndplayer.activity.edit.EditAbilityModActivity;
 import com.vituel.dndplayer.dao.AbilityModifierDao;
 import com.vituel.dndplayer.model.AbilityModifier;
 import com.vituel.dndplayer.model.CharBase;

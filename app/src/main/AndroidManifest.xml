@@ -25,64 +25,68 @@
             android:label="@string/char_edit"/>
 
         <activity
-            android:name=".activity.SelectCharActivity"
+            android:name=".activity.select.SelectCharActivity"
             android:label="@string/char_open"/>
 
         <activity
-            android:name=".activity.SelectClassActivity"
+            android:name=".activity.select.SelectClassActivity"
             android:label="@string/class_select"/>
 
         <activity
-            android:name=".activity.EditClassActivity"
+            android:name=".activity.edit.EditClassActivity"
             android:label="@string/class_edit"/>
 
         <activity
-            android:name=".activity.EditItemActivity"
+            android:name=".activity.edit.EditItemActivity"
             android:label="@string/item_edit"/>
 
         <activity
-            android:name=".activity.SelectItemActivity"
+            android:name=".activity.select.SelectItemActivity"
             android:label="@string/item_select"/>
 
         <activity
-            android:name=".activity.SelectTempEffectActivity"
+            android:name=".activity.select.SelectTempEffectActivity"
             android:label="@string/temps_select"/>
 
         <activity
-            android:name=".activity.EditTempEffectActivity"
+            android:name=".activity.edit.EditTempEffectActivity"
             android:label="@string/temps_edit"/>
 
         <activity
-            android:name=".activity.SelectRaceActivity"
+            android:name=".activity.select.SelectRaceActivity"
             android:label="@string/race_select"/>
 
         <activity
-            android:name=".activity.EditRaceActivity"
+            android:name=".activity.edit.EditRaceActivity"
             android:label="@string/race_edit"/>
 
         <activity
-            android:name=".activity.EditFeatActivity"
+            android:name=".activity.edit.EditFeatActivity"
             android:label="@string/trait_edit"/>
 
         <activity
-            android:name=".activity.SelectFeatActivity"
+            android:name=".activity.select.SelectFeatActivity"
             android:label="@string/trait_select"/>
 
         <activity
-            android:name=".activity.EditSkillActivity"
+            android:name=".activity.edit.EditSkillActivity"
             android:label="@string/skill_edit"/>
 
         <activity
-            android:name=".activity.SelectSkillActivity"
+            android:name=".activity.select.SelectSkillActivity"
             android:label="@string/skill_select"/>
 
         <activity
-            android:name=".activity.EditAttackRoundActivity"
+            android:name=".activity.edit.EditAttackRoundActivity"
             android:label="@string/attack_edit"/>
 
         <activity
-            android:name=".activity.EditAbilityModActivity"
+            android:name=".activity.edit.EditAbilityModActivity"
             android:label="@string/modlink_edit"/>
+
+        <activity
+            android:name=".activity.SelectBooksActivity"
+            android:label="@string/rule_books"/>
 
     </application>
 

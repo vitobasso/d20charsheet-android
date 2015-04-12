@@ -71,7 +71,7 @@ public class CharTempEffectDao extends AbstractAssociationDao<CharTempEffect> {
         values.put(COLUMN_TEMP_ID, tempEffect.getTempEffect().getId());
         values.put(COLUMN_ACTIVE, tempEffect.isActive());
 
-        database.insert(tableName(), null, values);
+        insert(values);
     }
 
     @Override

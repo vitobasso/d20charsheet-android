@@ -10,10 +10,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.activity.SelectCharActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
+import com.vituel.dndplayer.activity.select.SelectCharActivity;
 import com.vituel.dndplayer.dao.CharDao;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.CharSummary;

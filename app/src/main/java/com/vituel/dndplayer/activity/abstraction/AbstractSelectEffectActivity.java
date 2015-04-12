@@ -2,9 +2,9 @@ package com.vituel.dndplayer.activity.abstraction;
 
 import android.widget.ListAdapter;
 
-import com.vituel.dndplayer.activity.EffectArrayAdapter;
 import com.vituel.dndplayer.model.AbstractEntity;
 import com.vituel.dndplayer.model.EffectSource;
+import com.vituel.dndplayer.util.gui.EffectArrayAdapter;
 
 import java.util.List;
 

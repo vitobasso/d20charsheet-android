@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.activity;
+package com.vituel.dndplayer.activity.select;
 
 import android.app.AlertDialog;
 import android.app.Dialog;

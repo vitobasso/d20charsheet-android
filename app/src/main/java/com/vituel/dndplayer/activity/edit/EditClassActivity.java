@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.activity;
+package com.vituel.dndplayer.activity.edit;
 
 import android.widget.EditText;
 import android.widget.Spinner;

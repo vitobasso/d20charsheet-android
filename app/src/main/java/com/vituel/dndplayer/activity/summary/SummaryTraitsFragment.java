@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.activity.EffectPopulator;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
@@ -22,6 +21,7 @@ import com.vituel.dndplayer.model.EffectSource;
 import com.vituel.dndplayer.model.Feat;
 import com.vituel.dndplayer.model.Race;
 import com.vituel.dndplayer.model.RaceTrait;
+import com.vituel.dndplayer.util.gui.EffectPopulator;
 import com.vituel.dndplayer.util.gui.SingleColExpListAdapter;
 
 import java.util.ArrayList;

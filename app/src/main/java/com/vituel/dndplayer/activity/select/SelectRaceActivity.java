@@ -1,7 +1,8 @@
-package com.vituel.dndplayer.activity;
+package com.vituel.dndplayer.activity.select;
 
 import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
 import com.vituel.dndplayer.activity.abstraction.AbstractSelectActivity;
+import com.vituel.dndplayer.activity.edit.EditRaceActivity;
 import com.vituel.dndplayer.dao.AbstractEntityDao;
 import com.vituel.dndplayer.dao.RaceDao;
 import com.vituel.dndplayer.model.Race;

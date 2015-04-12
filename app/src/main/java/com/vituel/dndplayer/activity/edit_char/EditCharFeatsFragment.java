@@ -7,11 +7,11 @@ import android.view.MenuItem;
 import android.widget.ListAdapter;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.activity.EffectArrayAdapter;
-import com.vituel.dndplayer.activity.SelectFeatActivity;
 import com.vituel.dndplayer.activity.abstraction.AbstractListFragment;
+import com.vituel.dndplayer.activity.select.SelectFeatActivity;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.Feat;
+import com.vituel.dndplayer.util.gui.EffectArrayAdapter;
 
 import java.util.List;
 

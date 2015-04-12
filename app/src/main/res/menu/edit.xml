@@ -7,11 +7,18 @@
             android:title="@android:string/ok"
             android:showAsAction="ifRoom"
             android:orderInCategory="1"/>
+
     <item
             android:id="@+id/action_cancel"
             android:icon="@android:drawable/ic_menu_close_clear_cancel"
             android:title="@android:string/cancel"
             android:showAsAction="ifRoom"
             android:orderInCategory="2"/>
+
+    <item
+            android:id="@+id/action_books"
+            android:title="@string/rule_books"
+            android:showAsAction="never"
+            android:orderInCategory="3"/>
 
 </menu>

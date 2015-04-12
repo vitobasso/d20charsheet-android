@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.activity.EditAttackRoundActivity;
 import com.vituel.dndplayer.activity.abstraction.AbstractSimpleListFragment;
+import com.vituel.dndplayer.activity.edit.EditAttackRoundActivity;
 import com.vituel.dndplayer.dao.AttackRoundDao;
 import com.vituel.dndplayer.model.Attack;
 import com.vituel.dndplayer.model.AttackRound;

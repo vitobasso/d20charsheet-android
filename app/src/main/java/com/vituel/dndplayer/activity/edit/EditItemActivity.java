@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.activity;
+package com.vituel.dndplayer.activity.edit;
 
 import android.view.View;
 import android.widget.AdapterView;

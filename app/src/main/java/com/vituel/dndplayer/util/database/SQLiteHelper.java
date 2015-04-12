@@ -9,6 +9,8 @@ import com.vituel.dndplayer.dao.AbilityModifierDao;
 import com.vituel.dndplayer.dao.ActiveConditionDao;
 import com.vituel.dndplayer.dao.AttackDao;
 import com.vituel.dndplayer.dao.AttackRoundDao;
+import com.vituel.dndplayer.dao.BookDao;
+import com.vituel.dndplayer.dao.CharBookDao;
 import com.vituel.dndplayer.dao.CharClassDao;
 import com.vituel.dndplayer.dao.CharDao;
 import com.vituel.dndplayer.dao.CharFeatDao;
@@ -16,6 +18,7 @@ import com.vituel.dndplayer.dao.CharSkillDao;
 import com.vituel.dndplayer.dao.CharTempEffectDao;
 import com.vituel.dndplayer.dao.ClassDao;
 import com.vituel.dndplayer.dao.ClassTraitDao;
+import com.vituel.dndplayer.dao.EditionDao;
 import com.vituel.dndplayer.dao.EffectDao;
 import com.vituel.dndplayer.dao.FeatDao;
 import com.vituel.dndplayer.dao.ItemDao;
@@ -43,6 +46,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase database) {
 
         //library
+        database.execSQL(EditionDao.CREATE_TABLE);
+        database.execSQL(BookDao.CREATE_TABLE);
         database.execSQL(RaceDao.CREATE_TABLE);
         database.execSQL(RaceTraitDao.CREATE_TABLE);
         database.execSQL(ClassDao.CREATE_TABLE);
@@ -57,6 +62,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
         //char
         database.execSQL(CharDao.CREATE_TABLE);
+        database.execSQL(CharBookDao.CREATE_TABLE);
         database.execSQL(CharClassDao.CREATE_TABLE);
         database.execSQL(CharFeatDao.CREATE_TABLE);
         database.execSQL(CharTempEffectDao.CREATE_TABLE);
@@ -74,6 +80,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                         + newVersion + ", which will destroy all old data");
 
         //library
+        db.execSQL("DROP TABLE IF EXISTS " + EditionDao.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + BookDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + RaceDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + RaceTraitDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + ClassDao.TABLE);
@@ -88,6 +96,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
         //char
         db.execSQL("DROP TABLE IF EXISTS " + CharDao.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + CharBookDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + CharClassDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + CharFeatDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + CharTempEffectDao.TABLE);

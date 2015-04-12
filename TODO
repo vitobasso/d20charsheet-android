@@ -17,6 +17,7 @@ IMPROVEMENTS
 - custom keyboard on fields: damage, critical?
 - create modifier w/ conditional
 - separar ataques e links em outro pager: config/tweak/ajustes
+- select by CAB multiple choice
 
 #conditions
 - animate when hiding/showing
@@ -32,9 +33,6 @@ IMPROVEMENTS
 - item models (long sword vs. long sword +2)
 - weapon status modifier on edit screen
 - filter by weapon vs sheld, 1 vs 2handed, melee vs ranged
-
-#attacks
-- 2h weapons
 
 #others
 - parse modifiers w/ comma separated conditions

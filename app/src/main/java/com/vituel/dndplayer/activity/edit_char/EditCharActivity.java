@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.vituel.dndplayer.R;
+import com.vituel.dndplayer.activity.SelectBooksActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.dao.CharDao;
@@ -85,6 +86,11 @@ public class EditCharActivity extends FragmentActivity implements PagerActivity<
                 finish();
 
                 return true;
+
+            case R.id.action_books:
+
+                Intent selectBooksIntent = new Intent(this, SelectBooksActivity.class);
+                startActivity(selectBooksIntent);
 
             default:
                 return defaultOnOptionsItemSelected(item, this);

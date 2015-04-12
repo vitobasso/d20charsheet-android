@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.activity;
+package com.vituel.dndplayer.util.gui;
 
 import android.content.Context;
 import android.view.View;

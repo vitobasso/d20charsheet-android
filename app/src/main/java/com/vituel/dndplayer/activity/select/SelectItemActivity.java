@@ -1,9 +1,10 @@
-package com.vituel.dndplayer.activity;
+package com.vituel.dndplayer.activity.select;
 
 import android.content.Intent;
 
 import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
 import com.vituel.dndplayer.activity.abstraction.AbstractSelectEffectActivity;
+import com.vituel.dndplayer.activity.edit.EditItemActivity;
 import com.vituel.dndplayer.dao.AbstractEntityDao;
 import com.vituel.dndplayer.dao.ItemDao;
 import com.vituel.dndplayer.model.EquipSlot;

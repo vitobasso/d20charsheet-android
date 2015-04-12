@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.activity.SelectSkillActivity;
 import com.vituel.dndplayer.activity.abstraction.AbstractSimpleListFragment;
+import com.vituel.dndplayer.activity.select.SelectSkillActivity;
 import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.CharSkill;
 import com.vituel.dndplayer.model.Skill;
