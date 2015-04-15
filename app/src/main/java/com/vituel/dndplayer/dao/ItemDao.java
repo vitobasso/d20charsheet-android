@@ -65,7 +65,7 @@ public class ItemDao extends AbstractEntityDao<Item> {
     }
 
     @Override
-    public void save(Item entity) {
+    protected ContentValues toContentValues(Item entity) {
 
         if(entity.getName() == null) {
             Log.w(getClass().getSimpleName(), "null");
@@ -79,18 +79,22 @@ public class ItemDao extends AbstractEntityDao<Item> {
         if (entity.getItemType() != null) {
             values.put(COLUMN_ITEM_TYPE, entity.getItemType().toString());
         }
-        long id = insertOrUpdate(values, entity.getId());
+
+        return values;
+    }
+
+    @Override
+    public void postSave(Item entity) {
+        long id = entity.getId();
 
         //weapon properties
         if (entity.getItemType() == WEAPON) {
             WeaponItem weaponItem = (WeaponItem) entity;
             WeaponProperties weapon = weaponItem.getWeaponProperties();
             if (weapon.getId() == 0) {
-                weaponDao.save(weapon, id);
+                weaponDao.save(id, weapon);
             }
         }
-
-        entity.setId(id);
     }
 
     @Override

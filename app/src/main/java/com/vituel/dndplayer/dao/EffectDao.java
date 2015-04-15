@@ -46,15 +46,16 @@ public class EffectDao extends AbstractEntityDao<Effect> {
     }
 
     @Override
-    public void save(Effect entity) {
+    protected ContentValues toContentValues(Effect entity) {
+        return new ContentValues();
+    }
 
-        //basic data
-        ContentValues values = new ContentValues();
-        long id = insertOrUpdate(values, entity.getId());
+    @Override
+    public void postSave(Effect entity) {
+        long id = entity.getId();
 
         //magic bonuses
-        modifierDao.removeAllForEffect(id);
-        modifierDao.save(entity.getModifiers(), id);
+        modifierDao.saveOverwrite(id, entity.getModifiers());
 
         entity.setId(id);
     }
@@ -67,7 +68,7 @@ public class EffectDao extends AbstractEntityDao<Effect> {
         result.setId(cursor.getLong(0));
 
         //modifiers
-        result.setModifiers(modifierDao.listAllForEffect(result.getId()));
+        result.setModifiers(modifierDao.findByParent(result.getId()));
 
         return result;
     }

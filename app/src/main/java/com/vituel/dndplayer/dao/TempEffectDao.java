@@ -50,10 +50,8 @@ public class TempEffectDao extends AbstractEntityDao<TempEffect> {
     }
 
     @Override
-    public void save(TempEffect entity) {
-        ContentValues values = effectDao.preSaveEffectSource(entity);
-        long id = insertOrUpdate(values, entity.getId());
-        entity.setId(id);
+    protected ContentValues toContentValues(TempEffect entity) {
+        return effectDao.preSaveEffectSource(entity);
     }
 
     @Override
@@ -62,11 +60,9 @@ public class TempEffectDao extends AbstractEntityDao<TempEffect> {
     }
 
     @Override
-    public void remove(TempEffect e) {
-        super.remove(e);
-
-        CharTempEffectDao charTempDao = new CharTempEffectDao(context, database);
+    public void postRemove(TempEffect e) {
         //not created in constructor to avoid cyclic reference
-        charTempDao.removeAllForElement(e.getId());
+        CharTempEffectDao charTempDao = new CharTempEffectDao(context, database);
+        charTempDao.removeAllForChild(e.getId());
     }
 }

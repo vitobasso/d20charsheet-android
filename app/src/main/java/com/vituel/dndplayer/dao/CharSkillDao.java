@@ -59,8 +59,12 @@ public class CharSkillDao extends AbstractAssociationDao<CharSkill> {
     }
 
     @Override
-    protected String elementColumn() {
-        return COLUMN_SKILL_ID;
+    protected ContentValues toContentValues(long charId, CharSkill skill) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CHAR_ID, charId);
+        values.put(COLUMN_SKILL_ID, skill.getSkill().getId());
+        values.put(COLUMN_GRAD, skill.getScore());
+        return values;
     }
 
     @Override
@@ -74,18 +78,6 @@ public class CharSkillDao extends AbstractAssociationDao<CharSkill> {
         charSkill.setScore(cursor.getInt(3));
 
         return charSkill;
-    }
-
-    @Override
-    public void save(long charId, CharSkill skill) {
-        long skillId = skill.getSkill().getId();
-
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_CHAR_ID, charId);
-        values.put(COLUMN_SKILL_ID, skillId);
-        values.put(COLUMN_GRAD, skill.getScore());
-
-        insert(values);
     }
 
 }

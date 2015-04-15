@@ -16,7 +16,7 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 /**
  * Created by Victor on 01/05/14.
  */
-public class WeaponDao extends AbstractEntityDao<WeaponProperties> {
+public class WeaponDao extends AbstractAssociationDao<WeaponProperties> {
 
     public static final String TABLE = "weapon";
 
@@ -57,15 +57,19 @@ public class WeaponDao extends AbstractEntityDao<WeaponProperties> {
         };
     }
 
-    public void save(WeaponProperties weapon, long itemId) {
+    @Override
+    protected String parentColumn() {
+        return COLUMN_ITEM_ID;
+    }
+
+    @Override
+    protected ContentValues toContentValues(long itemId, WeaponProperties weapon) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_ITEM_ID, itemId);
         values.put(COLUMN_DAMAGE, weapon.getDamage().toString());
         values.put(COLUMN_CRIT_RANGE, weapon.getCritical().getRange());
         values.put(COLUMN_CRIT_MULT, weapon.getCritical().getMultiplier());
-
-        long id = insertOrUpdate(values, weapon.getId());
-        weapon.setId(id);
+        return values;
     }
 
     @Override
@@ -84,14 +88,8 @@ public class WeaponDao extends AbstractEntityDao<WeaponProperties> {
         return weapon;
     }
 
-    @Override
-    public void save(WeaponProperties entity) {
-        throw new UnsupportedOperationException();
-    }
-
     public WeaponProperties findByItem(long itemId) {
-        String query = String.format("%s=%d", COLUMN_ITEM_ID, itemId);
-        List<WeaponProperties> weapons = listForQuery(query);
+        List<WeaponProperties> weapons = findByParent(itemId);
         if (weapons.size() > 1) {
             throw new IllegalStateException("Multiple WeaponProperties found for Item id=" + itemId);
         } else if (weapons.isEmpty()) {

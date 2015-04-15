@@ -60,8 +60,12 @@ public class CharClassDao extends AbstractAssociationDao<ClassLevel> {
     }
 
     @Override
-    protected String elementColumn() {
-        return COLUMN_CLASS_ID;
+    protected ContentValues toContentValues(long charId, ClassLevel classLevel) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CHAR_ID, charId);
+        values.put(COLUMN_CLASS_ID, classLevel.getClazz().getId());
+        values.put(COLUMN_LEVEL, classLevel.getLevel());
+        return values;
     }
 
     @Override
@@ -71,18 +75,6 @@ public class CharClassDao extends AbstractAssociationDao<ClassLevel> {
         classLevel.setLevel(cursor.getInt(3));
         classLevel.setClazz(classDao.findById(classId));
         return classLevel;
-    }
-
-    @Override
-    public void save(long charId, ClassLevel classLevel) {
-        long classId = classLevel.getClazz().getId();
-
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_CHAR_ID, charId);
-        values.put(COLUMN_CLASS_ID, classId);
-        values.put(COLUMN_LEVEL, classLevel.getLevel());
-
-        insert(values);
     }
 
 }

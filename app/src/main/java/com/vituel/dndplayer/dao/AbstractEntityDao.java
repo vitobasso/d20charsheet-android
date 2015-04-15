@@ -26,7 +26,7 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
         super(context, database);
     }
 
-    public T findById(long id) {
+    public final T findById(long id) {
         Cursor cursor = database.query(tableName(), allColumns(), COLUMN_ID + " = " + id, null, null, null, null);
         cursor.moveToFirst();
         if (cursor.getCount() != 0) {
@@ -38,7 +38,7 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
         }
     }
 
-    public T findByName(String name) {
+    public final T findByName(String name) {
         String query = String.format("%s=\'%s\'", COLUMN_NAME, name);
         Cursor cursor = database.query(tableName(), allColumns(), query, null, null, null, null);
         cursor.moveToFirst();
@@ -53,7 +53,21 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
         return result;
     }
 
-    protected long insertOrUpdate(ContentValues values, long id) {
+    public final void save(Collection<T> list) {
+        for (T obj : list) {
+            save(obj);
+        }
+    }
+
+    public final void save(T entity) {
+        ContentValues values = toContentValues(entity);
+        long id = insertOrUpdate(values, entity.getId());
+        entity.setId(id);
+
+        postSave(entity);
+    }
+
+    private final long insertOrUpdate(ContentValues values, long id) {
         if (id == 0) {
             id = database.insert(tableName(), "_id", values);
         } else {
@@ -62,16 +76,15 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
         return id;
     }
 
-    public void save(Collection<T> list) {
-        for (T obj : list) {
-            save(obj);
-        }
+    public final void remove(T entity) {
+        removeForQuery(COLUMN_ID + " = " + entity.getId());
+        postRemove(entity);
     }
 
-    public abstract void save(T entity);
+    protected abstract ContentValues toContentValues(T entity);
 
-    public void remove(T c) {
-        removeForQuery(COLUMN_ID + " = " + c.getId());
-    }
+    protected void postSave(T entity) {}
+
+    protected void postRemove(T entity) {}
 
 }

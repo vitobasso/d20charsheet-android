@@ -4,19 +4,16 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.vituel.dndplayer.model.AbilityModifier;
 import com.vituel.dndplayer.model.ModifierSource;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.Multiplier;
 
-import java.util.List;
-
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 
 
-public class AbilityModifierDao extends AbstractEntityDao<AbilityModifier> {
+public class AbilityModifierDao extends AbstractAssociationDao<AbilityModifier> {
 
     public static final String TABLE = "ability_modifier";
 
@@ -61,30 +58,20 @@ public class AbilityModifierDao extends AbstractEntityDao<AbilityModifier> {
         };
     }
 
-    public List<AbilityModifier> save(List<AbilityModifier> modifiers, long effectId) {
-        for (AbilityModifier modifier : modifiers) {
-            if (modifier == null || modifier.getTarget() == null || modifier.getAbility() == null) {
-                Log.w(getClass().getSimpleName(), "Empty modifier ignored.");
-                continue;
-            }
-
-            save(modifier, effectId);
-        }
-        return modifiers;
+    @Override
+    protected String parentColumn() {
+        return COLUMN_CHAR_ID;
     }
 
-    public AbilityModifier save(AbilityModifier entity, long charId) {
-
+    @Override
+    protected ContentValues toContentValues(long parentId, AbilityModifier entity) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_CHAR_ID, charId);
+        values.put(COLUMN_CHAR_ID, parentId);
         values.put(COLUMN_ABILITY, entity.getAbility().toString());
         values.put(COLUMN_MULTIPLIER, entity.getMultiplier().toString());
         values.put(COLUMN_TARGET, entity.getTarget().toString());
         values.put(COLUMN_TARGET_VARIATION, entity.getVariation());
-
-        long id = database.insert(tableName(), null, values);
-        entity.setId(id);
-        return entity;
+        return values;
     }
 
     @Override
@@ -98,23 +85,6 @@ public class AbilityModifierDao extends AbstractEntityDao<AbilityModifier> {
         e.setVariation(cursor.getString(5));
 
         return e;
-    }
-
-    public List<AbilityModifier> listAllForChar(long charId) {
-        return listForQuery(query(charId));
-    }
-
-    public void removeAllForChar(long charId) {
-        removeForQuery(query(charId));
-    }
-
-    private String query(long effectId) {
-        return String.format("%s=%d", COLUMN_CHAR_ID, effectId);
-    }
-
-    @Override
-    public void save(AbilityModifier entity) {
-        throw new UnsupportedOperationException("Use the one with sourceType and sourceId instead.");
     }
 
 }

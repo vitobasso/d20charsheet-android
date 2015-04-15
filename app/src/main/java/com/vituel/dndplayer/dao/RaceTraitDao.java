@@ -60,15 +60,10 @@ public class RaceTraitDao extends AbstractAssociationDao<RaceTrait> {
     }
 
     @Override
-    protected String elementColumn() {
-        return COLUMN_EFFECT_ID;
-    }
-
-    @Override
-    public void save(long parentId, RaceTrait trait) {
+    protected ContentValues toContentValues(long parentId, RaceTrait trait) {
         ContentValues values = effectDao.preSaveEffectSource(trait);
         values.put(COLUMN_RACE_ID, parentId);
-        insert(values);
+        return values;
     }
 
     @Override

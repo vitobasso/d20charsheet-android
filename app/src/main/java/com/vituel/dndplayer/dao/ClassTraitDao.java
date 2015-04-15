@@ -66,19 +66,14 @@ public class ClassTraitDao extends AbstractAssociationDao<ClassTrait> {
     }
 
     @Override
-    protected String elementColumn() {
-        return COLUMN_EFFECT_ID;
-    }
-
-    @Override
-    public void save(long classId, ClassTrait trait) {
+    protected ContentValues toContentValues(long classId, ClassTrait trait) {
         ContentValues values = effectDao.preSaveEffectSource(trait);
         values.put(COLUMN_CLASS_ID, classId);
         values.put(COLUMN_LEVEL, trait.getLevel());
         if (trait.getOverridenTraitName() != null) {
             values.put(COLUMN_OVERRIDES, trait.getOverridenTraitName());
         }
-        insert(values);
+        return values;
     }
 
     @Override

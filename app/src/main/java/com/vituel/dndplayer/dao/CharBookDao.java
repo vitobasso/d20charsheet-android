@@ -57,17 +57,11 @@ public class CharBookDao extends AbstractAssociationDao<Book> {
     }
 
     @Override
-    protected String elementColumn() {
-        return COLUMN_BOOK_ID;
-    }
-
-    @Override
-    public void save(long parentId, Book entity) {
+    protected ContentValues toContentValues(long parentId, Book entity) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_CHAR_ID, parentId);
         values.put(COLUMN_BOOK_ID, entity.getId());
-
-        insert(values);
+        return values;
     }
 
     @Override

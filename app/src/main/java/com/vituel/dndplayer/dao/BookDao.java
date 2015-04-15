@@ -57,15 +57,13 @@ public class BookDao extends AbstractEntityDao<Book> {
     }
 
     @Override
-    public void save(Book entity) {
+    protected ContentValues toContentValues(Book entity) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, entity.getName());
         values.put(COLUMN_EDITION_ID, entity.getEdition().getId());
         values.put(COLUMN_ABBREVIATION, entity.getAbbreviation());
         values.put(COLUMN_YEAR, entity.getYear());
-
-        long id = insertOrUpdate(values, entity.getId());
-        entity.setId(id);
+        return values;
     }
 
     @Override

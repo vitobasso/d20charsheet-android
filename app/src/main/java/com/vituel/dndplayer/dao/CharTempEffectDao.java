@@ -60,18 +60,12 @@ public class CharTempEffectDao extends AbstractAssociationDao<CharTempEffect> {
     }
 
     @Override
-    protected String elementColumn() {
-        return COLUMN_TEMP_ID;
-    }
-
-    @Override
-    public void save(long charId, CharTempEffect tempEffect) {
+    protected ContentValues toContentValues(long charId, CharTempEffect tempEffect) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_CHAR_ID, charId);
         values.put(COLUMN_TEMP_ID, tempEffect.getTempEffect().getId());
         values.put(COLUMN_ACTIVE, tempEffect.isActive());
-
-        insert(values);
+        return values;
     }
 
     @Override
@@ -86,6 +80,11 @@ public class CharTempEffectDao extends AbstractAssociationDao<CharTempEffect> {
         result.setTempEffect(tempEffect);
 
         return result;
+    }
+
+
+    public final void removeAllForChild(long childId) {
+        removeForQuery(String.format("%s=%d", COLUMN_TEMP_ID, childId));
     }
 
 }

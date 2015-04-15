@@ -53,15 +53,13 @@ public class SkillDao extends AbstractEntityDao<Skill> {
     }
 
     @Override
-    public void save(Skill entity) {
-
+    protected ContentValues toContentValues(Skill entity) {
         //basic data
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, entity.getName());
         values.put(COLUMN_KEY_ABILITY, entity.getKeyAbility().toString());
         values.put(COLUMN_ARMOR_PENALITY, entity.isArmorPenaltyApplies());
-        long id = insertOrUpdate(values, entity.getId());
-        entity.setId(id);
+        return values;
     }
 
     @Override

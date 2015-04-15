@@ -50,10 +50,8 @@ public class FeatDao extends AbstractEntityDao<Feat> {
     }
 
     @Override
-    public void save(Feat entity) {
-        ContentValues values = effectDao.preSaveEffectSource(entity);
-        long id = insertOrUpdate(values, entity.getId());
-        entity.setId(id);
+    protected ContentValues toContentValues(Feat entity) {
+        return effectDao.preSaveEffectSource(entity);
     }
 
     @Override

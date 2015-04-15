@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.vituel.dndplayer.model.AbstractEntity;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -23,41 +25,35 @@ public abstract class AbstractAssociationDao<T> extends AbstractDao<T>{
 
     protected abstract String parentColumn();
 
-    protected abstract String elementColumn();
-
-    public List<T> findByParent(long parentId) {
+    public final List<T> findByParent(long parentId) {
         assert parentId != 0;
         Cursor cursor = database.query(tableName(), allColumns(), query(parentId), null, null, null, null);
         return cursorToList(cursor);
     }
 
-    public void saveOverwrite(long parentId, Collection<T> list) {
+    public final void saveOverwrite(long parentId, Collection<T> list) {
         removeAllForParent(parentId);
         for (T obj : list) {
             save(parentId, obj);
         }
     }
 
-    public abstract void save(long parentId, T entity);
-
-    protected void insert(ContentValues values) {
-        database.insert(tableName(), null, values);
+    public final void save(long parentId, T entity) {
+        ContentValues values = toContentValues(parentId, entity);
+        long id = database.insert(tableName(), null, values);
+        if (entity instanceof AbstractEntity) {
+            ((AbstractEntity) entity).setId(id);
+        }
     }
 
-    protected void removeAllForParent(long parentId) {
+    protected final void removeAllForParent(long parentId) {
         database.delete(tableName(), query(parentId), null);
     }
 
-    public void removeAllForElement(long elementId) {
-        removeForQuery(String.format("%s=%d", elementColumn(), elementId));
-    }
-
-    private String query(long parentId) {
+    private final String query(long parentId) {
         return String.format("%s=%d", parentColumn(), parentId);
     }
 
-    private String query(long parentId, long elementId) {
-        return String.format("%s=%d and %s=%d", parentColumn(), parentId, elementColumn(), elementId);
-    }
+    protected abstract ContentValues toContentValues(long parentId, T entity);
 
 }

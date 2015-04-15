@@ -59,17 +59,14 @@ public class ClassDao extends AbstractEntityDao<Clazz> {
     }
 
     @Override
-    public void save(Clazz entity) {
-
+    protected ContentValues toContentValues(Clazz entity) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, entity.getName());
         values.put(COLUMN_ATTACK, entity.getAttackProg().toString());
         values.put(COLUMN_FORTITUDE, entity.getFortitudeProg().toString());
         values.put(COLUMN_REFLEX, entity.getReflexProg().toString());
         values.put(COLUMN_WILL, entity.getWillProg().toString());
-
-        long id = insertOrUpdate(values, entity.getId());
-        entity.setId(id);
+        return values;
     }
 
     @Override

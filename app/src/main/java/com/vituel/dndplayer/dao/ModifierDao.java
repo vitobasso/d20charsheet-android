@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.vituel.dndplayer.model.Condition;
 import com.vituel.dndplayer.model.DiceRoll;
@@ -12,12 +11,10 @@ import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.ModifierType;
 
-import java.util.List;
-
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 
 
-public class ModifierDao extends AbstractEntityDao<Modifier> {
+public class ModifierDao extends AbstractAssociationDao<Modifier> {
 
     public static final String TABLE = "modifier";
 
@@ -68,22 +65,15 @@ public class ModifierDao extends AbstractEntityDao<Modifier> {
         };
     }
 
-    public List<Modifier> save(List<Modifier> modifiers, long effectId) {
-        for (Modifier modifier : modifiers) {
-            if (modifier == null || modifier.getTarget() == null || modifier.getAmount() == null) {
-                Log.w(getClass().getSimpleName(), "Empty modifier ignored.");
-                continue;
-            }
-
-            save(modifier, effectId);
-        }
-        return modifiers;
+    @Override
+    protected String parentColumn() {
+        return COLUMN_EFFECT_ID;
     }
 
-    public Modifier save(Modifier entity, long effectId) {
-
+    @Override
+    protected ContentValues toContentValues(long parentId, Modifier entity) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_EFFECT_ID, effectId);
+        values.put(COLUMN_EFFECT_ID, parentId);
         values.put(COLUMN_TARGET, entity.getTarget().toString());
         values.put(COLUMN_TARGET_VARIATION, entity.getVariation());
         values.put(COLUMN_AMOUNT, entity.getAmount().toString());
@@ -95,9 +85,7 @@ public class ModifierDao extends AbstractEntityDao<Modifier> {
             values.put(COLUMN_CONDITION_PREDICATE, entity.getCondition().getPredicate().toString());
         }
 
-        long id = database.insert(tableName(), null, values);
-        entity.setId(id);
-        return entity;
+        return values;
     }
 
     @Override
@@ -125,23 +113,6 @@ public class ModifierDao extends AbstractEntityDao<Modifier> {
         }
 
         return e;
-    }
-
-    public List<Modifier> listAllForEffect(long effectId) {
-        return listForQuery(query(effectId));
-    }
-
-    public void removeAllForEffect(long effectId) {
-        removeForQuery(query(effectId));
-    }
-
-    private String query(long effectId) {
-        return String.format("%s=%d", COLUMN_EFFECT_ID, effectId);
-    }
-
-    @Override
-    public void save(Modifier entity) {
-        throw new UnsupportedOperationException("Use the one with sourceType and sourceId instead.");
     }
 
 }

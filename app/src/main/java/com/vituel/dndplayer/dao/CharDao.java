@@ -174,8 +174,7 @@ public class CharDao extends AbstractEntityDao<CharBase> {
     }
 
     @Override
-    public void save(CharBase entity) {
-
+    protected ContentValues toContentValues(CharBase entity) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, entity.getName());
         values.put(COLUMN_TENDENCY_MORAL, entity.getTendencyMoral());
@@ -230,7 +229,18 @@ public class CharDao extends AbstractEntityDao<CharBase> {
             values.put(COLUMN_RACE_ID, entity.getRace().getId());
         }
 
-        long id = insertOrUpdate(values, entity.getId());
+        return values;
+    }
+
+    private void putEntityId(ContentValues values, String key, AbstractEntity entity){
+        if(entity != null) {
+            values.put(key, entity.getId());
+        }
+    }
+
+    @Override
+    public void postSave(CharBase entity) {
+        long id = entity.getId();
 
         //classes
         CharClassDao classDao = new CharClassDao(context, database);
@@ -251,19 +261,10 @@ public class CharDao extends AbstractEntityDao<CharBase> {
 
         //ability modifiers
         AbilityModifierDao abilityModDao = new AbilityModifierDao(context, database);
-        abilityModDao.removeAllForChar(id);
-        abilityModDao.save(entity.getAbilityMods(), id);
+        abilityModDao.saveOverwrite(id, entity.getAbilityMods());
 
         //temp effects are saved directly on TempEffectActivityDao from SummaryTempEffectsFragment
         //active conditions are saved directly on ActiveConditionDao from SummaryActivity
-
-        entity.setId(id);
-    }
-
-    private void putEntityId(ContentValues values, String key, AbstractEntity entity){
-        if(entity != null) {
-            values.put(key, entity.getId());
-        }
     }
 
     @Override
@@ -325,7 +326,7 @@ public class CharDao extends AbstractEntityDao<CharBase> {
 
         //ability modifiers
         AbilityModifierDao abilityModDao = new AbilityModifierDao(context, database);
-        c.setAbilityMods(abilityModDao.listAllForChar(c.getId()));
+        c.setAbilityMods(abilityModDao.findByParent(c.getId()));
 
         //attacks
         AttackRoundDao attacksDao = new AttackRoundDao(context, database);

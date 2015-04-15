@@ -55,27 +55,17 @@ public class CharFeatDao extends AbstractAssociationDao<Feat> {
     }
 
     @Override
-    protected String elementColumn() {
-        return COLUMN_FEAT_ID;
+    protected ContentValues toContentValues(long charId, Feat feat) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_CHAR_ID, charId);
+        values.put(COLUMN_FEAT_ID, feat.getId());
+        return values;
     }
 
     @Override
     protected Feat fromCursor(Cursor cursor) {
-        long id = cursor.getLong(2);
-
         FeatDao featDao = new FeatDao(context, database);
-        return featDao.findById(id);
-    }
-
-    @Override
-    public void save(long charId, Feat feat) {
-        long featId = feat.getId();
-
-        ContentValues values = new ContentValues();
-        values.put(COLUMN_CHAR_ID, charId);
-        values.put(COLUMN_FEAT_ID, featId);
-
-        insert(values);
+        return featDao.findById(cursor.getLong(2));
     }
 
 }

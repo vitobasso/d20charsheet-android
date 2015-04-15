@@ -52,14 +52,12 @@ public class EditionDao extends AbstractEntityDao<Edition> {
     }
 
     @Override
-    public void save(Edition entity) {
+    protected ContentValues toContentValues(Edition entity) {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, entity.getName());
         values.put(COLUMN_SYSTEM, entity.getSystem().toString());
         values.put(COLUMN_CORE, entity.isCore());
-
-        long id = insertOrUpdate(values, entity.getId());
-        entity.setId(id);
+        return values;
     }
 
     @Override
