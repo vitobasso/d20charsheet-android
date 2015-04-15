@@ -60,6 +60,7 @@ BUGS
 - nullpointer after renaming equiped weapon (at Attack.applyModifier, DAMAGE, getWeapon() is null)
 - can't remove trained skills (CAB + EditText bug)
 - null pointer after deleting item/feat/etc used by char
+- skills not taking ability bonus in summary
 
 
 FEATURES

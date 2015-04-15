@@ -76,6 +76,20 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
         return id;
     }
 
+    public final void insert(Collection<T> list) {
+        for (T obj : list) {
+            insert(obj);
+        }
+    }
+
+    public final void insert(T entity) {
+        ContentValues values = toContentValues(entity);
+        long id = database.insert(tableName(), "_id", values);
+        entity.setId(id);
+
+        postSave(entity);
+    }
+
     public final void remove(T entity) {
         removeForQuery(COLUMN_ID + " = " + entity.getId());
         postRemove(entity);

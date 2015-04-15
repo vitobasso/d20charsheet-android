@@ -31,28 +31,22 @@ public abstract class AbstractDao<T> {
         this.database = database;
     }
 
-    protected abstract String tableName();
-
-    protected abstract String[] allColumns();
-
-    public void close() {
+    public final void close() {
         dbHelper.close();
         database = null;
     }
 
-    public List<T> listAll() {
+    public final List<T> listAll() {
         Cursor cursor = database.query(tableName(), allColumns(), null, null, null, null, null);
         return cursorToList(cursor);
     }
 
-    protected List<T> listForQuery(String selection) {
+    protected final List<T> listForQuery(String selection) {
         Cursor cursor = database.query(tableName(), allColumns(), selection, null, null, null, null);
         return cursorToList(cursor);
     }
 
-    protected abstract T fromCursor(Cursor cursor);
-
-    protected List<T> cursorToList(Cursor cursor) {
+    protected final List<T> cursorToList(Cursor cursor) {
         List<T> list = new ArrayList<>();
 
         cursor.moveToFirst();
@@ -66,8 +60,14 @@ public abstract class AbstractDao<T> {
         return list;
     }
 
-    protected void removeForQuery(String selection) {
+    protected final void removeForQuery(String selection) {
         database.delete(tableName(), selection, null);
     }
+
+    protected abstract String tableName();
+
+    protected abstract String[] allColumns();
+
+    protected abstract T fromCursor(Cursor cursor);
 
 }

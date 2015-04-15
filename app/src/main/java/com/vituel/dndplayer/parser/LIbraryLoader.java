@@ -45,12 +45,12 @@ public class LibraryLoader {
 
         List<Edition> editions = new EditionParser(ctx).loadFile("data/csv/editions.csv");
         EditionDao editionDao = new EditionDao(ctx);
-        editionDao.save(editions);
+        editionDao.insert(editions);
         editionDao.close();
 
         List<Book> books = new BookParser(ctx).loadFile("data/csv/books.csv");
         BookDao bookDao = new BookDao(ctx);
-        bookDao.save(books);
+        bookDao.insert(books);
         bookDao.close();
 
         List<Race> races = new RaceParser(ctx).loadFile("data/races.txt");
