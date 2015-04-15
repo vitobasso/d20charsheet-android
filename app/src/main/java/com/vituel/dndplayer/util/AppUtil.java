@@ -2,7 +2,8 @@ package com.vituel.dndplayer.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import com.vituel.dndplayer.parser.InitialDataLoader;
+
+import com.vituel.dndplayer.parser.LibraryLoader;
 
 import static android.content.Context.MODE_PRIVATE;
 import static com.vituel.dndplayer.util.ActivityUtil.PREF;
@@ -17,7 +18,7 @@ public class AppUtil {
         SharedPreferences pref = ctx.getSharedPreferences(PREF, MODE_PRIVATE);
 
         if (pref.getBoolean(PREF_FIRST_RUN, true)) {
-            InitialDataLoader.loadDB(ctx);
+            LibraryLoader.loadDB(ctx);
         }
 
         pref.edit()

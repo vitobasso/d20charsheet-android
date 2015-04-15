@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.parser;
+package com.vituel.dndplayer.parser.old_txt;
 
 import android.content.Context;
 
@@ -6,6 +6,7 @@ import com.vituel.dndplayer.model.Effect;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.Race;
+import com.vituel.dndplayer.parser.csv.AbstractSimpleParser;
 
 import static com.vituel.dndplayer.model.ModifierTarget.CHA;
 import static com.vituel.dndplayer.model.ModifierTarget.CON;
@@ -19,30 +20,29 @@ import static com.vituel.dndplayer.model.ModifierTarget.WIS;
 /**
  * Created by Victor on 26/03/14.
  */
-public class RaceParser extends AbstractParser<Race> {
+public class RaceParser extends AbstractSimpleParser<Race> {
 
     public RaceParser(Context ctx) {
         super(ctx);
     }
 
     @Override
-    protected Race parse(String line) {
-        String split[] = line.split("\t");
+    protected Race parse(String[] line) {
         Race result = new Race();
-        result.setName(split[0]);
+        result.setName(line[0]);
 
         Effect effect = new Effect();
         effect.setSourceName(result.getName());
         result.setEffect(effect);
 
-        addMod(effect, split, STR, 1);
-        addMod(effect, split, DEX, 2);
-        addMod(effect, split, CON, 3);
-        addMod(effect, split, INT, 4);
-        addMod(effect, split, WIS, 5);
-        addMod(effect, split, CHA, 6);
-        addMod(effect, split, SIZE, 7);
-        addMod(effect, split, SPEED, 8);
+        addMod(effect, line, STR, 1);
+        addMod(effect, line, DEX, 2);
+        addMod(effect, line, CON, 3);
+        addMod(effect, line, INT, 4);
+        addMod(effect, line, WIS, 5);
+        addMod(effect, line, CHA, 6);
+        addMod(effect, line, SIZE, 7);
+        addMod(effect, line, SPEED, 8);
 
         return result;
     }

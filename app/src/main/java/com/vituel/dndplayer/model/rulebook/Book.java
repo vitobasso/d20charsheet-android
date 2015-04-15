@@ -9,7 +9,7 @@ public class Book extends AbstractEntity {
 
     private Edition edition;
     private String abbreviation;
-    private int year;
+    private Integer year;
 
     public Edition getEdition() {
         return edition;
@@ -27,11 +27,11 @@ public class Book extends AbstractEntity {
         this.abbreviation = abbreviation;
     }
 
-    public int getYear() {
+    public Integer getYear() {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(Integer year) {
         this.year = year;
     }
 }

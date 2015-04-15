@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.parser;
+package com.vituel.dndplayer.parser.old_txt;
 
 import android.content.Context;
 import android.util.Log;
@@ -10,6 +10,7 @@ import com.vituel.dndplayer.model.Item;
 import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.ModifierType;
 import com.vituel.dndplayer.model.WeaponItem;
+import com.vituel.dndplayer.parser.csv.AbstractSimpleParser;
 import com.vituel.dndplayer.util.JavaUtil;
 
 import static com.vituel.dndplayer.model.Item.ItemType.ARMOR;
@@ -23,7 +24,7 @@ import static com.vituel.dndplayer.model.SlotType.HELD;
 /**
  * Created by Victor on 26/03/14.
  */
-public class ItemParser extends AbstractParser<Item> {
+public class ItemParser extends AbstractSimpleParser<Item> {
 
     private static final String TAG = ItemParser.class.getSimpleName();
 
@@ -32,8 +33,7 @@ public class ItemParser extends AbstractParser<Item> {
     }
 
     @Override
-    protected Item parse(String line) {
-        String split[] = line.split("\t");
+    protected Item parse(String[] line) {
 
         //default values
         String name = null;
@@ -47,23 +47,23 @@ public class ItemParser extends AbstractParser<Item> {
 
         //parse data
         try {
-            name = split[0];
+            name = line[0];
             try {
-                price = Integer.valueOf(split[2]);
+                price = Integer.valueOf(line[2]);
             } catch (Throwable e) {
                 // price not set
             }
             try {
-                weight = Integer.valueOf(split[3]);
+                weight = Integer.valueOf(line[3]);
             } catch (Throwable e) {
                 // weight not set
             }
             try {
-                type = split[4];
+                type = line[4];
             } catch (Throwable e) {
                 // not an equipable item
             }
-            String dmgStr = split[7];
+            String dmgStr = line[7];
             try {
                 dmg = new DiceRoll(dmgStr);
             } catch (Throwable e) {
@@ -74,7 +74,7 @@ public class ItemParser extends AbstractParser<Item> {
                     Log.w(TAG, "Failed to decode damage: " + dmgStr);
                 }
             }
-            String critStr = split[8];
+            String critStr = line[8];
             try{
                 crit = new Critical(critStr);
             } catch (Throwable e) {
@@ -86,12 +86,12 @@ public class ItemParser extends AbstractParser<Item> {
                 }
             }
             try {
-                ac = Integer.valueOf(split[11]);
+                ac = Integer.valueOf(line[11]);
             } catch (Throwable e) {
                 // ac not set
             }
             try {
-                maxDex = Integer.valueOf(split[12]);
+                maxDex = Integer.valueOf(line[12]);
             } catch (Throwable e) {
                 // maxDex not set
             }

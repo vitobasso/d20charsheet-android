@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.parser;
+package com.vituel.dndplayer.parser.old_txt;
 
 import android.content.Context;
 import android.util.Log;
@@ -8,6 +8,7 @@ import com.vituel.dndplayer.model.ClassTrait;
 import com.vituel.dndplayer.model.Clazz;
 import com.vituel.dndplayer.model.Effect;
 import com.vituel.dndplayer.model.Modifier;
+import com.vituel.dndplayer.parser.exception.ParseFieldException;
 
 import java.text.ParseException;
 
@@ -24,19 +25,19 @@ public class ClassTraitParser extends AbstractDependantParser<ClassTrait, Clazz>
     }
 
     @Override
-    protected Clazz parseOwner(String line) {
+    protected Clazz parseOwner(String line) throws ParseFieldException {
         String split[] = line.split("\t");
-        String className = read(split, 0);
+        String className = readString(split, 0);
         return classDao.findByName(className);
     }
 
     @Override
-    protected ClassTrait parseDependant(String line) {
+    protected ClassTrait parseDependant(String line) throws ParseFieldException {
         String split[] = line.split("\t");
 
-        String lvlStr = read(split, 1);
-        String traitName = read(split, 2);
-        String overriden = read(split, 3);
+        String lvlStr = readString(split, 1);
+        String traitName = readString(split, 2);
+        String overriden = readString(split, 3);
 
         //basic fields
         ClassTrait result = new ClassTrait();

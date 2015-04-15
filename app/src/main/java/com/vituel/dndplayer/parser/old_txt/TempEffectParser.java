@@ -1,49 +1,40 @@
-package com.vituel.dndplayer.parser;
+package com.vituel.dndplayer.parser.old_txt;
 
 import android.content.Context;
 import android.util.Log;
 
-import com.vituel.dndplayer.dao.RaceDao;
 import com.vituel.dndplayer.model.Effect;
 import com.vituel.dndplayer.model.Modifier;
-import com.vituel.dndplayer.model.Race;
-import com.vituel.dndplayer.model.RaceTrait;
+import com.vituel.dndplayer.model.TempEffect;
+import com.vituel.dndplayer.parser.csv.AbstractSimpleParser;
+import com.vituel.dndplayer.parser.exception.ParseFieldException;
 
 import java.text.ParseException;
 
 /**
  * Created by Victor on 26/03/14.
  */
-public class RaceTraitParser extends AbstractDependantParser<RaceTrait, Race> {
+public class TempEffectParser extends AbstractSimpleParser<TempEffect> {
 
-    private RaceDao raceDao;
-
-    public RaceTraitParser(Context ctx, RaceDao raceDao) {
+    public TempEffectParser(Context ctx) {
         super(ctx);
-        this.raceDao = raceDao;
     }
 
     @Override
-    protected Race parseOwner(String line) {
-        String split[] = line.split("\t");
-        return raceDao.findByName(split[0]);
-    }
+    protected TempEffect parse(String[] line) throws ParseFieldException {
 
-    @Override
-    protected RaceTrait parseDependant(String line) {
-        String split[] = line.split("\t");
-
-        RaceTrait result = new RaceTrait();
-        result.setName(split[1]);
+        TempEffect result = new TempEffect();
+        result.setName(readString(line, 0));
 
         Effect effect = new Effect();
         effect.setSourceName(result.getName());
         result.setEffect(effect);
 
         ModifierParser modParser = new ModifierParser();
-        readModifier(modParser, split, 2, effect);
-        readModifier(modParser, split, 3, effect);
-        readModifier(modParser, split, 4, effect);
+        readModifier(modParser, line, 2, effect);
+        readModifier(modParser, line, 3, effect);
+        readModifier(modParser, line, 4, effect);
+        readModifier(modParser, line, 5, effect);
 
         return result;
     }

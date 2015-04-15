@@ -1,36 +1,49 @@
-package com.vituel.dndplayer.parser;
+package com.vituel.dndplayer.parser.old_txt;
 
 import android.content.Context;
 import android.util.Log;
 
+import com.vituel.dndplayer.dao.RaceDao;
 import com.vituel.dndplayer.model.Effect;
-import com.vituel.dndplayer.model.Feat;
 import com.vituel.dndplayer.model.Modifier;
+import com.vituel.dndplayer.model.Race;
+import com.vituel.dndplayer.model.RaceTrait;
 
 import java.text.ParseException;
 
 /**
  * Created by Victor on 26/03/14.
  */
-public class FeatParser extends AbstractParser<Feat> {
+public class RaceTraitParser extends AbstractDependantParser<RaceTrait, Race> {
 
-    public FeatParser(Context ctx) {
+    private RaceDao raceDao;
+
+    public RaceTraitParser(Context ctx, RaceDao raceDao) {
         super(ctx);
+        this.raceDao = raceDao;
     }
 
     @Override
-    protected Feat parse(String line) {
+    protected Race parseOwner(String line) {
         String split[] = line.split("\t");
-        Feat result = new Feat();
-        result.setName(split[0]);
+        return raceDao.findByName(split[0]);
+    }
+
+    @Override
+    protected RaceTrait parseDependant(String line) {
+        String split[] = line.split("\t");
+
+        RaceTrait result = new RaceTrait();
+        result.setName(split[1]);
 
         Effect effect = new Effect();
         effect.setSourceName(result.getName());
         result.setEffect(effect);
 
         ModifierParser modParser = new ModifierParser();
-        readModifier(modParser, split, 1, effect);
         readModifier(modParser, split, 2, effect);
+        readModifier(modParser, split, 3, effect);
+        readModifier(modParser, split, 4, effect);
 
         return result;
     }

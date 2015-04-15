@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.parser;
+package com.vituel.dndplayer.parser.old_txt;
 
 import com.vituel.dndplayer.model.Condition;
 import com.vituel.dndplayer.model.DiceRoll;

@@ -1,39 +1,36 @@
-package com.vituel.dndplayer.parser;
+package com.vituel.dndplayer.parser.old_txt;
 
 import android.content.Context;
 import android.util.Log;
 
 import com.vituel.dndplayer.model.Effect;
+import com.vituel.dndplayer.model.Feat;
 import com.vituel.dndplayer.model.Modifier;
-import com.vituel.dndplayer.model.TempEffect;
+import com.vituel.dndplayer.parser.csv.AbstractSimpleParser;
 
 import java.text.ParseException;
 
 /**
  * Created by Victor on 26/03/14.
  */
-public class TempEffectParser extends AbstractParser<TempEffect> {
+public class FeatParser extends AbstractSimpleParser<Feat> {
 
-    public TempEffectParser(Context ctx) {
+    public FeatParser(Context ctx) {
         super(ctx);
     }
 
     @Override
-    protected TempEffect parse(String line) {
-
-        String split[] = line.split("\t");
-        TempEffect result = new TempEffect();
-        result.setName(read(split, 0));
+    protected Feat parse(String[] line) {
+        Feat result = new Feat();
+        result.setName(line[0]);
 
         Effect effect = new Effect();
         effect.setSourceName(result.getName());
         result.setEffect(effect);
 
         ModifierParser modParser = new ModifierParser();
-        readModifier(modParser, split, 2, effect);
-        readModifier(modParser, split, 3, effect);
-        readModifier(modParser, split, 4, effect);
-        readModifier(modParser, split, 5, effect);
+        readModifier(modParser, line, 1, effect);
+        readModifier(modParser, line, 2, effect);
 
         return result;
     }
