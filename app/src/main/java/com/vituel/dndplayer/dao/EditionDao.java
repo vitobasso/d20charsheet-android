@@ -66,7 +66,7 @@ public class EditionDao extends AbstractEntityDao<Edition> {
         edition.setId(cursor.getInt(0));
         edition.setName(cursor.getString(1));
         edition.setSystem(RuleSystem.valueOf(cursor.getString(2)));
-        edition.setCore(cursor.getInt(cursor.getInt(3)) != 0);
+        edition.setCore(cursor.getInt(3) != 0);
         return edition;
     }
 }

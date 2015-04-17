@@ -69,6 +69,7 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
 
     private final long insertOrUpdate(ContentValues values, long id) {
         if (id == 0) {
+            values.remove(COLUMN_ID);
             id = database.insert(tableName(), "_id", values);
         } else {
             database.update(tableName(), values, COLUMN_ID + " = " + id, null);
@@ -84,6 +85,7 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
 
     public final void insert(T entity) {
         ContentValues values = toContentValues(entity);
+        values.put(COLUMN_ID, entity.getId());
         long id = database.insert(tableName(), "_id", values);
         entity.setId(id);
 

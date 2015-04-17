@@ -1,8 +1,6 @@
 package com.vituel.dndplayer.activity.summary;
 
-import android.content.Context;
 import android.content.Intent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,7 +20,7 @@ import com.vituel.dndplayer.model.Feat;
 import com.vituel.dndplayer.model.Race;
 import com.vituel.dndplayer.model.RaceTrait;
 import com.vituel.dndplayer.util.gui.EffectPopulator;
-import com.vituel.dndplayer.util.gui.SingleColExpListAdapter;
+import com.vituel.dndplayer.util.gui.SimpleExpListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,8 +30,6 @@ import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
-import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
-import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 
 /**
  * Created by Victor on 21/03/14.
@@ -92,40 +88,21 @@ public class SummaryTraitsFragment extends PagerFragment<CharSummary, SummaryAct
         }
     }
 
-    private class Adapter extends SingleColExpListAdapter<String, EffectSource> {
+    private class Adapter extends SimpleExpListAdapter<String, EffectSource> {
 
         public Adapter(TreeMap<String, List<EffectSource>> data) {
             super(SummaryTraitsFragment.this.activity, data, R.layout.expandable_list_group, R.layout.effect_row);
         }
 
         @Override
-        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                LayoutInflater infalInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = infalInflater.inflate(groupLayout, null);
-            }
-
-            populateTextView(convertView, R.id.text, groups.get(groupPosition));
-
-            setFontRecursively(activity, convertView, MAIN_FONT); //TODO bring to supperclass or to setText
-            return convertView;
+        protected void populateGroup(String group, boolean isExpanded, View convertView) {
+            populateTextView(convertView, R.id.text, group);
         }
 
         @Override
-        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                LayoutInflater infalInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = infalInflater.inflate(childLayout, null);
-            }
-
-            String group = groups.get(groupPosition);
-            EffectSource effect = children.get(group).get(childPosition);
-
+        protected void populateChild(EffectSource effectSource, View convertView) {
             EffectPopulator populator = new EffectPopulator(activity);
-            populator.populate(effect, (ViewGroup)convertView);
-
-            setFontRecursively(activity, convertView, MAIN_FONT); //TODO bring to supperclass or to setText
-            return convertView;
+            populator.populate(effectSource, (ViewGroup)convertView);
         }
     }
 

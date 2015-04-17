@@ -1,25 +1,23 @@
 package com.vituel.dndplayer.activity;
 
 import android.app.ExpandableListActivity;
-import android.content.Context;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
+import com.google.common.collect.Ordering;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.BookDao;
+import com.vituel.dndplayer.dao.EditionDao;
 import com.vituel.dndplayer.model.rulebook.Book;
 import com.vituel.dndplayer.model.rulebook.Edition;
-import com.vituel.dndplayer.util.gui.SingleColExpListAdapter;
+import com.vituel.dndplayer.util.gui.SimpleExpListAdapter;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
-import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
-import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 
 /**
  * Created by Victor on 12/04/2015.
@@ -29,19 +27,15 @@ public class SelectBooksActivity extends ExpandableListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setListAdapter(new Adapter(organizeBooks()));
+        setListAdapter(new Adapter(getSortedEditions(), getMappedBooks()));
     }
 
-    private TreeMap<Edition, List<Book>> organizeBooks() {
+    private TreeMap<Edition, List<Book>> getMappedBooks() {
 
         // load
         BookDao bookDao = new BookDao(this);
         List<Book> books = bookDao.listAll();
         bookDao.close();
-
-//        CharBookDao charBookDao = new CharBookDao(this);
-//        List<Book> enabledBooks = charBookDao.findByParent();
-//        charBookDao.close();
 
         // organize
         TreeMap<Edition, List<Book>> map = new TreeMap<>();
@@ -57,40 +51,34 @@ public class SelectBooksActivity extends ExpandableListActivity {
         return map;
     }
 
-    private class Adapter extends SingleColExpListAdapter<Edition, Book> {
+    private List<Edition> getSortedEditions() {
 
-        public Adapter(TreeMap<Edition, List<Book>> data) {
-            super(SelectBooksActivity.this, data, R.layout.expandable_list_group, R.layout.simple_row);
+        // load
+        EditionDao editionDao = new EditionDao(this);
+        List<Edition> editions = editionDao.listAll();
+        editionDao.close();
+
+        // sort
+        return Ordering.natural().sortedCopy(editions);
+    }
+
+    private class Adapter extends SimpleExpListAdapter<Edition, Book> {
+
+        public Adapter(List<Edition> editions, TreeMap<Edition, List<Book>> bookMap) {
+            super(SelectBooksActivity.this, editions, bookMap, R.layout.expandable_list_group, R.layout.simple_row);
         }
 
         @Override
-        public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                LayoutInflater infalInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = infalInflater.inflate(groupLayout, null);
-            }
-
-            populateTextView(convertView, R.id.text, groups.get(groupPosition));
-
-            setFontRecursively(activity, convertView, MAIN_FONT); //TODO bring to supperclass or to setText
-            return convertView;
+        public void populateGroup(Edition edition, boolean isExpanded, View convertView) {
+            String label = MessageFormat.format("{0} - {1}", edition.getSystem().toLabel(), edition.getName());
+            populateTextView(convertView, R.id.text, label);
         }
 
         @Override
-        public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-            if (convertView == null) {
-                LayoutInflater infalInflater = (LayoutInflater) activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                convertView = infalInflater.inflate(childLayout, null);
-            }
-
-            Edition edition = groups.get(groupPosition);
-            Book book = children.get(edition).get(childPosition);
-
+        public void populateChild(Book book, View convertView) {
             populateTextView(convertView, R.id.name, book.getName());
-
-            setFontRecursively(activity, convertView, MAIN_FONT); //TODO bring to supperclass or to setText
-            return convertView;
         }
+
     }
 
 }

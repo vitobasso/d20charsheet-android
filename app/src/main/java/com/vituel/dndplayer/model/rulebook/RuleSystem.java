@@ -20,4 +20,14 @@ public enum RuleSystem {
         }
     }
 
+    public String toLabel() {
+        switch (this) {
+            case DND_3_5:
+                return "3.5";
+            case DND_3_0:
+                return "3.0";
+            default:
+                throw new IllegalStateException("Invalid RuleSystem: " + this);
+        }
+    }
 }

@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import com.vituel.dndplayer.model.rulebook.Book;
 import com.vituel.dndplayer.model.rulebook.Edition;
 
+import java.util.List;
+
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 
@@ -78,4 +80,10 @@ public class BookDao extends AbstractEntityDao<Book> {
         book.setEdition(edition);
         return book;
     }
+
+    public final List<Book> findByEdition(long editionId) {
+        String query = String.format("%s=\'%s\'", COLUMN_EDITION_ID, editionId);
+        return listForQuery(query);
+    }
+
 }
