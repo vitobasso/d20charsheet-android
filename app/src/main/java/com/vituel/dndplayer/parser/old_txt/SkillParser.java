@@ -12,8 +12,8 @@ import com.vituel.dndplayer.parser.exception.ParseFieldException;
  */
 public class SkillParser extends AbstractSimpleParser<Skill> {
 
-    public SkillParser(Context ctx) {
-        super(ctx);
+    public SkillParser(Context ctx, String filePath) {
+        super(ctx, filePath);
     }
 
     @Override

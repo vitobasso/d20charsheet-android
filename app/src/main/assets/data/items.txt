@@ -1,4 +1,3 @@
-#				EQUIP		WEAPON					ARMOR										
 #name	item_type	cost	weight	slot	skill_required	weapon_type	dmg	critical	dmg_type	range	ac	max_dex	check_penalty	arcane_failure	speed	effect 1	effect 2	effect 3	effect 4	effect 5	
 Gauntlet	EQUIP	2	1	WEAPON	SIMPLE_WEAPONS	UNARMED	1d3	x2	BLUDGEONING	 											
 Dagger	EQUIP	2	1	WEAPON	SIMPLE_WEAPONS	LIGHT	1d4	19-20/x2	PIERCING, SLASHING	2											

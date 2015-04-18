@@ -13,8 +13,8 @@ import static com.vituel.dndplayer.model.Clazz.ResistProgression;
  */
 public class ClassParser extends AbstractSimpleParser<Clazz> {
 
-    public ClassParser(Context ctx) {
-        super(ctx);
+    public ClassParser(Context ctx, String filePath) {
+        super(ctx, filePath);
     }
 
     @Override

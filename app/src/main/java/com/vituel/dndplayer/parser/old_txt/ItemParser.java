@@ -28,8 +28,8 @@ public class ItemParser extends AbstractSimpleParser<Item> {
 
     private static final String TAG = ItemParser.class.getSimpleName();
 
-    public ItemParser(Context ctx) {
-        super(ctx);
+    public ItemParser(Context ctx, String filePath) {
+        super(ctx, filePath);
     }
 
     @Override

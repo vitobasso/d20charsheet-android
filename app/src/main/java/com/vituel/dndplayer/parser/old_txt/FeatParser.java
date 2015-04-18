@@ -15,8 +15,8 @@ import java.text.ParseException;
  */
 public class FeatParser extends AbstractSimpleParser<Feat> {
 
-    public FeatParser(Context ctx) {
-        super(ctx);
+    public FeatParser(Context ctx, String filePath) {
+        super(ctx, filePath);
     }
 
     @Override

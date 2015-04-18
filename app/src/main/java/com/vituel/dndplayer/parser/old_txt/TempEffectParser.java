@@ -16,8 +16,8 @@ import java.text.ParseException;
  */
 public class TempEffectParser extends AbstractSimpleParser<TempEffect> {
 
-    public TempEffectParser(Context ctx) {
-        super(ctx);
+    public TempEffectParser(Context ctx, String filePath) {
+        super(ctx, filePath);
     }
 
     @Override

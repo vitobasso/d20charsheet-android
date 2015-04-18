@@ -43,17 +43,17 @@ public class LibraryLoader {
 
     public static void loadDB(Context ctx) {
 
-        List<Edition> editions = new EditionParser(ctx).loadFile("data/csv/editions.csv");
+        List<Edition> editions = new EditionParser(ctx, "data/csv/editions.csv").loadFile();
         EditionDao editionDao = new EditionDao(ctx);
         editionDao.insert(editions);
         editionDao.close();
 
-        List<Book> books = new BookParser(ctx).loadFile("data/csv/books.csv");
+        List<Book> books = new BookParser(ctx, "data/csv/books.csv").loadFile();
         BookDao bookDao = new BookDao(ctx);
         bookDao.insert(books);
         bookDao.close();
 
-        List<Race> races = new RaceParser(ctx).loadFile("data/races.txt");
+        List<Race> races = new RaceParser(ctx, "data/races.txt").loadFile();
         RaceDao raceDao = new RaceDao(ctx);
         raceDao.save(races);
 
@@ -65,7 +65,7 @@ public class LibraryLoader {
         raceTraitDao.close();
         raceDao.close();
 
-        List<Clazz> classes = new ClassParser(ctx).loadFile("data/classes.txt");
+        List<Clazz> classes = new ClassParser(ctx, "data/classes.txt").loadFile();
         ClassDao classDao = new ClassDao(ctx);
         classDao.save(classes);
 
@@ -77,22 +77,22 @@ public class LibraryLoader {
         classTraitDao.close();
         classDao.close();
 
-        List<Feat> feats = new FeatParser(ctx).loadFile("data/feats.txt");
+        List<Feat> feats = new FeatParser(ctx, "data/feats.txt").loadFile();
         FeatDao featDao = new FeatDao(ctx);
         featDao.save(feats);
         featDao.close();
 
-        List<Skill> skills = new SkillParser(ctx).loadFile("data/skills.txt");
+        List<Skill> skills = new SkillParser(ctx, "data/skills.txt").loadFile();
         SkillDao skillDao = new SkillDao(ctx);
         skillDao.save(skills);
         skillDao.close();
 
-        List<Item> items = new ItemParser(ctx).loadFile("data/items.txt");
+        List<Item> items = new ItemParser(ctx, "data/items.txt").loadFile();
         ItemDao itemDao = new ItemDao(ctx);
         itemDao.save(items);
         itemDao.close();
 
-        List<TempEffect> tempEffects = new TempEffectParser(ctx).loadFile("data/temp_effects.txt");
+        List<TempEffect> tempEffects = new TempEffectParser(ctx, "data/temp_effects.txt").loadFile();
         TempEffectDao tempEffectDao = new TempEffectDao(ctx);
         tempEffectDao.save(tempEffects);
         tempEffectDao.close();

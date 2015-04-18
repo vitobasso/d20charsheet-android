@@ -6,7 +6,7 @@ import com.vituel.dndplayer.parser.exception.ParseNullValueException;
 /**
  * Created by Victor on 05/04/14.
  */
-public class AbstractParser {
+public abstract class AbstractParser {
 
     protected String readString(String[] split, int index) throws ParseNullValueException {
         String str = null;

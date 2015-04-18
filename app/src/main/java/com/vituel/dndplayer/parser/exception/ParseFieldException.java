@@ -9,6 +9,7 @@ public class ParseFieldException extends ParseException {
 
     public ParseFieldException(int columnIndex, String detailedMessage, Throwable throwable) {
         super(detailedMessage, throwable);
+        this.columnIndex = columnIndex;
     }
 
     public ParseFieldException(int columnIndex, String detailedMessage) {

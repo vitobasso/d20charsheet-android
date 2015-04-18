@@ -22,8 +22,8 @@ import static com.vituel.dndplayer.model.effect.ModifierTarget.WIS;
  */
 public class RaceParser extends AbstractSimpleParser<Race> {
 
-    public RaceParser(Context ctx) {
-        super(ctx);
+    public RaceParser(Context ctx, String filePath) {
+        super(ctx, filePath);
     }
 
     @Override

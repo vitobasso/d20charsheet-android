@@ -11,20 +11,20 @@ import com.vituel.dndplayer.parser.exception.ParseFieldException;
  */
 public class BookParser extends AbstractSimpleParser<Book> {
 
-    public BookParser(Context ctx) {
-        super(ctx);
+    public BookParser(Context ctx, String filePath) {
+        super(ctx, filePath);
     }
 
     @Override
     protected Book parse(String[] split) throws ParseFieldException {
         Book result = new Book();
-        result.setId(readInt(split, 0));
-        result.setName(readString(split, 2));
-        result.setAbbreviation(readString(split, 3));
-        result.setYear(readIntNullable(split, 4));
+        result.setId(readInt(split, "id"));
+        result.setName(readString(split, "name"));
+        result.setAbbreviation(readString(split, "abbr"));
+        result.setYear(readIntNullable(split, "year"));
 
         Edition edition = new Edition();
-        edition.setId(readInt(split, 1));
+        edition.setId(readInt(split, "dnd_edition_id"));
         result.setEdition(edition);
 
         return result;
