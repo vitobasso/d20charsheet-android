@@ -69,15 +69,7 @@ public class EditCharActivity extends FragmentActivity implements PagerActivity<
                     return true;
                 }
 
-                //standard attack
-                if(base.getAttacks().isEmpty()){
-                    base.createStandardAttacks();
-                }
-
-                //save to database
-                CharDao dataSource = new CharDao(this);
-                dataSource.save(base);
-                dataSource.close();
+                saveCharacter();
 
                 //send data back
                 Intent resultIntent = new Intent();
@@ -90,6 +82,7 @@ public class EditCharActivity extends FragmentActivity implements PagerActivity<
             case R.id.action_books:
 
                 Intent selectBooksIntent = new Intent(this, SelectBooksActivity.class);
+                selectBooksIntent.putExtra(EXTRA_EDITED, base);
                 startActivity(selectBooksIntent);
 
             default:
@@ -116,6 +109,18 @@ public class EditCharActivity extends FragmentActivity implements PagerActivity<
         base.setTendencyMoral("NEUTRAL");
         base.setStandardAbilityMods();
         return base;
+    }
+
+    private void saveCharacter() {
+        //standard attack
+        if(base.getAttacks().isEmpty()){
+            base.createStandardAttacks();
+        }
+
+        //save to database
+        CharDao dataSource = new CharDao(this);
+        dataSource.save(base);
+        dataSource.close();
     }
 
     @Override

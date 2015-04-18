@@ -38,7 +38,7 @@ public class SummaryTraitsFragment extends PagerFragment<CharSummary, SummaryAct
 
     @Override
     protected int getLayoutResourceId() {
-        return R.layout.expandable_list;
+        return R.layout.explist;
     }
 
     @Override
@@ -91,7 +91,7 @@ public class SummaryTraitsFragment extends PagerFragment<CharSummary, SummaryAct
     private class Adapter extends SimpleExpListAdapter<String, EffectSource> {
 
         public Adapter(TreeMap<String, List<EffectSource>> data) {
-            super(SummaryTraitsFragment.this.activity, data, R.layout.expandable_list_group, R.layout.effect_row);
+            super(SummaryTraitsFragment.this.activity, data, R.layout.explist_group, R.layout.effect_row);
         }
 
         @Override

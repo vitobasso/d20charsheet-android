@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -210,6 +212,16 @@ public class ActivityUtil {
     public static <T> T readSpinner(Object root, int... viewRes) {
         Spinner spinner = findView(root, viewRes);
         return (T) spinner.getSelectedItem();
+    }
+
+    public static CheckBox populateCheckBox(Object root, int viewRes, Boolean checked, CompoundButton.OnCheckedChangeListener checkListener) {
+        CheckBox view = findView(root, viewRes);
+        view.setOnCheckedChangeListener(null);
+        if (view != null && checked != null) {
+            view.setChecked(checked);
+        }
+        view.setOnCheckedChangeListener(checkListener);
+        return view;
     }
 
     public static <T extends TextView> T populateTextView(Object root, int viewRes, Object value) {

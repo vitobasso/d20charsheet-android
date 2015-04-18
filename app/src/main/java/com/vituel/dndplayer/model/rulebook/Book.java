@@ -1,5 +1,9 @@
 package com.vituel.dndplayer.model.rulebook;
 
+import android.support.annotation.NonNull;
+
+import com.google.common.base.Objects;
+import com.google.common.collect.ComparisonChain;
 import com.vituel.dndplayer.model.AbstractEntity;
 
 /**
@@ -33,5 +37,37 @@ public class Book extends AbstractEntity {
 
     public void setYear(Integer year) {
         this.year = year;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || ((Object)this).getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        Book book = (Book) o;
+
+        return Objects.equal(edition, book.edition)
+                && Objects.equal(name, book.name)
+                && Objects.equal(year, book.year);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(edition, name, year);
+    }
+
+    @Override
+    public int compareTo(@NonNull AbstractEntity another) {
+        if (!(another instanceof Book)) {
+            return 1;
+        } else {
+            Book book = (Book) another;
+            return ComparisonChain.start()
+                    .compare(edition, book.edition)
+                    .compare(name, book.name)
+                    .compare(year, book.year)
+                    .result();
+        }
     }
 }

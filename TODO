@@ -88,4 +88,8 @@ REFACTOR
 PROJECT
 
 - ORMLite? greenDAO?
-- groovy? https://github.com/melix/groovy-android-gradle-plugin
+- groovy
+    https://github.com/melix/groovy-android-gradle-plugin
+- scala
+    https://github.com/pocorall/scaloid
+    http://macroid.github.io/index.html
