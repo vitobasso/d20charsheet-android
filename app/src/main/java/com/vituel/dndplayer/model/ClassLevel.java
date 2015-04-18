@@ -1,13 +1,17 @@
 package com.vituel.dndplayer.model;
 
+import com.vituel.dndplayer.model.effect.Effect;
+import com.vituel.dndplayer.model.effect.EffectSource;
+import com.vituel.dndplayer.model.effect.Modifier;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.vituel.dndplayer.model.ModifierTarget.FORT;
-import static com.vituel.dndplayer.model.ModifierTarget.HIT;
-import static com.vituel.dndplayer.model.ModifierTarget.REFL;
-import static com.vituel.dndplayer.model.ModifierTarget.WILL;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.FORT;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.HIT;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.REFL;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.WILL;
 
 /**
  * Created by Victor on 31/03/14.

@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.dao.CharDao;
-import com.vituel.dndplayer.model.CharBase;
+import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.parser.json.CharJsonParser;
 
 import java.util.List;

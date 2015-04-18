@@ -1,7 +1,7 @@
-package com.vituel.dndplayer.model;
+package com.vituel.dndplayer.model.item;
 
-import static com.vituel.dndplayer.model.Item.ItemType.WEAPON;
-import static com.vituel.dndplayer.model.SlotType.HELD;
+import static com.vituel.dndplayer.model.item.Item.ItemType.WEAPON;
+import static com.vituel.dndplayer.model.item.SlotType.HELD;
 
 /**
  * Created by Victor on 19/03/14.

@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.model;
+package com.vituel.dndplayer.model.effect;
 
 import android.content.Context;
 

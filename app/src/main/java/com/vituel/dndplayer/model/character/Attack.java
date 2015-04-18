@@ -1,4 +1,10 @@
-package com.vituel.dndplayer.model;
+package com.vituel.dndplayer.model.character;
+
+import com.vituel.dndplayer.model.AbstractEntity;
+import com.vituel.dndplayer.model.DiceRoll;
+import com.vituel.dndplayer.model.effect.Modifier;
+import com.vituel.dndplayer.model.effect.ModifierTarget;
+import com.vituel.dndplayer.model.item.WeaponProperties;
 
 /**
  * Created by Victor on 01/05/14.

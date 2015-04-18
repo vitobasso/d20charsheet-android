@@ -4,10 +4,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.vituel.dndplayer.dao.RaceDao;
-import com.vituel.dndplayer.model.Effect;
-import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.Race;
 import com.vituel.dndplayer.model.RaceTrait;
+import com.vituel.dndplayer.model.effect.Effect;
+import com.vituel.dndplayer.model.effect.Modifier;
 
 import java.text.ParseException;
 

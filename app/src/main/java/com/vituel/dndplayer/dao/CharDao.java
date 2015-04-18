@@ -5,10 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.vituel.dndplayer.model.AbstractEntity;
-import com.vituel.dndplayer.model.CharBase;
-import com.vituel.dndplayer.model.CharEquip;
-import com.vituel.dndplayer.model.CharTempEffect;
-import com.vituel.dndplayer.model.DamageTaken;
+import com.vituel.dndplayer.model.character.CharBase;
+import com.vituel.dndplayer.model.character.CharEquip;
+import com.vituel.dndplayer.model.character.CharTempEffect;
+import com.vituel.dndplayer.model.character.DamageTaken;
 
 import java.util.HashSet;
 import java.util.List;

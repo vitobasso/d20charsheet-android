@@ -8,11 +8,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.activity.SelectBooksActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
+import com.vituel.dndplayer.activity.select.SelectBooksActivity;
 import com.vituel.dndplayer.dao.CharDao;
-import com.vituel.dndplayer.model.CharBase;
+import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.util.ActivityUtil;
 
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;

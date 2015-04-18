@@ -11,9 +11,9 @@ import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.AbstractSimpleListFragment;
 import com.vituel.dndplayer.activity.edit.EditAttackRoundActivity;
 import com.vituel.dndplayer.dao.AttackRoundDao;
-import com.vituel.dndplayer.model.Attack;
-import com.vituel.dndplayer.model.AttackRound;
-import com.vituel.dndplayer.model.CharBase;
+import com.vituel.dndplayer.model.character.Attack;
+import com.vituel.dndplayer.model.character.AttackRound;
+import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.util.ActivityUtil;
 import com.vituel.dndplayer.util.AttackUtil;
 

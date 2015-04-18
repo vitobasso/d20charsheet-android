@@ -5,21 +5,21 @@ import android.util.Log;
 
 import com.vituel.dndplayer.model.Critical;
 import com.vituel.dndplayer.model.DiceRoll;
-import com.vituel.dndplayer.model.Effect;
-import com.vituel.dndplayer.model.Item;
-import com.vituel.dndplayer.model.Modifier;
-import com.vituel.dndplayer.model.ModifierType;
-import com.vituel.dndplayer.model.WeaponItem;
+import com.vituel.dndplayer.model.effect.Effect;
+import com.vituel.dndplayer.model.effect.Modifier;
+import com.vituel.dndplayer.model.effect.ModifierType;
+import com.vituel.dndplayer.model.item.Item;
+import com.vituel.dndplayer.model.item.WeaponItem;
 import com.vituel.dndplayer.parser.csv.AbstractSimpleParser;
 import com.vituel.dndplayer.util.JavaUtil;
 
-import static com.vituel.dndplayer.model.Item.ItemType.ARMOR;
-import static com.vituel.dndplayer.model.Item.ItemType.SHIELD;
-import static com.vituel.dndplayer.model.Item.ItemType.WEAPON;
-import static com.vituel.dndplayer.model.ModifierTarget.AC;
-import static com.vituel.dndplayer.model.ModifierTarget.MAX_DEX;
-import static com.vituel.dndplayer.model.SlotType.BODY;
-import static com.vituel.dndplayer.model.SlotType.HELD;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.AC;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.MAX_DEX;
+import static com.vituel.dndplayer.model.item.Item.ItemType.ARMOR;
+import static com.vituel.dndplayer.model.item.Item.ItemType.SHIELD;
+import static com.vituel.dndplayer.model.item.Item.ItemType.WEAPON;
+import static com.vituel.dndplayer.model.item.SlotType.BODY;
+import static com.vituel.dndplayer.model.item.SlotType.HELD;
 
 /**
  * Created by Victor on 26/03/14.

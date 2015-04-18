@@ -2,21 +2,21 @@ package com.vituel.dndplayer.util;
 
 import android.content.Context;
 
-import com.vituel.dndplayer.model.CharBase;
-import com.vituel.dndplayer.model.Condition;
 import com.vituel.dndplayer.model.DiceRoll;
-import com.vituel.dndplayer.model.Modifier;
-import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.TempEffect;
+import com.vituel.dndplayer.model.character.CharBase;
+import com.vituel.dndplayer.model.effect.Condition;
+import com.vituel.dndplayer.model.effect.Modifier;
+import com.vituel.dndplayer.model.effect.ModifierTarget;
 
 import java.util.Collection;
 
-import static com.vituel.dndplayer.model.ModifierTarget.DEX;
-import static com.vituel.dndplayer.model.ModifierTarget.FORT;
-import static com.vituel.dndplayer.model.ModifierTarget.MAX_DEX;
-import static com.vituel.dndplayer.model.ModifierTarget.REFL;
-import static com.vituel.dndplayer.model.ModifierTarget.SAVES;
-import static com.vituel.dndplayer.model.ModifierTarget.WILL;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.DEX;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.FORT;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.MAX_DEX;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.REFL;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.SAVES;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.WILL;
 
 /**
  * Created by Victor on 24/04/14.

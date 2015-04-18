@@ -7,15 +7,15 @@ import android.widget.Spinner;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
 import com.vituel.dndplayer.model.DiceRoll;
-import com.vituel.dndplayer.model.Modifier;
-import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.Race;
 import com.vituel.dndplayer.model.Size;
+import com.vituel.dndplayer.model.effect.Modifier;
+import com.vituel.dndplayer.model.effect.ModifierTarget;
 import com.vituel.dndplayer.util.ActivityUtil;
 
 import java.util.List;
 
-import static com.vituel.dndplayer.model.ModifierType.RACIAL;
+import static com.vituel.dndplayer.model.effect.ModifierType.RACIAL;
 import static com.vituel.dndplayer.util.ActivityUtil.populateSpinnerWithEnum;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 

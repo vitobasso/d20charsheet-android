@@ -1,7 +1,8 @@
-package com.vituel.dndplayer.model;
+package com.vituel.dndplayer.model.effect;
 
 import android.content.Context;
 
+import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.util.JavaUtil;
 import com.vituel.dndplayer.util.i18n.EnumI18n;
 

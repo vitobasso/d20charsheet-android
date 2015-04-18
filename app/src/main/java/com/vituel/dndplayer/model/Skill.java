@@ -1,5 +1,7 @@
 package com.vituel.dndplayer.model;
 
+import com.vituel.dndplayer.model.effect.ModifierSource;
+
 /**
  * Created by Victor on 25/02/14.
  */

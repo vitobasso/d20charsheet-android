@@ -1,7 +1,10 @@
-package com.vituel.dndplayer.model;
+package com.vituel.dndplayer.model.effect;
 
-import static com.vituel.dndplayer.model.Condition.Predicate;
-import static com.vituel.dndplayer.model.Condition.Predicate.*;
+import static com.vituel.dndplayer.model.effect.Condition.Predicate;
+import static com.vituel.dndplayer.model.effect.Condition.Predicate.AGAINST;
+import static com.vituel.dndplayer.model.effect.Condition.Predicate.RELATED_TO;
+import static com.vituel.dndplayer.model.effect.Condition.Predicate.USING;
+import static com.vituel.dndplayer.model.effect.Condition.Predicate.WHEN;
 
 /**
  * Created by Victor on 26/02/14.

@@ -2,20 +2,20 @@ package com.vituel.dndplayer.parser.old_txt;
 
 import android.content.Context;
 
-import com.vituel.dndplayer.model.Effect;
-import com.vituel.dndplayer.model.Modifier;
-import com.vituel.dndplayer.model.ModifierTarget;
 import com.vituel.dndplayer.model.Race;
+import com.vituel.dndplayer.model.effect.Effect;
+import com.vituel.dndplayer.model.effect.Modifier;
+import com.vituel.dndplayer.model.effect.ModifierTarget;
 import com.vituel.dndplayer.parser.csv.AbstractSimpleParser;
 
-import static com.vituel.dndplayer.model.ModifierTarget.CHA;
-import static com.vituel.dndplayer.model.ModifierTarget.CON;
-import static com.vituel.dndplayer.model.ModifierTarget.DEX;
-import static com.vituel.dndplayer.model.ModifierTarget.INT;
-import static com.vituel.dndplayer.model.ModifierTarget.SIZE;
-import static com.vituel.dndplayer.model.ModifierTarget.SPEED;
-import static com.vituel.dndplayer.model.ModifierTarget.STR;
-import static com.vituel.dndplayer.model.ModifierTarget.WIS;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.CHA;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.CON;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.DEX;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.INT;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.SIZE;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.SPEED;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.STR;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.WIS;
 
 /**
  * Created by Victor on 26/03/14.

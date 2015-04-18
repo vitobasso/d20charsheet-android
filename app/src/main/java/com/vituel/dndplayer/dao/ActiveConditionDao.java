@@ -5,12 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vituel.dndplayer.model.Condition;
+import com.vituel.dndplayer.model.effect.Condition;
 
 import java.util.List;
 import java.util.Set;
 
-import static com.vituel.dndplayer.model.Condition.Predicate;
+import static com.vituel.dndplayer.model.effect.Condition.Predicate;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 

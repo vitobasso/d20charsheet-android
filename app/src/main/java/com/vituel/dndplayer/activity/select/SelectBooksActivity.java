@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.activity;
+package com.vituel.dndplayer.activity.select;
 
 import android.app.ExpandableListActivity;
 import android.os.Bundle;
@@ -12,7 +12,7 @@ import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.BookDao;
 import com.vituel.dndplayer.dao.CharBookDao;
 import com.vituel.dndplayer.dao.EditionDao;
-import com.vituel.dndplayer.model.CharBase;
+import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.model.rulebook.Book;
 import com.vituel.dndplayer.model.rulebook.Edition;
 import com.vituel.dndplayer.util.gui.SimpleExpListAdapter;

@@ -3,7 +3,7 @@ package com.vituel.dndplayer.util.i18n;
 import android.content.Context;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.model.ModifierSource;
+import com.vituel.dndplayer.model.effect.ModifierSource;
 
 /**
  * Created by Victor on 29/09/2014.

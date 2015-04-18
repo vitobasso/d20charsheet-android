@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.model.Critical;
 import com.vituel.dndplayer.model.DiceRoll;
-import com.vituel.dndplayer.model.WeaponProperties;
+import com.vituel.dndplayer.model.item.WeaponProperties;
 
 import java.util.List;
 

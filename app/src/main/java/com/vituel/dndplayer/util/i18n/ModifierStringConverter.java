@@ -8,10 +8,10 @@ import android.text.style.StyleSpan;
 import android.util.Log;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.model.Condition;
 import com.vituel.dndplayer.model.DiceRoll;
-import com.vituel.dndplayer.model.Modifier;
-import com.vituel.dndplayer.model.ModifierTarget;
+import com.vituel.dndplayer.model.effect.Condition;
+import com.vituel.dndplayer.model.effect.Modifier;
+import com.vituel.dndplayer.model.effect.ModifierTarget;
 
 /**
  * Created by Victor on 25/04/14.

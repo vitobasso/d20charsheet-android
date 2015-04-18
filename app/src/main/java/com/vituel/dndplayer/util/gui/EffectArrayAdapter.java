@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.model.EffectSource;
+import com.vituel.dndplayer.model.effect.EffectSource;
 
 import java.util.List;
 

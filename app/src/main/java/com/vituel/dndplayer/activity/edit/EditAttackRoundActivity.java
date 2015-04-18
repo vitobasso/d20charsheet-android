@@ -7,10 +7,10 @@ import android.view.ViewGroup;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
-import com.vituel.dndplayer.model.Attack;
-import com.vituel.dndplayer.model.AttackRound;
+import com.vituel.dndplayer.model.character.Attack;
+import com.vituel.dndplayer.model.character.AttackRound;
 
-import static com.vituel.dndplayer.model.Attack.WeaponReference.MAIN_HAND;
+import static com.vituel.dndplayer.model.character.Attack.WeaponReference.MAIN_HAND;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.inflate;
 import static com.vituel.dndplayer.util.ActivityUtil.populateSpinnerWithEnum;

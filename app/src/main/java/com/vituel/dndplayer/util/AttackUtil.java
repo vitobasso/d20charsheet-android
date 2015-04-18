@@ -1,10 +1,10 @@
 package com.vituel.dndplayer.util;
 
-import com.vituel.dndplayer.model.Attack;
-import com.vituel.dndplayer.model.AttackRound;
 import com.vituel.dndplayer.model.Critical;
 import com.vituel.dndplayer.model.DiceRoll;
-import com.vituel.dndplayer.model.WeaponProperties;
+import com.vituel.dndplayer.model.character.Attack;
+import com.vituel.dndplayer.model.character.AttackRound;
+import com.vituel.dndplayer.model.item.WeaponProperties;
 
 import java.util.ArrayList;
 import java.util.Comparator;

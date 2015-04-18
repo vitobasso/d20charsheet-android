@@ -6,8 +6,8 @@ import android.widget.Spinner;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
-import com.vituel.dndplayer.model.ModifierSource;
 import com.vituel.dndplayer.model.Skill;
+import com.vituel.dndplayer.model.effect.ModifierSource;
 
 import static com.vituel.dndplayer.util.ActivityUtil.setSpinnerSelection;
 

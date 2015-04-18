@@ -1,4 +1,6 @@
-package com.vituel.dndplayer.model;
+package com.vituel.dndplayer.model.character;
+
+import com.vituel.dndplayer.model.Skill;
 
 import java.io.Serializable;
 import java.security.InvalidParameterException;

@@ -2,14 +2,14 @@ package com.vituel.dndplayer.util.i18n;
 
 import android.content.Context;
 
-import com.vituel.dndplayer.model.Attack;
-import com.vituel.dndplayer.model.Condition;
-import com.vituel.dndplayer.model.Item;
-import com.vituel.dndplayer.model.ModifierSource;
-import com.vituel.dndplayer.model.ModifierTarget;
-import com.vituel.dndplayer.model.ModifierType;
-import com.vituel.dndplayer.model.Multiplier;
-import com.vituel.dndplayer.model.SlotType;
+import com.vituel.dndplayer.model.character.Attack;
+import com.vituel.dndplayer.model.effect.Condition;
+import com.vituel.dndplayer.model.effect.ModifierSource;
+import com.vituel.dndplayer.model.effect.ModifierTarget;
+import com.vituel.dndplayer.model.effect.ModifierType;
+import com.vituel.dndplayer.model.effect.Multiplier;
+import com.vituel.dndplayer.model.item.Item;
+import com.vituel.dndplayer.model.item.SlotType;
 
 /**
  * Created by Victor on 29/09/2014.

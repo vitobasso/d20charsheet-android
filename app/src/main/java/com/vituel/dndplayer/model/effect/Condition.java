@@ -1,4 +1,6 @@
-package com.vituel.dndplayer.model;
+package com.vituel.dndplayer.model.effect;
+
+import com.vituel.dndplayer.model.AbstractEntity;
 
 import java.security.InvalidParameterException;
 

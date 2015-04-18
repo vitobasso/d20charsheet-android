@@ -5,8 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vituel.dndplayer.model.CharSkill;
 import com.vituel.dndplayer.model.Skill;
+import com.vituel.dndplayer.model.character.CharSkill;
 
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 

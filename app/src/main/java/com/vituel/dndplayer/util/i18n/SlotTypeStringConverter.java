@@ -3,7 +3,7 @@ package com.vituel.dndplayer.util.i18n;
 import android.content.Context;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.model.SlotType;
+import com.vituel.dndplayer.model.item.SlotType;
 
 /**
  * Created by Victor on 29/09/2014.

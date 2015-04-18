@@ -5,8 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vituel.dndplayer.model.CharTempEffect;
 import com.vituel.dndplayer.model.TempEffect;
+import com.vituel.dndplayer.model.character.CharTempEffect;
 import com.vituel.dndplayer.util.database.SQLiteHelper;
 
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;

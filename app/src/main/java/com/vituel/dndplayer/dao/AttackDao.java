@@ -5,12 +5,12 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vituel.dndplayer.model.Attack;
+import com.vituel.dndplayer.model.character.Attack;
 
 import java.text.MessageFormat;
 import java.util.List;
 
-import static com.vituel.dndplayer.model.Attack.WeaponReference.valueOf;
+import static com.vituel.dndplayer.model.character.Attack.WeaponReference.valueOf;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 
 /**

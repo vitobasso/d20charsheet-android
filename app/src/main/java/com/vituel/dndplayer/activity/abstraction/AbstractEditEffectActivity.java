@@ -5,11 +5,11 @@ import android.view.ViewGroup;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.AbstractEntity;
 import com.vituel.dndplayer.model.DiceRoll;
-import com.vituel.dndplayer.model.Effect;
-import com.vituel.dndplayer.model.EffectSource;
-import com.vituel.dndplayer.model.Modifier;
-import com.vituel.dndplayer.model.ModifierTarget;
-import com.vituel.dndplayer.model.ModifierType;
+import com.vituel.dndplayer.model.effect.Effect;
+import com.vituel.dndplayer.model.effect.EffectSource;
+import com.vituel.dndplayer.model.effect.Modifier;
+import com.vituel.dndplayer.model.effect.ModifierTarget;
+import com.vituel.dndplayer.model.effect.ModifierType;
 
 import java.util.List;
 

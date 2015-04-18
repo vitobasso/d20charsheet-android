@@ -85,7 +85,7 @@
             android:label="@string/modlink_edit"/>
 
         <activity
-            android:name=".activity.SelectBooksActivity"
+            android:name=".activity.select.SelectBooksActivity"
             android:label="@string/rule_books"/>
 
     </application>

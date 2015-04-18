@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.model;
+package com.vituel.dndplayer.model.effect;
 
 /**
  * Created by Victor on 04/04/2015.

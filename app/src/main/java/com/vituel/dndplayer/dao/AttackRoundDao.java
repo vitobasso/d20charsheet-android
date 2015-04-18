@@ -5,8 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vituel.dndplayer.model.Attack;
-import com.vituel.dndplayer.model.AttackRound;
+import com.vituel.dndplayer.model.character.Attack;
+import com.vituel.dndplayer.model.character.AttackRound;
 
 import java.text.MessageFormat;
 import java.util.List;

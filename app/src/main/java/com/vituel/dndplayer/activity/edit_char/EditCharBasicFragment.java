@@ -12,10 +12,10 @@ import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.activity.select.SelectClassActivity;
 import com.vituel.dndplayer.activity.select.SelectRaceActivity;
-import com.vituel.dndplayer.model.CharBase;
 import com.vituel.dndplayer.model.ClassLevel;
 import com.vituel.dndplayer.model.Clazz;
 import com.vituel.dndplayer.model.Race;
+import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.util.ActivityUtil;
 
 import java.util.ArrayList;

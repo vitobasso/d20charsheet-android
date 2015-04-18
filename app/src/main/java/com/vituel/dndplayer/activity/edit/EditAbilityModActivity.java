@@ -8,10 +8,10 @@ import android.widget.Spinner;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
-import com.vituel.dndplayer.model.AbilityModifier;
-import com.vituel.dndplayer.model.ModifierSource;
-import com.vituel.dndplayer.model.ModifierTarget;
-import com.vituel.dndplayer.model.Multiplier;
+import com.vituel.dndplayer.model.effect.AbilityModifier;
+import com.vituel.dndplayer.model.effect.ModifierSource;
+import com.vituel.dndplayer.model.effect.ModifierTarget;
+import com.vituel.dndplayer.model.effect.Multiplier;
 
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.populateSpinnerWithEnum;

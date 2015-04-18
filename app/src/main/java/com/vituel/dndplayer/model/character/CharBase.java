@@ -1,5 +1,18 @@
-package com.vituel.dndplayer.model;
+package com.vituel.dndplayer.model.character;
 
+import com.vituel.dndplayer.model.AbstractEntity;
+import com.vituel.dndplayer.model.ClassLevel;
+import com.vituel.dndplayer.model.Feat;
+import com.vituel.dndplayer.model.Race;
+import com.vituel.dndplayer.model.Skill;
+import com.vituel.dndplayer.model.TempEffect;
+import com.vituel.dndplayer.model.effect.AbilityModifier;
+import com.vituel.dndplayer.model.effect.Condition;
+import com.vituel.dndplayer.model.effect.ModifierSource;
+import com.vituel.dndplayer.model.item.EquipSlot;
+import com.vituel.dndplayer.model.item.Item;
+import com.vituel.dndplayer.model.item.WeaponItem;
+import com.vituel.dndplayer.model.item.WeaponProperties;
 import com.vituel.dndplayer.util.AttackUtil;
 
 import java.security.InvalidParameterException;
@@ -12,15 +25,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
-import static com.vituel.dndplayer.model.Attack.WeaponReference.MAIN_HAND;
-import static com.vituel.dndplayer.model.ModifierTarget.AC;
-import static com.vituel.dndplayer.model.ModifierTarget.DAMAGE;
-import static com.vituel.dndplayer.model.ModifierTarget.FORT;
-import static com.vituel.dndplayer.model.ModifierTarget.HIT;
-import static com.vituel.dndplayer.model.ModifierTarget.INIT;
-import static com.vituel.dndplayer.model.ModifierTarget.REFL;
-import static com.vituel.dndplayer.model.ModifierTarget.SKILL;
-import static com.vituel.dndplayer.model.ModifierTarget.WILL;
+import static com.vituel.dndplayer.model.character.Attack.WeaponReference.MAIN_HAND;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.AC;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.DAMAGE;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.FORT;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.HIT;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.INIT;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.REFL;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.SKILL;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.WILL;
 
 /**
  * Persisted data inherent to the character. Values before calculation of bonus from items, traits and spells.
@@ -155,7 +168,7 @@ public class CharBase extends AbstractEntity {
 
     public String getDescription(){
         return MessageFormat.format("{0}, $lvl {1} {2} {3}",
-                name, getExperienceLevel(), getMulticlassString(), race.name);
+                name, getExperienceLevel(), getMulticlassString(), race.getName());
     }
 
     private String getMulticlassString() {

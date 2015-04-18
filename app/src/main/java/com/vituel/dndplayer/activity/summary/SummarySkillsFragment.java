@@ -14,15 +14,15 @@ import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
-import com.vituel.dndplayer.model.CharSkill;
-import com.vituel.dndplayer.model.CharSummary;
+import com.vituel.dndplayer.model.character.CharSkill;
+import com.vituel.dndplayer.model.character.CharSummary;
 import com.vituel.dndplayer.util.AppCommons;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static com.vituel.dndplayer.model.ModifierTarget.SKILL;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.SKILL;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;

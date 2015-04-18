@@ -3,9 +3,9 @@ package com.vituel.dndplayer.parser.old_txt;
 import android.content.Context;
 import android.util.Log;
 
-import com.vituel.dndplayer.model.Effect;
-import com.vituel.dndplayer.model.Modifier;
 import com.vituel.dndplayer.model.TempEffect;
+import com.vituel.dndplayer.model.effect.Effect;
+import com.vituel.dndplayer.model.effect.Modifier;
 import com.vituel.dndplayer.parser.csv.AbstractSimpleParser;
 import com.vituel.dndplayer.parser.exception.ParseFieldException;
 

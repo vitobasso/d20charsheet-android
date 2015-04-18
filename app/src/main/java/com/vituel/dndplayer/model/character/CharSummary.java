@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.model;
+package com.vituel.dndplayer.model.character;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,6 +6,18 @@ import android.util.Log;
 import com.esotericsoftware.kryo.Kryo;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.SkillDao;
+import com.vituel.dndplayer.model.ClassLevel;
+import com.vituel.dndplayer.model.DiceRoll;
+import com.vituel.dndplayer.model.Size;
+import com.vituel.dndplayer.model.Skill;
+import com.vituel.dndplayer.model.effect.AbilityModifier;
+import com.vituel.dndplayer.model.effect.Condition;
+import com.vituel.dndplayer.model.effect.Effect;
+import com.vituel.dndplayer.model.effect.EffectSource;
+import com.vituel.dndplayer.model.effect.Modifier;
+import com.vituel.dndplayer.model.effect.ModifierSource;
+import com.vituel.dndplayer.model.effect.ModifierTarget;
+import com.vituel.dndplayer.model.item.WeaponProperties;
 import com.vituel.dndplayer.util.i18n.ModifierStringConverter;
 
 import java.security.InvalidParameterException;
@@ -17,17 +29,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static com.vituel.dndplayer.model.ModifierTarget.AC;
-import static com.vituel.dndplayer.model.ModifierTarget.CHA;
-import static com.vituel.dndplayer.model.ModifierTarget.CON;
-import static com.vituel.dndplayer.model.ModifierTarget.DEX;
-import static com.vituel.dndplayer.model.ModifierTarget.HIT;
-import static com.vituel.dndplayer.model.ModifierTarget.HP;
-import static com.vituel.dndplayer.model.ModifierTarget.INT;
-import static com.vituel.dndplayer.model.ModifierTarget.SKILL;
-import static com.vituel.dndplayer.model.ModifierTarget.STR;
-import static com.vituel.dndplayer.model.ModifierTarget.WIS;
 import static com.vituel.dndplayer.model.Size.MEDIUM;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.AC;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.CHA;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.CON;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.DEX;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.HIT;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.HP;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.INT;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.SKILL;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.STR;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.WIS;
 
 /**
  * Values shown in the Summary. Including bonuses from items, traits and spells.
@@ -152,7 +164,7 @@ public class CharSummary {
         for (AbilityModifier mod : base.getAbilityMods()) {
             int value = getAbilityModifier(mod.getAbility());
             value = mod.getMultiplier().multiply(value);
-            Modifier resultingMod = new Modifier(mod.target, mod.variation, value);
+            Modifier resultingMod = new Modifier(mod.getTarget(), mod.getVariation(), value);
             String label = mod.getAbility().getLabel(context);
             result.put(resultingMod, label);
         }

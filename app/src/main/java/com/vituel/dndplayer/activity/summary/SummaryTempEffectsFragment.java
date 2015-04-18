@@ -13,9 +13,9 @@ import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.AbstractListFragment;
 import com.vituel.dndplayer.activity.select.SelectTempEffectActivity;
 import com.vituel.dndplayer.dao.CharTempEffectDao;
-import com.vituel.dndplayer.model.CharSummary;
-import com.vituel.dndplayer.model.CharTempEffect;
 import com.vituel.dndplayer.model.TempEffect;
+import com.vituel.dndplayer.model.character.CharSummary;
+import com.vituel.dndplayer.model.character.CharTempEffect;
 import com.vituel.dndplayer.util.gui.EffectArrayAdapter;
 
 import java.util.List;

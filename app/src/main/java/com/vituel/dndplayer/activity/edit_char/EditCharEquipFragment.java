@@ -8,10 +8,10 @@ import android.widget.TextView;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.activity.select.SelectItemActivity;
-import com.vituel.dndplayer.model.CharBase;
-import com.vituel.dndplayer.model.CharEquip;
-import com.vituel.dndplayer.model.EquipSlot;
-import com.vituel.dndplayer.model.Item;
+import com.vituel.dndplayer.model.character.CharBase;
+import com.vituel.dndplayer.model.character.CharEquip;
+import com.vituel.dndplayer.model.item.EquipSlot;
+import com.vituel.dndplayer.model.item.Item;
 
 import java.util.List;
 

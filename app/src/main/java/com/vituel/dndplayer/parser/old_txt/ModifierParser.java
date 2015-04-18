@@ -1,16 +1,16 @@
 package com.vituel.dndplayer.parser.old_txt;
 
-import com.vituel.dndplayer.model.Condition;
 import com.vituel.dndplayer.model.DiceRoll;
-import com.vituel.dndplayer.model.Modifier;
-import com.vituel.dndplayer.model.ModifierTarget;
-import com.vituel.dndplayer.model.ModifierType;
+import com.vituel.dndplayer.model.effect.Condition;
+import com.vituel.dndplayer.model.effect.Modifier;
+import com.vituel.dndplayer.model.effect.ModifierTarget;
+import com.vituel.dndplayer.model.effect.ModifierType;
 
 import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.vituel.dndplayer.model.Condition.Predicate;
+import static com.vituel.dndplayer.model.effect.Condition.Predicate;
 
 /**
  * Created by Victor on 31/03/14.

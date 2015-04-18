@@ -1,4 +1,8 @@
-package com.vituel.dndplayer.model;
+package com.vituel.dndplayer.model.item;
+
+import com.vituel.dndplayer.model.AbstractEntity;
+import com.vituel.dndplayer.model.effect.Effect;
+import com.vituel.dndplayer.model.effect.EffectSource;
 
 /**
  * Created by Victor on 25/02/14.

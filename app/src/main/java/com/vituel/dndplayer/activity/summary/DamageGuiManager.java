@@ -7,9 +7,9 @@ import android.widget.NumberPicker;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.CharDao;
-import com.vituel.dndplayer.model.CharSummary;
-import com.vituel.dndplayer.model.DamageTaken;
-import com.vituel.dndplayer.model.ModifierTarget;
+import com.vituel.dndplayer.model.character.CharSummary;
+import com.vituel.dndplayer.model.character.DamageTaken;
+import com.vituel.dndplayer.model.effect.ModifierTarget;
 import com.vituel.dndplayer.util.ActivityUtil;
 import com.vituel.dndplayer.util.gui.GuiInflater;
 

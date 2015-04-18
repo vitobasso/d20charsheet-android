@@ -4,7 +4,7 @@ import android.view.View;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
-import com.vituel.dndplayer.model.CharBase;
+import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.util.ActivityUtil;
 
 import static com.vituel.dndplayer.util.ActivityUtil.populateStaticSpinner;

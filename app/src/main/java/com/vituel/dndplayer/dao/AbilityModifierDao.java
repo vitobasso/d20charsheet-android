@@ -5,10 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vituel.dndplayer.model.AbilityModifier;
-import com.vituel.dndplayer.model.ModifierSource;
-import com.vituel.dndplayer.model.ModifierTarget;
-import com.vituel.dndplayer.model.Multiplier;
+import com.vituel.dndplayer.model.effect.AbilityModifier;
+import com.vituel.dndplayer.model.effect.ModifierSource;
+import com.vituel.dndplayer.model.effect.ModifierTarget;
+import com.vituel.dndplayer.model.effect.Multiplier;
 
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 

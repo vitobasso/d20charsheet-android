@@ -7,8 +7,8 @@ import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.ActiveConditionDao;
-import com.vituel.dndplayer.model.CharSummary;
-import com.vituel.dndplayer.model.Condition;
+import com.vituel.dndplayer.model.character.CharSummary;
+import com.vituel.dndplayer.model.effect.Condition;
 import com.vituel.dndplayer.util.JavaUtil;
 import com.vituel.dndplayer.util.i18n.EnumI18n;
 
@@ -20,7 +20,7 @@ import java.util.TreeMap;
 import static android.view.MotionEvent.ACTION_DOWN;
 import static android.view.MotionEvent.ACTION_MOVE;
 import static android.view.MotionEvent.ACTION_UP;
-import static com.vituel.dndplayer.model.Condition.Predicate;
+import static com.vituel.dndplayer.model.effect.Condition.Predicate;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.inflate;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;

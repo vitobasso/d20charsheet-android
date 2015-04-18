@@ -2,8 +2,8 @@ package com.vituel.dndplayer.parser.old_txt;
 
 import android.content.Context;
 
-import com.vituel.dndplayer.model.ModifierSource;
 import com.vituel.dndplayer.model.Skill;
+import com.vituel.dndplayer.model.effect.ModifierSource;
 import com.vituel.dndplayer.parser.csv.AbstractSimpleParser;
 import com.vituel.dndplayer.parser.exception.ParseFieldException;
 

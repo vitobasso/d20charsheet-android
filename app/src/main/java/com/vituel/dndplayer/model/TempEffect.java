@@ -1,5 +1,8 @@
 package com.vituel.dndplayer.model;
 
+import com.vituel.dndplayer.model.effect.Effect;
+import com.vituel.dndplayer.model.effect.EffectSource;
+
 /**
  * Effects to be toggled on/off as opposed to fixed effects (from equip, class, race, feats).
  * E.g.: Spells, item activation effects and combat modifiers.

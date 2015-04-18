@@ -6,8 +6,8 @@ import android.util.Log;
 import com.vituel.dndplayer.dao.ClassDao;
 import com.vituel.dndplayer.model.ClassTrait;
 import com.vituel.dndplayer.model.Clazz;
-import com.vituel.dndplayer.model.Effect;
-import com.vituel.dndplayer.model.Modifier;
+import com.vituel.dndplayer.model.effect.Effect;
+import com.vituel.dndplayer.model.effect.Modifier;
 import com.vituel.dndplayer.parser.exception.ParseFieldException;
 
 import java.text.ParseException;

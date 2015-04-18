@@ -1,24 +1,25 @@
-package com.vituel.dndplayer.model;
+package com.vituel.dndplayer.model.character;
 
 import com.vituel.dndplayer.R;
+import com.vituel.dndplayer.model.item.EquipSlot;
 
 import java.io.Serializable;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.vituel.dndplayer.model.SlotType.ARMS;
-import static com.vituel.dndplayer.model.SlotType.BODY;
-import static com.vituel.dndplayer.model.SlotType.EYES;
-import static com.vituel.dndplayer.model.SlotType.FEET;
-import static com.vituel.dndplayer.model.SlotType.FINGER;
-import static com.vituel.dndplayer.model.SlotType.HANDS;
-import static com.vituel.dndplayer.model.SlotType.HEAD;
-import static com.vituel.dndplayer.model.SlotType.HELD;
-import static com.vituel.dndplayer.model.SlotType.NECK;
-import static com.vituel.dndplayer.model.SlotType.SHOULDERS;
-import static com.vituel.dndplayer.model.SlotType.TORSO;
-import static com.vituel.dndplayer.model.SlotType.WAIST;
+import static com.vituel.dndplayer.model.item.SlotType.ARMS;
+import static com.vituel.dndplayer.model.item.SlotType.BODY;
+import static com.vituel.dndplayer.model.item.SlotType.EYES;
+import static com.vituel.dndplayer.model.item.SlotType.FEET;
+import static com.vituel.dndplayer.model.item.SlotType.FINGER;
+import static com.vituel.dndplayer.model.item.SlotType.HANDS;
+import static com.vituel.dndplayer.model.item.SlotType.HEAD;
+import static com.vituel.dndplayer.model.item.SlotType.HELD;
+import static com.vituel.dndplayer.model.item.SlotType.NECK;
+import static com.vituel.dndplayer.model.item.SlotType.SHOULDERS;
+import static com.vituel.dndplayer.model.item.SlotType.TORSO;
+import static com.vituel.dndplayer.model.item.SlotType.WAIST;
 
 /**
  * See DM Guide, p.214

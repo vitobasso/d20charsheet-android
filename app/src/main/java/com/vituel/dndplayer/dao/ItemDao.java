@@ -6,16 +6,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.vituel.dndplayer.model.Item;
-import com.vituel.dndplayer.model.SlotType;
-import com.vituel.dndplayer.model.WeaponItem;
-import com.vituel.dndplayer.model.WeaponProperties;
+import com.vituel.dndplayer.model.item.Item;
+import com.vituel.dndplayer.model.item.SlotType;
+import com.vituel.dndplayer.model.item.WeaponItem;
+import com.vituel.dndplayer.model.item.WeaponProperties;
 
 import java.util.List;
 
-import static com.vituel.dndplayer.model.Item.ItemType;
-import static com.vituel.dndplayer.model.Item.ItemType.WEAPON;
-import static com.vituel.dndplayer.model.Item.ItemType.valueOf;
+import static com.vituel.dndplayer.model.item.Item.ItemType;
+import static com.vituel.dndplayer.model.item.Item.ItemType.WEAPON;
+import static com.vituel.dndplayer.model.item.Item.ItemType.valueOf;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;

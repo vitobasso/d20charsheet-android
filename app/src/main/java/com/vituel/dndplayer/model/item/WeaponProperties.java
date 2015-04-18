@@ -1,11 +1,16 @@
-package com.vituel.dndplayer.model;
+package com.vituel.dndplayer.model.item;
+
+import com.vituel.dndplayer.model.AbstractEntity;
+import com.vituel.dndplayer.model.Critical;
+import com.vituel.dndplayer.model.DiceRoll;
+import com.vituel.dndplayer.model.effect.Modifier;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.vituel.dndplayer.model.ModifierTarget.CRIT_MULT;
-import static com.vituel.dndplayer.model.ModifierTarget.CRIT_RANGE;
-import static com.vituel.dndplayer.model.ModifierTarget.DAMAGE;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.CRIT_MULT;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.CRIT_RANGE;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.DAMAGE;
 
 /**
  * Created by Victor on 01/05/14.

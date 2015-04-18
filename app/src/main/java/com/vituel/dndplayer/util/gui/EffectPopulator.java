@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.model.EffectSource;
-import com.vituel.dndplayer.model.Modifier;
+import com.vituel.dndplayer.model.effect.EffectSource;
+import com.vituel.dndplayer.model.effect.Modifier;
 import com.vituel.dndplayer.util.AppCommons;
 import com.vituel.dndplayer.util.i18n.ModifierStringConverter;
 

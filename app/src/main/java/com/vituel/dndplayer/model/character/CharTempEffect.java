@@ -1,4 +1,8 @@
-package com.vituel.dndplayer.model;
+package com.vituel.dndplayer.model.character;
+
+import com.vituel.dndplayer.model.TempEffect;
+import com.vituel.dndplayer.model.effect.Effect;
+import com.vituel.dndplayer.model.effect.EffectSource;
 
 import java.io.Serializable;
 

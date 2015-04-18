@@ -7,8 +7,8 @@ import com.vituel.dndplayer.activity.abstraction.AbstractSelectEffectActivity;
 import com.vituel.dndplayer.activity.edit.EditItemActivity;
 import com.vituel.dndplayer.dao.AbstractEntityDao;
 import com.vituel.dndplayer.dao.ItemDao;
-import com.vituel.dndplayer.model.EquipSlot;
-import com.vituel.dndplayer.model.Item;
+import com.vituel.dndplayer.model.item.EquipSlot;
+import com.vituel.dndplayer.model.item.Item;
 
 import java.util.List;
 
