@@ -18,7 +18,8 @@ public abstract class AbstractParser {
             if (str.isEmpty()) {
                 str = null;
             }
-        } else {
+        }
+        if (str == null) {
             throw new ParseNullValueException(index);
         }
         return str;
@@ -48,6 +49,27 @@ public abstract class AbstractParser {
     protected Integer readIntNullable(String[] split, int index) throws ParseFormatException {
         try {
             return readInt(split, index);
+        } catch (ParseNullValueException e) {
+            return null;
+        }
+    }
+
+    protected Double readDouble(String[] split, int index) throws ParseNullValueException, ParseFormatException {
+        String str = readString(split, index);
+        if (str != null) {
+            try {
+                return Double.valueOf(str);
+            } catch (NumberFormatException e) {
+                throw new ParseFormatException(index, ParseFormatException.Type.FLOAT, str, e);
+            }
+        } else {
+            throw new ParseNullValueException(index);
+        }
+    }
+
+    protected Double readDoubleNullable(String[] split, int index) throws ParseFormatException {
+        try {
+            return readDouble(split, index);
         } catch (ParseNullValueException e) {
             return null;
         }

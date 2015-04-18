@@ -16,8 +16,8 @@ public class Item extends AbstractEntity implements EffectSource {
     private SlotType slotType; //slot where item can be equipped in character
     private ItemType itemType; //if not null, defines specific fields (weapon dmg, armor ac, etc)
     private Effect effect;
-    private double weight;
-    private double price;
+    private Double weight;
+    private Double price;
 
     public Item() {
     }
@@ -52,19 +52,19 @@ public class Item extends AbstractEntity implements EffectSource {
         this.effect = effect;
     }
 
-    public double getWeight() {
+    public Double getWeight() {
         return weight;
     }
 
-    public void setWeight(double weight) {
+    public void setWeight(Double weight) {
         this.weight = weight;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 }

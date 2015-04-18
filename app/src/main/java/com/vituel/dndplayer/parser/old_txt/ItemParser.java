@@ -37,8 +37,8 @@ public class ItemParser extends AbstractSimpleParser<Item> {
 
         //default values
         String name = null;
-        int price = 0;
-        int weight = 0;
+        Double price = 0.;
+        Double weight = 0.;
         String type = null;
         DiceRoll dmg = null;
         Critical crit = null;
@@ -49,12 +49,12 @@ public class ItemParser extends AbstractSimpleParser<Item> {
         try {
             name = line[0];
             try {
-                price = Integer.valueOf(line[2]);
+                price = Double.valueOf(line[2]);
             } catch (Throwable e) {
                 // price not set
             }
             try {
-                weight = Integer.valueOf(line[3]);
+                weight = Double.valueOf(line[3]);
             } catch (Throwable e) {
                 // weight not set
             }

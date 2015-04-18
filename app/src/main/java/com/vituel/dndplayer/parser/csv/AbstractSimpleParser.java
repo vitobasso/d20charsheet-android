@@ -113,6 +113,14 @@ public abstract class AbstractSimpleParser<T> extends AbstractParser {
         return readIntNullable(split, getIndex(column));
     }
 
+    protected Double readDouble(String[] split, String column) throws ParseFieldException {
+        return readDouble(split, getIndex(column));
+    }
+
+    protected Double readDoubleNullable(String[] split, String column) throws ParseFieldException {
+        return readDoubleNullable(split, getIndex(column));
+    }
+
     protected Integer getIndex(String column) throws ParseFieldException {
         Integer index = headers.inverse().get(column);
         if (index == null) {
