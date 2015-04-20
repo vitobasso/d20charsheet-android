@@ -2,11 +2,13 @@ __author__ = 'Victor'
 
 import csv, re
 
-#cleanRegex = r'_\\.*|^"? *\| *| *\| *"?$| *-- *(?=\|)|_\. *|(?<=\d)st (?=\|)|(?<=\d)nd (?=\|)|(?<=\d)rd (?=\|)|(?<=\d)th (?=\|)|(?<=\|) \+|(/\+\d*)+ *|(?<=\|) *| *(?=\|)'
-cleanRegex = r'_\\.*|^"? *\| *| *\| *_?\.?"?$| *-- *(?=\|)|_\. *|(?<=\d)st (?=\|)|(?<=\d)nd (?=\|)|(?<=\d)rd (?=\|)|(?<=\d)th (?=\|)|(?<=\|) \+|(/\+\d*)+ *|(?<=\|) *| *(?=\|)'
+cleanRegex = r'_\\.*|^"? *\| *| *\| *"?$| *-- *(?=\|)|_\. *|(?<=\d)st (?=\|)|(?<=\d)nd (?=\|)|(?<=\d)rd (?=\|)|(?<=\d)th (?=\|)|(?<=\|) \+|(/\+\d*)+ *|(?<=\|) *| *(?=\|)' #133
+# cleanRegex = r'_\\.*|^"? *\| *| *\| *_?\.?"?$| *-- *(?=\|)|_\. *|(?<=\d)st (?=\|)|(?<=\d)nd (?=\|)|(?<=\d)rd (?=\|)|(?<=\d)th (?=\|)|(?<=\|) \+|(/\+\d*)+ *|(?<=\|) *| *(?=\|)' #133
+# cleanRegex = r'^"? *\| *| *\| *"?$| *-- *(?=\|)|_\. *|(?<=\d)st *(?=\|)|(?<=\d)nd *(?=\|)|(?<=\d)rd *(?=\|)|(?<=\d)th *(?=\|)|(?<=\|) \+|(/\+\d*)+ *|(?<=\|) *| *(?=\|)|_\\.*$' #133
+# cleanRegex = r'_\\.*|^"? *\| *| *\| *_?\.?"?$| *-- *(?=\|)|_\. *|_/\d\. *|(?<=\d)st *(?=\|)|(?<=\d)nd *(?=\|)|(?<=\d)rd *(?=\|)|(?<=\d)th *(?=\|)|(?<=\|) *\+|(/\+\d*)+ *|(?<=\|) *| *(?=\|)' #133
 
 babMap = [None, 'POOR', 'AVERAGE', 'GOOD']
-resistMap = [None, 'POOR', None, 'GOOD']
+resistMap = ['POOR', None, 'GOOD']
 
 
 class ClassAdv:
@@ -56,33 +58,46 @@ def readAdvanementTable(tableLines):
     return classAdv, failCount
 
 
-def readAdvancementStringInRow(row):
-    tableStr = row['advancement']
-    tableLines = cleanTable(tableStr)
-    result, fails = readAdvanementTable(tableLines)
+def readRow(row):
+    advStr = row['advancement']
+    advLines = cleanTable(advStr)
+    result, fails = readAdvanementTable(advLines)
     if (fails > 1):
         print(row['id'], row['name'], 'fails:', fails)
     return result, fails
 
 
-def addAdvColsToCsv(inFile, outFile):
+def convertHeaders(oldHeaders):
+    newHeaders = oldHeaders[:]
+    pos = newHeaders.index('advancement')
+    newHeaders.remove('advancement')
+    newHeaders[pos:pos] = ['bab', 'fort', 'refl', 'will', 'traits']
+    return newHeaders
+
+
+def convertRow(row, failCount):
+    adv, rowFails = readRow(row)
+    if (rowFails > 1):
+        failCount['manyLines'] += 1
+    elif (rowFails > 0):
+        failCount['oneLine'] += 1
+    newRow = dict(row, bab=adv.bab, fort=adv.fort, refl=adv.refl, will=adv.will, traits=adv.traits)
+    newRow.pop('advancement')
+    return newRow
+
+
+def convertCsv(inFile, outFile):
     with open(inFile, 'r') as inf, open(outFile, 'w') as outf:
         reader = csv.DictReader(inf, delimiter=';', quotechar='"')
-        colnames = reader.fieldnames + ['bab', 'fort', 'refl', 'will', 'traits']
-        writer = csv.DictWriter(outf, colnames, delimiter=';', quotechar='"', lineterminator='\n')
+        newHeaders = convertHeaders(reader.fieldnames)
+        writer = csv.DictWriter(outf, newHeaders, delimiter=';', quotechar='"', lineterminator='\n')
         writer.writeheader()
-        failMap = dict(oneLine=0, manyLines=0)
-        for node, row in enumerate(reader, 1):
-            adv, rowFails = readAdvancementStringInRow(row)
-            if (rowFails > 1):
-                failMap['manyLines'] += 1
-            elif (rowFails > 0):
-                failMap['oneLine'] += 1
-
-            row = dict(row, bab=adv.bab, fort=adv.fort, refl=adv.refl, will=adv.will, traits=adv.traits)
-            writer.writerow(row)
-        print('failed one line:', failMap['oneLine'], 'many lines:', failMap['manyLines'])
+        failCount = dict(oneLine=0, manyLines=0)
+        for row in reader:
+            newRow = convertRow(row, failCount)
+            writer.writerow(newRow)
+        print('failed one line:', failCount['oneLine'], 'many lines:', failCount['manyLines'])
 
 
 dir = '../../app/src/main/assets/data/csv/'
-addAdvColsToCsv(dir + 'classes.csv', dir + 'classes_new.csv')
+convertCsv(dir + 'classes.csv', dir + 'classes_new.csv')
