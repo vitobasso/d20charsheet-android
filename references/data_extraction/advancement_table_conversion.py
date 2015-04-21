@@ -70,8 +70,10 @@ def readRow(row):
 def createClassHeaders(oldHeaders):
     newHeaders = oldHeaders[:]
     pos = newHeaders.index('advancement')
-    newHeaders.remove('advancement')
     newHeaders[pos:pos] = ['bab', 'fort', 'refl', 'will']
+    newHeaders.remove('advancement')
+    newHeaders.remove('class_features')
+    newHeaders.remove('requirements')
     return newHeaders
 
 
@@ -84,7 +86,9 @@ def createClassWriter(outf, oldHeaders):
 
 def writeClassRow(writer, row, model):
     newRow = dict(row, bab=model.bab, fort=model.fort, refl=model.refl, will=model.will)
-    newRow.pop('advancement')
+    newRow.pop('advancement') # remove data already parsed
+    newRow.pop('class_features') # remove large, unused data
+    newRow.pop('requirements') # remove large, unused data
     writer.writerow(newRow)
 
 
@@ -135,4 +139,4 @@ def convertCsv(inFile, classFile, traitFile):
 
 
 dir = '../../app/src/main/assets/data/csv/'
-convertCsv(dir + 'classes.csv', dir + 'classes_new.csv', dir + 'classes_trait.csv')
+convertCsv(dir + 'classes.csv', dir + 'classes_new.csv', dir + 'class_traits.csv')
