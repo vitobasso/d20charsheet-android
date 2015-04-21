@@ -22,6 +22,7 @@ import com.vituel.dndplayer.model.rulebook.Book;
 import com.vituel.dndplayer.model.rulebook.Edition;
 import com.vituel.dndplayer.parser.csv.BookParser;
 import com.vituel.dndplayer.parser.csv.EditionParser;
+import com.vituel.dndplayer.parser.csv.FeatParser;
 import com.vituel.dndplayer.parser.csv.ItemParser;
 import com.vituel.dndplayer.parser.csv.RaceParser;
 
@@ -55,6 +56,10 @@ public class LibraryLoader {
         itemDao.insert(items);
         itemDao.close();
 
+        List<Feat> feats = new FeatParser(ctx, "data/csv/feats.csv").loadFile();
+        FeatDao featDao = new FeatDao(ctx);
+        featDao.insert(feats);
+        featDao.close();
 
         // OLD
 
@@ -82,10 +87,10 @@ public class LibraryLoader {
         classTraitDao.close();
         classDao.close();
 
-        List<Feat> feats = new com.vituel.dndplayer.parser.old_txt.FeatParser(ctx, "data/feats.txt").loadFile();
-        FeatDao featDao = new FeatDao(ctx);
-        featDao.save(feats);
-        featDao.close();
+//        List<Feat> feats = new com.vituel.dndplayer.parser.old_txt.FeatParser(ctx, "data/feats.txt").loadFile();
+//        FeatDao featDao = new FeatDao(ctx);
+//        featDao.save(feats);
+//        featDao.close();
 
         List<Skill> skills = new com.vituel.dndplayer.parser.old_txt.SkillParser(ctx, "data/skills.txt").loadFile();
         SkillDao skillDao = new SkillDao(ctx);
