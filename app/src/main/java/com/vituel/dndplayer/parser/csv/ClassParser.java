@@ -19,10 +19,10 @@ public class ClassParser extends AbstractSimpleParser<Clazz> {
         Clazz clazz = new Clazz();
         clazz.setId(readInt(line, "id"));
         clazz.setName(readString(line, "name"));
-        clazz.setAttackProg(readEnumNullable(Clazz.AttackProgression.class, line, "bab"));
-        clazz.setFortitudeProg(readEnumNullable(Clazz.ResistProgression.class, line, "fort"));
-        clazz.setReflexProg(readEnumNullable(Clazz.ResistProgression.class, line, "refl"));
-        clazz.setWillProg(readEnumNullable(Clazz.ResistProgression.class, line, "will"));
+        clazz.setAttackProg(readEnum(Clazz.AttackProgression.class, line, "bab"));
+        clazz.setFortitudeProg(readEnum(Clazz.ResistProgression.class, line, "fort"));
+        clazz.setReflexProg(readEnum(Clazz.ResistProgression.class, line, "refl"));
+        clazz.setWillProg(readEnum(Clazz.ResistProgression.class, line, "will"));
         return clazz;
     }
 

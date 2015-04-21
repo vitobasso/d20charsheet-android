@@ -9,7 +9,7 @@ import com.vituel.dndplayer.model.effect.EffectSource;
 public class ClassTrait extends AbstractEntity implements EffectSource {
 
     private Clazz clazz;
-    private Effect effect;
+    private Effect effect = new Effect();
     private int level;
     private String overridenTraitName;
 

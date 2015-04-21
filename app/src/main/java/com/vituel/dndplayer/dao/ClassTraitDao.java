@@ -8,8 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import com.vituel.dndplayer.model.ClassTrait;
 import com.vituel.dndplayer.model.Clazz;
 
-import java.util.Collection;
-
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
@@ -92,17 +90,12 @@ public class ClassTraitDao extends AbstractAssociationDao<ClassTrait> {
         return classTrait;
     }
 
-    public void insert(long parentId, ClassTrait entity) {
-        ContentValues values = toContentValues(parentId, entity);
+    @Override
+    public void insert(ClassTrait entity) {
+        ContentValues values = toContentValues(entity.getClazz().getId(), entity);
         values.put(COLUMN_ID, entity.getId());
-        long id = database.insert(tableName(), "_id", values);
+        long id = database.insertOrThrow(tableName(), "_id", values);
         entity.setId(id);
-    }
-
-    public void insert(Collection<ClassTrait> list) {
-        for (ClassTrait obj : list) {
-            insert(obj.getClazz().getId(), obj);
-        }
     }
 
 }

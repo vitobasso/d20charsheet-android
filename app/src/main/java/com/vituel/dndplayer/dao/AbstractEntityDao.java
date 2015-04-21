@@ -78,16 +78,10 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
     }
 
     @Override
-    public void insert(Collection<T> list) {
-        for (T obj : list) {
-            insert(obj);
-        }
-    }
-
     public final void insert(T entity) {
         ContentValues values = toContentValues(entity);
         values.put(COLUMN_ID, entity.getId());
-        long id = database.insert(tableName(), "_id", values);
+        long id = database.insertOrThrow(tableName(), "_id", values);
         entity.setId(id);
 
         postSave(entity);

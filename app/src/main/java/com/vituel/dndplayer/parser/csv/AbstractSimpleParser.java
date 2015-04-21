@@ -1,7 +1,6 @@
 package com.vituel.dndplayer.parser.csv;
 
 import android.content.Context;
-import android.util.Log;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
@@ -10,50 +9,56 @@ import com.vituel.dndplayer.parser.exception.ParseEnumException;
 import com.vituel.dndplayer.parser.exception.ParseFieldException;
 import com.vituel.dndplayer.parser.exception.ParseNullValueException;
 
-import java.io.BufferedReader;
+import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 
-import static java.util.Collections.emptyList;
+import au.com.bytecode.opencsv.CSVReader;
 
 /**
  * Created by Victor on 26/03/14.
  */
-public abstract class AbstractSimpleParser<T> extends AbstractParser {
-
-    public static final String TAG = AbstractSimpleParser.class.getSimpleName();
+public abstract class AbstractSimpleParser<T> extends AbstractParser implements Closeable {
 
     private Context ctx;
     private String filePath;
+
     private BiMap<Integer, String> headers;
-    private List<ParseEntityException> failures;
+    private CSVReader reader;
+    private int count;
+    private String[] nextLine;
 
     public AbstractSimpleParser(Context ctx, String path) {
         this.ctx = ctx;
         filePath = path;
-        headers = null;
-        failures = new ArrayList<>();
     }
 
-    public List<T> loadFile() {
+    public boolean hasNext() throws IOException {
+        initIfNecessary();
+        return nextLine != null;
+    }
+
+    public T next() throws IOException, ParseEntityException {
+        initIfNecessary();
         try {
-            InputStream in = ctx.getAssets().open(filePath);
-            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-            headers = readHeaders(reader);
-            return readLines(reader);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return emptyList();
+            return parseLine(++count, nextLine);
         } finally {
-            logFailures();
+            nextLine = reader.readNext();
         }
     }
 
-    private BiMap<Integer, String> readHeaders(BufferedReader reader) throws IOException {
-        String[] split = reader.readLine().split("[\t;]");
+    private void initIfNecessary() throws IOException {
+        if (reader == null) {
+            InputStream in = ctx.getAssets().open(filePath);
+            reader = new CSVReader(new InputStreamReader(in), ';', '"');
+            headers = readHeaders();
+            nextLine = reader.readNext();
+        }
+    }
+
+    private BiMap<Integer, String> readHeaders() throws IOException {
+        String[] split = reader.readNext();
         BiMap<Integer, String> map = HashBiMap.create();
         for (int i = 0; i <split.length; i++) {
             map.put(i, split[i]);
@@ -61,29 +66,9 @@ public abstract class AbstractSimpleParser<T> extends AbstractParser {
         return map;
     }
 
-    private List<T> readLines(BufferedReader reader) throws IOException {
-        List<T> result = new ArrayList<>();
-
-        String line = reader.readLine();
-        int count = 0;
-        while (line != null) {
-            try {
-                T obj = parseLine(count, line);
-                result.add(obj);
-            } catch (ParseEntityException e) {
-                failures.add(e);
-            }
-            line = reader.readLine();
-            count++;
-        }
-
-        return result;
-    }
-
-    private T parseLine(int lineIndex, String line) throws ParseEntityException {
-        String split[] = line.split("[\t;]");
+    private T parseLine(int lineIndex, String[] line) throws ParseEntityException {
         try {
-            return parse(split);
+            return parse(line);
         } catch (ParseFieldException e) {
             String columnName = headers.get(e.getColumnIndex());
             throw new ParseEntityException(lineIndex, line, columnName, filePath, e);
@@ -92,12 +77,13 @@ public abstract class AbstractSimpleParser<T> extends AbstractParser {
 
     protected abstract T parse(String[] line) throws ParseFieldException;
 
-    private void logFailures() {
-        for (ParseEntityException failure : failures) {
-            Log.w(TAG, failure.getMessage());
+    protected Integer getIndex(String column) throws ParseFieldException {
+        Integer index = headers.inverse().get(column);
+        if (index == null) {
+            throw new ParseFieldException(-1, "Column name not found: " + column);
         }
+        return index;
     }
-
 
     protected String readString(String[] split, String column) throws ParseFieldException {
         return readString(split, getIndex(column));
@@ -124,13 +110,13 @@ public abstract class AbstractSimpleParser<T> extends AbstractParser {
     }
 
     public <E extends Enum<E>> E readEnum(Class<E> type, String[] line, String column) throws ParseFieldException {
-        String str = readString(line, column);
-        for (E value : type.getEnumConstants()) {
-            if (value.equals(line)) {
-                return value;
+        String value = readString(line, column);
+        for (E enumValue : type.getEnumConstants()) {
+            if (enumValue.name().equals(value)) {
+                return enumValue;
             }
         }
-        throw new ParseEnumException(getIndex(column), type, str);
+        throw new ParseEnumException(getIndex(column), type, value);
     }
 
     public <E extends Enum<E>> E readEnumNullable(Class<E> type, String[] line, String column) throws ParseFieldException {
@@ -141,12 +127,15 @@ public abstract class AbstractSimpleParser<T> extends AbstractParser {
         }
     }
 
-    protected Integer getIndex(String column) throws ParseFieldException {
-        Integer index = headers.inverse().get(column);
-        if (index == null) {
-            throw new ParseFieldException(-1, "Column name not found: " + column);
+    public int getCount() {
+        return count;
+    }
+
+    @Override
+    public void close() throws IOException {
+        if (reader != null) {
+            reader.close();
         }
-        return index;
     }
 
 }

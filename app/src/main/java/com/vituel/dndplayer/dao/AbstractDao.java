@@ -65,8 +65,15 @@ public abstract class AbstractDao<T> {
         database.delete(tableName(), selection, null);
     }
 
+    public void insert(Collection<T> list) {
+        for (T obj : list) {
+            insert(obj);
+        }
+    }
 
-    public abstract void insert(Collection<T> list);
+    public void insert(T entity) {
+        throw new UnsupportedOperationException();
+    }
 
     protected abstract String tableName();
 

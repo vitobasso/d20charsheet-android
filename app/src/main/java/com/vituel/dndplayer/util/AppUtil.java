@@ -23,7 +23,7 @@ public class AppUtil {
 
         pref.edit()
                 .putBoolean(PREF_FIRST_RUN, false)
-                .commit();
+                .apply();
     }
 
 }
