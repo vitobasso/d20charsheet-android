@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.vituel.dndplayer.util.database.SQLiteHelper;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -63,6 +64,9 @@ public abstract class AbstractDao<T> {
     protected final void removeForQuery(String selection) {
         database.delete(tableName(), selection, null);
     }
+
+
+    public abstract void insert(Collection<T> list);
 
     protected abstract String tableName();
 

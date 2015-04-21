@@ -6,6 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.model.ClassTrait;
+import com.vituel.dndplayer.model.Clazz;
+
+import java.util.Collection;
 
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
@@ -81,7 +84,25 @@ public class ClassTraitDao extends AbstractAssociationDao<ClassTrait> {
         ClassTrait classTrait = effectDao.loadEffectSource(cursor, new ClassTrait(), 0, 1, 3);
         classTrait.setLevel(cursor.getInt(4));
         classTrait.setOverridenTraitName(cursor.getString(5));
+
+        Clazz clazz = new Clazz();
+        clazz.setId(cursor.getInt(2));
+        classTrait.setClazz(clazz);
+
         return classTrait;
+    }
+
+    public void insert(long parentId, ClassTrait entity) {
+        ContentValues values = toContentValues(parentId, entity);
+        values.put(COLUMN_ID, entity.getId());
+        long id = database.insert(tableName(), "_id", values);
+        entity.setId(id);
+    }
+
+    public void insert(Collection<ClassTrait> list) {
+        for (ClassTrait obj : list) {
+            insert(obj.getClazz().getId(), obj);
+        }
     }
 
 }

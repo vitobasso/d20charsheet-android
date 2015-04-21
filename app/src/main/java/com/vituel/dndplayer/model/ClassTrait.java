@@ -8,9 +8,18 @@ import com.vituel.dndplayer.model.effect.EffectSource;
  */
 public class ClassTrait extends AbstractEntity implements EffectSource {
 
+    private Clazz clazz;
     private Effect effect;
     private int level;
     private String overridenTraitName;
+
+    public Clazz getClazz() {
+        return clazz;
+    }
+
+    public void setClazz(Clazz clazz) {
+        this.clazz = clazz;
+    }
 
     public Effect getEffect() {
         return effect;

@@ -77,7 +77,8 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
         return id;
     }
 
-    public final void insert(Collection<T> list) {
+    @Override
+    public void insert(Collection<T> list) {
         for (T obj : list) {
             insert(obj);
         }

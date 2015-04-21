@@ -56,4 +56,9 @@ public abstract class AbstractAssociationDao<T> extends AbstractDao<T>{
 
     protected abstract ContentValues toContentValues(long parentId, T entity);
 
+    @Override
+    public void insert(Collection<T> list) {
+        throw new UnsupportedOperationException();
+    }
+
 }

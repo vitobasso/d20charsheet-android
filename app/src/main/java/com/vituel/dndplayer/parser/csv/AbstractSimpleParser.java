@@ -6,7 +6,9 @@ import android.util.Log;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.vituel.dndplayer.parser.exception.ParseEntityException;
+import com.vituel.dndplayer.parser.exception.ParseEnumException;
 import com.vituel.dndplayer.parser.exception.ParseFieldException;
+import com.vituel.dndplayer.parser.exception.ParseNullValueException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -29,7 +31,7 @@ public abstract class AbstractSimpleParser<T> extends AbstractParser {
     private BiMap<Integer, String> headers;
     private List<ParseEntityException> failures;
 
-    protected AbstractSimpleParser(Context ctx, String path) {
+    public AbstractSimpleParser(Context ctx, String path) {
         this.ctx = ctx;
         filePath = path;
         headers = null;
@@ -119,6 +121,24 @@ public abstract class AbstractSimpleParser<T> extends AbstractParser {
 
     protected Double readDoubleNullable(String[] split, String column) throws ParseFieldException {
         return readDoubleNullable(split, getIndex(column));
+    }
+
+    public <E extends Enum<E>> E readEnum(Class<E> type, String[] line, String column) throws ParseFieldException {
+        String str = readString(line, column);
+        for (E value : type.getEnumConstants()) {
+            if (value.equals(line)) {
+                return value;
+            }
+        }
+        throw new ParseEnumException(getIndex(column), type, str);
+    }
+
+    public <E extends Enum<E>> E readEnumNullable(Class<E> type, String[] line, String column) throws ParseFieldException {
+        try {
+            return readEnum(type, line, column);
+        } catch (ParseNullValueException e) {
+            return null;
+        }
     }
 
     protected Integer getIndex(String column) throws ParseFieldException {
