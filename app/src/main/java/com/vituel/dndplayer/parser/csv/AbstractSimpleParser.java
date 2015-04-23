@@ -131,6 +131,10 @@ public abstract class AbstractSimpleParser<T> extends AbstractParser implements 
         return count;
     }
 
+    public String getFilePath() {
+        return filePath;
+    }
+
     @Override
     public void close() throws IOException {
         if (reader != null) {

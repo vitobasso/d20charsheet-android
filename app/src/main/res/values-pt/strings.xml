@@ -202,5 +202,6 @@
     <string name="failed_saving">Falha ao salvar em arquivo.</string>
     <string name="cant_be_empty">Não pode ser vazio</string>
     <string name="rule_books">Livros</string>
+    <string name="loading">Importando regras…</string>
 
 </resources>

@@ -39,6 +39,7 @@ public class ActivityUtil {
     public static final int REQUEST_CREATE = 3;
     public static final int REQUEST_SELECT_RACE = 4;
     public static final int REQUEST_SELECT_CLASS = 5;
+    public static final int REQUEST_LOAD = 6;
 
     public static final String EXTRA_SELECTED = "SELECTED";
     public static final String EXTRA_EDITED = "EDITED";
@@ -106,6 +107,12 @@ public class ActivityUtil {
         } else {
             return (T) v;
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends View> T inflate(Activity activity, int parentId, int layout) {
+        ViewGroup parent = findView(activity, parentId);
+        return inflate(activity, parent, layout);
     }
 
     @SuppressWarnings("unchecked")

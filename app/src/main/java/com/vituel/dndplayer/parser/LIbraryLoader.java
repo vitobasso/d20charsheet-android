@@ -12,6 +12,7 @@ import com.vituel.dndplayer.dao.EditionDao;
 import com.vituel.dndplayer.dao.FeatDao;
 import com.vituel.dndplayer.dao.ItemDao;
 import com.vituel.dndplayer.dao.RaceDao;
+import com.vituel.dndplayer.model.AbstractEntity;
 import com.vituel.dndplayer.parser.csv.AbstractSimpleParser;
 import com.vituel.dndplayer.parser.csv.BookParser;
 import com.vituel.dndplayer.parser.csv.ClassParser;
@@ -21,6 +22,7 @@ import com.vituel.dndplayer.parser.csv.FeatParser;
 import com.vituel.dndplayer.parser.csv.ItemParser;
 import com.vituel.dndplayer.parser.csv.RaceParser;
 import com.vituel.dndplayer.parser.exception.ParseEntityException;
+import com.vituel.dndplayer.util.gui.LoaderObserver;
 
 import java.io.IOException;
 
@@ -31,7 +33,15 @@ public class LibraryLoader {
 
     public static final String TAG = LibraryLoader.class.getSimpleName();
 
-    public static void loadDB(Context ctx) {
+    private Context ctx;
+    private LoaderObserver observer;
+
+    public LibraryLoader(Context ctx, LoaderObserver observer) {
+        this.ctx = ctx;
+        this.observer = observer;
+    }
+
+    public void loadDB() {
 
         loadTable(new EditionParser(ctx, "data/csv/editions.csv"), new EditionDao(ctx));
         loadTable(new BookParser(ctx, "data/csv/books.csv"), new BookDao(ctx));
@@ -55,8 +65,9 @@ public class LibraryLoader {
 //        tempEffectDao.close();
     }
 
-    private static <T> void loadTable(AbstractSimpleParser<T> parser, AbstractDao<T> dao) {
+    private <T extends AbstractEntity> void loadTable(AbstractSimpleParser<T> parser, AbstractDao<T> dao) {
         try {
+            observer.onStartLoadingTable(parser.getFilePath());
             while (parser.hasNext()) {
                 loadEntity(parser, dao);
             }
@@ -67,9 +78,10 @@ public class LibraryLoader {
         }
     }
 
-    private static <T> void loadEntity(AbstractSimpleParser<T> parser, AbstractDao<T> dao) {
+    private <T extends AbstractEntity> void loadEntity(AbstractSimpleParser<T> parser, AbstractDao<T> dao) {
         try {
             T entity = parser.next();
+            observer.onFinishLoadingEntity(entity.getName(), parser.getCount());
             dao.insert(entity);
         } catch (ParseEntityException | SQLException e) {
             Log.w(TAG, e.getMessage());
@@ -78,7 +90,7 @@ public class LibraryLoader {
         }
     }
 
-    private static <T> void close(AbstractSimpleParser<T> parser, AbstractDao<T> dao) {
+    private <T> void close(AbstractSimpleParser<T> parser, AbstractDao<T> dao) {
         dao.close();
         try {
             parser.close();
@@ -87,5 +99,8 @@ public class LibraryLoader {
         }
     }
 
+    public int getTotalTables() {
+        return 7;
+    }
 
 }

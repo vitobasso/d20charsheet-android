@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.vituel.dndplayer.R;
+import com.vituel.dndplayer.activity.LoadingActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
@@ -18,15 +19,16 @@ import com.vituel.dndplayer.dao.CharDao;
 import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.model.character.CharSummary;
 import com.vituel.dndplayer.util.ActivityUtil;
-import com.vituel.dndplayer.util.AppUtil;
 
 import java.util.List;
 
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
 import static com.vituel.dndplayer.util.ActivityUtil.PREF;
+import static com.vituel.dndplayer.util.ActivityUtil.PREF_FIRST_RUN;
 import static com.vituel.dndplayer.util.ActivityUtil.PREF_OPENED_CHARACTER;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_LOAD;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
@@ -37,21 +39,26 @@ public class SummaryActivity extends FragmentActivity implements PagerActivity<C
 
     private ViewPager pager;
     private ConditionGuiManager conditionsGuiManager;
+    private SharedPreferences pref;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.summary);
 
+        pref = getSharedPreferences(PREF, MODE_PRIVATE);
         conditionsGuiManager = new ConditionGuiManager(this);
 
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(new SummaryPagerAdapter(getSupportFragmentManager(), this));
         pager.setCurrentItem(SummaryPagerAdapter.PAGE_BASIC);
         pager.setOnPageChangeListener(new SummaryPagerListener(this));
+    }
 
-        AppUtil.onLaunch(this);
-        findCharacterToOpen();
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadContentOrOpenChar();
     }
 
     @Override
@@ -76,6 +83,9 @@ public class SummaryActivity extends FragmentActivity implements PagerActivity<C
                         open(editedChar);
                 }
                 break;
+            case REQUEST_LOAD:
+                pref.edit().putBoolean(PREF_FIRST_RUN, false).apply();
+                findCharacterToOpen();
         }
     }
 
@@ -101,13 +111,21 @@ public class SummaryActivity extends FragmentActivity implements PagerActivity<C
         }
     }
 
+    public void loadContentOrOpenChar() {
+        if (pref.getBoolean(PREF_FIRST_RUN, true)) {
+            Intent intent = new Intent(this, LoadingActivity.class);
+            startActivityForResult(intent, REQUEST_LOAD);
+        } else {
+            findCharacterToOpen();
+        }
+    }
+
     /**
      * Called by SummaryMainFragment after it's done creating views
      */
     public void findCharacterToOpen() {
         CharDao dataSource = new CharDao(this);
 
-        SharedPreferences pref = getSharedPreferences(PREF, MODE_PRIVATE);
         long lastOpenedCharId = pref.getLong(PREF_OPENED_CHARACTER, 0);
         if (lastOpenedCharId != 0) {
             CharBase lastOpenedChar = dataSource.findById(lastOpenedCharId);
@@ -116,7 +134,7 @@ public class SummaryActivity extends FragmentActivity implements PagerActivity<C
                 open(lastOpenedChar);
             } else {
                 pref = getSharedPreferences(PREF, MODE_PRIVATE);
-                pref.edit().putLong(PREF_OPENED_CHARACTER, 0).commit();
+                pref.edit().putLong(PREF_OPENED_CHARACTER, 0).apply();
                 selectOrCreateCharacter(dataSource);
             }
         } else {
@@ -129,8 +147,7 @@ public class SummaryActivity extends FragmentActivity implements PagerActivity<C
     @SuppressWarnings("unchecked")
     private void open(CharBase base) {
         this.charSummary = new CharSummary(this, base); //TODO replace by a "re-calculate" so the reference doesn't change
-        SharedPreferences pref = getSharedPreferences(PREF, MODE_PRIVATE);
-        pref.edit().putLong(PREF_OPENED_CHARACTER, charSummary.getBase().getId()).commit();
+        pref.edit().putLong(PREF_OPENED_CHARACTER, charSummary.getBase().getId()).apply();
         refreshUI();
     }
 

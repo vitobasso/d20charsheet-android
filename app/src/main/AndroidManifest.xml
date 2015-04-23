@@ -88,6 +88,11 @@
             android:name=".activity.select.SelectBooksActivity"
             android:label="@string/rule_books"/>
 
+        <activity
+            android:name=".activity.LoadingActivity"
+            android:label="@string/loading"/>
+
+
     </application>
 
 </manifest>

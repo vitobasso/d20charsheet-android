@@ -101,7 +101,7 @@ def createTraitsWriter(outf):
 
 def writeTraitRow(writer, row, level, name):
     global traitCount
-    traitCount += 1
+    traitCount += 1 #TODO usar como unicidade: rulebook_id + name
     row = dict(id=traitCount, rulebook_id=row['rulebook_id'], page=row['page'], class_id=row['id'], level=level, name=name)
     writer.writerow(row)
 
