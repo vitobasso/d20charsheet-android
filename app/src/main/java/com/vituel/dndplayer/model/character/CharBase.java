@@ -123,14 +123,27 @@ public class CharBase extends AbstractEntity {
         modifiers.add(new AbilityModifier(ModifierSource.STR, HIT));
         modifiers.add(new AbilityModifier(ModifierSource.STR, DAMAGE));
         modifiers.add(new AbilityModifier(ModifierSource.DEX, INIT));
+        setAbilityMods(modifiers);
+    }
 
-        //skills
+    public void createAbilityModsForNewSkills() {
         for (CharSkill charSkill : getSkills()) {
             Skill skill = charSkill.getSkill();
-            modifiers.add(new AbilityModifier(skill.getKeyAbility(), SKILL, skill.getName()));
+            if(!hasAbilityModForSkill(skill)){
+                AbilityModifier skillMod = new AbilityModifier(skill.getKeyAbility(), SKILL, skill.getName());
+                addAbilityMod(skillMod);
+            }
         }
+    }
 
-        setAbilityMods(modifiers);
+    private boolean hasAbilityModForSkill(Skill skill) {
+        List<AbilityModifier> allMods = getAbilityMods();
+        for (AbilityModifier mod : allMods) {
+            if (mod.getTarget() == SKILL && skill.getName().equals(mod.getVariation())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void createStandardAttacks() {
@@ -403,6 +416,14 @@ public class CharBase extends AbstractEntity {
 
     public void setAbilityMods(List<AbilityModifier> abilityMods) {
         this.abilityMods = abilityMods;
+    }
+
+    public void addAbilityMod(AbilityModifier abilityMod) {
+        List<AbilityModifier> mods = getAbilityMods();
+        if (mods == null) {
+            mods = new ArrayList<>();
+        }
+        mods.add(abilityMod);
     }
 
     public DamageTaken getDamageTaken() {

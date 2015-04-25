@@ -125,7 +125,7 @@
     <string name="equip">Equipment</string>
     <string name="attacks">Attacks</string>
     <string name="attack_edit">Edit Attack</string>
-    <string name="modlinks">Modifier Links</string>
+    <string name="bonuses">Bonuses</string>
     <string name="modlink_edit">Edit Modifier Links</string>
     <string name="class_select">Manage Classes</string>
     <string name="class_remove">Remove Class</string>

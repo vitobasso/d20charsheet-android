@@ -84,17 +84,20 @@ public class EditCharSkillsFragment extends AbstractSimpleListFragment<CharBase,
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        super.onActivityResult(requestCode, resultCode, intent);
         switch (requestCode) {
             case REQUEST_SELECT:
                 switch (resultCode) {
                     case RESULT_OK:
-                        Skill selected = (Skill) data.getSerializableExtra(EXTRA_SELECTED);
+                        Skill selected = (Skill) intent.getSerializableExtra(EXTRA_SELECTED);
 
                         //update list
                         CharSkill charSkill = new CharSkill(selected);
                         listData.add(charSkill);
+
+                        //udpate ability modifiers
+                        data.createAbilityModsForNewSkills();
 
                         update();
                 }

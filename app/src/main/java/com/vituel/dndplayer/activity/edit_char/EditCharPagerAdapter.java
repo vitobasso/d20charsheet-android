@@ -71,7 +71,7 @@ public class EditCharPagerAdapter extends FragmentPagerAdapter {
                 resId = R.string.attacks;
                 break;
             case PAGE_MODIFIERS:
-                resId = R.string.modlinks;
+                resId = R.string.bonuses;
                 break;
             case PAGE_PERSONAL:
                 resId = R.string.personality;

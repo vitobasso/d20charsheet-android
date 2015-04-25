@@ -12,7 +12,10 @@ import com.vituel.dndplayer.util.i18n.EnumI18n;
  * DEX to HIT
  * 1.5xSTR to DAMAGE
  * WIS to AC
- * <p/>
+ *
+ * Unusual bonus refference:
+ * http://www.giantitp.com/forums/showthread.php?125732-3-x-X-stat-to-Y-bonus
+ *
  * Created by Victor on 05/04/2015.
  */
 public class AbilityModifier extends Modifier {
