@@ -89,7 +89,7 @@ public class ModifierDao extends AbstractAssociationDao<Modifier> {
     }
 
     @Override
-    protected Modifier fromCursor(Cursor cursor) {
+    public Modifier fromCursor(Cursor cursor) {
 
         Modifier e = new Modifier();
         e.setId(cursor.getLong(0));

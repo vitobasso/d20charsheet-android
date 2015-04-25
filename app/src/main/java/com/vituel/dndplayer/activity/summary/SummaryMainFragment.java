@@ -142,9 +142,7 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
                 //edit opened character
                 Intent intent = new Intent(activity, EditCharActivity.class);
                 intent.putExtra(EXTRA_EDITED, base);
-                int page = base.getRace() == null || base.getClassLevels().isEmpty() || base.getExperienceLevel() == 0 ?
-                        EditCharPagerAdapter.PAGE_BASIC : EditCharPagerAdapter.PAGE_EQUIP;
-                intent.putExtra(EXTRA_PAGE, page);
+                intent.putExtra(EXTRA_PAGE, EditCharPagerAdapter.PAGE_BASIC);
                 activity.startActivityForResult(intent, REQUEST_EDIT);
 
                 return true;

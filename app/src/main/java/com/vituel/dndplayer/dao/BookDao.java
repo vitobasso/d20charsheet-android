@@ -69,7 +69,7 @@ public class BookDao extends AbstractEntityDao<Book> {
     }
 
     @Override
-    protected Book fromCursor(Cursor cursor) {
+    public Book fromCursor(Cursor cursor) {
         Book book = new Book();
         book.setId(cursor.getInt(0));
         book.setName(cursor.getString(2));

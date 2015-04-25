@@ -71,7 +71,7 @@ public class ActiveConditionDao extends AbstractDao<Condition> {
     }
 
     @Override
-    protected Condition fromCursor(Cursor cursor) {
+    public Condition fromCursor(Cursor cursor) {
 
         Condition cond = new Condition();
         cond.setName(cursor.getString(2));

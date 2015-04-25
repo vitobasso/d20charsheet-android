@@ -68,7 +68,7 @@ public class CharSkillDao extends AbstractAssociationDao<CharSkill> {
     }
 
     @Override
-    protected CharSkill fromCursor(Cursor cursor) {
+    public CharSkill fromCursor(Cursor cursor) {
         long id = cursor.getLong(2);
 
         SkillDao skillDao = new SkillDao(context, database);

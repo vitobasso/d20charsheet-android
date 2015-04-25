@@ -11,6 +11,7 @@ import com.vituel.dndplayer.model.item.SlotType;
 import com.vituel.dndplayer.model.item.WeaponItem;
 import com.vituel.dndplayer.model.item.WeaponProperties;
 
+import java.text.MessageFormat;
 import java.util.List;
 
 import static com.vituel.dndplayer.model.item.Item.ItemType;
@@ -98,7 +99,7 @@ public class ItemDao extends AbstractEntityDao<Item> {
     }
 
     @Override
-    protected Item fromCursor(Cursor cursor) {
+    public Item fromCursor(Cursor cursor) {
 
         //find type
         ItemType itemType;
@@ -125,8 +126,17 @@ public class ItemDao extends AbstractEntityDao<Item> {
     }
 
     public List<Item> findBySlot(SlotType slotType) {
-        String query = String.format("%s='%s'", COLUMN_SLOT_TYPE, slotType.toString());
-        Cursor cursor = database.query(TABLE, allColumns(), query, null, null, null, null);
+        Cursor cursor = findBySlotCursor(slotType);
         return cursorToList(cursor);
+    }
+
+    public Cursor findBySlotCursor(SlotType slotType) {
+        String query = String.format("%s='%s'", COLUMN_SLOT_TYPE, slotType.toString());
+        return database.query(TABLE, allColumns(), query, null, null, null, null);
+    }
+
+    public Cursor filterByNameAndSlotCursor(SlotType slotType, String name) {
+        String query = MessageFormat.format("{0} like ''%{1}%'' and {2}={3}", COLUMN_NAME, name, COLUMN_SLOT_TYPE, slotType.toString());
+        return database.query(TABLE, allColumns(), query, null, null, null, null);
     }
 }

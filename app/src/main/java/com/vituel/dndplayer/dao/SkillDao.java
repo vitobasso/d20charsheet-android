@@ -63,7 +63,7 @@ public class SkillDao extends AbstractEntityDao<Skill> {
     }
 
     @Override
-    protected Skill fromCursor(Cursor cursor) {
+    public Skill fromCursor(Cursor cursor) {
 
         //basic fields
         long id = cursor.getLong(0);

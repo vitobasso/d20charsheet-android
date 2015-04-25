@@ -55,7 +55,7 @@ public class FeatDao extends AbstractEntityDao<Feat> {
     }
 
     @Override
-    protected Feat fromCursor(Cursor cursor) {
+    public Feat fromCursor(Cursor cursor) {
         return effectDao.loadEffectSource(cursor, new Feat(), 0, 1, 2);
     }
 

@@ -70,7 +70,7 @@ public class ClassDao extends AbstractEntityDao<Clazz> {
     }
 
     @Override
-    protected Clazz fromCursor(Cursor cursor) {
+    public Clazz fromCursor(Cursor cursor) {
 
         Clazz result = new Clazz();
         result.setId(cursor.getLong(0));

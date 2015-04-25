@@ -78,7 +78,7 @@ public class ClassTraitDao extends AbstractAssociationDao<ClassTrait> {
     }
 
     @Override
-    protected ClassTrait fromCursor(Cursor cursor) {
+    public ClassTrait fromCursor(Cursor cursor) {
         ClassTrait classTrait = effectDao.loadEffectSource(cursor, new ClassTrait(), 0, 1, 3);
         classTrait.setLevel(cursor.getInt(4));
         classTrait.setOverridenTraitName(cursor.getString(5));

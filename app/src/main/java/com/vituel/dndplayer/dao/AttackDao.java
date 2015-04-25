@@ -76,7 +76,7 @@ public class AttackDao extends AbstractDao<Attack> {
     }
 
     @Override
-    protected Attack fromCursor(Cursor cursor) {
+    public Attack fromCursor(Cursor cursor) {
 
         int penalty = cursor.getInt(1);
         Attack.WeaponReference refType = valueOf(cursor.getString(2));

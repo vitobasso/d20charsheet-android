@@ -7,7 +7,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListAdapter;
-import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.AbstractListFragment;
@@ -91,18 +90,14 @@ public class SummaryTempEffectsFragment extends AbstractListFragment<CharSummary
     private class Adapter extends EffectArrayAdapter<CharTempEffect> {
 
         public Adapter(List<CharTempEffect> objects) {
-            super(activity, R.layout.effect_row, objects);
+            super(activity, objects);
         }
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             ViewGroup group = (ViewGroup) super.getView(position, convertView, parent);
+
             CharTempEffect effect = listData.get(position);
-
-            TextView textView = (TextView) group.findViewById(R.id.name);
-            textView.setText(effect.getName());
-
-            //set transparency
             View effectView = group.findViewById(R.id.effect);
             effectView.setAlpha(effect.isActive() ? 1 : .3f);
 

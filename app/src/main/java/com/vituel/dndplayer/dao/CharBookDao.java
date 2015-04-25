@@ -65,7 +65,7 @@ public class CharBookDao extends AbstractAssociationDao<Book> {
     }
 
     @Override
-    protected Book fromCursor(Cursor cursor) {
+    public Book fromCursor(Cursor cursor) {
         return bookDao.findById(cursor.getInt(2));
     }
 }

@@ -59,7 +59,7 @@ public class RaceDao extends AbstractEntityDao<Race> {
     }
 
     @Override
-    protected Race fromCursor(Cursor cursor) {
+    public Race fromCursor(Cursor cursor) {
         Race result = effectDao.loadEffectSource(cursor, new Race(), 0, 1, 2);
 
         //racial traits

@@ -61,7 +61,7 @@ public class EffectDao extends AbstractEntityDao<Effect> {
     }
 
     @Override
-    protected Effect fromCursor(Cursor cursor) {
+    public Effect fromCursor(Cursor cursor) {
 
         //basic fields
         Effect result = new Effect();

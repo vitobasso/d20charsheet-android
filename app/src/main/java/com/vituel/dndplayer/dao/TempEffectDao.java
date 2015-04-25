@@ -55,7 +55,7 @@ public class TempEffectDao extends AbstractEntityDao<TempEffect> {
     }
 
     @Override
-    protected TempEffect fromCursor(Cursor cursor) {
+    public TempEffect fromCursor(Cursor cursor) {
         return effectDao.loadEffectSource(cursor, new TempEffect(), 0, 1, 2);
     }
 

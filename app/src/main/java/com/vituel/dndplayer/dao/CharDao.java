@@ -268,7 +268,7 @@ public class CharDao extends AbstractEntityDao<CharBase> {
     }
 
     @Override
-    protected CharBase fromCursor(Cursor cursor) {
+    public CharBase fromCursor(Cursor cursor) {
 
         CharBase c = new CharBase();
         c.setId(cursor.getLong(0));

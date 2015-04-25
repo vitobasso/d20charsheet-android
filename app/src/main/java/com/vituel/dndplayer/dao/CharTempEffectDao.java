@@ -69,7 +69,7 @@ public class CharTempEffectDao extends AbstractAssociationDao<CharTempEffect> {
     }
 
     @Override
-    protected CharTempEffect fromCursor(Cursor cursor) {
+    public CharTempEffect fromCursor(Cursor cursor) {
 
         //basic fields
         CharTempEffect result = new CharTempEffect();

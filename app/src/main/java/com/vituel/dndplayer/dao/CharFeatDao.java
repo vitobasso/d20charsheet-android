@@ -63,7 +63,7 @@ public class CharFeatDao extends AbstractAssociationDao<Feat> {
     }
 
     @Override
-    protected Feat fromCursor(Cursor cursor) {
+    public Feat fromCursor(Cursor cursor) {
         FeatDao featDao = new FeatDao(context, database);
         return featDao.findById(cursor.getLong(2));
     }

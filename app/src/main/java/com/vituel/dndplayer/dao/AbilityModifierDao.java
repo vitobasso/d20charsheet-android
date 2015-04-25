@@ -75,7 +75,7 @@ public class AbilityModifierDao extends AbstractAssociationDao<AbilityModifier> 
     }
 
     @Override
-    protected AbilityModifier fromCursor(Cursor cursor) {
+    public AbilityModifier fromCursor(Cursor cursor) {
 
         AbilityModifier e = new AbilityModifier();
         e.setId(cursor.getLong(0));

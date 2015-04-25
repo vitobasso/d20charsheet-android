@@ -69,7 +69,7 @@ public class CharClassDao extends AbstractAssociationDao<ClassLevel> {
     }
 
     @Override
-    protected ClassLevel fromCursor(Cursor cursor) {
+    public ClassLevel fromCursor(Cursor cursor) {
         ClassLevel classLevel = new ClassLevel();
         long classId = cursor.getLong(2);
         classLevel.setLevel(cursor.getInt(3));

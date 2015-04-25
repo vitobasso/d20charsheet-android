@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.vituel.dndplayer.model.AbstractEntity;
 
+import java.text.MessageFormat;
 import java.util.Collection;
 
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
@@ -51,6 +52,11 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
         }
         cursor.close();
         return result;
+    }
+
+    public final Cursor filterByNameCursor(String name) {
+        String query = MessageFormat.format("{0} like ''%{1}%''", COLUMN_NAME, name);
+        return listForQueryCursor(query);
     }
 
     public final void save(Collection<T> list) {

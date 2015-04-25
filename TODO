@@ -42,12 +42,6 @@ IMPROVEMENTS
 #performance
 - avoid full queries when opening char
 
-#UI standards
-- unify remove behavior: some screens use rubbish bin icon, others use long press popup menu
-    - swipe (nao combina com pager :/)
-        https://code.google.com/p/dashclock/source/browse/main/src/main/java/com/google/android/apps/dashclock/ui/SwipeDismissListViewTouchListener.java
-        https://github.com/47deg/android-swipelistview
-
 
 BUGS
 
@@ -61,20 +55,22 @@ BUGS
 - can't remove trained skills (CAB + EditText bug)
 - null pointer after deleting item/feat/etc used by char
 - skills not taking ability bonus in summary
+- crash when editing entity w/ enum, when translated (can't find enum from translated string)
 
 
 FEATURES
 
 - import/export
+    - library
+        - how to preserve char with dependencies to removed stuff?
+    - char
 - translate to PT
 - port to tablet
-- loading screen on first run
 - baggage (+ weight calculation)
 - spells
 - xp
 - animal companion, mount, followers
-- library
-- to pdf
+- export to pdf
 
 
 REFACTOR

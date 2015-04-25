@@ -1,7 +1,12 @@
 package com.vituel.dndplayer.activity.abstraction;
 
 import android.app.Activity;
+import android.app.LoaderManager;
+import android.content.Context;
+import android.content.CursorLoader;
 import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.ActionMode;
@@ -9,12 +14,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.CursorAdapter;
+import android.widget.FilterQueryProvider;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.ResourceCursorAdapter;
 import android.widget.SearchView;
 
 import com.vituel.dndplayer.R;
@@ -31,6 +37,7 @@ import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
 import static com.vituel.dndplayer.util.ActivityUtil.defaultOnOptionsItemSelected;
+import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
@@ -44,13 +51,12 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
     //parameter
     protected int request;
 
-    //data
-    protected List<T> fullList, filteredList;
-    protected String filter;
-
     //ui
     protected ListView listView;
     protected SearchView searchView;
+
+    protected Activity activity = this;
+    private LoaderObserver loaderObserver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,15 +66,17 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
 
         onPrePopulate();
 
-        listView = (ListView) findViewById(R.id.list);
         searchView = (SearchView) findViewById(R.id.search);
-
-        refresh();
-
         searchView.setOnQueryTextListener(new SearchListener());
+
+        listView = (ListView) findViewById(R.id.list);
+        listView.setAdapter(createAdapter());
         listView.setOnItemClickListener(new ClickListener());
         listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(new ContextualActionBarListener());
+
+        loaderObserver = new LoaderObserver();
+        getLoaderManager().initLoader(0, null, loaderObserver);
 
         setActionbarTitle(this, BOLD_FONT, getTitle());
     }
@@ -82,8 +90,8 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
 
         @Override
         public boolean onQueryTextChange(String newText) {
-            filter = newText;
-            updateUI();
+            CursorAdapter adapter = (CursorAdapter) listView.getAdapter();
+            adapter.getFilter().filter(newText);
             return false;
         }
     }
@@ -92,7 +100,8 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
 
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            T selected = (T) listView.getItemAtPosition(position);
+            Cursor cursor = (Cursor) listView.getItemAtPosition(position);
+            T selected = getDataSource().fromCursor(cursor);
 
             if (request != REQUEST_EDIT) {
                 select(selected);
@@ -109,13 +118,7 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
                 switch (resultCode) {
                     case RESULT_OK:
                         T created = (T) data.getSerializableExtra(EXTRA_EDITED);
-
-                        //save to db
-                        AbstractEntityDao<T> dataSource = getDataSource();
-                        dataSource.save(created);
-                        dataSource.close();
-
-                        refresh();
+                        save(created);
                 }
                 break;
         }
@@ -131,66 +134,18 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
             case R.id.action_create:
-
-                //create new character
                 Intent intent = new Intent(this, getEditActivityClass());
                 startActivityForResult(intent, REQUEST_CREATE);
                 return true;
-
             default:
                 return defaultOnOptionsItemSelected(menuItem, this);
         }
     }
 
-    private void refresh() {
-        //update memory
-        AbstractEntityDao<T> dataSource = getDataSource();
-        fullList = onQueryDB(dataSource);
-        dataSource.close();
-
-        //update ui
-        updateUI();
-    }
-
-    private void updateUI() {
-        filteredList = filter();
-        listView.setAdapter(createAdapter(filteredList));
-    }
-
-    private List<T> filter() {
-        if (filter == null || filter.isEmpty()) {
-            return fullList;
-        } else {
-            List<T> filtered = new ArrayList<T>();
-            for (T element : fullList) {
-                if (element.getName().toLowerCase().contains(filter.toLowerCase().trim())) {
-                    filtered.add(element);
-                }
-            }
-            return filtered;
-        }
-    }
-
-    protected abstract AbstractEntityDao<T> getDataSource();
-
-    protected abstract Class<? extends AbstractEditActivity> getEditActivityClass();
-
-    protected void onPrePopulate() {
-    }
-
-    protected void onPreFinish(Intent resultIntent) {
-    }
-
-    protected List<T> onQueryDB(AbstractEntityDao<T> dataSource) {
-        return dataSource.listAll();
-    }
-
-
     private class ContextualActionBarListener implements AbsListView.MultiChoiceModeListener {
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            // Inflate the menu for the CAB
             MenuInflater inflater = mode.getMenuInflater();
             inflater.inflate(R.menu.list_selection, menu);
             return true;
@@ -204,7 +159,7 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
                     mode.finish();
                 case R.id.action_remove:
                     removeSelected();
-                    mode.finish(); // Action picked, so close the CAB
+                    mode.finish();
                 default:
                     return false;
             }
@@ -219,39 +174,83 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
 
         @Override
         public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            // Here you can perform updates to the CAB due to
-            // an invalidate() request
             return false;
         }
 
         @Override
-        public void onDestroyActionMode(ActionMode mode) {
-            // Here you can make any necessary updates to the activity when
-            // the CAB is removed. By default, selected items are deselected/unchecked.
+        public void onDestroyActionMode(ActionMode mode) {}
+    }
+
+    protected ListAdapter createAdapter(){
+        ResourceCursorAdapter adapter = new ResourceCursorAdapter(this, getRowLayout(), null, false) {
+            @Override
+            public void bindView(View view, Context context, Cursor cursor) {
+                T entity = getDataSource().fromCursor(cursor);
+                onPopulateRow(view, entity);
+                setFontRecursively(activity, view, MAIN_FONT);
+            }
+        };
+        adapter.setFilterQueryProvider(new FilterQueryProvider() {
+            @Override
+            public Cursor runQuery(CharSequence constraint) {
+                //TODO should move to Loader to run in background?
+                return onQueryFiltered(getDataSource(), constraint.toString());
+            }
+
+        });
+        return adapter;
+    }
+
+    private class LoaderObserver implements LoaderManager.LoaderCallbacks<Cursor> {
+
+        @Override
+        public Loader<Cursor> onCreateLoader(int id, Bundle args) {
+            return new CursorLoader(activity){
+                @Override
+                public Cursor loadInBackground() {
+                    return onQuery(getDataSource());
+                }
+            };
+        }
+
+        @Override
+        public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
+            CursorAdapter adapter = (CursorAdapter) listView.getAdapter();
+            adapter.changeCursor(data);
+        }
+
+        @Override
+        public void onLoaderReset(Loader<Cursor> loader) {
+            CursorAdapter adapter = (CursorAdapter) listView.getAdapter();
+            adapter.changeCursor(null);
         }
     }
+
+    private T getElementAt(int position) {
+        CursorAdapter adapter = (CursorAdapter) listView.getAdapter();
+        Cursor cursor = (Cursor) adapter.getItem(position);
+        return getDataSource().fromCursor(cursor);
+    }
+
 
     private void editSelected() {
         SparseBooleanArray checked = listView.getCheckedItemPositions();
         for (int i = 0; i < checked.size(); i++) {
-            if (checked.get(i)) {
-                T element = filteredList.get(i);
-                edit(element);
-                break;
-            }
+            int position = checked.keyAt(i);
+            T element = getElementAt(position);
+            edit(element);
+            break;
         }
     }
 
     private void removeSelected() {
-        int len = listView.getCount();
         SparseBooleanArray checked = listView.getCheckedItemPositions();
 
-        //choose elements for removal
+        //mark elements for removal
         List<T> toRemove = new ArrayList<>();
-        for (int i = 0; i < len; i++) {
-            if (checked.get(i)) {
-                toRemove.add(filteredList.get(i));
-            }
+        for (int i = 0; i < checked.size(); i++) {
+            int position = checked.keyAt(i);
+            toRemove.add(getElementAt(position));
         }
 
         //actually remove elements
@@ -259,7 +258,22 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
             remove(element);
         }
 
-        updateUI();
+    }
+
+    private void edit(T element) {
+        //call edit activity
+        Intent intent = new Intent(activity, getEditActivityClass());
+        intent.putExtra(EXTRA_SELECTED, element);
+        startActivityForResult(intent, REQUEST_CREATE);
+    }
+
+    private void remove(T element) {
+        //deleteAll from db
+        AbstractEntityDao<T> dataSource = getDataSource();
+        dataSource.remove(element);
+        dataSource.close();
+
+        getLoaderManager().restartLoader(0, null, loaderObserver);
     }
 
     private void select(T element) {
@@ -271,32 +285,39 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
         finish();
     }
 
-    private void edit(T element) {
-        //call edit activity
-        Intent intent = new Intent(AbstractSelectActivity.this, getEditActivityClass());
-        intent.putExtra(EXTRA_SELECTED, element);
-        startActivityForResult(intent, REQUEST_CREATE);
-    }
-
-    private void remove(T element) {
-        //deleteAll from db
+    private void save(T created) {
+        //save to db
         AbstractEntityDao<T> dataSource = getDataSource();
-        dataSource.remove(element);
+        dataSource.save(created);
         dataSource.close();
 
-        //update ui
-        fullList.remove(element);
+        getLoaderManager().restartLoader(0, null, loaderObserver);
     }
 
-    protected ListAdapter createAdapter(List<T> list){
-        return new ArrayAdapter<T>(this, R.layout.simple_row, R.id.name, list) {
-            @Override
-            public View getView(int position, View convertView, ViewGroup parent) {
-                View v = super.getView(position, convertView, parent);
-                setFontRecursively(AbstractSelectActivity.this, v, MAIN_FONT);
-                return v;
-            }
-        };
+    protected abstract AbstractEntityDao<T> getDataSource();
+
+    protected abstract Class<? extends AbstractEditActivity> getEditActivityClass();
+
+    protected int getRowLayout() {
+        return R.layout.simple_row;
+    }
+
+    protected void onPopulateRow(View view, T entity) {
+        populateTextView(view, R.id.name, entity.getName());
+    }
+
+    protected void onPrePopulate() {
+    }
+
+    protected void onPreFinish(Intent resultIntent) {
+    }
+
+    protected Cursor onQuery(AbstractEntityDao<T> dataSource) {
+        return dataSource.listAllCursor();
+    }
+
+    protected Cursor onQueryFiltered(AbstractEntityDao<T> dataSource, String filter) {
+        return dataSource.filterByNameCursor(filter);
     }
 
 }

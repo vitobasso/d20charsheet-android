@@ -73,7 +73,7 @@ public class WeaponDao extends AbstractAssociationDao<WeaponProperties> {
     }
 
     @Override
-    protected WeaponProperties fromCursor(Cursor cursor) {
+    public WeaponProperties fromCursor(Cursor cursor) {
 
         long id = cursor.getLong(0);
         DiceRoll damage = new DiceRoll(cursor.getString(2));

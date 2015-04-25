@@ -79,7 +79,7 @@ public class AttackRoundDao extends AbstractDao<AttackRound> {
     }
 
     @Override
-    protected AttackRound fromCursor(Cursor cursor) {
+    public AttackRound fromCursor(Cursor cursor) {
         int id = cursor.getInt(0);
         String name = cursor.getString(2);
         assert id > 0;

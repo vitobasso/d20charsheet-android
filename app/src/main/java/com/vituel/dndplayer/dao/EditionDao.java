@@ -61,7 +61,7 @@ public class EditionDao extends AbstractEntityDao<Edition> {
     }
 
     @Override
-    protected Edition fromCursor(Cursor cursor) {
+    public Edition fromCursor(Cursor cursor) {
         Edition edition = new Edition();
         edition.setId(cursor.getInt(0));
         edition.setName(cursor.getString(1));

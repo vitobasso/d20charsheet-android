@@ -67,7 +67,7 @@ public class RaceTraitDao extends AbstractAssociationDao<RaceTrait> {
     }
 
     @Override
-    protected RaceTrait fromCursor(Cursor cursor) {
+    public RaceTrait fromCursor(Cursor cursor) {
         return effectDao.loadEffectSource(cursor, new RaceTrait(), 0, 1, 3);
     }
 
