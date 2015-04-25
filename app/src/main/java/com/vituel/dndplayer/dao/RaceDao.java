@@ -68,4 +68,12 @@ public class RaceDao extends AbstractEntityDao<Race> {
 
         return result;
     }
+
+    @Override
+    public Race fromCursorBrief(Cursor cursor) {
+        Race result = new Race();
+        result.setId(cursor.getLong(0));
+        result.setName(cursor.getString(1));
+        return result;
+    }
 }

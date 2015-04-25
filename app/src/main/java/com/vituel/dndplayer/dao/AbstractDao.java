@@ -89,4 +89,8 @@ public abstract class AbstractDao<T> {
 
     public abstract T fromCursor(Cursor cursor);
 
+    public T fromCursorBrief(Cursor cursor) {
+        return fromCursor(cursor);
+    }
+
 }

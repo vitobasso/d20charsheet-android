@@ -185,7 +185,7 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
         ResourceCursorAdapter adapter = new ResourceCursorAdapter(this, getRowLayout(), null, false) {
             @Override
             public void bindView(View view, Context context, Cursor cursor) {
-                T entity = getDataSource().fromCursor(cursor);
+                T entity = getDataSource().fromCursorBrief(cursor);
                 onPopulateRow(view, entity);
                 setFontRecursively(activity, view, MAIN_FONT);
             }

@@ -40,6 +40,7 @@ IMPROVEMENTS
 - source book
 
 #performance
+- load partially on select activity (only id, name, effects). load the rest after selection. (specially classes/races which have traits)
 - avoid full queries when opening char
 
 
@@ -54,7 +55,6 @@ BUGS
 - nullpointer after renaming equiped weapon (at Attack.applyModifier, DAMAGE, getWeapon() is null)
 - can't remove trained skills (CAB + EditText bug)
 - null pointer after deleting item/feat/etc used by char
-- skills not taking ability bonus in summary
 - crash when editing entity w/ enum, when translated (can't find enum from translated string)
 
 

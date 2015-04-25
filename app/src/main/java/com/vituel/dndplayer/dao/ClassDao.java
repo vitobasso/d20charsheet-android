@@ -72,9 +72,7 @@ public class ClassDao extends AbstractEntityDao<Clazz> {
     @Override
     public Clazz fromCursor(Cursor cursor) {
 
-        Clazz result = new Clazz();
-        result.setId(cursor.getLong(0));
-        result.setName(cursor.getString(1));
+        Clazz result = fromCursorBrief(cursor);
         result.setAttackProg(AttackProgression.valueOf(cursor.getString(2)));
         result.setFortitudeProg(ResistProgression.valueOf(cursor.getString(3)));
         result.setReflexProg(ResistProgression.valueOf(cursor.getString(4)));
@@ -85,7 +83,7 @@ public class ClassDao extends AbstractEntityDao<Clazz> {
 
         //organize traits by level
         result.setTraits(new ArrayList<List<ClassTrait>>());
-        for(ClassTrait trait : traits){
+        for (ClassTrait trait : traits) {
             List<ClassTrait> listOfSpecificLevel = getAndIfOverflowsCreate(result.getTraits(), trait.getLevel() - 1);
             listOfSpecificLevel.add(trait);
 
@@ -94,6 +92,14 @@ public class ClassDao extends AbstractEntityDao<Clazz> {
             trait.getEffect().setSourceName(sourceName);
         }
 
+        return result;
+    }
+
+    @Override
+    public Clazz fromCursorBrief(Cursor cursor) {
+        Clazz result = new Clazz();
+        result.setId(cursor.getLong(0));
+        result.setName(cursor.getString(1));
         return result;
     }
 }
