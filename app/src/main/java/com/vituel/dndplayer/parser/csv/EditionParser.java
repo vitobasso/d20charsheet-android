@@ -9,7 +9,7 @@ import com.vituel.dndplayer.parser.exception.ParseFieldException;
 /**
  * Created by Victor on 12/04/2015.
  */
-public class EditionParser extends AbstractSimpleParser<Edition> {
+public class EditionParser extends AbstractCsvParser<Edition> {
 
     public EditionParser(Context ctx, String filePath) {
         super(ctx, filePath);

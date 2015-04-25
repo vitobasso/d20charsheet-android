@@ -1,12 +1,12 @@
-package com.vituel.dndplayer.parser.old_txt;
+package com.vituel.dndplayer.parser.csv;
 
 import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.effect.Condition;
 import com.vituel.dndplayer.model.effect.Modifier;
 import com.vituel.dndplayer.model.effect.ModifierTarget;
 import com.vituel.dndplayer.model.effect.ModifierType;
+import com.vituel.dndplayer.parser.exception.ParseModifierException;
 
-import java.text.ParseException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,11 +17,11 @@ import static com.vituel.dndplayer.model.effect.Condition.Predicate;
  */
 public class ModifierParser {
 
-    public Modifier parse(String line) throws ParseException {
+    public Modifier parse(String str) throws ParseModifierException {
         // TARGET(variation) amount type [condition]
         //(( 2  )((  4   ))) ( 5 ) ( 6 ) ((   8   ))
         Pattern p = Pattern.compile("^((\\w+)(\\((.*)\\))?)( [\\d|\\.|d|\\-|\\+]*)?( \\w+)?( \\[(.+)\\])?");
-        Matcher m = p.matcher(line);
+        Matcher m = p.matcher(str);
         if (m.find()) {
 
             //find parts
@@ -51,11 +51,11 @@ public class ModifierParser {
                 return new Modifier(target, variationStr, amount, type, cond);
 
             } catch (IllegalArgumentException e) {
-                throw new ParseException("Unknown modifier format: " + line, 0);
+                throw new ParseModifierException("Unknown modifier format: " + str);
             }
 
         } else {
-            throw new ParseException("Unknown modifier format: " + line, 0);
+            throw new ParseModifierException("Unknown modifier format: " + str);
         }
     }
 

@@ -44,7 +44,7 @@ public class LoadingActivity extends Activity implements LoaderObserver {
         @Override
         protected Void doInBackground(Void... params) {
             LibraryLoader loader = new LibraryLoader(activity, activity);
-            progressBar.setMax(loader.getTotalTables());
+            progressBar.setMax(loader.getTotalFiles());
             loader.loadDB();
             return null;
         }
@@ -56,20 +56,20 @@ public class LoadingActivity extends Activity implements LoaderObserver {
     }
 
     @Override
-    public void onStartLoadingTable(final String className) {
+    public void onStartLoadingFile(final String fileName) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
                 int prog = progressBar.getProgress();
                 progressBar.setProgress(prog + 1);
                 currentRow = inflate(activity, R.id.list, R.layout.progress_row);
-                populateTextView(currentRow, R.id.table, className);
+                populateTextView(currentRow, R.id.table, fileName);
             }
         });
     }
 
     @Override
-    public void onFinishLoadingEntity(final String name, final int count) {
+    public void onFinishLoadingRow(final String name, final int count) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {

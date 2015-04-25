@@ -5,8 +5,8 @@ package com.vituel.dndplayer.util.gui;
  */
 public interface LoaderObserver {
 
-    void onStartLoadingTable(String className);
+    void onStartLoadingFile(String fileName);
 
-    void onFinishLoadingEntity(String name, int count);
+    void onFinishLoadingRow(String name, int count);
 
 }

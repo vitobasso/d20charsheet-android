@@ -8,7 +8,7 @@ import com.vituel.dndplayer.parser.exception.ParseFieldException;
 /**
  * Created by Victor on 21/04/2015.
  */
-public class ClassParser extends AbstractSimpleParser<Clazz> {
+public class ClassParser extends AbstractCsvParser<Clazz> {
 
     public ClassParser(Context ctx, String path) {
         super(ctx, path);

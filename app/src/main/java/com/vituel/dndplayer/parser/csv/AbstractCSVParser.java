@@ -19,7 +19,7 @@ import au.com.bytecode.opencsv.CSVReader;
 /**
  * Created by Victor on 26/03/14.
  */
-public abstract class AbstractSimpleParser<T> extends AbstractParser implements Closeable {
+public abstract class AbstractCsvParser<T> extends AbstractParser implements Closeable {
 
     private Context ctx;
     private String filePath;
@@ -29,7 +29,7 @@ public abstract class AbstractSimpleParser<T> extends AbstractParser implements 
     private int count;
     private String[] nextLine;
 
-    public AbstractSimpleParser(Context ctx, String path) {
+    public AbstractCsvParser(Context ctx, String path) {
         this.ctx = ctx;
         filePath = path;
     }
@@ -127,12 +127,21 @@ public abstract class AbstractSimpleParser<T> extends AbstractParser implements 
         }
     }
 
+    public boolean readBoolean(String[] line, String column) throws ParseFieldException {
+        String str = readStringNullable(line, column);
+        return str != null && !str.isEmpty();
+    }
+
     public int getCount() {
         return count;
     }
 
     public String getFilePath() {
         return filePath;
+    }
+
+    public BiMap<Integer, String> getHeaders() {
+        return headers;
     }
 
     @Override

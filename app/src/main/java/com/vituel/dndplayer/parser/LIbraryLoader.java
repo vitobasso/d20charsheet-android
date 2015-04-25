@@ -12,8 +12,10 @@ import com.vituel.dndplayer.dao.EditionDao;
 import com.vituel.dndplayer.dao.FeatDao;
 import com.vituel.dndplayer.dao.ItemDao;
 import com.vituel.dndplayer.dao.RaceDao;
+import com.vituel.dndplayer.dao.SkillDao;
+import com.vituel.dndplayer.dao.TempEffectDao;
 import com.vituel.dndplayer.model.AbstractEntity;
-import com.vituel.dndplayer.parser.csv.AbstractSimpleParser;
+import com.vituel.dndplayer.parser.csv.AbstractCsvParser;
 import com.vituel.dndplayer.parser.csv.BookParser;
 import com.vituel.dndplayer.parser.csv.ClassParser;
 import com.vituel.dndplayer.parser.csv.ClassTraitParser;
@@ -21,6 +23,8 @@ import com.vituel.dndplayer.parser.csv.EditionParser;
 import com.vituel.dndplayer.parser.csv.FeatParser;
 import com.vituel.dndplayer.parser.csv.ItemParser;
 import com.vituel.dndplayer.parser.csv.RaceParser;
+import com.vituel.dndplayer.parser.csv.SkillParser;
+import com.vituel.dndplayer.parser.csv.TempEffectParser;
 import com.vituel.dndplayer.parser.exception.ParseEntityException;
 import com.vituel.dndplayer.util.gui.LoaderObserver;
 
@@ -42,32 +46,20 @@ public class LibraryLoader {
     }
 
     public void loadDB() {
-
         loadTable(new EditionParser(ctx, "data/csv/editions.csv"), new EditionDao(ctx));
         loadTable(new BookParser(ctx, "data/csv/books.csv"), new BookDao(ctx));
         loadTable(new RaceParser(ctx, "data/csv/races.csv"), new RaceDao(ctx));
-        loadTable(new ClassParser(ctx, "data/csv/classes_new.csv"), new ClassDao(ctx));
+        loadTable(new ClassParser(ctx, "data/csv/classes.csv"), new ClassDao(ctx));
         loadTable(new ClassTraitParser(ctx, "data/csv/class_traits.csv"), new ClassTraitDao(ctx));
         loadTable(new ItemParser(ctx, "data/csv/items.csv"), new ItemDao(ctx));
         loadTable(new FeatParser(ctx, "data/csv/feats.csv"), new FeatDao(ctx));
-
-
-        // OLD
-
-//        List<Skill> skills = new com.vituel.dndplayer.parser.old_txt.SkillParser(ctx, "data/skills.txt").read();
-//        SkillDao skillDao = new SkillDao(ctx);
-//        skillDao.save(skills);
-//        skillDao.close();
-//
-//        List<TempEffect> tempEffects = new com.vituel.dndplayer.parser.old_txt.TempEffectParser(ctx, "data/temp_effects.txt").read();
-//        TempEffectDao tempEffectDao = new TempEffectDao(ctx);
-//        tempEffectDao.save(tempEffects);
-//        tempEffectDao.close();
+        loadTable(new SkillParser(ctx, "data/csv/skills.csv"), new SkillDao(ctx));
+        loadTable(new TempEffectParser(ctx, "data/csv/temp_effects.csv"), new TempEffectDao(ctx));
     }
 
-    private <T extends AbstractEntity> void loadTable(AbstractSimpleParser<T> parser, AbstractDao<T> dao) {
+    private <T extends AbstractEntity> void loadTable(AbstractCsvParser<T> parser, AbstractDao<T> dao) {
         try {
-            observer.onStartLoadingTable(parser.getFilePath());
+            observer.onStartLoadingFile(parser.getFilePath());
             while (parser.hasNext()) {
                 loadEntity(parser, dao);
             }
@@ -78,11 +70,11 @@ public class LibraryLoader {
         }
     }
 
-    private <T extends AbstractEntity> void loadEntity(AbstractSimpleParser<T> parser, AbstractDao<T> dao) {
+    private <T extends AbstractEntity> void loadEntity(AbstractCsvParser<T> parser, AbstractDao<T> dao) {
         try {
             T entity = parser.next();
-            observer.onFinishLoadingEntity(entity.getName(), parser.getCount());
             dao.insert(entity);
+            observer.onFinishLoadingRow(entity.getName(), parser.getCount());
         } catch (ParseEntityException | SQLException e) {
             Log.w(TAG, e.getMessage());
         } catch (Exception e) {
@@ -90,7 +82,7 @@ public class LibraryLoader {
         }
     }
 
-    private <T> void close(AbstractSimpleParser<T> parser, AbstractDao<T> dao) {
+    private <T> void close(AbstractCsvParser<T> parser, AbstractDao<T> dao) {
         dao.close();
         try {
             parser.close();
@@ -99,8 +91,8 @@ public class LibraryLoader {
         }
     }
 
-    public int getTotalTables() {
-        return 7;
+    public int getTotalFiles() {
+        return 9;
     }
 
 }
