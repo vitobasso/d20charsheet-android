@@ -96,8 +96,7 @@ public class EditCharAbilityModsFragment extends AbstractSimpleListFragment<Char
                 dao.save(data.getId(), edited);
                 dao.close();
 
-                //update activity and ui
-                update();
+                refresh();
         }
     }
 

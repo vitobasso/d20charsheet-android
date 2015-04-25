@@ -40,10 +40,10 @@ public abstract class PagerFragment<T, A extends Activity & PagerActivity<T>> ex
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         setHasOptionsMenu(true);
-        update();
+        refresh();
     }
 
-    public final void update() {
+    public final void refresh() {
         data = activity.getData();
         onPopulate();
         onSetFont();

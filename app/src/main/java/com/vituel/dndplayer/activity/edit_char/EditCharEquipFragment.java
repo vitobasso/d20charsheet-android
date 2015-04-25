@@ -95,7 +95,7 @@ public class EditCharEquipFragment extends PagerFragment<CharBase, EditCharActiv
                         memSlot.setItem(item);
 
                         //update UI
-                        update();
+                        refresh();
                         break;
                 }
                 break;

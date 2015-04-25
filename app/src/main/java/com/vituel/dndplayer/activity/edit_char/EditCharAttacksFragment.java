@@ -106,8 +106,7 @@ public class EditCharAttacksFragment extends AbstractSimpleListFragment<CharBase
                 dao.save(edited, data.getId());
                 dao.close();
 
-                //update activity and ui
-                update();
+                refresh();
         }
     }
 

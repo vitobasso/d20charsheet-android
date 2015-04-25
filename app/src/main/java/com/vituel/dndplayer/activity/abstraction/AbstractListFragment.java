@@ -132,7 +132,7 @@ public abstract class AbstractListFragment<T, A extends Activity & PagerActivity
         for (E element : toRemove) {
             listData.remove(element);
         }
-        update();
+        refresh();
     }
 
 

@@ -161,7 +161,7 @@ public class SummaryActivity extends FragmentActivity implements PagerActivity<C
         if (fragments != null) {
             for (Fragment frag : fragments) {
                 if (frag instanceof PagerFragment && ((PagerFragment) frag).isReadyToPopulate()) {
-                    ((PagerFragment<CharSummary, ?>) frag).update();
+                    ((PagerFragment<CharSummary, ?>) frag).refresh();
                 }
             }
         }

@@ -65,7 +65,7 @@ public class EditCharFeatsFragment extends AbstractListFragment<CharBase, EditCh
                         //update list
                         listData.add(selected);
 
-                        update();
+                        refresh();
                 }
         }
     }

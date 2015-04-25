@@ -99,7 +99,7 @@ public class EditCharSkillsFragment extends AbstractSimpleListFragment<CharBase,
                         //udpate ability modifiers
                         data.createAbilityModsForNewSkills();
 
-                        update();
+                        refresh();
                 }
         }
     }
