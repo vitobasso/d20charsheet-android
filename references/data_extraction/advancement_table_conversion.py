@@ -101,7 +101,7 @@ def createTraitsWriter(outf):
 
 def writeTraitRow(writer, row, level, name):
     global traitCount
-    traitCount += 1 #TODO usar como unicidade: rulebook_id + name
+    traitCount += 1 #TODO override: regex pegando o nome repetido com +X
     row = dict(id=traitCount, rulebook_id=row['rulebook_id'], page=row['page'], class_id=row['id'], level=level, name=name)
     writer.writerow(row)
 
@@ -139,4 +139,4 @@ def convertCsv(inFile, classFile, traitFile):
 
 
 dir = '../../app/src/main/assets/data/csv/'
-convertCsv(dir + 'classes.csv', dir + 'classes_new.csv', dir + 'class_traits.csv')
+convertCsv(dir + 'classes_original.csv', dir + 'classes.csv', dir + 'class_traits.csv')
