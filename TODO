@@ -1,3 +1,19 @@
+
+BUGS
+
+- skill list in Summary rolls to top when toggling conditions
+- can add the same skill twice
+- can add the same feat twice
+- temp HP effect
+- when has 2+ classes, class fields change when moving away from EditCharBasicFragment and back
+- nullpointer after renaming equiped weapon (at Attack.applyModifier, DAMAGE, getWeapon() is null)
+- can't remove trained skills (CAB + EditText bug)
+- null pointer after deleting item/feat/etc used by char
+- crash when editing entity w/ enum, when translated (can't find enum from translated string)
+- can't create new bonus (ability modifier): empty spinners
+- filter not working on SelectItemActivity
+
+
 IMPROVEMENTS
 
 #summary
@@ -43,21 +59,6 @@ IMPROVEMENTS
 - load partially on select activity (only id, name, effects). load the rest after selection. (specially classes/races which have traits)
 - avoid full queries when opening char
 
-
-BUGS
-
-- skill list in Summary rolls to top when toggling conditions
-- can add the same skill twice
-- can add the same feat twice
-- temp HP effect
-- Barkskin doesn't parse
-- when has 2+ classes, class fields change when moving away from EditCharBasicFragment and back
-- nullpointer after renaming equiped weapon (at Attack.applyModifier, DAMAGE, getWeapon() is null)
-- can't remove trained skills (CAB + EditText bug)
-- null pointer after deleting item/feat/etc used by char
-- crash when editing entity w/ enum, when translated (can't find enum from translated string)
-
-
 FEATURES
 
 - import/export
@@ -70,7 +71,7 @@ FEATURES
 - spells
 - xp
 - animal companion, mount, followers
-- export to pdf
+- export to pdf/printable
 
 
 REFACTOR
