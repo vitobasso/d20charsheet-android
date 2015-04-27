@@ -26,6 +26,7 @@ import com.vituel.dndplayer.util.gui.EnumI18nSpinnerAdapter;
 import com.vituel.dndplayer.util.gui.NoSelectionSpinnerAdapter;
 
 import java.security.InvalidParameterException;
+import java.text.MessageFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -276,6 +277,28 @@ public class ActivityUtil {
             view.setError(null);
             return true;
         }
+    }
+
+    public static boolean validateTextInt(Object root, int viewRes, int min, int max) {
+        TextView view = findView(root, viewRes);
+        String str = view.getText().toString().trim();
+        try {
+            Integer value = Integer.valueOf(str);
+            if (value >= min && value <= max) {
+                view.setError(null);
+                return true;
+            } else {
+                return setIntValidationError(view, min, max);
+            }
+        } catch (NumberFormatException e) {
+            return setIntValidationError(view, min, max);
+        }
+    }
+
+    private static boolean setIntValidationError(TextView view, int min, int max) {
+        String msg = MessageFormat.format("Expected a number between {0} and {1}", min, max);
+        view.setError(msg);
+        return false;
     }
 
     public static boolean validateSpinner(Object root, int... viewRes) {

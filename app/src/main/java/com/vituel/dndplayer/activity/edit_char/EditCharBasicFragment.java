@@ -30,6 +30,7 @@ import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 import static com.vituel.dndplayer.util.ActivityUtil.readInt;
 import static com.vituel.dndplayer.util.ActivityUtil.readString;
 import static com.vituel.dndplayer.util.ActivityUtil.validateText;
+import static com.vituel.dndplayer.util.ActivityUtil.validateTextInt;
 
 /**
  * Created by Victor on 28/02/14.
@@ -76,16 +77,16 @@ public class EditCharBasicFragment extends PagerFragment<CharBase, EditCharActiv
         for (int i = 0; i < classes.size(); i++) {
             ViewGroup group = (ViewGroup) classesRoot.getChildAt(i);
             allValid &= validateText(group, R.id.classField);
-            allValid &= validateText(group, R.id.level);
+            allValid &= validateTextInt(group, R.id.level, 1, 50);
         }
 
-        allValid &= validateText(root, R.id.hp);
-        allValid &= validateText(root, R.id.str);
-        allValid &= validateText(root, R.id.dex);
-        allValid &= validateText(root, R.id.con);
-        allValid &= validateText(root, R.id.attr_int);
-        allValid &= validateText(root, R.id.wis);
-        allValid &= validateText(root, R.id.cha);
+        allValid &= validateTextInt(root, R.id.hp, 1, 50);
+        allValid &= validateTextInt(root, R.id.str, 1, 50);
+        allValid &= validateTextInt(root, R.id.dex, 1, 50);
+        allValid &= validateTextInt(root, R.id.con, 1, 50);
+        allValid &= validateTextInt(root, R.id.attr_int, 1, 50);
+        allValid &= validateTextInt(root, R.id.wis, 1, 50);
+        allValid &= validateTextInt(root, R.id.cha, 1, 50);
         return allValid;
     }
 
@@ -116,16 +117,31 @@ public class EditCharBasicFragment extends PagerFragment<CharBase, EditCharActiv
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.add, menu);
+        inflater.inflate(R.menu.edit_char_basic, menu);
+
+        ViewGroup classesRoot = findView(R.id.classList);
+        int classRows = classesRoot.getChildCount();
+        if (classRows < 2) {
+            MenuItem remove = menu.findItem(R.id.action_remove);
+            remove.setEnabled(false);
+        }
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        ViewGroup classesRoot = findView(R.id.classList);
+        int classRows = classesRoot.getChildCount();
         switch (item.getItemId()) {
             case R.id.action_add:
-                ViewGroup classesRoot = findView(R.id.classList);
-                inflateClassRow(classesRoot, classesRoot.getChildCount());
+                inflateClassRow(classesRoot, classRows);
                 classes.add(new ClassLevel());
+                activity.invalidateOptionsMenu();
+                return true;
+            case R.id.action_remove:
+                int lastRow = classRows - 1;
+                classesRoot.removeViewAt(lastRow);
+                classes.remove(lastRow);
+                activity.invalidateOptionsMenu();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -197,14 +213,6 @@ public class EditCharBasicFragment extends PagerFragment<CharBase, EditCharActiv
             }
         });
 
-        //setup remove button
-        View removeBtn = ActivityUtil.findView(group, R.id.remove);
-        if (position == 0) {
-            removeBtn.setVisibility(View.GONE);
-        } else {
-            removeBtn.setOnClickListener(new RemoveClickListener(position));
-        }
-
         return group;
     }
 
@@ -260,22 +268,6 @@ public class EditCharBasicFragment extends PagerFragment<CharBase, EditCharActiv
                         break;
                 }
                 break;
-        }
-    }
-
-    private class RemoveClickListener implements View.OnClickListener {
-
-        private int position;
-
-        public RemoveClickListener(int position) {
-            this.position = position;
-        }
-
-        @Override
-        public void onClick(View v) {
-            ViewGroup classesRoot = findView(R.id.classList);
-            classesRoot.removeViewAt(position);
-            classes.remove(position);
         }
     }
 

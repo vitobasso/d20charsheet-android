@@ -41,22 +41,17 @@
 
             <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="8"
+                    android:layout_weight="5"
                     android:layout_height="wrap_content"
                     android:text="@string/char_class"
                     android:id="@+id/classLabel"/>
 
             <TextView
                     android:layout_width="0dp"
-                    android:layout_weight="2"
+                    android:layout_weight="1"
                     android:layout_height="wrap_content"
                     android:text="@string/level"
                     android:id="@+id/lvlLabel"/>
-
-            <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
