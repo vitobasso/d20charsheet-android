@@ -187,6 +187,7 @@
     <string name="penalty">Penalty</string>
     <string name="penalties">Penalties</string>
     <string name="weapon">Weapon</string>
+    <string name="protective">Protective</string>
     <string name="empty"></string>
     <string name="hit_points">Hit Points</string>
     <string name="spell_resistance">Spell Resistance</string>

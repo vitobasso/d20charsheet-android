@@ -56,6 +56,12 @@ public abstract class AbstractEffectParser<T extends EffectSource> extends Abstr
         effect.addModifier(new Modifier(target, value));
     }
 
+    protected void addModifierIfNotNull(T source, ModifierTarget target, Integer value) throws ParseFormatException, ParseNullValueException {
+        if (value != null) {
+            addModifier(source, target, value);
+        }
+    }
+
     private Effect getOrCreateEffect(T source) {
         Effect effect = source.getEffect();
         if (effect == null) {

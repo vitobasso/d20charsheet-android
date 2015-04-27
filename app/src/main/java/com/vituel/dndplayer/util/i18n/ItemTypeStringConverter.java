@@ -18,10 +18,8 @@ public class ItemTypeStringConverter extends AbstractEnumStringConverter<Item.It
         switch (type) {
             case WEAPON:
                 return findResource(R.string.weapon);
-            case SHIELD:
+            case PROTECTIVE:
                 return findResource(R.string.shield);
-            case ARMOR:
-                return findResource(R.string.armor);
             default:
                 return super.toString(type);
         }

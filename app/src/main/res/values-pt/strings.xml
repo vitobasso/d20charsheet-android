@@ -187,6 +187,7 @@
     <string name="penalty">Penalidade</string>
     <string name="penalties">Penalidades</string>
     <string name="weapon">Arma</string>
+    <string name="protective">Proteção</string>
     <string name="empty"></string>
     <string name="hit_points">Pontos de Vida</string>
     <string name="spell_resistance">Resistência à Magia</string>

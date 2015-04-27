@@ -19,6 +19,7 @@ public class FeatParser extends AbstractEffectParser<Feat> {
         Feat result = new Feat();
         result.setId(readInt(line, "id"));
         result.setName(readString(line, "name"));
+        readEffect(line, result);
         return result;
     }
 

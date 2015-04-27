@@ -85,7 +85,6 @@ public class SummaryActivity extends FragmentActivity implements PagerActivity<C
                 break;
             case REQUEST_LOAD:
                 pref.edit().putBoolean(PREF_FIRST_RUN, false).apply();
-                findCharacterToOpen();
         }
     }
 

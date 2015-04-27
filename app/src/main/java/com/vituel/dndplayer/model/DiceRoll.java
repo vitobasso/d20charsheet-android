@@ -33,25 +33,33 @@ public class DiceRoll implements Serializable {
         Pattern p = Pattern.compile("(\\-?\\d+(d(2|3|4|6|8|10|12|20|100))?)[\\+\\-]?");
         Matcher m = p.matcher(expression);
 
+        //TODO throw exception when can't parse (need to handle it on every existing caller)
+//        if (!m.matches()) {
+//            throw new ParseDiceRollException(-1, "Bad dice roll format: " + expression);
+//        }
+
         while (m.find()) {
             String str = m.group(1);
+            decodeParcel(str);
+        }
+    }
 
-            String[] parts = str.split("d");
-            int count = Integer.valueOf(parts[0]);
-            int faces = 0;
-            if (parts.length > 1) {
-                faces = Integer.valueOf(parts[1]);
-            }
+    private void decodeParcel(String str) {
+        String[] parts = str.split("d");
+        int count = Integer.valueOf(parts[0]);
+        int faces = 0;
+        if (parts.length > 1) {
+            faces = Integer.valueOf(parts[1]);
+        }
 
-            if (faces > 0) {
-                Integer currentValue = dice.get(faces);
-                if (currentValue == null) {
-                    currentValue = 0;
-                }
-                dice.put(faces, currentValue + count);
-            } else {
-                fixedValue += count;
+        if (faces > 0) {
+            Integer currentValue = dice.get(faces);
+            if (currentValue == null) {
+                currentValue = 0;
             }
+            dice.put(faces, currentValue + count);
+        } else {
+            fixedValue += count;
         }
     }
 

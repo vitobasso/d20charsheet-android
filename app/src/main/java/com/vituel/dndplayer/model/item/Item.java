@@ -10,7 +10,7 @@ import com.vituel.dndplayer.model.effect.EffectSource;
 public class Item extends AbstractEntity implements EffectSource {
 
     public enum ItemType {
-        WEAPON, SHIELD, ARMOR
+        WEAPON, PROTECTIVE
     }
 
     private SlotType slotType; //slot where item can be equipped in character

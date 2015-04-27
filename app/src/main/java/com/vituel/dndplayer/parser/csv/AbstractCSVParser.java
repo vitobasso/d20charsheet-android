@@ -4,6 +4,8 @@ import android.content.Context;
 
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
+import com.vituel.dndplayer.model.Critical;
+import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.parser.exception.ParseEntityException;
 import com.vituel.dndplayer.parser.exception.ParseEnumException;
 import com.vituel.dndplayer.parser.exception.ParseFieldException;
@@ -122,6 +124,32 @@ public abstract class AbstractCsvParser<T> extends AbstractParser implements Clo
     public <E extends Enum<E>> E readEnumNullable(Class<E> type, String[] line, String column) throws ParseFieldException {
         try {
             return readEnum(type, line, column);
+        } catch (ParseNullValueException e) {
+            return null;
+        }
+    }
+
+    public DiceRoll readRoll(String[] line, String column) throws ParseFieldException {
+        String str = readString(line, column);
+        return new DiceRoll(str);
+    }
+
+    public DiceRoll readRollNullable(String[] line, String column) throws ParseFieldException {
+        try {
+            return readRoll(line, column);
+        } catch (ParseNullValueException e) {
+            return null;
+        }
+    }
+
+    public Critical readCritical(String[] line, String column) throws ParseFieldException {
+        String str = readString(line, column);
+        return new Critical(str);
+    }
+
+    public Critical readCriticalNullable(String[] line, String column) throws ParseFieldException {
+        try {
+            return readCritical(line, column);
         } catch (ParseNullValueException e) {
             return null;
         }

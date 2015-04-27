@@ -9,7 +9,7 @@ import com.vituel.dndplayer.parser.exception.ParseFieldException;
 /**
  * Created by Victor on 21/04/2015.
  */
-public class ClassTraitParser extends AbstractCsvParser<ClassTrait> {
+public class ClassTraitParser extends AbstractEffectParser<ClassTrait> {
 
     public ClassTraitParser(Context ctx, String path) {
         super(ctx, path);
@@ -21,6 +21,7 @@ public class ClassTraitParser extends AbstractCsvParser<ClassTrait> {
         trait.setId(readInt(line, "id"));
         trait.setName(readString(line, "name"));
         trait.setLevel(readInt(line, "level"));
+        readEffect(line, trait);
 
         Clazz clazz = new Clazz();
         clazz.setId(readInt(line, "class_id"));
