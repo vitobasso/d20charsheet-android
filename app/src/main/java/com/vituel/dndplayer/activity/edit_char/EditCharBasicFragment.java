@@ -80,7 +80,7 @@ public class EditCharBasicFragment extends PagerFragment<CharBase, EditCharActiv
             allValid &= validateTextInt(group, R.id.level, 1, 50);
         }
 
-        allValid &= validateTextInt(root, R.id.hp, 1, 50);
+        allValid &= validateTextInt(root, R.id.hp, 1, 500);
         allValid &= validateTextInt(root, R.id.str, 1, 50);
         allValid &= validateTextInt(root, R.id.dex, 1, 50);
         allValid &= validateTextInt(root, R.id.con, 1, 50);
