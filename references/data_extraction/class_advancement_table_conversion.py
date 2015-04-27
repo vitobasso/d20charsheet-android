@@ -93,7 +93,7 @@ def writeClassRow(writer, row, model):
 
 
 def createTraitsWriter(outf):
-    headers = ['id', 'rulebook_id', 'page', 'class_id', 'level', 'name']
+    headers = ['id', 'rulebook_id', 'class_id', 'level', 'name']
     writer = csv.DictWriter(outf, headers, delimiter=';', quotechar='"', lineterminator='\n')
     writer.writeheader()
     return writer
@@ -102,7 +102,7 @@ def createTraitsWriter(outf):
 def writeTraitRow(writer, row, level, name):
     global traitCount
     traitCount += 1 #TODO override: regex pegando o nome repetido com +X
-    row = dict(id=traitCount, rulebook_id=row['rulebook_id'], page=row['page'], class_id=row['id'], level=level, name=name)
+    row = dict(id=traitCount, rulebook_id=row['rulebook_id'], class_id=row['id'], level=level, name=name)
     writer.writerow(row)
 
 
@@ -138,5 +138,6 @@ def convertCsv(inFile, classFile, traitFile):
         print('failed one line:', failCount['oneLine'], 'many lines:', failCount['manyLines'])
 
 
-dir = '../../app/src/main/assets/data/csv/'
-convertCsv(dir + 'classes_original.csv', dir + 'classes.csv', dir + 'class_traits.csv')
+indir = '../../references/dnd database/csv/'
+outdir = '../../app/src/main/assets/data/csv/'
+convertCsv(indir + 'classes_original.csv', outdir + 'classes.csv', outdir + 'class_traits.csv')
