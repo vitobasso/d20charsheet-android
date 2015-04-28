@@ -37,8 +37,8 @@ public abstract class AbstractDao<T> {
         database = null;
     }
 
-    public final Cursor listAllCursor() {
-        return database.query(tableName(), allColumns(), null, null, null, null, null);
+    public Cursor listAllCursor() {
+        return database.query(tableName(), allColumns(), null, null, null, null, orderBy());
     }
 
     public final List<T> listAll() {
@@ -46,12 +46,12 @@ public abstract class AbstractDao<T> {
         return cursorToList(cursor);
     }
 
-    public final Cursor listForQueryCursor(String selection) {
-        return database.query(tableName(), allColumns(), selection, null, null, null, null);
+    public Cursor selectCursor(String selection) {
+        return database.query(tableName(), allColumns(), selection, null, null, null, orderBy());
     }
 
-    protected final List<T> listForQuery(String selection) {
-        Cursor cursor = listForQueryCursor(selection);
+    protected final List<T> select(String selection) {
+        Cursor cursor = selectCursor(selection);
         return cursorToList(cursor);
     }
 
@@ -77,6 +77,10 @@ public abstract class AbstractDao<T> {
         for (T obj : list) {
             insert(obj);
         }
+    }
+
+    protected String orderBy() {
+        return null;
     }
 
     public void insert(T entity) {

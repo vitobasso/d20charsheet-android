@@ -75,7 +75,7 @@ public class AttackRoundDao extends AbstractDao<AttackRound> {
 
     public List<AttackRound> listForChar(long charId) {
         String query = MessageFormat.format("{0}={1}", COLUMN_CHAR_ID, charId);
-        return listForQuery(query);
+        return select(query);
     }
 
     @Override

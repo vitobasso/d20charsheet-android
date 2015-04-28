@@ -83,7 +83,7 @@ public class BookDao extends AbstractEntityDao<Book> {
 
     public final List<Book> findByEdition(long editionId) {
         String query = String.format("%s=\'%s\'", COLUMN_EDITION_ID, editionId);
-        return listForQuery(query);
+        return select(query);
     }
 
 }

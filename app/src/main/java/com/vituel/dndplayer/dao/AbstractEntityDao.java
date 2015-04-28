@@ -56,7 +56,7 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
 
     public final Cursor filterByNameCursor(String name) {
         String query = MessageFormat.format("{0} like ''%{1}%''", COLUMN_NAME, name);
-        return listForQueryCursor(query);
+        return selectCursor(query);
     }
 
     public final void save(Collection<T> list) {
