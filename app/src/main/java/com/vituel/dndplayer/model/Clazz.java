@@ -1,5 +1,9 @@
 package com.vituel.dndplayer.model;
 
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+import com.vituel.dndplayer.business.OverridingTraitMatcher;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,25 +84,30 @@ public class Clazz extends AbstractEntity {
         throw new AssertionError();
     }
 
-    public List<ClassTrait> getTraits(int level) {
+    public List<ClassTrait> getTraits(int topLevel) {
+        Iterable<ClassTrait> allTraits = Iterables.concat(getTraits());
+        OverridingTraitMatcher matcher = new OverridingTraitMatcher(Lists.newArrayList(allTraits));
+        return getNonOverridenTraits(topLevel, matcher);
+    }
+
+    private List<ClassTrait> getNonOverridenTraits(int topLevel, OverridingTraitMatcher matcher) {
         List<ClassTrait> result = new ArrayList<>();
-        List<String> overridenList = new ArrayList<>();
-        for (int i = level-1; i >= 0; i--) {
-            if(getTraits().size() > i) {
-                for (ClassTrait trait : getTraits().get(i)) {
-                    if (!overridenList.contains(trait.getName())) {
-                        result.add(trait);
-                    } else {
-                        overridenList.remove(trait.getName());
-                    }
-                    String overriden = trait.getOverridenTraitName();
-                    if (overriden != null) {
-                        overridenList.add(overriden);
-                    }
-                }
+        for (int level = topLevel; level > 0; level--) {
+            int index = level - 1;
+            if (getTraits().size() > index) {
+                List<ClassTrait> traitsInLevel = getTraits().get(index);
+                addTraitIfNotOverriden(traitsInLevel, result, matcher);
             }
         }
         return result;
+    }
+
+    private void addTraitIfNotOverriden(List<ClassTrait> currentLevelTraits, List<ClassTrait> higherLevelTraits, OverridingTraitMatcher matcher) {
+        for (ClassTrait trait : currentLevelTraits) {
+            if (!matcher.matchesAny(trait, higherLevelTraits)) {
+                higherLevelTraits.add(trait);
+            }
+        }
     }
 
     @Override

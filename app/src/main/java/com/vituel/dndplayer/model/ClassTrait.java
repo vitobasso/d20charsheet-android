@@ -11,7 +11,6 @@ public class ClassTrait extends AbstractEntity implements EffectSource {
     private Clazz clazz;
     private Effect effect = new Effect();
     private int level;
-    private String overridenTraitName;
 
     public Clazz getClazz() {
         return clazz;
@@ -37,11 +36,4 @@ public class ClassTrait extends AbstractEntity implements EffectSource {
         this.level = level;
     }
 
-    public String getOverridenTraitName() {
-        return overridenTraitName;
-    }
-
-    public void setOverridenTraitName(String overridenTraitName) {
-        this.overridenTraitName = overridenTraitName;
-    }
 }
