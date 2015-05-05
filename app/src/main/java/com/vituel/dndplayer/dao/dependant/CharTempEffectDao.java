@@ -1,10 +1,13 @@
-package com.vituel.dndplayer.dao;
+package com.vituel.dndplayer.dao.dependant;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.vituel.dndplayer.dao.abstraction.AbstractAssociationDao;
+import com.vituel.dndplayer.dao.entity.CharDao;
+import com.vituel.dndplayer.dao.entity.TempEffectDao;
 import com.vituel.dndplayer.model.TempEffect;
 import com.vituel.dndplayer.model.character.CharTempEffect;
 import com.vituel.dndplayer.util.database.SQLiteHelper;

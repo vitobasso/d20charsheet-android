@@ -1,10 +1,11 @@
-package com.vituel.dndplayer.dao;
+package com.vituel.dndplayer.dao.entity;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
 import com.vituel.dndplayer.model.rulebook.Book;
 import com.vituel.dndplayer.model.rulebook.Edition;
 
@@ -38,7 +39,7 @@ public class BookDao extends AbstractEntityDao<Book> {
         super(context);
     }
 
-    protected BookDao(Context context, SQLiteDatabase database) {
+    public BookDao(Context context, SQLiteDatabase database) {
         super(context, database);
     }
 

@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.dao;
+package com.vituel.dndplayer.dao.abstraction;
 
 import android.content.Context;
 import android.database.Cursor;

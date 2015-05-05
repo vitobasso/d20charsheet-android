@@ -1,10 +1,11 @@
-package com.vituel.dndplayer.dao;
+package com.vituel.dndplayer.dao.entity;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
 import com.vituel.dndplayer.model.Feat;
 
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
@@ -31,7 +32,7 @@ public class FeatDao extends AbstractEntityDao<Feat> {
         super(context);
     }
 
-    protected FeatDao(Context context, SQLiteDatabase database) {
+    public FeatDao(Context context, SQLiteDatabase database) {
         super(context, database);
     }
 

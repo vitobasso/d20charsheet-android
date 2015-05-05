@@ -16,7 +16,7 @@ import com.vituel.dndplayer.activity.abstraction.PagerActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.activity.select.SelectCharActivity;
-import com.vituel.dndplayer.dao.CharDao;
+import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.model.character.CharSummary;
 import com.vituel.dndplayer.util.ActivityUtil;

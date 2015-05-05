@@ -3,8 +3,8 @@ package com.vituel.dndplayer.activity.select;
 import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
 import com.vituel.dndplayer.activity.abstraction.AbstractSelectEffectActivity;
 import com.vituel.dndplayer.activity.edit.EditFeatActivity;
-import com.vituel.dndplayer.dao.AbstractEntityDao;
-import com.vituel.dndplayer.dao.FeatDao;
+import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
+import com.vituel.dndplayer.dao.entity.FeatDao;
 import com.vituel.dndplayer.model.Feat;
 
 /**

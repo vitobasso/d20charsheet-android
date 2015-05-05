@@ -3,8 +3,8 @@ package com.vituel.dndplayer.activity.select;
 import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
 import com.vituel.dndplayer.activity.abstraction.AbstractSelectActivity;
 import com.vituel.dndplayer.activity.edit.EditSkillActivity;
-import com.vituel.dndplayer.dao.AbstractEntityDao;
-import com.vituel.dndplayer.dao.SkillDao;
+import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
+import com.vituel.dndplayer.dao.entity.SkillDao;
 import com.vituel.dndplayer.model.Skill;
 
 /**

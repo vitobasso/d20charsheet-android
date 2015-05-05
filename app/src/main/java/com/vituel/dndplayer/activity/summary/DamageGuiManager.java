@@ -6,7 +6,7 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.dao.CharDao;
+import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.character.CharSummary;
 import com.vituel.dndplayer.model.character.DamageTaken;
 import com.vituel.dndplayer.model.effect.ModifierTarget;

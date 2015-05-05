@@ -11,7 +11,7 @@ import android.widget.ListAdapter;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.AbstractListFragment;
 import com.vituel.dndplayer.activity.select.SelectTempEffectActivity;
-import com.vituel.dndplayer.dao.CharTempEffectDao;
+import com.vituel.dndplayer.dao.dependant.CharTempEffectDao;
 import com.vituel.dndplayer.model.TempEffect;
 import com.vituel.dndplayer.model.character.CharSummary;
 import com.vituel.dndplayer.model.character.CharTempEffect;

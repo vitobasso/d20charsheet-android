@@ -1,9 +1,11 @@
-package com.vituel.dndplayer.dao;
+package com.vituel.dndplayer.dao.entity;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.vituel.dndplayer.dao.abstraction.AbstractRuleDao;
+import com.vituel.dndplayer.dao.dependant.ClassTraitDao;
 import com.vituel.dndplayer.model.ClassTrait;
 import com.vituel.dndplayer.model.Clazz;
 import com.vituel.dndplayer.model.rulebook.Book;

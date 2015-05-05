@@ -1,10 +1,13 @@
-package com.vituel.dndplayer.dao;
+package com.vituel.dndplayer.dao.dependant;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.vituel.dndplayer.dao.abstraction.AbstractAssociationDao;
+import com.vituel.dndplayer.dao.entity.ClassDao;
+import com.vituel.dndplayer.dao.entity.EffectDao;
 import com.vituel.dndplayer.model.ClassTrait;
 import com.vituel.dndplayer.model.Clazz;
 
@@ -38,7 +41,7 @@ public class ClassTraitDao extends AbstractAssociationDao<ClassTrait> {
         super(context);
     }
 
-    protected ClassTraitDao(Context context, SQLiteDatabase database) {
+    public ClassTraitDao(Context context, SQLiteDatabase database) {
         super(context, database);
     }
 

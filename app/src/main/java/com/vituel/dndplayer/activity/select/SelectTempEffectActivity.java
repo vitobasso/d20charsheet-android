@@ -3,8 +3,8 @@ package com.vituel.dndplayer.activity.select;
 import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
 import com.vituel.dndplayer.activity.abstraction.AbstractSelectEffectActivity;
 import com.vituel.dndplayer.activity.edit.EditTempEffectActivity;
-import com.vituel.dndplayer.dao.AbstractEntityDao;
-import com.vituel.dndplayer.dao.TempEffectDao;
+import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
+import com.vituel.dndplayer.dao.entity.TempEffectDao;
 import com.vituel.dndplayer.model.TempEffect;
 
 /**

@@ -1,10 +1,13 @@
-package com.vituel.dndplayer.dao;
+package com.vituel.dndplayer.dao.dependant;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.vituel.dndplayer.dao.abstraction.AbstractAssociationDao;
+import com.vituel.dndplayer.dao.entity.EffectDao;
+import com.vituel.dndplayer.dao.entity.RaceDao;
 import com.vituel.dndplayer.model.RaceTrait;
 
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
@@ -35,7 +38,7 @@ public class RaceTraitDao extends AbstractAssociationDao<RaceTrait> {
         super(context);
     }
 
-    protected RaceTraitDao(Context context, SQLiteDatabase database) {
+    public RaceTraitDao(Context context, SQLiteDatabase database) {
         super(context, database);
     }
 

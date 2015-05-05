@@ -1,10 +1,13 @@
-package com.vituel.dndplayer.dao;
+package com.vituel.dndplayer.dao.dependant;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.vituel.dndplayer.dao.abstraction.AbstractAssociationDao;
+import com.vituel.dndplayer.dao.entity.BookDao;
+import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.rulebook.Book;
 
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;

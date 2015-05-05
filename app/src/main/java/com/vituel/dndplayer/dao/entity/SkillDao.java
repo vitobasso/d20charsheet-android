@@ -1,10 +1,11 @@
-package com.vituel.dndplayer.dao;
+package com.vituel.dndplayer.dao.entity;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
 import com.vituel.dndplayer.model.Skill;
 import com.vituel.dndplayer.model.effect.ModifierSource;
 

@@ -1,9 +1,17 @@
-package com.vituel.dndplayer.dao;
+package com.vituel.dndplayer.dao.entity;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.vituel.dndplayer.dao.ActiveConditionDao;
+import com.vituel.dndplayer.dao.AttackRoundDao;
+import com.vituel.dndplayer.dao.abstraction.AbilityModifierDao;
+import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
+import com.vituel.dndplayer.dao.dependant.CharClassDao;
+import com.vituel.dndplayer.dao.dependant.CharFeatDao;
+import com.vituel.dndplayer.dao.dependant.CharSkillDao;
+import com.vituel.dndplayer.dao.dependant.CharTempEffectDao;
 import com.vituel.dndplayer.model.AbstractEntity;
 import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.model.character.CharEquip;

@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.dao;
+package com.vituel.dndplayer.dao.entity;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
+import com.vituel.dndplayer.dao.dependant.WeaponDao;
 import com.vituel.dndplayer.model.item.Item;
 import com.vituel.dndplayer.model.item.SlotType;
 import com.vituel.dndplayer.model.item.WeaponItem;

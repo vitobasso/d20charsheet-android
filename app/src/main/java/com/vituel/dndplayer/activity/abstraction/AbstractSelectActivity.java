@@ -24,7 +24,7 @@ import android.widget.ResourceCursorAdapter;
 import android.widget.SearchView;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.dao.AbstractEntityDao;
+import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
 import com.vituel.dndplayer.model.AbstractEntity;
 
 import java.util.ArrayList;

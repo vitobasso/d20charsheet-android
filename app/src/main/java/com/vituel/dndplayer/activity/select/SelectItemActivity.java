@@ -6,8 +6,8 @@ import android.database.Cursor;
 import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
 import com.vituel.dndplayer.activity.abstraction.AbstractSelectEffectActivity;
 import com.vituel.dndplayer.activity.edit.EditItemActivity;
-import com.vituel.dndplayer.dao.AbstractEntityDao;
-import com.vituel.dndplayer.dao.ItemDao;
+import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
+import com.vituel.dndplayer.dao.entity.ItemDao;
 import com.vituel.dndplayer.model.item.EquipSlot;
 import com.vituel.dndplayer.model.item.Item;
 

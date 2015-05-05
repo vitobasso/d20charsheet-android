@@ -2,7 +2,7 @@ package com.vituel.dndplayer;
 
 import android.app.Application;
 
-import com.vituel.dndplayer.dao.CharBookDao;
+import com.vituel.dndplayer.dao.dependant.CharBookDao;
 import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.model.rulebook.Book;
 

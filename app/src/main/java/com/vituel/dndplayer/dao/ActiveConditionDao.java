@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.vituel.dndplayer.dao.abstraction.AbstractDao;
 import com.vituel.dndplayer.model.effect.Condition;
 
 import java.util.List;

@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.esotericsoftware.kryo.Kryo;
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.dao.SkillDao;
+import com.vituel.dndplayer.dao.entity.SkillDao;
 import com.vituel.dndplayer.model.ClassLevel;
 import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.Size;

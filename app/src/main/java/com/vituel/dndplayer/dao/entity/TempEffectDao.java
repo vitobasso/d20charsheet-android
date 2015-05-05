@@ -1,14 +1,13 @@
-package com.vituel.dndplayer.dao;
+package com.vituel.dndplayer.dao.entity;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vituel.dndplayer.model.Race;
-import com.vituel.dndplayer.model.RaceTrait;
-
-import java.util.List;
+import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
+import com.vituel.dndplayer.dao.dependant.CharTempEffectDao;
+import com.vituel.dndplayer.model.TempEffect;
 
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
@@ -17,9 +16,9 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 /**
  * Created by Victor on 30/03/14.
  */
-public class RaceDao extends AbstractEntityDao<Race> {
+public class TempEffectDao extends AbstractEntityDao<TempEffect> {
 
-    public static final String TABLE = "race";
+    public static final String TABLE = "temp_effect";
 
     public static final String CREATE_TABLE = "create table " + TABLE + "("
             + COLUMN_ID + " integer primary key autoincrement, "
@@ -29,13 +28,12 @@ public class RaceDao extends AbstractEntityDao<Race> {
             + ");";
 
     private EffectDao effectDao = new EffectDao(context, database);
-    private RaceTraitDao raceTraitDao = new RaceTraitDao(context, database);;
 
-    public RaceDao(Context context) {
+    public TempEffectDao(Context context) {
         super(context);
     }
 
-    protected RaceDao(Context context, SQLiteDatabase database) {
+    public TempEffectDao(Context context, SQLiteDatabase database) {
         super(context, database);
     }
 
@@ -54,26 +52,19 @@ public class RaceDao extends AbstractEntityDao<Race> {
     }
 
     @Override
-    protected ContentValues toContentValues(Race entity) {
+    protected ContentValues toContentValues(TempEffect entity) {
         return effectDao.preSaveEffectSource(entity);
     }
 
     @Override
-    public Race fromCursor(Cursor cursor) {
-        Race result = effectDao.loadEffectSource(cursor, new Race(), 0, 1, 2);
-
-        //racial traits
-        List<RaceTrait> traits = raceTraitDao.findByParent(result.getId());
-        result.setTraits(traits);
-
-        return result;
+    public TempEffect fromCursor(Cursor cursor) {
+        return effectDao.loadEffectSource(cursor, new TempEffect(), 0, 1, 2);
     }
 
     @Override
-    public Race fromCursorBrief(Cursor cursor) {
-        Race result = new Race();
-        result.setId(cursor.getLong(0));
-        result.setName(cursor.getString(1));
-        return result;
+    public void postRemove(TempEffect e) {
+        //not created in constructor to avoid cyclic reference
+        CharTempEffectDao charTempDao = new CharTempEffectDao(context, database);
+        charTempDao.removeAllForChild(e.getId());
     }
 }
