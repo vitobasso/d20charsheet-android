@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 
 import com.google.common.collect.Lists;
+import com.vituel.dndplayer.MemoryCache;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.BookDao;
 import com.vituel.dndplayer.dao.CharBookDao;
@@ -154,9 +155,16 @@ public class SelectBooksActivity extends ExpandableListActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_save:
+
+                // persist
                 CharBookDao charBookDao = new CharBookDao(this);
                 charBookDao.saveOverwrite(base.getId(), checkedBooks);
                 charBookDao.close();
+
+                // update rulebooks in memory
+                MemoryCache cache = (MemoryCache) getApplicationContext();
+                cache.setActiveRulebooks(checkedBooks);
+
                 finish();
                 return true;
 

@@ -1,17 +1,17 @@
 package com.vituel.dndplayer.dao;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteQueryBuilder;
 
-import com.vituel.dndplayer.model.AbstractEntity;
+import com.vituel.dndplayer.MemoryCache;
+import com.vituel.dndplayer.model.rulebook.Book;
 import com.vituel.dndplayer.model.rulebook.Rule;
-import com.vituel.dndplayer.util.database.SQLiteHelper;
 
-import java.text.MessageFormat;
+import java.util.Collection;
 
-import static com.vituel.dndplayer.util.database.SQLiteHelper.*;
+import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 
 /**
  * Created by Victor on 26/04/2015.
@@ -30,12 +30,44 @@ public abstract class AbstractRuleDao<T extends Rule> extends AbstractEntityDao<
 
     @Override
     public Cursor listAllCursor() {
-        String join = String.format("%s rule left join %s book on rule.%s = book.%s", tableName(), BookDao.TABLE, COLUMN_BOOK_ID, COLUMN_ID);
-        return database.query(join, allColumns(), null, null, null, orderBy(), null);
+        String bookIds = getRulebookIdsAsString();
+        if (bookIds != null) {
+            String selection = String.format("%s in (%s)", COLUMN_BOOK_ID, bookIds);
+            return database.query(tableName(), allColumns(), selection, null, null, null, orderBy());
+        } else {
+            return super.listAllCursor();
+        }
     }
 
     @Override
     protected String orderBy() {
         return COLUMN_BOOK_ID;
     }
+
+    @Override
+    protected ContentValues toContentValues(T entity) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_BOOK_ID, entity.getBook().getId());
+        values.put(COLUMN_NAME, entity.getName());
+        return values;
+    }
+
+    private String getRulebookIdsAsString() {
+        MemoryCache cache = (MemoryCache) context.getApplicationContext();
+        Collection<Book> rulebooks = cache.getActiveRulebooks();
+        if (rulebooks == null) {
+            return null;
+        }
+
+        StringBuilder str = new StringBuilder();
+        for (Book rulebook : rulebooks) {
+            if (str.length() > 0) {
+                str.append(",");
+            }
+            str.append(rulebook.getId());
+        }
+
+        return str.toString();
+    }
+
 }

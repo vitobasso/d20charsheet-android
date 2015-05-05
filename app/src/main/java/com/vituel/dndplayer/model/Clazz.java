@@ -3,6 +3,7 @@ package com.vituel.dndplayer.model;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 import com.vituel.dndplayer.business.OverridingTraitMatcher;
+import com.vituel.dndplayer.model.rulebook.Rule;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Created by Victor on 28/02/14.
  */
-public class Clazz extends AbstractEntity {
+public class Clazz extends Rule {
 
     private AttackProgression attackProg;
     private ResistProgression reflexProg;

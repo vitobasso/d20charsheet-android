@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.vituel.dndplayer.MemoryCache;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.LoadingActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerActivity;
@@ -40,6 +41,7 @@ public class SummaryActivity extends FragmentActivity implements PagerActivity<C
     private ViewPager pager;
     private ConditionGuiManager conditionsGuiManager;
     private SharedPreferences pref;
+    private MemoryCache cache;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,8 @@ public class SummaryActivity extends FragmentActivity implements PagerActivity<C
         setContentView(R.layout.summary);
 
         pref = getSharedPreferences(PREF, MODE_PRIVATE);
+        cache = (MemoryCache) getApplicationContext();
+
         conditionsGuiManager = new ConditionGuiManager(this);
 
         pager = (ViewPager) findViewById(R.id.pager);
@@ -147,6 +151,7 @@ public class SummaryActivity extends FragmentActivity implements PagerActivity<C
     private void open(CharBase base) {
         this.charSummary = new CharSummary(this, base); //TODO replace by a "re-calculate" so the reference doesn't change
         pref.edit().putLong(PREF_OPENED_CHARACTER, charSummary.getBase().getId()).apply();
+        cache.setOpenedChar(base);
         refreshUI();
     }
 

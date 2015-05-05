@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vituel.dndplayer.model.AbstractEntity;
-
 import java.util.Collection;
 import java.util.List;
 
@@ -40,10 +38,7 @@ public abstract class AbstractAssociationDao<T> extends AbstractDao<T>{
 
     public final void save(long parentId, T entity) {
         ContentValues values = toContentValues(parentId, entity);
-        long id = database.insert(tableName(), null, values);
-        if (entity instanceof AbstractEntity) {
-            ((AbstractEntity) entity).setId(id);
-        }
+        database.insert(tableName(), null, values);
     }
 
     protected final void removeAllForParent(long parentId) {
