@@ -1,13 +1,13 @@
 package com.vituel.dndplayer.model.item;
 
-import com.vituel.dndplayer.model.AbstractEntity;
 import com.vituel.dndplayer.model.effect.Effect;
 import com.vituel.dndplayer.model.effect.EffectSource;
+import com.vituel.dndplayer.model.rulebook.Rule;
 
 /**
  * Created by Victor on 25/02/14.
  */
-public class Item extends AbstractEntity implements EffectSource {
+public class Item extends Rule implements EffectSource {
 
     public enum ItemType {
         WEAPON, PROTECTIVE
@@ -18,15 +18,6 @@ public class Item extends AbstractEntity implements EffectSource {
     private Effect effect;
     private Double weight;
     private Double price;
-
-    public Item() {
-    }
-
-    protected Item(String name, SlotType slotType, ItemType itemType) {
-        super(name);
-        this.setSlotType(slotType);
-        this.setItemType(itemType);
-    }
 
     public SlotType getSlotType() {
         return slotType;

@@ -15,11 +15,12 @@ public class FeatParser extends AbstractEffectParser<Feat> {
     }
 
     @Override
-    protected Feat parse(String[] line) throws ParseFieldException {
+    protected Feat parse(String[] split) throws ParseFieldException {
         Feat result = new Feat();
-        result.setId(readInt(line, "id"));
-        result.setName(readString(line, "name"));
-        readEffect(line, result);
+        result.setId(readInt(split, "id"));
+        result.setName(readString(split, "name"));
+        result.setBook(readRulebook(split, "rulebook_id"));
+        readEffect(split, result);
         return result;
     }
 

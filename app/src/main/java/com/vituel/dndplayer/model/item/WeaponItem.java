@@ -11,7 +11,8 @@ public class WeaponItem extends Item {
     private WeaponProperties weaponProperties;
 
     public WeaponItem() {
-        super(null, HELD, WEAPON);
+        this.setSlotType(HELD);
+        this.setItemType(WEAPON);
         this.setWeaponProperties(new WeaponProperties());
     }
 

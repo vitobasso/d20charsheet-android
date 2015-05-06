@@ -15,16 +15,16 @@ public class ClassParser extends AbstractCsvParser<Clazz> {
     }
 
     @Override
-    protected Clazz parse(String[] line) throws ParseFieldException {
-        Clazz clazz = new Clazz();
-        clazz.setId(readInt(line, "id"));
-        clazz.setName(readString(line, "name"));
-        clazz.setAttackProg(readEnum(Clazz.AttackProgression.class, line, "bab"));
-        clazz.setFortitudeProg(readEnum(Clazz.ResistProgression.class, line, "fort"));
-        clazz.setReflexProg(readEnum(Clazz.ResistProgression.class, line, "refl"));
-        clazz.setWillProg(readEnum(Clazz.ResistProgression.class, line, "will"));
-        clazz.setBook(readRulebook(line, "rulebook_id"));
-        return clazz;
+    protected Clazz parse(String[] split) throws ParseFieldException {
+        Clazz result = new Clazz();
+        result.setId(readInt(split, "id"));
+        result.setName(readString(split, "name"));
+        result.setAttackProg(readEnum(Clazz.AttackProgression.class, split, "bab"));
+        result.setFortitudeProg(readEnum(Clazz.ResistProgression.class, split, "fort"));
+        result.setReflexProg(readEnum(Clazz.ResistProgression.class, split, "refl"));
+        result.setWillProg(readEnum(Clazz.ResistProgression.class, split, "will"));
+        result.setBook(readRulebook(split, "rulebook_id"));
+        return result;
     }
 
 }

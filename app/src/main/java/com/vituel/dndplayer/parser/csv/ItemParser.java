@@ -40,6 +40,7 @@ public class ItemParser extends AbstractEffectParser<Item> {
         result.setSlotType(readSlot(split, "slot"));
         result.setWeight(readDoubleNullable(split, "weight"));
         result.setPrice(readDoubleNullable(split, "price_gp"));
+        result.setBook(readRulebook(split, "rulebook_id"));
 
         if (type == WEAPON) {
             addWeaponFields(split, (WeaponItem) result);

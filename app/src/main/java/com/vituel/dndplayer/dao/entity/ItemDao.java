@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
+import com.vituel.dndplayer.dao.abstraction.AbstractRuleDao;
 import com.vituel.dndplayer.dao.dependant.WeaponDao;
 import com.vituel.dndplayer.model.item.Item;
 import com.vituel.dndplayer.model.item.SlotType;
@@ -24,7 +24,7 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 
 
-public class ItemDao extends AbstractEntityDao<Item> {
+public class ItemDao extends AbstractRuleDao<Item> {
 
     public static final String TABLE = "item";
 
@@ -33,6 +33,7 @@ public class ItemDao extends AbstractEntityDao<Item> {
 
     public static final String CREATE_TABLE = "create table " + TABLE + "("
             + COLUMN_ID + " integer primary key autoincrement, "
+            + COLUMN_BOOK_ID + " integer not null, "
             + COLUMN_NAME + " text not null, "
             + COLUMN_SLOT_TYPE + " text, "
             + COLUMN_ITEM_TYPE + " text, "
@@ -60,6 +61,7 @@ public class ItemDao extends AbstractEntityDao<Item> {
     protected String[] allColumns() {
         return new String[]{
                 COLUMN_ID,
+                COLUMN_BOOK_ID,
                 COLUMN_NAME,
                 COLUMN_SLOT_TYPE,
                 COLUMN_ITEM_TYPE,
@@ -71,11 +73,11 @@ public class ItemDao extends AbstractEntityDao<Item> {
     protected ContentValues toContentValues(Item entity) {
 
         if(entity.getName() == null) {
-            Log.w(getClass().getSimpleName(), "null");
+            Log.w(getClass().getSimpleName(), "Saving item with null name");
         }
 
-        //basic data
-        ContentValues values = effectDao.preSaveEffectSource(entity);
+        ContentValues values = super.toContentValues(entity);
+        values = effectDao.preSaveEffectSource(values, entity);
         if (entity.getSlotType() != null) {
             values.put(COLUMN_SLOT_TYPE, entity.getSlotType().toString());
         }
@@ -106,16 +108,17 @@ public class ItemDao extends AbstractEntityDao<Item> {
         //find type
         ItemType itemType;
         try {
-            itemType = valueOf(cursor.getString(3));
+            itemType = valueOf(cursor.getString(4));
         } catch (IllegalArgumentException | NullPointerException e) {
             itemType = null;
         }
 
         //basic fields
         Item item = itemType == WEAPON ? new WeaponItem() : new Item();
-        effectDao.loadEffectSource(cursor, item, 0, 1, 4);
+        effectDao.loadEffectSource(cursor, item, 0, 2, 5);
         item.setItemType(itemType);
-        item.setSlotType(SlotType.valueOf(cursor.getString(2)));
+        item.setSlotType(SlotType.valueOf(cursor.getString(3)));
+        setRulebook(item, cursor, 1);
 
         //weapon fields
         if (itemType == WEAPON) {
