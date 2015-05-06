@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
+import com.vituel.dndplayer.dao.abstraction.AbstractRuleDao;
 import com.vituel.dndplayer.dao.dependant.RaceTraitDao;
 import com.vituel.dndplayer.model.Race;
 import com.vituel.dndplayer.model.RaceTrait;
@@ -19,12 +19,13 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 /**
  * Created by Victor on 30/03/14.
  */
-public class RaceDao extends AbstractEntityDao<Race> {
+public class RaceDao extends AbstractRuleDao<Race> {
 
     public static final String TABLE = "race";
 
     public static final String CREATE_TABLE = "create table " + TABLE + "("
             + COLUMN_ID + " integer primary key autoincrement, "
+            + COLUMN_BOOK_ID + " integer not null, "
             + COLUMN_NAME + " text not null, "
             + COLUMN_EFFECT_ID + " integer not null, "
             + "FOREIGN KEY(" + COLUMN_EFFECT_ID + ") REFERENCES " + EffectDao.TABLE + "(" + COLUMN_ID + ")"
@@ -50,6 +51,7 @@ public class RaceDao extends AbstractEntityDao<Race> {
     protected String[] allColumns() {
         return new String[]{
                 COLUMN_ID,
+                COLUMN_BOOK_ID,
                 COLUMN_NAME,
                 COLUMN_EFFECT_ID
         };
@@ -57,12 +59,13 @@ public class RaceDao extends AbstractEntityDao<Race> {
 
     @Override
     protected ContentValues toContentValues(Race entity) {
-        return effectDao.preSaveEffectSource(entity);
+        ContentValues values = super.toContentValues(entity);
+        return effectDao.preSaveEffectSource(values, entity);
     }
 
     @Override
     public Race fromCursor(Cursor cursor) {
-        Race result = effectDao.loadEffectSource(cursor, new Race(), 0, 1, 2);
+        Race result = effectDao.loadEffectSource(cursor, new Race(), 0, 2, 3);
 
         //racial traits
         List<RaceTrait> traits = raceTraitDao.findByParent(result.getId());
@@ -75,7 +78,8 @@ public class RaceDao extends AbstractEntityDao<Race> {
     public Race fromCursorBrief(Cursor cursor) {
         Race result = new Race();
         result.setId(cursor.getLong(0));
-        result.setName(cursor.getString(1));
+        result.setName(cursor.getString(2));
+        setRulebook(result, cursor, 1);
         return result;
     }
 }

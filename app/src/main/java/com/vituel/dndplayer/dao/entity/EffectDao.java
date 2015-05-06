@@ -77,6 +77,10 @@ public class EffectDao extends AbstractEntityDao<Effect> {
 
     public ContentValues preSaveEffectSource(EffectSource source) {
         ContentValues values = new ContentValues();
+        return preSaveEffectSource(values, source);
+    }
+
+    public ContentValues preSaveEffectSource(ContentValues values, EffectSource source) {
         values.put(COLUMN_NAME, source.getName());
 
         Effect effect = source.getEffect();

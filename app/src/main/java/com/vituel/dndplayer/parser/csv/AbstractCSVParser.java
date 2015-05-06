@@ -6,6 +6,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.vituel.dndplayer.model.Critical;
 import com.vituel.dndplayer.model.DiceRoll;
+import com.vituel.dndplayer.model.rulebook.Book;
 import com.vituel.dndplayer.parser.exception.ParseEntityException;
 import com.vituel.dndplayer.parser.exception.ParseEnumException;
 import com.vituel.dndplayer.parser.exception.ParseFieldException;
@@ -158,6 +159,12 @@ public abstract class AbstractCsvParser<T> extends AbstractParser implements Clo
     public boolean readBoolean(String[] line, String column) throws ParseFieldException {
         String str = readStringNullable(line, column);
         return str != null && !str.isEmpty();
+    }
+
+    protected Book readRulebook(String[] line, String column) throws ParseFieldException {
+        Book book = new Book();
+        book.setId(readInt(line, column));
+        return book;
     }
 
     public int getCount() {

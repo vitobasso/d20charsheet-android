@@ -52,6 +52,12 @@ public abstract class AbstractRuleDao<T extends Rule> extends AbstractEntityDao<
         return values;
     }
 
+    protected void setRulebook(Rule rule, Cursor cursor, int col) {
+        Book book = new Book();
+        book.setId(cursor.getInt(col));
+        rule.setBook(book);
+    }
+
     private String getRulebookIdsAsString() {
         MemoryCache cache = (MemoryCache) context.getApplicationContext();
         Collection<Book> rulebooks = cache.getActiveRulebooks();

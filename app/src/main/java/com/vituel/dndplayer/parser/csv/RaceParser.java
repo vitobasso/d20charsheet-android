@@ -28,6 +28,7 @@ public class RaceParser extends AbstractEffectParser<Race> {
         Race result = new Race();
         result.setId(readInt(split, "id"));
         result.setName(readString(split, "name"));
+        result.setBook(readRulebook(split, "rulebook_id"));
 
         parseModifier(result, split, "str", STR);
         parseModifier(result, split, "dex", DEX);

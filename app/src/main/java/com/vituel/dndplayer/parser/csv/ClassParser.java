@@ -3,7 +3,6 @@ package com.vituel.dndplayer.parser.csv;
 import android.content.Context;
 
 import com.vituel.dndplayer.model.Clazz;
-import com.vituel.dndplayer.model.rulebook.Book;
 import com.vituel.dndplayer.parser.exception.ParseFieldException;
 
 /**
@@ -24,11 +23,7 @@ public class ClassParser extends AbstractCsvParser<Clazz> {
         clazz.setFortitudeProg(readEnum(Clazz.ResistProgression.class, line, "fort"));
         clazz.setReflexProg(readEnum(Clazz.ResistProgression.class, line, "refl"));
         clazz.setWillProg(readEnum(Clazz.ResistProgression.class, line, "will"));
-
-        Book book = new Book();
-        book.setId(readInt(line, "rulebook_id"));
-        clazz.setBook(book);
-
+        clazz.setBook(readRulebook(line, "rulebook_id"));
         return clazz;
     }
 

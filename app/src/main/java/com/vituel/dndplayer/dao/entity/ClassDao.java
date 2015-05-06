@@ -8,7 +8,6 @@ import com.vituel.dndplayer.dao.abstraction.AbstractRuleDao;
 import com.vituel.dndplayer.dao.dependant.ClassTraitDao;
 import com.vituel.dndplayer.model.ClassTrait;
 import com.vituel.dndplayer.model.Clazz;
-import com.vituel.dndplayer.model.rulebook.Book;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +30,7 @@ public class ClassDao extends AbstractRuleDao<Clazz> {
 
     public static final String CREATE_TABLE = "create table " + TABLE + "("
             + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_BOOK_ID+ " integer not null, "
+            + COLUMN_BOOK_ID + " integer not null, "
             + COLUMN_NAME + " text not null, "
             + COLUMN_ATTACK + " text not null, "
             + COLUMN_FORTITUDE + " text not null, "
@@ -104,12 +103,7 @@ public class ClassDao extends AbstractRuleDao<Clazz> {
         Clazz result = new Clazz();
         result.setId(cursor.getLong(0));
         result.setName(cursor.getString(2));
-
-        // rulebook
-        Book book = new Book();
-        book.setId(cursor.getInt(1));
-        result.setBook(book);
-
+        setRulebook(result, cursor, 1);
         return result;
     }
 }
