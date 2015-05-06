@@ -56,8 +56,7 @@ public class AttackDao extends AbstractDao<Attack> {
 
     public List<Attack> findByAttackRound(long roundId) {
         String query = MessageFormat.format("{0}={1}", COLUMN_ATTACK_ROUND_ID, roundId);
-        Cursor cursor = database.query(tableName(), allColumns(), query, null, null, null, null);
-        return cursorToList(cursor);
+        return select(query);
     }
 
     public void save(List<Attack> groups, long roundId) {

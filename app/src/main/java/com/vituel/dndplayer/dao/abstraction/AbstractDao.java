@@ -38,7 +38,7 @@ public abstract class AbstractDao<T> {
     }
 
     public Cursor listAllCursor() {
-        return database.query(tableName(), allColumns(), null, null, null, null, orderBy());
+        return selectCursor(null);
     }
 
     public final List<T> listAll() {

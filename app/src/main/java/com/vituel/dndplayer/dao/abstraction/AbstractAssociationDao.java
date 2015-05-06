@@ -2,7 +2,6 @@ package com.vituel.dndplayer.dao.abstraction;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.util.Collection;
@@ -25,8 +24,7 @@ public abstract class AbstractAssociationDao<T> extends AbstractDao<T>{
 
     public final List<T> findByParent(long parentId) {
         assert parentId != 0;
-        Cursor cursor = database.query(tableName(), allColumns(), query(parentId), null, null, null, null);
-        return cursorToList(cursor);
+        return select(query(parentId));
     }
 
     public final void saveOverwrite(long parentId, Collection<T> list) {

@@ -33,7 +33,7 @@ public abstract class AbstractRuleDao<T extends Rule> extends AbstractEntityDao<
         String bookIds = getRulebookIdsAsString();
         if (bookIds != null) {
             String selection = String.format("%s in (%s)", COLUMN_BOOK_ID, bookIds);
-            return database.query(tableName(), allColumns(), selection, null, null, null, orderBy());
+            return selectCursor(selection);
         } else {
             return super.listAllCursor();
         }

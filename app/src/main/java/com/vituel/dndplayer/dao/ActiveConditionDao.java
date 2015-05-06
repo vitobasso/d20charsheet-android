@@ -67,8 +67,7 @@ public class ActiveConditionDao extends AbstractDao<Condition> {
     }
 
     public List<Condition> findByChar(long charId) {
-        Cursor cursor = database.query(tableName(), allColumns(), queryByChar(charId), null, null, null, null);
-        return cursorToList(cursor);
+        return select(queryByChar(charId));
     }
 
     @Override

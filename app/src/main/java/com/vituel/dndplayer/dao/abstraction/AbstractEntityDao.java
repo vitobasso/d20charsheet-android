@@ -28,7 +28,7 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
     }
 
     public final T findById(long id) {
-        Cursor cursor = database.query(tableName(), allColumns(), COLUMN_ID + " = " + id, null, null, null, null);
+        Cursor cursor = selectCursor(COLUMN_ID + " = " + id);
         cursor.moveToFirst();
         if (cursor.getCount() != 0) {
             T result = fromCursor(cursor);
@@ -41,7 +41,7 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
 
     public final T findByName(String name) {
         String query = String.format("%s=\'%s\'", COLUMN_NAME, name);
-        Cursor cursor = database.query(tableName(), allColumns(), query, null, null, null, null);
+        Cursor cursor = selectCursor(query);
         cursor.moveToFirst();
         T result = null;
         if (cursor.getCount() != 0) {
