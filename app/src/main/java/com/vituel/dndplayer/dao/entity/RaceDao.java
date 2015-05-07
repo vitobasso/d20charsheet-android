@@ -82,4 +82,5 @@ public class RaceDao extends AbstractRuleDao<Race> {
         setRulebook(result, cursor, 1);
         return result;
     }
+
 }

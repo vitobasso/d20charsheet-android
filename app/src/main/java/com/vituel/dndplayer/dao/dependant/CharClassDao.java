@@ -80,4 +80,8 @@ public class CharClassDao extends AbstractAssociationDao<ClassLevel> {
         return classLevel;
     }
 
+    public void setIgnoreBookSelection(boolean ignoreActiveBooks) {
+        classDao.setIgnoreBookSelection(ignoreActiveBooks);
+    }
+
 }

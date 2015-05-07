@@ -316,6 +316,7 @@ public class CharDao extends AbstractEntityDao<CharBase> {
 
         //equip
         ItemDao itemDao = new ItemDao(context, database);
+        itemDao.setIgnoreBookSelection(true);
         c.setEquipment(new CharEquip());
         c.getEquipment().getMainHand().setItem(itemDao.findById(cursor.getInt(31)));
         c.getEquipment().getOffhand().setItem(itemDao.findById(cursor.getInt(32)));
@@ -342,14 +343,17 @@ public class CharDao extends AbstractEntityDao<CharBase> {
 
         //load race
         RaceDao raceDao = new RaceDao(context, database);
+        raceDao.setIgnoreBookSelection(true);
         c.setRace(raceDao.findById(cursor.getInt(2)));
 
         //load class
         CharClassDao classDao = new CharClassDao(context, database);
+        classDao.setIgnoreBookSelection(true);
         c.setClassLevels(classDao.findByParent(c.getId()));
 
         //load feats
         CharFeatDao charFeatDao = new CharFeatDao(context, database);
+        charFeatDao.setIgnoreBookSelection(true);
         c.setFeats(charFeatDao.findByParent(c.getId()));
 
         //load skills

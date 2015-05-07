@@ -30,6 +30,8 @@ public class CharFeatDao extends AbstractAssociationDao<Feat> {
             + "FOREIGN KEY(" + COLUMN_FEAT_ID + ") REFERENCES " + FeatDao.TABLE + "(" + COLUMN_ID + ")"
             + ");";
 
+    private FeatDao featDao = new FeatDao(context, database);
+
     public CharFeatDao(Context context) {
         super(context);
     }
@@ -67,8 +69,11 @@ public class CharFeatDao extends AbstractAssociationDao<Feat> {
 
     @Override
     public Feat fromCursor(Cursor cursor) {
-        FeatDao featDao = new FeatDao(context, database);
         return featDao.findById(cursor.getLong(2));
+    }
+
+    public void setIgnoreBookSelection(boolean ignoreActiveBooks) {
+        featDao.setIgnoreBookSelection(ignoreActiveBooks);
     }
 
 }

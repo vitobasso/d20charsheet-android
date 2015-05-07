@@ -12,6 +12,7 @@ import com.vituel.dndplayer.model.rulebook.Rule;
 import java.util.Collection;
 
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
+import static java.lang.String.format;
 
 /**
  * Created by Victor on 26/04/2015.
@@ -19,6 +20,8 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 public abstract class AbstractRuleDao<T extends Rule> extends AbstractEntityDao<T> {
 
     public static final String COLUMN_BOOK_ID = "rulebook_id";
+
+    private boolean ignoreActiveBooks;
 
     public AbstractRuleDao(Context context) {
         super(context);
@@ -29,14 +32,13 @@ public abstract class AbstractRuleDao<T extends Rule> extends AbstractEntityDao<
     }
 
     @Override
-    public Cursor listAllCursor() {
+    public Cursor selectCursor(String selection) {
         String bookIds = getRulebookIdsAsString();
-        if (bookIds != null) {
-            String selection = String.format("%s in (%s)", COLUMN_BOOK_ID, bookIds);
-            return selectCursor(selection);
-        } else {
-            return super.listAllCursor();
+        if (!ignoreActiveBooks && bookIds != null) {
+            String bookSelection = format("%s in (%s)", COLUMN_BOOK_ID, bookIds);
+            selection = appendWhereClause(bookSelection, selection);
         }
+        return super.selectCursor(selection);
     }
 
     @Override
@@ -74,6 +76,10 @@ public abstract class AbstractRuleDao<T extends Rule> extends AbstractEntityDao<
         }
 
         return str.toString();
+    }
+
+    public void setIgnoreBookSelection(boolean ignoreActiveBooks) {
+        this.ignoreActiveBooks = ignoreActiveBooks;
     }
 
 }

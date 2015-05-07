@@ -10,12 +10,14 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
+
 /**
  * Created by Victor on 21/04/14.
  */
 public abstract class AbstractDao<T> {
 
-    protected static SQLiteDatabase database;
+    protected SQLiteDatabase database;
     protected Context context;
     protected SQLiteHelper dbHelper;
 
@@ -53,6 +55,20 @@ public abstract class AbstractDao<T> {
     protected final List<T> select(String selection) {
         Cursor cursor = selectCursor(selection);
         return cursorToList(cursor);
+    }
+
+    protected String appendWhereClause(String base, String newClause) {
+        StringBuilder str = new StringBuilder();
+        if (!isNullOrEmpty(base)) {
+            str.append(base);
+        }
+        if (!isNullOrEmpty(base) && !isNullOrEmpty(newClause)) {
+            str.append(" and ");
+        }
+        if (!isNullOrEmpty(newClause)) {
+            str.append(newClause);
+        }
+        return str.toString();
     }
 
     protected final List<T> cursorToList(Cursor cursor) {
