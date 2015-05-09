@@ -2,6 +2,7 @@ package com.vituel.dndplayer.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -27,6 +28,7 @@ import static com.vituel.dndplayer.activity.MainNavigationActivity.NavigationIte
 import static com.vituel.dndplayer.activity.MainNavigationActivity.NavigationItem.OPEN;
 import static com.vituel.dndplayer.activity.MainNavigationActivity.NavigationItem.SUMMARY;
 import static com.vituel.dndplayer.activity.MainNavigationActivity.NavigationItem.values;
+import static com.vituel.dndplayer.util.ActivityUtil.PREF;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.inflate;
 
@@ -37,6 +39,7 @@ public abstract class MainNavigationActivity extends FragmentActivity {
 
     protected Activity activity;
     protected MemoryCache cache;
+    protected SharedPreferences pref;
 
     private DrawerLayout drawerLayout;
     private ListView listView;
@@ -52,6 +55,7 @@ public abstract class MainNavigationActivity extends FragmentActivity {
         setContentView(R.layout.drawer_layout);
         activity = this;
         cache = (MemoryCache) getApplicationContext();
+        pref = getSharedPreferences(PREF, MODE_PRIVATE);
         initDrawer();
     }
 

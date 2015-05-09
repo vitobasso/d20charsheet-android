@@ -1,7 +1,6 @@
 package com.vituel.dndplayer.activity.summary;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
@@ -41,7 +40,6 @@ public class SummaryActivity extends MainNavigationActivity implements PagerActi
 
     private ViewPager pager;
     private ConditionGuiManager conditionsGuiManager;
-    private SharedPreferences pref;
 
     @Override
     protected int getContentLayout() {
@@ -51,7 +49,6 @@ public class SummaryActivity extends MainNavigationActivity implements PagerActi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        pref = getSharedPreferences(PREF, MODE_PRIVATE);
         conditionsGuiManager = new ConditionGuiManager(this);
 
         pager = (ViewPager) findViewById(R.id.pager);
@@ -62,8 +59,14 @@ public class SummaryActivity extends MainNavigationActivity implements PagerActi
 
     @Override
     protected void onStart() {
-        super.onStart();
-        loadContentOrOpenChar();
+        CharBase openedChar = cache.getOpenedChar();
+        if (openedChar != null) {
+            open(openedChar);
+            super.onStart();
+        } else {
+            super.onStart();
+            loadContentOrOpenChar();
+        }
     }
 
     @Override
@@ -102,6 +105,7 @@ public class SummaryActivity extends MainNavigationActivity implements PagerActi
         }
     }
 
+    //TODO move to separate startup activity
     public void loadContentOrOpenChar() {
         if (pref.getBoolean(PREF_FIRST_RUN, true)) {
             Intent intent = new Intent(this, LoadingActivity.class);

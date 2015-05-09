@@ -40,8 +40,8 @@ public abstract class AbstractListFragment<T, A extends Activity & PagerActivity
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
         outState.putInt(EXTRA_SELECTED, clickedIndex);
+        super.onSaveInstanceState(outState);
     }
 
     @Override
