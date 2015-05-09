@@ -3,13 +3,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/action_add"
-        android:icon="@android:drawable/ic_menu_add"
+        android:icon="@drawable/ic_action_new"
         android:orderInCategory="3"
         android:showAsAction="withText"
         android:title="@string/class_add" />
     <item
         android:id="@+id/action_remove"
-        android:icon="@android:drawable/ic_menu_delete"
+        android:icon="@drawable/ic_action_remove"
         android:orderInCategory="4"
         android:showAsAction="withText"
         android:title="@string/class_remove" />
