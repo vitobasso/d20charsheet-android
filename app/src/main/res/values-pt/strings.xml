@@ -199,6 +199,7 @@
     <string name="intelligence">Inteligência</string>
     <string name="wisdom">Sabedoria</string>
     <string name="charisma">Carisma</string>
+    <string name="save">Salvar</string>
     <string name="saved_to">Salvo em</string>
     <string name="failed_saving">Falha ao salvar em arquivo.</string>
     <string name="cant_be_empty">Não pode ser vazio</string>

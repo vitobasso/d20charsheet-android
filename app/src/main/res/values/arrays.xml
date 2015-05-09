@@ -47,6 +47,10 @@
         <item>@string/export</item>
         <item>@string/remove</item>
     </array>
+    <array name="edit_dialog_items">
+        <item>@string/save</item>
+        <item>@android:string/cancel</item>
+    </array>
     <array name="main_navigation">
         <item>@string/page_summary</item>
         <item>@string/char_edit</item>

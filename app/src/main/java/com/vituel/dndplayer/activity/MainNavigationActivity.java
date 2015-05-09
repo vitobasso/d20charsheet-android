@@ -32,6 +32,7 @@ import static com.vituel.dndplayer.util.ActivityUtil.inflate;
  */
 public abstract class MainNavigationActivity extends FragmentActivity {
 
+    protected Activity activity;
     protected MemoryCache cache;
 
     private DrawerLayout drawerLayout;
@@ -42,9 +43,10 @@ public abstract class MainNavigationActivity extends FragmentActivity {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.drawer_layout);
+        activity = this;
         cache = (MemoryCache) getApplicationContext();
         initDrawer();
     }

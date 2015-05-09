@@ -32,6 +32,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created by Victor on 07/03/14.
+ * TODO move to top abstract activity?
  */
 public class ActivityUtil {
 
@@ -57,22 +58,28 @@ public class ActivityUtil {
 
     public static boolean defaultOnOptionsItemSelected(MenuItem item, Activity activity) {
         switch (item.getItemId()) {
-            case R.id.action_cancel:
-
-                activity.setResult(Activity.RESULT_CANCELED);
-                activity.finish();
+            case R.id.action_cancel:  //TODO remove if not used anymore
+                cancel(activity);
                 return true;
 
             case R.id.action_summary:
-
-                Intent summaryIntent = new Intent(activity, SummaryActivity.class);
-                summaryIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                activity.startActivity(summaryIntent);
+                backToSummary(activity);
                 return true;
 
             default:
                 return false;
         }
+    }
+
+    public static void cancel(Activity activity) {
+        activity.setResult(Activity.RESULT_CANCELED);
+        activity.finish();
+    }
+
+    public static void backToSummary(Activity activity) {
+        Intent summaryIntent = new Intent(activity, SummaryActivity.class);
+        summaryIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        activity.startActivity(summaryIntent);
     }
 
     @SuppressWarnings("unchecked")
