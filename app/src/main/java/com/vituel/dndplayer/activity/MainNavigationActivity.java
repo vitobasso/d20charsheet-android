@@ -17,6 +17,7 @@ import android.widget.ListView;
 import com.vituel.dndplayer.MemoryCache;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
+import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
 import com.vituel.dndplayer.activity.select.SelectBooksActivity;
 import com.vituel.dndplayer.activity.select.SelectCharActivity;
 import com.vituel.dndplayer.activity.summary.SummaryActivity;
@@ -28,7 +29,11 @@ import static com.vituel.dndplayer.activity.MainNavigationActivity.NavigationIte
 import static com.vituel.dndplayer.activity.MainNavigationActivity.NavigationItem.OPEN;
 import static com.vituel.dndplayer.activity.MainNavigationActivity.NavigationItem.SUMMARY;
 import static com.vituel.dndplayer.activity.MainNavigationActivity.NavigationItem.values;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
 import static com.vituel.dndplayer.util.ActivityUtil.PREF;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CHAR;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.inflate;
 
@@ -126,6 +131,23 @@ public abstract class MainNavigationActivity extends FragmentActivity {
         } else {
             throw new InvalidParameterException(activityClass.getCanonicalName());
         }
+    }
+
+    protected void navigateToEditChar() {
+        Intent editIntent = new Intent(this, EditCharActivity.class);
+        editIntent.putExtra(EXTRA_MODE, REQUEST_EDIT);
+        editIntent.putExtra(EXTRA_PAGE, EditCharPagerAdapter.PAGE_BASIC); //TODO change according to page in summary
+        startActivityForResult(editIntent, REQUEST_CHAR);
+    }
+
+    protected void navigateToBooks() {
+        Intent booksIntent = new Intent(this, SelectBooksActivity.class);
+        startActivityForResult(booksIntent, REQUEST_CHAR);
+    }
+
+    protected void navigateToOpenChar() {
+        Intent openIntent = new Intent(this, SelectCharActivity.class);
+        startActivityForResult(openIntent, REQUEST_CHAR);
     }
 
     protected abstract int getContentLayout();

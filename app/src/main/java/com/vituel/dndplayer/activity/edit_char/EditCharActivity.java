@@ -10,8 +10,6 @@ import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.MainNavigationActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
-import com.vituel.dndplayer.activity.select.SelectBooksActivity;
-import com.vituel.dndplayer.activity.select.SelectCharActivity;
 import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.character.CharBase;
 
@@ -20,9 +18,7 @@ import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
 import static com.vituel.dndplayer.util.ActivityUtil.cancel;
-import static com.vituel.dndplayer.util.ActivityUtil.defaultOnOptionsItemSelected;
 import static com.vituel.dndplayer.util.ActivityUtil.findFragment;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
@@ -69,12 +65,10 @@ public class EditCharActivity extends MainNavigationActivity implements PagerAct
                 cancel(this);
                 break;
             case BOOKS:
-                Intent booksIntent = new Intent(this, SelectBooksActivity.class);
-                startActivityForResult(booksIntent, REQUEST_SELECT);
+                navigateToBooks();
                 break;
             case OPEN:
-                Intent openIntent = new Intent(this, SelectCharActivity.class);
-                startActivityForResult(openIntent, REQUEST_SELECT);
+                navigateToOpenChar();
                 break;
         }
     }
@@ -93,7 +87,7 @@ public class EditCharActivity extends MainNavigationActivity implements PagerAct
                 save();
                 return true;
             default:
-                return defaultOnOptionsItemSelected(item, this);
+                return false;
         }
     }
 

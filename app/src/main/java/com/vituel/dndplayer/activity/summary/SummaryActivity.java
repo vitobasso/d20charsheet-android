@@ -10,10 +10,6 @@ import com.vituel.dndplayer.activity.LoadingActivity;
 import com.vituel.dndplayer.activity.MainNavigationActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
-import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
-import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
-import com.vituel.dndplayer.activity.select.SelectBooksActivity;
-import com.vituel.dndplayer.activity.select.SelectCharActivity;
 import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.model.character.CharSummary;
@@ -23,14 +19,11 @@ import java.util.List;
 import static com.vituel.dndplayer.activity.MainNavigationActivity.NavigationItem.EDIT;
 import static com.vituel.dndplayer.activity.MainNavigationActivity.NavigationItem.OPEN;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
 import static com.vituel.dndplayer.util.ActivityUtil.PREF;
 import static com.vituel.dndplayer.util.ActivityUtil.PREF_FIRST_RUN;
 import static com.vituel.dndplayer.util.ActivityUtil.PREF_OPENED_CHARACTER;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CHAR;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_LOAD;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 
@@ -73,18 +66,13 @@ public class SummaryActivity extends MainNavigationActivity implements PagerActi
     protected void navigateTo(NavigationItem nextActivity) {
         switch (nextActivity) {
             case EDIT:
-                Intent editIntent = new Intent(this, EditCharActivity.class);
-                editIntent.putExtra(EXTRA_MODE, REQUEST_EDIT); //TODO change according to page in summary
-                editIntent.putExtra(EXTRA_PAGE, EditCharPagerAdapter.PAGE_BASIC); //TODO change according to page in summary
-                startActivityForResult(editIntent, REQUEST_EDIT);
+                navigateToEditChar();
                 break;
             case BOOKS:
-                Intent booksIntent = new Intent(this, SelectBooksActivity.class);
-                startActivityForResult(booksIntent, REQUEST_SELECT);
+                navigateToBooks();
                 break;
             case OPEN:
-                Intent openIntent = new Intent(this, SelectCharActivity.class);
-                startActivityForResult(openIntent, REQUEST_SELECT);
+                navigateToOpenChar();
                 break;
         }
     }
@@ -93,7 +81,7 @@ public class SummaryActivity extends MainNavigationActivity implements PagerActi
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         switch (requestCode) {
-            case REQUEST_SELECT:case REQUEST_EDIT:
+            case REQUEST_CHAR:
                 switch (resultCode) {
                     case RESULT_OK:
                         CharBase charToOpen = (CharBase) data.getSerializableExtra(EXTRA_CHAR);

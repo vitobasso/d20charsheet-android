@@ -42,6 +42,7 @@ public class ActivityUtil {
     public static final int REQUEST_SELECT_RACE = 4;
     public static final int REQUEST_SELECT_CLASS = 5;
     public static final int REQUEST_LOAD = 6;
+    public static final int REQUEST_CHAR = 7;
 
     public static final String EXTRA_CHAR = "CHAR";
     public static final String EXTRA_MODE = "MODE";
@@ -72,6 +73,7 @@ public class ActivityUtil {
     }
 
     public static void backToSummary(Activity activity) {
+        activity.finish();
         Intent summaryIntent = new Intent(activity, SummaryActivity.class);
         summaryIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         activity.startActivity(summaryIntent);

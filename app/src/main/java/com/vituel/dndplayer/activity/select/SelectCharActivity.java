@@ -2,7 +2,6 @@ package com.vituel.dndplayer.activity.select;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.ListActivity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -17,6 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
+import com.vituel.dndplayer.activity.MainNavigationActivity;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.character.CharBase;
@@ -28,7 +28,7 @@ import static android.widget.AdapterView.OnItemLongClickListener;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
-import static com.vituel.dndplayer.util.ActivityUtil.defaultOnOptionsItemSelected;
+import static com.vituel.dndplayer.util.ActivityUtil.backToSummary;
 import static com.vituel.dndplayer.util.ActivityUtil.internationalize;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
@@ -36,31 +36,53 @@ import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 /**
  * Created by Victor on 28/02/14.
  */
-public class SelectCharActivity extends ListActivity {
+public class SelectCharActivity extends MainNavigationActivity {
 
     private List<CharBase> list;
+    private ListView listView;
+
+    @Override
+    protected int getContentLayout() {
+        return R.layout.list;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list);
 
         CharDao dataSource = new CharDao(this);
         list = dataSource.listAll();
+        dataSource.close();
 
-        updateUI();
-
-        ListView listView = (ListView) findViewById(android.R.id.list);
+        listView = (ListView) findViewById(android.R.id.list);
         listView.setOnItemClickListener(new ClickListener());
         listView.setOnItemLongClickListener(new LongClickListener());
 
-        dataSource.close();
 
+        updateUI();
         setActionbarTitle(this, BOLD_FONT, getTitle());
     }
 
+    @Override
+    protected void navigateTo(NavigationItem nextActivity) {
+        switch (nextActivity) {
+            case SUMMARY:
+                backToSummary(this);
+                break;
+            case EDIT:
+                backToSummary(this);
+                navigateToEditChar();
+                break;
+            case BOOKS:
+                backToSummary(this);
+                navigateToBooks();
+                break;
+        }
+
+    }
+
     private void updateUI() {
-        setListAdapter(new Adapter(this, android.R.layout.simple_list_item_1, list));
+        listView.setAdapter(new Adapter(this, android.R.layout.simple_list_item_1, list));
     }
 
     @Override
@@ -82,7 +104,7 @@ public class SelectCharActivity extends ListActivity {
                 return true;
 
             default:
-                return defaultOnOptionsItemSelected(item, this);
+                return false;
         }
     }
 
@@ -112,10 +134,8 @@ public class SelectCharActivity extends ListActivity {
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            Intent intent = new Intent();
-            intent.putExtra(EXTRA_CHAR, list.get(i));
-            setResult(RESULT_OK, intent);
-            finish();
+            cache.setOpenedChar(list.get(i));
+            backToSummary(activity);
         }
     }
 
