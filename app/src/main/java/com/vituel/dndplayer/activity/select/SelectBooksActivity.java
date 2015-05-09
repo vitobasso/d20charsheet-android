@@ -155,6 +155,7 @@ public class SelectBooksActivity extends ExpandableListActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.action_save:
 

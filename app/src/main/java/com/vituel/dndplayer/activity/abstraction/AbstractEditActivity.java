@@ -47,10 +47,11 @@ public abstract class AbstractEditActivity<T extends AbstractEntity> extends Act
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.action_save:
 
-                if(!validate()){
+                if (!validate()) {
                     return true;
                 }
 

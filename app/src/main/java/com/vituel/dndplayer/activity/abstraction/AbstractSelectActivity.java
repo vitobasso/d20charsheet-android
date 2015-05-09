@@ -132,6 +132,7 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
 
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
+        super.onOptionsItemSelected(menuItem);
         switch (menuItem.getItemId()) {
             case R.id.action_create:
                 Intent intent = new Intent(this, getEditActivityClass());

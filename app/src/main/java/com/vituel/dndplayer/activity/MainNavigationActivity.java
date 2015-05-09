@@ -2,9 +2,12 @@ package com.vituel.dndplayer.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -37,6 +40,7 @@ public abstract class MainNavigationActivity extends FragmentActivity {
 
     private DrawerLayout drawerLayout;
     private ListView listView;
+    private ActionBarDrawerToggle drawerToggle;
 
     public enum NavigationItem {
         SUMMARY, EDIT, BOOKS, OPEN
@@ -49,6 +53,26 @@ public abstract class MainNavigationActivity extends FragmentActivity {
         activity = this;
         cache = (MemoryCache) getApplicationContext();
         initDrawer();
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        drawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (drawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -75,6 +99,10 @@ public abstract class MainNavigationActivity extends FragmentActivity {
         listView.setAdapter(new ArrayAdapter<>(this, R.layout.simple_row, R.id.name, drawerItems));
         listView.setOnItemClickListener(new NavigationClickListener());
         selectCurrentActivityInDrawer();
+
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_drawer, R.string.open, R.string.close);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
     }
 
     private void selectCurrentActivityInDrawer() {

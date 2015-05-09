@@ -1,8 +1,5 @@
 package com.vituel.dndplayer.activity.edit_char;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -69,7 +66,7 @@ public class EditCharActivity extends MainNavigationActivity implements PagerAct
     protected void navigateTo(NavigationItem nextActivity) {
         switch (nextActivity) {
             case SUMMARY:
-                showConfirmDialog();
+                cancel(this);
                 break;
             case BOOKS:
                 Intent booksIntent = new Intent(this, SelectBooksActivity.class);
@@ -90,6 +87,7 @@ public class EditCharActivity extends MainNavigationActivity implements PagerAct
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.action_save:
                 save();
@@ -151,28 +149,6 @@ public class EditCharActivity extends MainNavigationActivity implements PagerAct
                 pager.setCurrentItem(currentPage); //stay in page
             }
 
-        }
-    }
-
-    public void showConfirmDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setItems(R.array.edit_dialog_items, new DialogClickListener());
-        Dialog dialog = builder.create();
-        dialog.show();
-    }
-
-    private class DialogClickListener implements DialogInterface.OnClickListener{
-        @Override
-        public void onClick(DialogInterface dialog, int which) {
-            switch (which){
-                case 0:
-                    save();
-                    break;
-                case 1:
-                    cancel(activity);
-                    break;
-            }
-            dialog.dismiss();
         }
     }
 

@@ -205,5 +205,7 @@
     <string name="cant_be_empty">Não pode ser vazio</string>
     <string name="rule_books">Livros</string>
     <string name="loading">Importando regras…</string>
+    <string name="open">Abrir</string>
+    <string name="close">Fechar</string>
 
 </resources>

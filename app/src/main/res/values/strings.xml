@@ -205,5 +205,7 @@
     <string name="cant_be_empty">Can\'t be empty</string>
     <string name="rule_books">Rule books</string>
     <string name="loading">Importing rules…</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
 </resources>
