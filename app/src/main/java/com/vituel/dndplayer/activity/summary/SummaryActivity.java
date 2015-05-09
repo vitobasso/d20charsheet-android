@@ -77,7 +77,7 @@ public class SummaryActivity extends MainNavigationActivity implements PagerActi
                 break;
             case BOOKS:
                 Intent booksIntent = new Intent(this, SelectBooksActivity.class);
-                startActivity(booksIntent);
+                startActivityForResult(booksIntent, REQUEST_SELECT);
                 break;
             case OPEN:
                 Intent openIntent = new Intent(this, SelectCharActivity.class);

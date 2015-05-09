@@ -32,7 +32,6 @@ import java.util.regex.Pattern;
 
 /**
  * Created by Victor on 07/03/14.
- * TODO move to top abstract activity?
  */
 public class ActivityUtil {
 
@@ -58,10 +57,6 @@ public class ActivityUtil {
 
     public static boolean defaultOnOptionsItemSelected(MenuItem item, Activity activity) {
         switch (item.getItemId()) {
-            case R.id.action_cancel:  //TODO remove if not used anymore
-                cancel(activity);
-                return true;
-
             case R.id.action_summary:
                 backToSummary(activity);
                 return true;

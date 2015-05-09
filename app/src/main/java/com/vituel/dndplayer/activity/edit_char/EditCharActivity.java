@@ -73,7 +73,7 @@ public class EditCharActivity extends MainNavigationActivity implements PagerAct
                 break;
             case BOOKS:
                 Intent booksIntent = new Intent(this, SelectBooksActivity.class);
-                startActivity(booksIntent);
+                startActivityForResult(booksIntent, REQUEST_SELECT);
                 break;
             case OPEN:
                 Intent openIntent = new Intent(this, SelectCharActivity.class);
