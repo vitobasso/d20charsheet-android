@@ -1,15 +1,16 @@
 package com.vituel.dndplayer.activity.select;
 
-import android.app.ExpandableListActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
+import android.widget.ExpandableListView;
 
 import com.google.common.collect.Lists;
 import com.vituel.dndplayer.MemoryCache;
 import com.vituel.dndplayer.R;
+import com.vituel.dndplayer.activity.MainNavigationActivity;
 import com.vituel.dndplayer.dao.dependant.CharBookDao;
 import com.vituel.dndplayer.dao.entity.BookDao;
 import com.vituel.dndplayer.dao.entity.EditionDao;
@@ -25,7 +26,9 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
+import static com.vituel.dndplayer.util.ActivityUtil.backToSummary;
 import static com.vituel.dndplayer.util.ActivityUtil.defaultOnOptionsItemSelected;
+import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.populateCheckBox;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
@@ -34,7 +37,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 /**
  * Created by Victor on 12/04/2015.
  */
-public class SelectBooksActivity extends ExpandableListActivity {
+public class SelectBooksActivity extends MainNavigationActivity {
 
     private CharBase base;
     private SortedSet<Edition> editions;
@@ -42,6 +45,11 @@ public class SelectBooksActivity extends ExpandableListActivity {
     private SortedSet<Book> checkedBooks;
 
     private MemoryCache cache; //TODO move to superclass
+
+    @Override
+    protected int getContentLayout() {
+        return android.R.layout.expandable_list_content;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +62,25 @@ public class SelectBooksActivity extends ExpandableListActivity {
         booksByEdition = mapBooksByEdition();
         checkedBooks = loadSortedCheckedBooks(base.getId());
 
-        setListAdapter(new Adapter());
+        ExpandableListView list = findView(this, android.R.id.list);
+        list.setAdapter(new Adapter());
+    }
+
+    @Override
+    protected void navigateTo(NavigationItem nextActivity) {
+        switch (nextActivity) {
+            case SUMMARY:
+                backToSummary(this);
+                break;
+            case EDIT:
+                backToSummary(this);
+                navigateToEditChar();
+                break;
+            case OPEN:
+                backToSummary(this);
+                navigateToOpenChar();
+                break;
+        }
     }
 
     private TreeMap<Edition, List<Book>> mapBooksByEdition() {

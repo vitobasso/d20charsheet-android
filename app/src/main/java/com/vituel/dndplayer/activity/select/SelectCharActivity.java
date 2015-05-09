@@ -78,7 +78,6 @@ public class SelectCharActivity extends MainNavigationActivity {
                 navigateToBooks();
                 break;
         }
-
     }
 
     private void updateUI() {
