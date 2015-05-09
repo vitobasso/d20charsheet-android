@@ -25,8 +25,8 @@ import com.vituel.dndplayer.parser.json.CharJsonParser;
 import java.util.List;
 
 import static android.widget.AdapterView.OnItemLongClickListener;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
 import static com.vituel.dndplayer.util.ActivityUtil.defaultOnOptionsItemSelected;
 import static com.vituel.dndplayer.util.ActivityUtil.internationalize;
@@ -76,6 +76,7 @@ public class SelectCharActivity extends ListActivity {
 
                 //create new character
                 Intent intent = new Intent(this, EditCharActivity.class);
+                intent.putExtra(EXTRA_MODE, REQUEST_CREATE);
                 startActivityForResult(intent, REQUEST_CREATE);
                 return true;
 
@@ -92,7 +93,7 @@ public class SelectCharActivity extends ListActivity {
                     case RESULT_OK:
 
                         //save to db
-                        CharBase base = (CharBase) data.getSerializableExtra(EXTRA_EDITED);
+                        CharBase base = (CharBase) data.getSerializableExtra(EXTRA_CHAR);
                         CharDao dataSource = new CharDao(this);
                         dataSource.save(base);
                         dataSource.close();
@@ -111,7 +112,7 @@ public class SelectCharActivity extends ListActivity {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Intent intent = new Intent();
-            intent.putExtra(EXTRA_SELECTED, list.get(i));
+            intent.putExtra(EXTRA_CHAR, list.get(i));
             setResult(RESULT_OK, intent);
             finish();
         }

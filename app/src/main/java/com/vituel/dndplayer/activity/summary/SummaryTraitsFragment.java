@@ -1,17 +1,11 @@
 package com.vituel.dndplayer.activity.summary;
 
-import android.content.Intent;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
-import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
-import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
 import com.vituel.dndplayer.model.ClassLevel;
 import com.vituel.dndplayer.model.ClassTrait;
 import com.vituel.dndplayer.model.Feat;
@@ -26,9 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
 
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 
 /**
@@ -63,29 +54,6 @@ public class SummaryTraitsFragment extends PagerFragment<CharSummary, SummaryAct
         }
 
         return traitsMap;
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.summary_main, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_edit:
-
-                //edit opened character
-                Intent intent = new Intent(activity, EditCharActivity.class);
-                intent.putExtra(EXTRA_EDITED, data.getBase());
-                intent.putExtra(EXTRA_PAGE, EditCharPagerAdapter.PAGE_FEATS);
-                activity.startActivityForResult(intent, REQUEST_EDIT);
-
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     private class Adapter extends SimpleExpListAdapter<String, EffectSource> {

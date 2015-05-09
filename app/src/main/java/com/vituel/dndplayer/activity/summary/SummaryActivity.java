@@ -4,27 +4,28 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.view.Menu;
-import android.view.MenuItem;
 
-import com.vituel.dndplayer.MemoryCache;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.LoadingActivity;
+import com.vituel.dndplayer.activity.MainNavigationActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
+import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
+import com.vituel.dndplayer.activity.select.SelectBooksActivity;
 import com.vituel.dndplayer.activity.select.SelectCharActivity;
 import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.model.character.CharSummary;
-import com.vituel.dndplayer.util.ActivityUtil;
 
 import java.util.List;
 
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
+import static com.vituel.dndplayer.activity.MainNavigationActivity.NavigationItem.EDIT;
+import static com.vituel.dndplayer.activity.MainNavigationActivity.NavigationItem.OPEN;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
 import static com.vituel.dndplayer.util.ActivityUtil.PREF;
 import static com.vituel.dndplayer.util.ActivityUtil.PREF_FIRST_RUN;
 import static com.vituel.dndplayer.util.ActivityUtil.PREF_OPENED_CHARACTER;
@@ -34,23 +35,23 @@ import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 
-public class SummaryActivity extends FragmentActivity implements PagerActivity<CharSummary> {
+public class SummaryActivity extends MainNavigationActivity implements PagerActivity<CharSummary> {
 
     private CharSummary charSummary;
 
     private ViewPager pager;
     private ConditionGuiManager conditionsGuiManager;
     private SharedPreferences pref;
-    private MemoryCache cache;
+
+    @Override
+    protected int getContentLayout() {
+        return R.layout.summary;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.summary);
-
         pref = getSharedPreferences(PREF, MODE_PRIVATE);
-        cache = (MemoryCache) getApplicationContext();
-
         conditionsGuiManager = new ConditionGuiManager(this);
 
         pager = (ViewPager) findViewById(R.id.pager);
@@ -66,51 +67,38 @@ public class SummaryActivity extends FragmentActivity implements PagerActivity<C
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        switch (requestCode) {
-            case REQUEST_SELECT:
-                switch (resultCode) {
-                    case RESULT_OK:
-
-                        //open selected character
-                        CharBase selectedChar = (CharBase) data.getSerializableExtra(EXTRA_SELECTED);
-                        open(selectedChar);
-                }
+    protected void navigateTo(NavigationItem nextActivity) {
+        switch (nextActivity) {
+            case EDIT:
+                Intent editIntent = new Intent(this, EditCharActivity.class);
+                editIntent.putExtra(EXTRA_MODE, REQUEST_EDIT); //TODO change according to page in summary
+                editIntent.putExtra(EXTRA_PAGE, EditCharPagerAdapter.PAGE_BASIC); //TODO change according to page in summary
+                startActivityForResult(editIntent, REQUEST_EDIT);
                 break;
-            case REQUEST_EDIT:
-                switch (resultCode) {
-                    case RESULT_OK:
-
-                        //open edited/created character
-                        CharBase editedChar = (CharBase) data.getSerializableExtra(EXTRA_EDITED);
-                        open(editedChar);
-                }
+            case BOOKS:
+                Intent booksIntent = new Intent(this, SelectBooksActivity.class);
+                startActivity(booksIntent);
                 break;
-            case REQUEST_LOAD:
-                pref.edit().putBoolean(PREF_FIRST_RUN, false).apply();
+            case OPEN:
+                Intent openIntent = new Intent(this, SelectCharActivity.class);
+                startActivityForResult(openIntent, REQUEST_SELECT);
+                break;
         }
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.summary, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_open:
-
-                //select another character
-                Intent intent = new Intent(this, SelectCharActivity.class);
-                startActivityForResult(intent, REQUEST_SELECT);
-
-                return true;
-
-            default:
-                return ActivityUtil.defaultOnOptionsItemSelected(item, this);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case REQUEST_SELECT:case REQUEST_EDIT:
+                switch (resultCode) {
+                    case RESULT_OK:
+                        CharBase charToOpen = (CharBase) data.getSerializableExtra(EXTRA_CHAR);
+                        open(charToOpen);
+                }
+                break;
+            case REQUEST_LOAD:
+                pref.edit().putBoolean(PREF_FIRST_RUN, false).apply();
         }
     }
 
@@ -147,6 +135,16 @@ public class SummaryActivity extends FragmentActivity implements PagerActivity<C
         dataSource.close();
     }
 
+    private void selectOrCreateCharacter(CharDao dataSource) {
+        List<CharBase> list = dataSource.listAll();
+        if (!list.isEmpty()) {
+            //select a character
+            navigateTo(OPEN);
+        } else {
+            navigateTo(EDIT);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     private void open(CharBase base) {
         this.charSummary = new CharSummary(this, base); //TODO replace by a "re-calculate" so the reference doesn't change
@@ -176,19 +174,6 @@ public class SummaryActivity extends FragmentActivity implements PagerActivity<C
         SummaryPagerAdapter adapter = (SummaryPagerAdapter) pager.getAdapter();
         boolean showConditions = adapter.shouldShowConditionsGui(pager.getCurrentItem());
         conditionsGuiManager.setVisibility(showConditions);
-    }
-
-    private void selectOrCreateCharacter(CharDao dataSource) {
-        List<CharBase> list = dataSource.listAll();
-        if (!list.isEmpty()) {
-            //select a character
-            Intent intent = new Intent(this, SelectCharActivity.class);
-            startActivityForResult(intent, REQUEST_SELECT);
-        } else {
-            //create new character
-            Intent intent = new Intent(this, EditCharActivity.class);
-            startActivityForResult(intent, REQUEST_EDIT);
-        }
     }
 
     @Override

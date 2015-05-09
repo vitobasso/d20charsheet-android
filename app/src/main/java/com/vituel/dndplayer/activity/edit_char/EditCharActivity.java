@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.vituel.dndplayer.MemoryCache;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.PagerActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
@@ -15,8 +16,11 @@ import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.util.ActivityUtil;
 
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
+import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
 import static com.vituel.dndplayer.util.ActivityUtil.defaultOnOptionsItemSelected;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
@@ -30,6 +34,7 @@ public class EditCharActivity extends FragmentActivity implements PagerActivity<
 
     private ViewPager pager;
     private int currentPage;
+    private MemoryCache cache; //TODO move to superclass
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +42,11 @@ public class EditCharActivity extends FragmentActivity implements PagerActivity<
         setContentView(R.layout.pager);
         setActionbarTitle(this, BOLD_FONT, getTitle());
 
-        base = (CharBase) getIntent().getSerializableExtra(EXTRA_EDITED);
-        if (base == null) {
+        int mode = getIntent().getIntExtra(EXTRA_MODE, REQUEST_CREATE);
+        if (mode == REQUEST_EDIT) {
+            cache = (MemoryCache) getApplicationContext();
+            base = cache.getOpenedChar();
+        } else {
             base = createNewCharacter();
         }
 
@@ -73,7 +81,7 @@ public class EditCharActivity extends FragmentActivity implements PagerActivity<
 
                 //send data back
                 Intent resultIntent = new Intent();
-                resultIntent.putExtra(EXTRA_EDITED, base);
+                resultIntent.putExtra(EXTRA_CHAR, base);
                 setResult(RESULT_OK, resultIntent);
                 finish();
 
@@ -82,7 +90,6 @@ public class EditCharActivity extends FragmentActivity implements PagerActivity<
             case R.id.action_books:
 
                 Intent selectBooksIntent = new Intent(this, SelectBooksActivity.class);
-                selectBooksIntent.putExtra(EXTRA_EDITED, base);
                 startActivity(selectBooksIntent);
 
             default:

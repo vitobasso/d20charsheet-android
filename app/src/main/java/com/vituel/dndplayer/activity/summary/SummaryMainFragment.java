@@ -1,22 +1,15 @@
 package com.vituel.dndplayer.activity.summary;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Typeface;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
-import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
-import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
 import com.vituel.dndplayer.model.character.Attack;
 import com.vituel.dndplayer.model.character.AttackRound;
-import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.model.character.CharSummary;
 import com.vituel.dndplayer.model.effect.ModifierSource;
 import com.vituel.dndplayer.model.effect.ModifierTarget;
@@ -52,9 +45,6 @@ import static com.vituel.dndplayer.model.effect.ModifierTarget.SPEED;
 import static com.vituel.dndplayer.model.effect.ModifierTarget.STR;
 import static com.vituel.dndplayer.model.effect.ModifierTarget.WILL;
 import static com.vituel.dndplayer.model.effect.ModifierTarget.WIS;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
 import static com.vituel.dndplayer.util.ActivityUtil.inflate;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLDER_FONT;
@@ -125,30 +115,6 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
     protected void onSetFont() {
         super.onSetFont();
         setFontToLabels();
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.summary_main, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_edit:
-                CharBase base = data.getBase();
-
-                //edit opened character
-                Intent intent = new Intent(activity, EditCharActivity.class);
-                intent.putExtra(EXTRA_EDITED, base);
-                intent.putExtra(EXTRA_PAGE, EditCharPagerAdapter.PAGE_BASIC);
-                activity.startActivityForResult(intent, REQUEST_EDIT);
-
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     private ViewGroup getGroup(int viewGroupId, final ModifierTarget target) {

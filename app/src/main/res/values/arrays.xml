@@ -47,4 +47,10 @@
         <item>@string/export</item>
         <item>@string/remove</item>
     </array>
+    <array name="main_navigation">
+        <item>@string/page_summary</item>
+        <item>@string/char_edit</item>
+        <item>@string/rule_books</item>
+        <item>@string/char_open</item>
+    </array>
 </resources>

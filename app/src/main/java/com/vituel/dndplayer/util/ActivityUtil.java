@@ -35,6 +35,7 @@ import java.util.regex.Pattern;
  */
 public class ActivityUtil {
 
+    //TODO replace by enum
     public static final int REQUEST_SELECT = 1;
     public static final int REQUEST_EDIT = 2;
     public static final int REQUEST_CREATE = 3;
@@ -42,6 +43,8 @@ public class ActivityUtil {
     public static final int REQUEST_SELECT_CLASS = 5;
     public static final int REQUEST_LOAD = 6;
 
+    public static final String EXTRA_CHAR = "CHAR";
+    public static final String EXTRA_MODE = "MODE";
     public static final String EXTRA_SELECTED = "SELECTED";
     public static final String EXTRA_EDITED = "EDITED";
     public static final String EXTRA_TYPE = "TYPE";

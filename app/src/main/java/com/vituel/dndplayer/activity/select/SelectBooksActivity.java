@@ -25,7 +25,6 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
 import static com.vituel.dndplayer.util.ActivityUtil.defaultOnOptionsItemSelected;
 import static com.vituel.dndplayer.util.ActivityUtil.populateCheckBox;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
@@ -42,12 +41,15 @@ public class SelectBooksActivity extends ExpandableListActivity {
     private TreeMap<Edition, List<Book>> booksByEdition;
     private SortedSet<Book> checkedBooks;
 
+    private MemoryCache cache; //TODO move to superclass
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setActionbarTitle(this, BOLD_FONT, getTitle());
 
-        base = (CharBase) getIntent().getSerializableExtra(EXTRA_EDITED);
+        cache = (MemoryCache) getApplicationContext();
+        base = cache.getOpenedChar();
         editions = loadSortedEditions();
         booksByEdition = mapBooksByEdition();
         checkedBooks = loadSortedCheckedBooks(base.getId());
