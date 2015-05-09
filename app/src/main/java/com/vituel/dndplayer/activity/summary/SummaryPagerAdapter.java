@@ -47,7 +47,7 @@ public class SummaryPagerAdapter extends FragmentPagerAdapter {
         int resId;
         switch (position) {
             case PAGE_BASIC:
-                resId = R.string.page_summary;
+                resId = R.string.sheet;
                 break;
             case PAGE_SKILLS:
                 resId = R.string.skills;

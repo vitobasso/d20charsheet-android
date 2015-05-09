@@ -4,7 +4,7 @@
 
     <item
             android:id="@+id/action_summary"
-            android:title="@string/page_summary"
+            android:title="@string/sheet"
             android:showAsAction="never"/>
 
 </menu>

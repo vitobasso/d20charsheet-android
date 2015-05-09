@@ -52,9 +52,9 @@
         <item>@android:string/cancel</item>
     </array>
     <array name="main_navigation">
-        <item>@string/page_summary</item>
-        <item>@string/char_edit</item>
-        <item>@string/rule_books</item>
-        <item>@string/char_open</item>
+        <item>@string/sheet</item>
+        <item>@string/edit</item>
+        <item>@string/rulebooks</item>
+        <item>@string/chars</item>
     </array>
 </resources>

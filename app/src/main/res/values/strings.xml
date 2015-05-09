@@ -113,14 +113,13 @@
 
     <!-- UI -->
     <string name="app_name">D&amp;D Player</string>
-    <string name="page_summary">Summary</string>
+    <string name="sheet">Sheet</string>
     <string name="create">Create</string>
     <string name="select">Select</string>
     <string name="remove">Remove</string>
     <string name="export">Export</string>
     <string name="edit">Edit</string>
-    <string name="char_edit">Edit Character</string>
-    <string name="char_open">Open Character</string>
+    <string name="chars">Characters</string>
     <string name="char_remove">Remove Character</string>
     <string name="equip">Equipment</string>
     <string name="attacks">Attacks</string>
@@ -203,7 +202,7 @@
     <string name="saved_to">Saved to</string>
     <string name="failed_saving">Falied when saving to file.</string>
     <string name="cant_be_empty">Can\'t be empty</string>
-    <string name="rule_books">Rule books</string>
+    <string name="rulebooks">Rule books</string>
     <string name="loading">Importing rules…</string>
     <string name="open">Open</string>
     <string name="close">Close</string>

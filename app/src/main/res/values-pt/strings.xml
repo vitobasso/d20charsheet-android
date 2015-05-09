@@ -113,14 +113,13 @@
 
     <!-- UI -->
     <string name="app_name">Ficha D&amp;D</string>
-    <string name="page_summary">Resumo</string>
+    <string name="sheet">Ficha</string>
     <string name="create">Criar</string>
     <string name="select">Selecionar</string>
     <string name="remove">Remover</string>
     <string name="export">Exportar</string>
     <string name="edit">Editar</string>
-    <string name="char_edit">Editar Personagem</string>
-    <string name="char_open">Abrir Personagem</string>
+    <string name="chars">Personagens</string>
     <string name="char_remove">Remover Personagens</string>
     <string name="equip">Equipamento</string>
     <string name="attacks">Attaques</string>
@@ -203,7 +202,7 @@
     <string name="saved_to">Salvo em</string>
     <string name="failed_saving">Falha ao salvar em arquivo.</string>
     <string name="cant_be_empty">Não pode ser vazio</string>
-    <string name="rule_books">Livros</string>
+    <string name="rulebooks">Livros</string>
     <string name="loading">Importando regras…</string>
     <string name="open">Abrir</string>
     <string name="close">Fechar</string>

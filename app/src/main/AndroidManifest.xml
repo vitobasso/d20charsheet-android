@@ -23,11 +23,11 @@
 
         <activity
             android:name=".activity.edit_char.EditCharActivity"
-            android:label="@string/char_edit"/>
+            android:label="@string/edit"/>
 
         <activity
             android:name=".activity.select.SelectCharActivity"
-            android:label="@string/char_open"/>
+            android:label="@string/chars"/>
 
         <activity
             android:name=".activity.select.SelectClassActivity"
@@ -87,7 +87,7 @@
 
         <activity
             android:name=".activity.select.SelectBooksActivity"
-            android:label="@string/rule_books"/>
+            android:label="@string/rulebooks"/>
 
         <activity
             android:name=".activity.LoadingActivity"
