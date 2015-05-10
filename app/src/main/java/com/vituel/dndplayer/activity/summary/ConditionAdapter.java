@@ -8,6 +8,7 @@ import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.ActiveConditionDao;
 import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.model.effect.Condition;
+import com.vituel.dndplayer.util.database.DBTask;
 import com.vituel.dndplayer.util.gui.GroupedListAdapter;
 import com.vituel.dndplayer.util.i18n.ConditionPredicateStringConverter;
 
@@ -64,19 +65,30 @@ public class ConditionAdapter extends GroupedListAdapter<Condition, Predicate> i
     }
 
     private void toggleActive(Condition condition) {
-        //toggle active
         if (activeConditions.contains(condition)) {
             activeConditions.remove(condition);
         } else {
             activeConditions.add(condition);
         }
 
-        //update conditions on DB
-        ActiveConditionDao condDao = new ActiveConditionDao(activity);
-        condDao.save(activeConditions, charBase.getId());
-        condDao.close();
+        new UpdateTask().execute();
+    }
 
-        activity.refreshUI();
+    private class UpdateTask extends DBTask<ActiveConditionDao> {
+
+        public UpdateTask() {
+            super(new ActiveConditionDao(activity));
+        }
+
+        @Override
+        protected void doInBackgroud(ActiveConditionDao dao) {
+            dao.save(activeConditions, charBase.getId());
+        }
+
+        @Override
+        protected void onPostExecute() {
+            activity.refreshUI();
+        }
     }
 
 }

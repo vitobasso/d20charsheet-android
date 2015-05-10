@@ -1,6 +1,11 @@
 package com.vituel.dndplayer.util;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 /**
  * Meant to allow customization of GUI components with hidden fields and methods in the Android framework
@@ -14,14 +19,6 @@ public class ReflectionUtil {
      * For primitive parameters call the one with a Class[] parameter.
      */
     public static <T> T createTemplateInstance(Object object, int templateIndex, Object... args) {
-        Class[] argClasses = new Class[args.length];
-        for (int i = 0; i < args.length; i++) {
-            argClasses[i] = args[i].getClass();
-        }
-        return createTemplateInstance(object, templateIndex, argClasses, args);
-    }
-
-    public static <T> T createTemplateInstance(Object object, int templateIndex, Class[] argClasses, Object[] args) {
         ParameterizedType superClass = (ParameterizedType) object.getClass().getGenericSuperclass();
         Type type = superClass.getActualTypeArguments()[templateIndex];
         Class<T> instanceType;
@@ -30,6 +27,15 @@ public class ReflectionUtil {
         } else {
             instanceType = (Class<T>) type;
         }
+        return createInstance(instanceType, args);
+    }
+
+    public static <T> T createInstance(Class<T> instanceType, Object... args) {
+        Class[] classes = getClasses(args);
+        return createInstance(instanceType, classes, args);
+    }
+
+    private static <T> T createInstance(Class<T> instanceType, Class[] argClasses, Object[] args) {
         try {
             Constructor<T> cons = instanceType.getConstructor(argClasses);
             return cons.newInstance(args);
@@ -43,10 +49,7 @@ public class ReflectionUtil {
      * For primitive parameters call the one with a Class[] parameter.
      */
     public static Object callPrivateMethod(Object obj, Class clazz, String methodName, Object... args) {
-        Class[] argClasses = new Class[args.length];
-        for (int i = 0; i < args.length; i++) {
-            argClasses[i] = args[i].getClass();
-        }
+        Class[] argClasses = getClasses(args);
         return callPrivateMethod(obj, clazz, methodName, argClasses, args);
     }
 
@@ -111,6 +114,14 @@ public class ReflectionUtil {
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
+    }
+
+    private static Class[] getClasses(Object[] args) {
+        Class[] argClasses = new Class[args.length];
+        for (int i = 0; i < args.length; i++) {
+            argClasses[i] = args[i].getClass();
+        }
+        return argClasses;
     }
 
 }
