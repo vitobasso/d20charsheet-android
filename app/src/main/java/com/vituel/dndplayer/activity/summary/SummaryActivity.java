@@ -32,7 +32,6 @@ public class SummaryActivity extends MainNavigationActvity implements PagerActiv
     private CharSummary charSummary;
 
     private ViewPager pager;
-    private ConditionGuiManager conditionsGuiManager;
 
     @Override
     protected int getContentLayout() {
@@ -42,12 +41,10 @@ public class SummaryActivity extends MainNavigationActvity implements PagerActiv
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        conditionsGuiManager = new ConditionGuiManager(this);
 
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(new SummaryPagerAdapter(getSupportFragmentManager(), this));
         pager.setCurrentItem(SummaryPagerAdapter.PAGE_BASIC);
-        pager.setOnPageChangeListener(new SummaryPagerListener(this));
     }
 
     @Override
@@ -60,11 +57,6 @@ public class SummaryActivity extends MainNavigationActvity implements PagerActiv
             super.onStart();
             loadContentOrOpenChar();
         }
-    }
-
-    private void postOpenChar() {
-        setupRightDrawer(new ConditionAdapter(this));
-        refreshUI();
     }
 
     @Override
@@ -147,13 +139,13 @@ public class SummaryActivity extends MainNavigationActvity implements PagerActiv
         this.charSummary = new CharSummary(this, base); //TODO replace by a "re-calculate" so the reference doesn't change
         pref.edit().putLong(PREF_OPENED_CHARACTER, charSummary.getBase().getId()).apply();
         cache.setOpenedChar(base);
-        postOpenChar();
+        refreshUI();
     }
 
     public void refreshUI() {
         charSummary = new CharSummary(this, charSummary.getBase()); //TODO replace by a "re-calculate" so the reference doesn't change
         setActionbarTitle(this, BOLD_FONT, charSummary.getBase().getName());
-        conditionsGuiManager.populate(charSummary);
+        setupRightDrawer(new ConditionAdapter(this));
 
         //update fragments (only the ones already loaded)
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
@@ -165,12 +157,6 @@ public class SummaryActivity extends MainNavigationActvity implements PagerActiv
             }
         }
 
-    }
-
-    public void showOrHideConditionsGui() {
-        SummaryPagerAdapter adapter = (SummaryPagerAdapter) pager.getAdapter();
-        boolean showConditions = adapter.shouldShowConditionsGui(pager.getCurrentItem());
-        conditionsGuiManager.setVisibility(showConditions);
     }
 
     @Override
