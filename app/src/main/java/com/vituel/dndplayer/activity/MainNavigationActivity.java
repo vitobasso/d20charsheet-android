@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.vituel.dndplayer.MemoryCache;
@@ -24,6 +25,8 @@ import com.vituel.dndplayer.activity.summary.SummaryActivity;
 
 import java.security.InvalidParameterException;
 
+import static android.support.v4.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
+import static android.support.v4.widget.DrawerLayout.LOCK_MODE_UNLOCKED;
 import static com.vituel.dndplayer.activity.MainNavigationActivity.NavigationItem.BOOKS;
 import static com.vituel.dndplayer.activity.MainNavigationActivity.NavigationItem.EDIT;
 import static com.vituel.dndplayer.activity.MainNavigationActivity.NavigationItem.OPEN;
@@ -47,7 +50,8 @@ public abstract class MainNavigationActivity extends FragmentActivity {
     protected SharedPreferences pref;
 
     private DrawerLayout drawerLayout;
-    private ListView listView;
+    private ListView leftList;
+    private ListView rightList;
     private ActionBarDrawerToggle drawerToggle;
 
     public enum NavigationItem {
@@ -61,7 +65,7 @@ public abstract class MainNavigationActivity extends FragmentActivity {
         activity = this;
         cache = (MemoryCache) getApplicationContext();
         pref = getSharedPreferences(PREF, MODE_PRIVATE);
-        initDrawer();
+        initDrawerLayout();
     }
 
     @Override
@@ -95,28 +99,36 @@ public abstract class MainNavigationActivity extends FragmentActivity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             NavigationItem nextActivity = values()[position];
             navigateTo(nextActivity);
-            drawerLayout.closeDrawer(listView);
+            drawerLayout.closeDrawer(leftList);
         }
     }
 
-    private void initDrawer() {
+    private void initDrawerLayout() {
         drawerLayout = findView(this, R.id.drawer_layout);
         inflate(this, R.id.frame, getContentLayout());
 
-        String[] drawerItems = getResources().getStringArray(R.array.main_navigation);
-        listView = findView(drawerLayout, R.id.drawer);
-        listView.setAdapter(new ArrayAdapter<>(this, R.layout.simple_row, R.id.name, drawerItems));
-        listView.setOnItemClickListener(new NavigationClickListener());
-        selectCurrentActivityInDrawer();
+        setupLeftDrawer();
 
-        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.drawable.ic_drawer, R.string.open, R.string.close);
+        rightList = findView(drawerLayout, R.id.right_drawer);
+        drawerLayout.setDrawerLockMode(LOCK_MODE_LOCKED_CLOSED, rightList);
+
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
     }
 
+    private void setupLeftDrawer() {
+        String[] drawerItems = getResources().getStringArray(R.array.main_navigation);
+        leftList = findView(drawerLayout, R.id.left_drawer);
+        leftList.setAdapter(new ArrayAdapter<>(this, R.layout.simple_row, R.id.name, drawerItems));
+        leftList.setOnItemClickListener(new NavigationClickListener());
+        selectCurrentActivityInDrawer();
+        drawerToggle = new LeftDrawerToggle();
+        drawerLayout.setDrawerListener(drawerToggle);
+    }
+
     private void selectCurrentActivityInDrawer() {
         NavigationItem currentItem = getNavigationItem(getClass());
-        listView.setItemChecked(currentItem.ordinal(), true);
+        leftList.setItemChecked(currentItem.ordinal(), true);
     }
 
     private <T extends Activity> NavigationItem getNavigationItem(Class<T> activityClass) {
@@ -153,5 +165,27 @@ public abstract class MainNavigationActivity extends FragmentActivity {
     protected abstract int getContentLayout();
 
     protected abstract void navigateTo(NavigationItem nextActivity);
+
+    protected void enableRightDrawer(ListAdapter adapter, ListView.OnItemClickListener listener) {
+        rightList.setAdapter(adapter);
+        rightList.setOnItemClickListener(listener);
+        drawerLayout.setDrawerLockMode(LOCK_MODE_UNLOCKED, rightList);
+    }
+
+    private class LeftDrawerToggle extends ActionBarDrawerToggle {
+
+        public LeftDrawerToggle() {
+            super(activity, drawerLayout, R.drawable.ic_drawer, R.string.open, R.string.close);
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            if (item.getItemId() == android.R.id.home) {
+                drawerLayout.closeDrawer(rightList);
+            }
+            return super.onOptionsItemSelected(item);
+        }
+
+    }
 
 }
