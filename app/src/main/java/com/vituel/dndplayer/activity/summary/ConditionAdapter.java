@@ -9,6 +9,7 @@ import com.vituel.dndplayer.dao.ActiveConditionDao;
 import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.model.effect.Condition;
 import com.vituel.dndplayer.util.gui.GroupedListAdapter;
+import com.vituel.dndplayer.util.i18n.ConditionPredicateStringConverter;
 
 import java.util.Set;
 
@@ -22,6 +23,7 @@ public class ConditionAdapter extends GroupedListAdapter<Condition, Predicate> i
     private final SummaryActivity activity;
     private final CharBase charBase;
     private final Set<Condition> activeConditions;
+    private final ConditionPredicateStringConverter predicateI18n;
 
     public ConditionAdapter(SummaryActivity activity) {
         super(activity, activity.getData().getReferencedConditions(),
@@ -29,6 +31,7 @@ public class ConditionAdapter extends GroupedListAdapter<Condition, Predicate> i
         this.activity = activity;
         this.charBase = activity.getData().getBase();
         this.activeConditions = charBase.getActiveConditions();
+        this.predicateI18n = new ConditionPredicateStringConverter(activity);
     }
 
     @Override
@@ -48,7 +51,7 @@ public class ConditionAdapter extends GroupedListAdapter<Condition, Predicate> i
 
     @Override
     protected String groupToString(Predicate group) {
-        return group.name();
+        return predicateI18n.toString(group).toString();
     }
 
     @Override

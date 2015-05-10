@@ -120,8 +120,8 @@ public abstract class DoubleDrawerActivity extends FragmentActivity {
 
     protected abstract void onClickLeftDrawerItem(AdapterView<?> parent, View view, int position, long id);
 
-    protected <T extends ListAdapter & ListView.OnItemClickListener>void setupRightDrawer(T adapterAndListener) {
-        setupRightDrawer(adapterAndListener, adapterAndListener);
+    protected <T extends ListAdapter & ListView.OnItemClickListener> void setupRightDrawer(T adapter) {
+        setupRightDrawer(adapter, adapter);
     }
 
     protected void setupRightDrawer(ListAdapter adapter, ListView.OnItemClickListener listener) {

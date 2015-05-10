@@ -5,6 +5,8 @@ import android.content.Context;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.effect.Condition;
 
+import static com.vituel.dndplayer.model.effect.Condition.Predicate;
+
 /**
  * Created by Victor on 29/09/2014.
  */
@@ -14,7 +16,7 @@ public class ConditionPredicateStringConverter extends AbstractEnumStringConvert
         super(ctx);
     }
 
-    public CharSequence toString(Condition.Predicate pred) {
+    public CharSequence toString(Predicate pred) {
         switch (pred) {
             case WHEN:
                 return findResource(R.string.when);
