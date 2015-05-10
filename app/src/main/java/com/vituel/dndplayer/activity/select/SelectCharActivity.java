@@ -16,7 +16,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.activity.MainNavigationActivity;
+import com.vituel.dndplayer.activity.abstraction.MainNavigationActvity;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.character.CharBase;
@@ -36,7 +36,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 /**
  * Created by Victor on 28/02/14.
  */
-public class SelectCharActivity extends MainNavigationActivity {
+public class SelectCharActivity extends MainNavigationActvity {
 
     private List<CharBase> list;
     private ListView listView;

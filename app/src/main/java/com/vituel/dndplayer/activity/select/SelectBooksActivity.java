@@ -10,7 +10,7 @@ import android.widget.ExpandableListView;
 import com.google.common.collect.Lists;
 import com.vituel.dndplayer.MemoryCache;
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.activity.MainNavigationActivity;
+import com.vituel.dndplayer.activity.abstraction.MainNavigationActvity;
 import com.vituel.dndplayer.dao.dependant.CharBookDao;
 import com.vituel.dndplayer.dao.entity.BookDao;
 import com.vituel.dndplayer.dao.entity.EditionDao;
@@ -37,7 +37,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 /**
  * Created by Victor on 12/04/2015.
  */
-public class SelectBooksActivity extends MainNavigationActivity {
+public class SelectBooksActivity extends MainNavigationActvity {
 
     private CharBase base;
     private SortedSet<Edition> editions;

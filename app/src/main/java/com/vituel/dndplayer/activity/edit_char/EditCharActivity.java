@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.activity.MainNavigationActivity;
+import com.vituel.dndplayer.activity.abstraction.MainNavigationActvity;
 import com.vituel.dndplayer.activity.abstraction.PagerActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.dao.entity.CharDao;
@@ -26,7 +26,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 /**
  * Created by Victor on 27/02/14.
  */
-public class EditCharActivity extends MainNavigationActivity implements PagerActivity<CharBase> {
+public class EditCharActivity extends MainNavigationActvity implements PagerActivity<CharBase> {
 
     private CharBase base;
 

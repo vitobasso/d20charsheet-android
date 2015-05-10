@@ -7,7 +7,7 @@ import android.support.v4.view.ViewPager;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.LoadingActivity;
-import com.vituel.dndplayer.activity.MainNavigationActivity;
+import com.vituel.dndplayer.activity.abstraction.MainNavigationActvity;
 import com.vituel.dndplayer.activity.abstraction.PagerActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.dao.entity.CharDao;
@@ -16,8 +16,8 @@ import com.vituel.dndplayer.model.character.CharSummary;
 
 import java.util.List;
 
-import static com.vituel.dndplayer.activity.MainNavigationActivity.NavigationItem.EDIT;
-import static com.vituel.dndplayer.activity.MainNavigationActivity.NavigationItem.OPEN;
+import static com.vituel.dndplayer.activity.abstraction.MainNavigationActvity.NavigationItem.EDIT;
+import static com.vituel.dndplayer.activity.abstraction.MainNavigationActvity.NavigationItem.OPEN;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
 import static com.vituel.dndplayer.util.ActivityUtil.PREF;
 import static com.vituel.dndplayer.util.ActivityUtil.PREF_FIRST_RUN;
@@ -27,7 +27,7 @@ import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_LOAD;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 
-public class SummaryActivity extends MainNavigationActivity implements PagerActivity<CharSummary> {
+public class SummaryActivity extends MainNavigationActvity implements PagerActivity<CharSummary> {
 
     private CharSummary charSummary;
 
