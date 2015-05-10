@@ -17,6 +17,7 @@
     <dimen name="standard_padding">8dp</dimen>
     <dimen name="half_padding">4dp</dimen>
     <dimen name="double_padding">16dp</dimen>
+    <dimen name="indent">24dp</dimen>
 
     <style name="summary_field_group">
         <item name="android:layout_width">match_parent</item>

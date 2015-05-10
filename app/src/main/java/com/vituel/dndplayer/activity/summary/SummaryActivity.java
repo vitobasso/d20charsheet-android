@@ -62,6 +62,11 @@ public class SummaryActivity extends MainNavigationActvity implements PagerActiv
         }
     }
 
+    private void postOpenChar() {
+        setupRightDrawer(new ConditionAdapter(this));
+        refreshUI();
+    }
+
     @Override
     protected void navigateTo(NavigationItem nextActivity) {
         switch (nextActivity) {
@@ -142,7 +147,7 @@ public class SummaryActivity extends MainNavigationActvity implements PagerActiv
         this.charSummary = new CharSummary(this, base); //TODO replace by a "re-calculate" so the reference doesn't change
         pref.edit().putLong(PREF_OPENED_CHARACTER, charSummary.getBase().getId()).apply();
         cache.setOpenedChar(base);
-        refreshUI();
+        postOpenChar();
     }
 
     public void refreshUI() {
