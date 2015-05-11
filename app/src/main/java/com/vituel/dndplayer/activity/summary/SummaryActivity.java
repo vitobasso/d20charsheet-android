@@ -78,6 +78,15 @@ public class SummaryActivity extends MainNavigationActvity implements PagerActiv
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (pager.getCurrentItem() != PAGE_BASIC) {
+            pager.setCurrentItem(PAGE_BASIC);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
     @SuppressWarnings("unchecked")
     private void open(CharBase base) {
         this.charSummary = new CharSummary(this, base); //TODO replace by a "re-calculate" so the reference doesn't change
