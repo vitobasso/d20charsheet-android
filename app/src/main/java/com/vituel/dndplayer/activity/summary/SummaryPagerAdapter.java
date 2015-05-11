@@ -69,8 +69,4 @@ public class SummaryPagerAdapter extends FragmentPagerAdapter {
         return 4;
     }
 
-    public boolean shouldShowConditionsGui(int position){
-        return position == PAGE_BASIC || position == PAGE_SKILLS;
-    }
-
 }

@@ -72,9 +72,13 @@ public abstract class MainNavigationActvity extends DoubleDrawerActivity {
     }
 
     protected void goToEditChar() {
+        goToEditChar(PAGE_BASIC);
+    }
+
+    protected void goToEditChar(int page) {
         Intent editIntent = new Intent(this, EditCharActivity.class);
         editIntent.putExtra(EXTRA_MODE, Mode.EDIT);
-        editIntent.putExtra(EXTRA_PAGE, PAGE_BASIC); //TODO change according to page in summary
+        editIntent.putExtra(EXTRA_PAGE, page);
         startActivityForResult(editIntent, REQUEST_CHAR);
     }
 

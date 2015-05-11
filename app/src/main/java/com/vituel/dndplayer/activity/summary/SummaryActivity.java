@@ -9,11 +9,15 @@ import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.MainNavigationActvity;
 import com.vituel.dndplayer.activity.abstraction.PagerActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
+import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
 import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.model.character.CharSummary;
 
 import java.util.List;
 
+import static com.vituel.dndplayer.activity.summary.SummaryPagerAdapter.PAGE_BASIC;
+import static com.vituel.dndplayer.activity.summary.SummaryPagerAdapter.PAGE_SKILLS;
+import static com.vituel.dndplayer.activity.summary.SummaryPagerAdapter.PAGE_TRAITS;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CHAR;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
@@ -22,6 +26,7 @@ import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 public class SummaryActivity extends MainNavigationActvity implements PagerActivity<CharSummary> {
 
     private CharSummary charSummary;
+    private ViewPager pager;
 
     @Override
     protected int getContentLayout() {
@@ -32,9 +37,9 @@ public class SummaryActivity extends MainNavigationActvity implements PagerActiv
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ViewPager pager = (ViewPager) findViewById(R.id.pager);
+        pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(new SummaryPagerAdapter(getSupportFragmentManager(), this));
-        pager.setCurrentItem(SummaryPagerAdapter.PAGE_BASIC);
+        pager.setCurrentItem(PAGE_BASIC);
     }
 
     @Override
@@ -47,7 +52,8 @@ public class SummaryActivity extends MainNavigationActvity implements PagerActiv
     protected void navigateTo(NavigationItem nextActivity) {
         switch (nextActivity) {
             case EDIT:
-                goToEditChar();
+                int page = getRelatedEditPage();
+                goToEditChar(page);
                 break;
             case BOOKS:
                 goToBooks();
@@ -86,6 +92,22 @@ public class SummaryActivity extends MainNavigationActvity implements PagerActiv
                     ((PagerFragment<CharSummary, ?>) frag).refresh();
                 }
             }
+        }
+    }
+
+    private int getRelatedEditPage() {
+        int summaryPage = pager.getCurrentItem();
+        return getRelatedEditPage(summaryPage);
+    }
+
+    private int getRelatedEditPage(int summaryPage) {
+        switch (summaryPage) {
+            case PAGE_SKILLS:
+                return EditCharPagerAdapter.PAGE_SKILLS;
+            case PAGE_TRAITS:
+                return EditCharPagerAdapter.PAGE_FEATS;
+            default:
+                return EditCharPagerAdapter.PAGE_BASIC;
         }
     }
 
