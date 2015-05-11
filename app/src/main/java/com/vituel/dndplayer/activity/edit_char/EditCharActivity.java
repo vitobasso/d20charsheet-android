@@ -13,6 +13,7 @@ import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.character.CharBase;
 
+import static com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter.PAGE_BASIC;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
@@ -54,10 +55,9 @@ public class EditCharActivity extends MainNavigationActvity implements PagerActi
 
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(new EditCharPagerAdapter(getSupportFragmentManager(), this));
+        currentPage = getIntent().getIntExtra(EXTRA_PAGE, PAGE_BASIC);
+        pager.setCurrentItem(currentPage);
         pager.setOnPageChangeListener(new PagerListener());
-
-        int page = getIntent().getIntExtra(EXTRA_PAGE, 0);
-        pager.setCurrentItem(page);
     }
 
     @Override
@@ -129,12 +129,9 @@ public class EditCharActivity extends MainNavigationActvity implements PagerActi
     private class PagerListener extends ViewPager.SimpleOnPageChangeListener {
         @Override
         public void onPageSelected(int position) {
-            PagerFragment fragment = (PagerFragment) findFragment(EditCharActivity.this, pager, currentPage);
-            if (fragment == null || !fragment.isReadyToPopulate()) {
-                //should fall here only when being called from onCreate
-                currentPage = position;
-            } else if (fragment.onValidate()) {
-                fragment.onSave();
+            PagerFragment previousFragment = (PagerFragment) findFragment(EditCharActivity.this, pager, currentPage);
+            if (previousFragment.onValidate()) {
+                previousFragment.onSave();
                 currentPage = position;
             } else {
                 pager.setCurrentItem(currentPage); //stay in page
