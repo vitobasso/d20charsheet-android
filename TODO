@@ -12,6 +12,9 @@ BUGS
 - crash when editing entity w/ enum, when translated (can't find enum from translated string)
 - can't create new bonus (ability modifier): empty spinners
 - filter not working on SelectItemActivity
+- crashes on first run (when chached char is null)
+    - go to rulebooks
+    - go to edit
 
 
 IMPROVEMENTS

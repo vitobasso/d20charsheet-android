@@ -2,6 +2,7 @@ package com.vituel.dndplayer.dao.abstraction;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.util.database.SQLiteHelper;
@@ -55,6 +56,10 @@ public abstract class AbstractDao<T> {
     protected final List<T> select(String selection) {
         Cursor cursor = selectCursor(selection);
         return cursorToList(cursor);
+    }
+
+    public long count() {
+        return DatabaseUtils.queryNumEntries(database, tableName());
     }
 
     protected String appendWhereClause(String base, String newClause) {

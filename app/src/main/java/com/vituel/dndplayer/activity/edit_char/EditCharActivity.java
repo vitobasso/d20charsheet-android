@@ -16,8 +16,6 @@ import com.vituel.dndplayer.model.character.CharBase;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
 import static com.vituel.dndplayer.util.ActivityUtil.cancel;
 import static com.vituel.dndplayer.util.ActivityUtil.findFragment;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
@@ -27,6 +25,10 @@ import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
  * Created by Victor on 27/02/14.
  */
 public class EditCharActivity extends MainNavigationActvity implements PagerActivity<CharBase> {
+
+    public static enum Mode {
+        CREATE, EDIT
+    }
 
     private CharBase base;
 
@@ -43,8 +45,8 @@ public class EditCharActivity extends MainNavigationActvity implements PagerActi
         super.onCreate(savedInstanceState);
         setActionbarTitle(this, BOLD_FONT, getTitle());
 
-        int mode = getIntent().getIntExtra(EXTRA_MODE, REQUEST_CREATE);
-        if (mode == REQUEST_EDIT) {
+        Mode mode = (Mode) getIntent().getSerializableExtra(EXTRA_MODE);
+        if (mode == Mode.EDIT) {
             base = cache.getOpenedChar();
         } else {
             base = createNewCharacter();
@@ -65,10 +67,10 @@ public class EditCharActivity extends MainNavigationActvity implements PagerActi
                 cancel(this);
                 break;
             case BOOKS:
-                navigateToBooks();
+                goToBooks();
                 break;
             case OPEN:
-                navigateToOpenChar();
+                goToOpenChar();
                 break;
         }
     }
@@ -89,11 +91,6 @@ public class EditCharActivity extends MainNavigationActvity implements PagerActi
             default:
                 return false;
         }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
     }
 
     private CharBase createNewCharacter() {

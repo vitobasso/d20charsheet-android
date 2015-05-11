@@ -44,8 +44,6 @@ public class SelectBooksActivity extends MainNavigationActvity {
     private TreeMap<Edition, List<Book>> booksByEdition;
     private SortedSet<Book> checkedBooks;
 
-    private MemoryCache cache; //TODO move to superclass
-
     @Override
     protected int getContentLayout() {
         return android.R.layout.expandable_list_content;
@@ -56,8 +54,8 @@ public class SelectBooksActivity extends MainNavigationActvity {
         super.onCreate(savedInstanceState);
         setActionbarTitle(this, BOLD_FONT, getTitle());
 
-        cache = (MemoryCache) getApplicationContext();
-        base = cache.getOpenedChar();
+        MemoryCache cache = (MemoryCache) getApplicationContext();
+        base = cache.getOpenedChar(); //TODO base may be null on first run
         editions = loadSortedEditions();
         booksByEdition = mapBooksByEdition();
         checkedBooks = loadSortedCheckedBooks(base.getId());
@@ -74,11 +72,11 @@ public class SelectBooksActivity extends MainNavigationActvity {
                 break;
             case EDIT:
                 backToSummary(this);
-                navigateToEditChar();
+                goToEditChar();
                 break;
             case OPEN:
                 backToSummary(this);
-                navigateToOpenChar();
+                goToOpenChar();
                 break;
         }
     }

@@ -9,7 +9,6 @@ import android.widget.AdapterView;
 
 import com.vituel.dndplayer.MemoryCache;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
-import com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter;
 import com.vituel.dndplayer.activity.select.SelectBooksActivity;
 import com.vituel.dndplayer.activity.select.SelectCharActivity;
 import com.vituel.dndplayer.activity.summary.SummaryActivity;
@@ -20,11 +19,12 @@ import static com.vituel.dndplayer.activity.abstraction.MainNavigationActvity.Na
 import static com.vituel.dndplayer.activity.abstraction.MainNavigationActvity.NavigationItem.EDIT;
 import static com.vituel.dndplayer.activity.abstraction.MainNavigationActvity.NavigationItem.OPEN;
 import static com.vituel.dndplayer.activity.abstraction.MainNavigationActvity.NavigationItem.SUMMARY;
+import static com.vituel.dndplayer.activity.edit_char.EditCharActivity.Mode;
+import static com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter.PAGE_BASIC;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
 import static com.vituel.dndplayer.util.ActivityUtil.PREF;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CHAR;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
 
 /**
  * Created by Victor on 09/05/2015.
@@ -71,19 +71,19 @@ public abstract class MainNavigationActvity extends DoubleDrawerActivity {
         navigateTo(nextActivity);
     }
 
-    protected void navigateToEditChar() {
+    protected void goToEditChar() {
         Intent editIntent = new Intent(this, EditCharActivity.class);
-        editIntent.putExtra(EXTRA_MODE, REQUEST_EDIT);
-        editIntent.putExtra(EXTRA_PAGE, EditCharPagerAdapter.PAGE_BASIC); //TODO change according to page in summary
+        editIntent.putExtra(EXTRA_MODE, Mode.EDIT);
+        editIntent.putExtra(EXTRA_PAGE, PAGE_BASIC); //TODO change according to page in summary
         startActivityForResult(editIntent, REQUEST_CHAR);
     }
 
-    protected void navigateToBooks() {
+    protected void goToBooks() {
         Intent booksIntent = new Intent(this, SelectBooksActivity.class);
         startActivityForResult(booksIntent, REQUEST_CHAR);
     }
 
-    protected void navigateToOpenChar() {
+    protected void goToOpenChar() {
         Intent openIntent = new Intent(this, SelectCharActivity.class);
         startActivityForResult(openIntent, REQUEST_CHAR);
     }

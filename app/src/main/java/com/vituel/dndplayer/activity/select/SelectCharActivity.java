@@ -25,6 +25,7 @@ import com.vituel.dndplayer.parser.json.CharJsonParser;
 import java.util.List;
 
 import static android.widget.AdapterView.OnItemLongClickListener;
+import static com.vituel.dndplayer.activity.edit_char.EditCharActivity.Mode.CREATE;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
@@ -58,7 +59,6 @@ public class SelectCharActivity extends MainNavigationActvity {
         listView.setOnItemClickListener(new ClickListener());
         listView.setOnItemLongClickListener(new LongClickListener());
 
-
         updateUI();
         setActionbarTitle(this, BOLD_FONT, getTitle());
     }
@@ -71,11 +71,11 @@ public class SelectCharActivity extends MainNavigationActvity {
                 break;
             case EDIT:
                 backToSummary(this);
-                navigateToEditChar();
+                goToEditChar();
                 break;
             case BOOKS:
                 backToSummary(this);
-                navigateToBooks();
+                goToBooks();
                 break;
         }
     }
@@ -95,13 +95,8 @@ public class SelectCharActivity extends MainNavigationActvity {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.action_create:
-
-                //create new character
-                Intent intent = new Intent(this, EditCharActivity.class);
-                intent.putExtra(EXTRA_MODE, REQUEST_CREATE);
-                startActivityForResult(intent, REQUEST_CREATE);
+                goToCreateChar();
                 return true;
-
             default:
                 return false;
         }
@@ -194,4 +189,11 @@ public class SelectCharActivity extends MainNavigationActvity {
             return view;
         }
     }
+
+    private void goToCreateChar() {
+        Intent intent = new Intent(this, EditCharActivity.class);
+        intent.putExtra(EXTRA_MODE, CREATE);
+        startActivityForResult(intent, REQUEST_CREATE);
+    }
+
 }

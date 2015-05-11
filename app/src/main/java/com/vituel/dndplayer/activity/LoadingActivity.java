@@ -51,6 +51,7 @@ public class LoadingActivity extends Activity implements LoaderObserver {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            setResult(RESULT_OK);
             finish();
         }
     }
