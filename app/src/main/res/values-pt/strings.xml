@@ -131,6 +131,8 @@
     <string name="class_add">Criar Classe</string>
     <string name="class_edit">Editar Classe</string>
     <string name="class_edit_atk_prog">Progressão do Ataque</string>
+    <string name="multiclass_more">Adicionar classe</string>
+    <string name="multiclass_less">Remover última classe</string>
     <string name="item_edit">Editar Item</string>
     <string name="item_select">Selecionar Item</string>
     <string name="item_remove">Remover Item</string>

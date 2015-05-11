@@ -6,11 +6,11 @@
         android:icon="@drawable/ic_action_new"
         android:orderInCategory="3"
         android:showAsAction="withText"
-        android:title="@string/class_add" />
+        android:title="@string/multiclass_more" />
     <item
         android:id="@+id/action_remove"
         android:icon="@drawable/ic_action_remove"
         android:orderInCategory="4"
         android:showAsAction="withText"
-        android:title="@string/class_remove" />
+        android:title="@string/multiclass_less" />
 </menu>
