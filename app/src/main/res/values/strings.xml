@@ -126,7 +126,7 @@
     <string name="attack_edit">Edit Attack</string>
     <string name="bonuses">Bonuses</string>
     <string name="modlink_edit">Edit Modifier Links</string>
-    <string name="class_select">Manage Classes</string>
+    <string name="class_select">Select Class</string>
     <string name="class_remove">Remove Class</string>
     <string name="class_add">Add Class</string>
     <string name="class_edit">Edit Class</string>

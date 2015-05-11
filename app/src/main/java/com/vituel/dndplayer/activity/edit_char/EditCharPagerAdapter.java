@@ -15,13 +15,13 @@ import static com.vituel.dndplayer.util.font.FontUtil.setFont;
  */
 public class EditCharPagerAdapter extends FragmentPagerAdapter {
 
-    public static final int PAGE_BASIC = 0;
-    public static final int PAGE_FEATS = 1;
-    public static final int PAGE_SKILLS = 2;
-    public static final int PAGE_EQUIP = 3;
-    public static final int PAGE_ATTACKS = 4;
-    public static final int PAGE_MODIFIERS = 5;
-    public static final int PAGE_PERSONAL = 6;
+    public static final int PAGE_PERSONAL = 0;
+    public static final int PAGE_BASIC = 1;
+    public static final int PAGE_FEATS = 2;
+    public static final int PAGE_SKILLS = 3;
+    public static final int PAGE_EQUIP = 4;
+    public static final int PAGE_ATTACKS = 5;
+    public static final int PAGE_MODIFIERS = 6;
 
     private Context ctx;
 
@@ -33,6 +33,8 @@ public class EditCharPagerAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         switch (position) {
+            case PAGE_PERSONAL:
+                return new EditCharPersonalFragment();
             case PAGE_BASIC:
                 return new EditCharBasicFragment();
             case PAGE_FEATS:
@@ -45,8 +47,6 @@ public class EditCharPagerAdapter extends FragmentPagerAdapter {
                 return new EditCharAttacksFragment();
             case PAGE_MODIFIERS:
                 return new EditCharAbilityModsFragment();
-            case PAGE_PERSONAL:
-                return new EditCharPersonalFragment();
         }
         return null;
     }
@@ -55,6 +55,9 @@ public class EditCharPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         int resId;
         switch (position) {
+            case PAGE_PERSONAL:
+                resId = R.string.personality;
+                break;
             case PAGE_BASIC:
                 resId = R.string.basic;
                 break;
@@ -72,9 +75,6 @@ public class EditCharPagerAdapter extends FragmentPagerAdapter {
                 break;
             case PAGE_MODIFIERS:
                 resId = R.string.bonuses;
-                break;
-            case PAGE_PERSONAL:
-                resId = R.string.personality;
                 break;
             default:
                 return super.getPageTitle(position);
