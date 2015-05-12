@@ -141,7 +141,7 @@ public class ItemDao extends AbstractRuleDao<Item> {
     }
 
     public Cursor filterByNameAndSlotCursor(SlotType slotType, String name) {
-        String query = MessageFormat.format("{0} like ''%{1}%'' and {2}={3}", COLUMN_NAME, name, COLUMN_SLOT_TYPE, slotType.toString());
+        String query = MessageFormat.format("{0} like ''%{1}%'' and {2}=''{3}''", COLUMN_NAME, name, COLUMN_SLOT_TYPE, slotType.toString());
         return selectCursor(query);
     }
 }
