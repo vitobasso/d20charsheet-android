@@ -67,13 +67,13 @@ public class EditCharSkillsFragment extends AbstractSimpleListFragment<CharBase,
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.search, menu);
+        inflater.inflate(R.menu.add, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_search:
+            case R.id.action_add:
                 onSave();
                 Intent intent = new Intent(activity, SelectSkillActivity.class);
                 startActivityForResult(intent, REQUEST_SELECT);
