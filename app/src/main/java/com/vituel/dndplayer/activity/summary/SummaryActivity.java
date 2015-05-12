@@ -91,9 +91,19 @@ public class SummaryActivity extends MainNavigationActvity implements PagerActiv
     private void open(CharBase base) {
         this.charSummary = new CharSummary(this, base); //TODO replace by a "re-calculate" so the reference doesn't change
         setActionbarTitle(this, BOLD_FONT, charSummary.getBase().getName());
-        setupRightDrawer(new ConditionAdapter(this));
+        updateConditionsDrawer();
+        updateFragments();
+    }
 
-        //update fragments (only the ones already loaded)
+    private void updateConditionsDrawer() {
+        if (charSummary.getReferencedConditions().isEmpty()) {
+            disableRightDrawer();
+        } else {
+            enableRightDrawer(new ConditionAdapter(this));
+        }
+    }
+
+    private void updateFragments() {
         List<Fragment> fragments = getSupportFragmentManager().getFragments();
         if (fragments != null) {
             for (Fragment frag : fragments) {

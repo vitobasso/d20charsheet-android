@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -54,9 +55,25 @@ public abstract class DoubleDrawerActivity extends FragmentActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.conditions, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem item = menu.findItem(R.id.action_conditionals);
+        item.setVisible(isRightDrawerEnabled());
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (drawerToggle.onOptionsItemSelected(item)) {
             return true;
+        }
+        if (item.getItemId() == R.id.action_conditionals) {
+            toggleDrawer(rightList);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -120,14 +137,34 @@ public abstract class DoubleDrawerActivity extends FragmentActivity {
 
     protected abstract void onClickLeftDrawerItem(AdapterView<?> parent, View view, int position, long id);
 
-    protected <T extends ListAdapter & ListView.OnItemClickListener> void setupRightDrawer(T adapter) {
-        setupRightDrawer(adapter, adapter);
+    protected <T extends ListAdapter & ListView.OnItemClickListener> void enableRightDrawer(T adapter) {
+        enableRightDrawer(adapter, adapter);
     }
 
-    protected void setupRightDrawer(ListAdapter adapter, ListView.OnItemClickListener listener) {
+    protected void enableRightDrawer(ListAdapter adapter, ListView.OnItemClickListener listener) {
         rightList.setAdapter(adapter);
         rightList.setOnItemClickListener(listener);
         drawerLayout.setDrawerLockMode(LOCK_MODE_UNLOCKED, rightList);
+        invalidateOptionsMenu();
+    }
+
+    protected void disableRightDrawer() {
+        rightList.setAdapter(null);
+        rightList.setOnItemClickListener(null);
+        drawerLayout.setDrawerLockMode(LOCK_MODE_LOCKED_CLOSED, rightList);
+        invalidateOptionsMenu();
+    }
+
+    public boolean isRightDrawerEnabled() {
+        return rightList.getAdapter() != null;
+    }
+
+    private void toggleDrawer(View drawer) {
+        if (drawerLayout.isDrawerOpen(drawer)) {
+            drawerLayout.closeDrawer(drawer);
+        } else {
+            drawerLayout.openDrawer(drawer);
+        }
     }
 
 }
