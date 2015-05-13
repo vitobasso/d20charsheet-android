@@ -17,8 +17,8 @@ public class EditCharPagerAdapter extends FragmentPagerAdapter {
 
     public static final int PAGE_PERSONAL = 0;
     public static final int PAGE_BASIC = 1;
-    public static final int PAGE_FEATS = 2;
-    public static final int PAGE_SKILLS = 3;
+    public static final int PAGE_SKILLS = 2;
+    public static final int PAGE_FEATS = 3;
     public static final int PAGE_EQUIP = 4;
     public static final int PAGE_ATTACKS = 5;
     public static final int PAGE_MODIFIERS = 6;
@@ -37,10 +37,10 @@ public class EditCharPagerAdapter extends FragmentPagerAdapter {
                 return new EditCharPersonalFragment();
             case PAGE_BASIC:
                 return new EditCharBasicFragment();
-            case PAGE_FEATS:
-                return new EditCharFeatsFragment();
             case PAGE_SKILLS:
                 return new EditCharSkillsFragment();
+            case PAGE_FEATS:
+                return new EditCharFeatsFragment();
             case PAGE_EQUIP:
                 return new EditCharEquipFragment();
             case PAGE_ATTACKS:
@@ -61,11 +61,11 @@ public class EditCharPagerAdapter extends FragmentPagerAdapter {
             case PAGE_BASIC:
                 resId = R.string.basic;
                 break;
-            case PAGE_FEATS:
-                resId = R.string.feats;
-                break;
             case PAGE_SKILLS:
                 resId = R.string.trained_skills;
+                break;
+            case PAGE_FEATS:
+                resId = R.string.feats;
                 break;
             case PAGE_EQUIP:
                 resId = R.string.equip;
