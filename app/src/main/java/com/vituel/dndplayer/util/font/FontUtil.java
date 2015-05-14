@@ -19,16 +19,13 @@ import com.vituel.dndplayer.util.gui.RecursiveViewCaller;
 public class FontUtil {
 
     Context ctx;
-    public final static String CELESTIA_ANTIQUA = "fonts/Celestia_Antiqua.ttf";
-    public final static String PTERRA_DACTYL = "fonts/Pterra-dactyl.ttf";
-    public final static String FUTURA_OBLIQUE = "fonts/Futura Oblique.ttf";
-    public final static String FUTURA_LIGHT = "fonts/Futura Light.ttf";
-    public final static String FUTURA_LIGHTER = "fonts/Futura Lighter.ttf";
-    public final static String FUTURA_BOLD = "fonts/Futura Bold.ttf";
-    public final static String FUTURA_EXTRA_BOLD = "fonts/Futura Extra Bold.ttf";
-    public final static String BOWLBYONE_REGULAR = "fonts/BowlbyOne-Regular.ttf";
+    public final static String FUTURA_LIGHT = "fonts/FuturaLT-Light.ttf";
+    public final static String FUTURA_MEDIUM = "fonts/FuturaLT.ttf";
+    public final static String FUTURA_BOOK = "fonts/FuturaLT-Book.ttf";
+    public final static String FUTURA_BOLD = "fonts/FuturaLT-Bold.ttf";
+    public final static String FUTURA_EXTRA_BOLD = "fonts/FuturaLT-ExtraBold.ttf";
 
-    public final static String MAIN_FONT = FUTURA_OBLIQUE;
+    public final static String MAIN_FONT = FUTURA_MEDIUM;
     public final static String BOLD_FONT = FUTURA_BOLD;
     public final static String BOLDER_FONT = FUTURA_EXTRA_BOLD;
 
