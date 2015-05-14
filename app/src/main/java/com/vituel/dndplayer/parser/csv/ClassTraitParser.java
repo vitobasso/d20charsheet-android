@@ -16,18 +16,20 @@ public class ClassTraitParser extends AbstractEffectParser<ClassTrait> {
     }
 
     @Override
-    protected ClassTrait parse(String[] line) throws ParseFieldException {
-        ClassTrait trait = new ClassTrait();
-        trait.setId(readInt(line, "id"));
-        trait.setName(readString(line, "name"));
-        trait.setLevel(readInt(line, "level"));
-        readEffect(line, trait);
+    protected ClassTrait parse(String[] line, ClassTrait result) throws ParseFieldException {
+        result.setLevel(readInt(line, "level"));
+        readEffect(line, result);
 
         Clazz clazz = new Clazz();
         clazz.setId(readInt(line, "class_id"));
-        trait.setClazz(clazz);
+        result.setClazz(clazz);
 
-        return trait;
+        return result;
+    }
+
+    @Override
+    protected ClassTrait newInstance(String[] split) {
+        return new ClassTrait();
     }
 
 }

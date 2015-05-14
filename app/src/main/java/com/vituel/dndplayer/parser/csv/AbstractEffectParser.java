@@ -2,6 +2,7 @@ package com.vituel.dndplayer.parser.csv;
 
 import android.content.Context;
 
+import com.vituel.dndplayer.model.AbstractEntity;
 import com.vituel.dndplayer.model.effect.Effect;
 import com.vituel.dndplayer.model.effect.EffectSource;
 import com.vituel.dndplayer.model.effect.Modifier;
@@ -15,7 +16,7 @@ import static com.google.common.base.Strings.isNullOrEmpty;
 /**
  * Created by Victor on 18/04/2015.
  */
-public abstract class AbstractEffectParser<T extends EffectSource> extends AbstractCsvParser<T> {
+public abstract class AbstractEffectParser<T extends AbstractEntity & EffectSource> extends AbstractEntityParser<T> {
 
     public static final String EFFECT_COL_PATTERN = "effect \\d+";
 
@@ -24,9 +25,6 @@ public abstract class AbstractEffectParser<T extends EffectSource> extends Abstr
     protected AbstractEffectParser(Context ctx, String path) {
         super(ctx, path);
     }
-
-    @Override
-    protected abstract T parse(String[] line) throws ParseFieldException;
 
     protected Effect readEffect(String[] line, T source) throws ParseFieldException {
         Effect effect = getOrCreateEffect(source);

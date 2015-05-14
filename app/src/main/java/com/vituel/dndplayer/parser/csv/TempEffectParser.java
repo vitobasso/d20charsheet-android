@@ -15,12 +15,14 @@ public class TempEffectParser extends AbstractEffectParser<TempEffect> {
     }
 
     @Override
-    protected TempEffect parse(String[] line) throws ParseFieldException {
-        TempEffect result = new TempEffect();
-        result.setId(readInt(line, "id"));
-        result.setName(readString(line, "name"));
+    protected TempEffect parse(String[] line, TempEffect result) throws ParseFieldException {
         result.setEffect(readEffect(line, result));
         return result;
+    }
+
+    @Override
+    protected TempEffect newInstance(String[] split) throws ParseFieldException {
+        return new TempEffect();
     }
 
 }

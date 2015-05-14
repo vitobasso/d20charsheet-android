@@ -9,17 +9,14 @@ import com.vituel.dndplayer.parser.exception.ParseFieldException;
 /**
  * Created by Victor on 12/04/2015.
  */
-public class BookParser extends AbstractCsvParser<Book> {
+public class BookParser extends AbstractEntityParser<Book> {
 
     public BookParser(Context ctx, String filePath) {
         super(ctx, filePath);
     }
 
     @Override
-    protected Book parse(String[] split) throws ParseFieldException {
-        Book result = new Book();
-        result.setId(readInt(split, "id"));
-        result.setName(readString(split, "name"));
+    protected Book parse(String[] split, Book result) throws ParseFieldException {
         result.setAbbreviation(readString(split, "abbr"));
         result.setYear(readIntNullable(split, "year"));
 
@@ -28,6 +25,11 @@ public class BookParser extends AbstractCsvParser<Book> {
         result.setEdition(edition);
 
         return result;
+    }
+
+    @Override
+    protected Book newInstance(String[] split) {
+        return new Book();
     }
 
 }

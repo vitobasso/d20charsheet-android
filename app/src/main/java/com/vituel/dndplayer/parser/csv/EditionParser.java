@@ -9,21 +9,22 @@ import com.vituel.dndplayer.parser.exception.ParseFieldException;
 /**
  * Created by Victor on 12/04/2015.
  */
-public class EditionParser extends AbstractCsvParser<Edition> {
+public class EditionParser extends AbstractEntityParser<Edition> {
 
     public EditionParser(Context ctx, String filePath) {
         super(ctx, filePath);
     }
 
     @Override
-    protected Edition parse(String[] line) throws ParseFieldException {
-        Edition result = new Edition();
-        result.setId(readInt(line, "id"));
-        result.setName(readString(line, "name"));
+    protected Edition parse(String[] line, Edition result) throws ParseFieldException {
         result.setSystem(RuleSystem.fromString(readString(line, "system")));
         result.setCore(readInt(line, "core") == 1);
-
         return result;
+    }
+
+    @Override
+    protected Edition newInstance(String[] split) {
+        return new Edition();
     }
 
 }

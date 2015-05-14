@@ -31,17 +31,13 @@ public class ItemParser extends AbstractEffectParser<Item> {
     }
 
     @Override
-    protected Item parse(String[] split) throws ParseFieldException {
-        ItemType type = readType(split, "slot");
-        Item result = type == WEAPON ? new WeaponItem() : new Item();
-
-        result.setId(readInt(split, "id"));
-        result.setName(readString(split, "name"));
+    protected Item parse(String[] split, Item result) throws ParseFieldException {
         result.setSlotType(readSlot(split, "slot"));
         result.setWeight(readDoubleNullable(split, "weight"));
         result.setPrice(readDoubleNullable(split, "price_gp"));
         result.setBook(readRulebook(split, "rulebook_id"));
 
+        ItemType type = readType(split, "slot");
         if (type == WEAPON) {
             addWeaponFields(split, (WeaponItem) result);
         } else if (type == PROTECTIVE) {
@@ -49,6 +45,12 @@ public class ItemParser extends AbstractEffectParser<Item> {
         }
 
         return result;
+    }
+
+    @Override
+    protected Item newInstance(String[] split) throws ParseFieldException {
+        ItemType type = readType(split, "slot");
+        return type == WEAPON ? new WeaponItem() : new Item();
     }
 
     private void addWeaponFields(String[] split, WeaponItem result) throws ParseFieldException {

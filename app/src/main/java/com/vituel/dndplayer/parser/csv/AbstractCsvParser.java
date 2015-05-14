@@ -2,6 +2,7 @@ package com.vituel.dndplayer.parser.csv;
 
 import android.content.Context;
 
+import com.google.common.base.Charsets;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.vituel.dndplayer.model.Critical;
@@ -54,7 +55,7 @@ public abstract class AbstractCsvParser<T> extends AbstractParser implements Clo
     private void initIfNecessary() throws IOException {
         if (reader == null) {
             InputStream in = ctx.getAssets().open(filePath);
-            reader = new CSVReader(new InputStreamReader(in), ';', '"');
+            reader = new CSVReader(new InputStreamReader(in, Charsets.UTF_8), ';', '"');
             headers = readHeaders();
             nextLine = reader.readNext();
         }

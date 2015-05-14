@@ -24,10 +24,8 @@ public class RaceParser extends AbstractEffectParser<Race> {
     }
 
     @Override
-    protected Race parse(String[] split) throws ParseFieldException {
-        Race result = new Race();
-        result.setId(readInt(split, "id"));
-        result.setName(readString(split, "name"));
+    protected Race parse(String[] split, Race result) throws ParseFieldException {
+
         result.setBook(readRulebook(split, "rulebook_id"));
 
         parseModifier(result, split, "str", STR);
@@ -42,6 +40,11 @@ public class RaceParser extends AbstractEffectParser<Race> {
         readSpeed(split, "speed");
 
         return result;
+    }
+
+    @Override
+    protected Race newInstance(String[] split) throws ParseFieldException {
+        return new Race();
     }
 
     private Size readSize(String[] split, String column) throws ParseFieldException {
