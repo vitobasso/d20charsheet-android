@@ -18,7 +18,7 @@ import static com.google.common.base.Strings.isNullOrEmpty;
  */
 public abstract class AbstractEffectParser<T extends AbstractEntity & EffectSource> extends AbstractEntityParser<T> {
 
-    public static final String EFFECT_COL_PATTERN = "effect \\d+";
+    public static final String EFFECT_COL_PATTERN = "effect[ _]?\\d+";
 
     private ModifierParser modifierParser = new ModifierParser();
 
