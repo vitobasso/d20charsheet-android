@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.SQLException;
 import android.util.Log;
 
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.abstraction.AbstractDao;
 import com.vituel.dndplayer.dao.dependant.ClassTraitDao;
 import com.vituel.dndplayer.dao.entity.BookDao;
@@ -15,7 +16,7 @@ import com.vituel.dndplayer.dao.entity.RaceDao;
 import com.vituel.dndplayer.dao.entity.SkillDao;
 import com.vituel.dndplayer.dao.entity.TempEffectDao;
 import com.vituel.dndplayer.model.AbstractEntity;
-import com.vituel.dndplayer.parser.csv.AbstractCsvParser;
+import com.vituel.dndplayer.parser.csv.AbstractEntityParser;
 import com.vituel.dndplayer.parser.csv.BookParser;
 import com.vituel.dndplayer.parser.csv.ClassParser;
 import com.vituel.dndplayer.parser.csv.ClassTraitParser;
@@ -46,20 +47,21 @@ public class LibraryLoader {
     }
 
     public void loadDB() {
-        loadTable(new EditionParser(ctx, "data/csv/editions.csv"), new EditionDao(ctx));
-        loadTable(new BookParser(ctx, "data/csv/books.csv"), new BookDao(ctx));
-        loadTable(new RaceParser(ctx, "data/csv/races.csv"), new RaceDao(ctx));
-        loadTable(new ClassParser(ctx, "data/csv/classes.csv"), new ClassDao(ctx));
-        loadTable(new ClassTraitParser(ctx, "data/csv/class_traits.csv"), new ClassTraitDao(ctx));
-        loadTable(new ItemParser(ctx, "data/csv/items.csv"), new ItemDao(ctx));
-        loadTable(new FeatParser(ctx, "data/csv/feats.csv"), new FeatDao(ctx));
-        loadTable(new SkillParser(ctx, "data/csv/skills.csv"), new SkillDao(ctx));
-        loadTable(new TempEffectParser(ctx, "data/csv/temp_effects.csv"), new TempEffectDao(ctx));
+        loadTable(new EditionParser(ctx, "data/csv/editions.csv"), R.string.editions, new EditionDao(ctx));
+        loadTable(new BookParser(ctx, "data/csv/books.csv"), R.string.rulebooks, new BookDao(ctx));
+        loadTable(new RaceParser(ctx, "data/csv/races.csv"), R.string.races, new RaceDao(ctx));
+        loadTable(new ClassParser(ctx, "data/csv/classes.csv"), R.string.classes, new ClassDao(ctx));
+        loadTable(new ClassTraitParser(ctx, "data/csv/class_traits.csv"), R.string.class_traits, new ClassTraitDao(ctx));
+        loadTable(new ItemParser(ctx, "data/csv/items.csv"), R.string.items, new ItemDao(ctx));
+        loadTable(new FeatParser(ctx, "data/csv/feats.csv"), R.string.feats, new FeatDao(ctx));
+        loadTable(new SkillParser(ctx, "data/csv/skills.csv"), R.string.skills, new SkillDao(ctx));
+        loadTable(new TempEffectParser(ctx, "data/csv/temp_effects.csv"), R.string.effects, new TempEffectDao(ctx));
     }
 
-    private <T extends AbstractEntity> void loadTable(AbstractCsvParser<T> parser, AbstractDao<T> dao) {
+    private <T extends AbstractEntity> void loadTable(AbstractEntityParser<T> parser, int displayNameRes, AbstractDao<T> dao) {
         try {
-            observer.onStartLoadingFile(parser.getFilePath());
+            String displayName = ctx.getResources().getString(displayNameRes);
+            observer.onStartLoadingFile(displayName);
             while (parser.hasNext()) {
                 loadEntity(parser, dao);
             }
@@ -70,7 +72,7 @@ public class LibraryLoader {
         }
     }
 
-    private <T extends AbstractEntity> void loadEntity(AbstractCsvParser<T> parser, AbstractDao<T> dao) {
+    private <T extends AbstractEntity> void loadEntity(AbstractEntityParser<T> parser, AbstractDao<T> dao) {
         try {
             T entity = parser.next();
             dao.insert(entity);
@@ -82,7 +84,7 @@ public class LibraryLoader {
         }
     }
 
-    private <T> void close(AbstractCsvParser<T> parser, AbstractDao<T> dao) {
+    private <T extends AbstractEntity> void close(AbstractEntityParser<T> parser, AbstractDao<T> dao) {
         dao.close();
         try {
             parser.close();

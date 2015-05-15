@@ -3,6 +3,7 @@ package com.vituel.dndplayer.parser.csv;
 import android.content.Context;
 
 import com.vituel.dndplayer.model.AbstractEntity;
+import com.vituel.dndplayer.parser.exception.ParseException;
 import com.vituel.dndplayer.parser.exception.ParseFieldException;
 
 import java.util.Locale;
@@ -40,14 +41,15 @@ public abstract class AbstractEntityParser<T extends AbstractEntity> extends Abs
     }
 
     private String readName(String[] line) throws ParseFieldException {
-        String name = readStringNullable(line, HEADER_NAME);
-        if (name == null) {
-            name = readString(line, HEADER_NAME_DEFAULT);
+        try {
+            return readString(line, HEADER_NAME);
+        } catch (ParseException e) {
+            return readString(line, HEADER_NAME_DEFAULT);
         }
-        return name;
     }
 
     protected abstract T parse(String[] line, T result) throws ParseFieldException;
 
     protected abstract T newInstance(String[] split) throws ParseFieldException;
+
 }

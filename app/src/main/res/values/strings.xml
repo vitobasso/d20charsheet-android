@@ -208,5 +208,11 @@
     <string name="loading">Importing rules…</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
+    <string name="editions">Editions</string>
+    <string name="races">Races</string>
+    <string name="classes">Classes</string>
+    <string name="items">Items</string>
+    <string name="effects">Effects</string>
+    <string name="class_traits">Class traits</string>
 
 </resources>

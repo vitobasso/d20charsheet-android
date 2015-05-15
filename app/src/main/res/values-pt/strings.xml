@@ -208,5 +208,11 @@
     <string name="loading">Importando regras…</string>
     <string name="open">Abrir</string>
     <string name="close">Fechar</string>
+    <string name="editions">Edições</string>
+    <string name="races">Raças</string>
+    <string name="classes">Classes</string>
+    <string name="items">Itens</string>
+    <string name="effects">Efeitos</string>
+    <string name="class_traits">Traços de classe</string>
 
 </resources>
