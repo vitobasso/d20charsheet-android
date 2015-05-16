@@ -84,14 +84,6 @@ public abstract class DoubleDrawerActivity extends FragmentActivity {
         selectCurrentActivityInDrawer();
     }
 
-    private class NavigationClickListener implements ListView.OnItemClickListener {
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-            onClickLeftDrawerItem(parent, view, position, id);
-            drawerLayout.closeDrawer(leftList);
-        }
-    }
-
     private void initDrawerLayout() {
         drawerLayout = findView(this, R.id.drawer_layout);
         inflate(this, R.id.frame, getContentLayout());
@@ -106,18 +98,22 @@ public abstract class DoubleDrawerActivity extends FragmentActivity {
     }
 
     private void setupLeftDrawer() {
-        String[] drawerItems = getResources().getStringArray(R.array.main_navigation);
+        ArrayAdapter<String> leftListAdapter = getLeftDrawerAdapter();
         leftList = findView(drawerLayout, R.id.left_drawer);
-        leftList.setAdapter(new ArrayAdapter<>(this, R.layout.simple_row, R.id.name, drawerItems));
-        leftList.setOnItemClickListener(new NavigationClickListener());
+        leftList.setAdapter(leftListAdapter);
+        leftList.setOnItemClickListener(new LeftDrawerClickListener());
         selectCurrentActivityInDrawer();
         drawerToggle = new LeftDrawerToggle();
         drawerLayout.setDrawerListener(drawerToggle);
     }
 
-    protected abstract void selectCurrentActivityInDrawer();
-
-    protected abstract int getContentLayout();
+    private class LeftDrawerClickListener implements ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            onClickLeftDrawerItem(parent, view, position, id);
+            drawerLayout.closeDrawer(leftList);
+        }
+    }
 
     private class LeftDrawerToggle extends ActionBarDrawerToggle {
 
@@ -134,8 +130,6 @@ public abstract class DoubleDrawerActivity extends FragmentActivity {
         }
 
     }
-
-    protected abstract void onClickLeftDrawerItem(AdapterView<?> parent, View view, int position, long id);
 
     protected <T extends ListAdapter & ListView.OnItemClickListener> void enableRightDrawer(T adapter) {
         enableRightDrawer(adapter, adapter);
@@ -166,5 +160,13 @@ public abstract class DoubleDrawerActivity extends FragmentActivity {
             drawerLayout.openDrawer(drawer);
         }
     }
+
+    protected abstract void selectCurrentActivityInDrawer();
+
+    protected abstract int getContentLayout();
+
+    protected abstract void onClickLeftDrawerItem(AdapterView<?> parent, View view, int position, long id);
+
+    protected abstract ArrayAdapter<String> getLeftDrawerAdapter();
 
 }

@@ -28,7 +28,7 @@ public class AppPreferences {
         pref.edit().putBoolean(PREF_FIRST_RUN, isFirstRun).apply();
     }
 
-    public long getLastOpenedChar() {
+    public long getOpenedChar() {
         return pref.getLong(PREF_OPENED_CHARACTER, 0);
     }
 

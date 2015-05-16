@@ -40,6 +40,10 @@ public class MemoryCache extends Application {
         return openedChar;
     }
 
+    public boolean isCharOpened() {
+        return openedChar != null;
+    }
+
     public void setActiveRulebooks(Collection<Book> activeRulebooks) {
         this.activeRulebooks = activeRulebooks;
     }

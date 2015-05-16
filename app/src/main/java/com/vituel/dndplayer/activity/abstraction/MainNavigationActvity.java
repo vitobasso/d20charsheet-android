@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 
 import com.vituel.dndplayer.MemoryCache;
+import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.activity.select.SelectBooksActivity;
 import com.vituel.dndplayer.activity.select.SelectCharActivity;
@@ -42,6 +44,12 @@ public abstract class MainNavigationActvity extends DoubleDrawerActivity {
         super.onCreate(savedInstanceState);
         cache = (MemoryCache) getApplicationContext();
         pref = new AppPreferences(this);
+    }
+
+    @Override
+    protected ArrayAdapter<String> getLeftDrawerAdapter() {
+        String[] drawerItems = getResources().getStringArray(R.array.main_navigation);
+        return new ArrayAdapter<>(this, R.layout.simple_row, R.id.name, drawerItems);
     }
 
     @Override

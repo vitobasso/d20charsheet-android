@@ -67,7 +67,7 @@ public class StartupActivity extends Activity {
     private void findCharacterToOpen() {
         CharDao dataSource = new CharDao(this);
 
-        long charId = pref.getLastOpenedChar();
+        long charId = pref.getOpenedChar();
         if (charId != 0) {
             CharBase lastOpenedChar = dataSource.findById(charId);
             if (lastOpenedChar != null) {
