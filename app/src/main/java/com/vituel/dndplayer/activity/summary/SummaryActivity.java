@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
 import com.vituel.dndplayer.R;
+import com.vituel.dndplayer.activity.StartupActivity;
 import com.vituel.dndplayer.activity.abstraction.MainNavigationActvity;
 import com.vituel.dndplayer.activity.abstraction.PagerActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
@@ -44,7 +45,11 @@ public class SummaryActivity extends MainNavigationActvity implements PagerActiv
 
     @Override
     protected void onStart() {
-        open(cache.getOpenedChar());
+        if (cache.isCharOpened()) {
+            open(cache.getOpenedChar());
+        } else {
+            goToStartup();
+        }
         super.onStart();
     }
 
@@ -128,6 +133,12 @@ public class SummaryActivity extends MainNavigationActvity implements PagerActiv
             default:
                 return EditCharPagerAdapter.PAGE_BASIC;
         }
+    }
+
+    private void goToStartup() {
+        finish();
+        Intent startupIntent = new Intent(this, StartupActivity.class);
+        startActivity(startupIntent);
     }
 
     public void refreshUI() {
