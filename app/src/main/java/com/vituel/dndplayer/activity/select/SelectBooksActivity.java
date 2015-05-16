@@ -21,6 +21,7 @@ import com.vituel.dndplayer.util.gui.SimpleExpListAdapter;
 
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeMap;
@@ -55,10 +56,10 @@ public class SelectBooksActivity extends MainNavigationActvity {
         setActionbarTitle(this, BOLD_FONT, getTitle());
 
         MemoryCache cache = (MemoryCache) getApplicationContext();
-        base = cache.getOpenedChar(); //TODO base may be null on first run
-        editions = loadSortedEditions();
+        base = cache.getOpenedChar();
+        editions = loadEditions();
         booksByEdition = mapBooksByEdition();
-        checkedBooks = loadSortedCheckedBooks(base.getId());
+        checkedBooks = loadCheckedBooks();
 
         ExpandableListView list = findView(this, android.R.id.list);
         list.setAdapter(new Adapter());
@@ -99,17 +100,22 @@ public class SelectBooksActivity extends MainNavigationActvity {
         return map;
     }
 
-    private SortedSet<Edition> loadSortedEditions() {
+    private SortedSet<Edition> loadEditions() {
         EditionDao editionDao = new EditionDao(this);
         List<Edition> editions = editionDao.listAll();
         editionDao.close();
         return new TreeSet<>(editions);
     }
 
-    private SortedSet<Book> loadSortedCheckedBooks(long charId) {
-        CharBookDao charBookDao = new CharBookDao(this);
-        List<Book> checkedBooks = charBookDao.findByParent(charId);
-        charBookDao.close();
+    private SortedSet<Book> loadCheckedBooks() {
+        Collection<Book> checkedBooks;
+        if (base == null) {
+            checkedBooks = cache.getActiveRulebooks();
+        } else {
+            CharBookDao charBookDao = new CharBookDao(this);
+            checkedBooks = charBookDao.findByParent(base.getId());
+            charBookDao.close();
+        }
         return new TreeSet<>(checkedBooks);
     }
 
@@ -182,22 +188,27 @@ public class SelectBooksActivity extends MainNavigationActvity {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.action_save:
-
-                // persist
-                CharBookDao charBookDao = new CharBookDao(this);
-                charBookDao.saveOverwrite(base.getId(), checkedBooks);
-                charBookDao.close();
-
-                // update rulebooks in memory
-                MemoryCache cache = (MemoryCache) getApplicationContext();
-                cache.setActiveRulebooks(checkedBooks);
-
+                if(base != null) { // should be null in first run (before char was created)
+                    saveCharBooks();
+                }
+                updateCharBooksInMemory();
                 finish();
                 return true;
 
             default:
                 return defaultOnOptionsItemSelected(item, this);
         }
+    }
+
+    private void updateCharBooksInMemory() {
+        MemoryCache cache = (MemoryCache) getApplicationContext();
+        cache.setActiveRulebooks(checkedBooks);
+    }
+
+    private void saveCharBooks() {
+        CharBookDao charBookDao = new CharBookDao(this);
+        charBookDao.saveOverwrite(base.getId(), checkedBooks);
+        charBookDao.close();
     }
 
 }

@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.google.common.collect.Lists;
 import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
 import com.vituel.dndplayer.model.rulebook.Book;
 import com.vituel.dndplayer.model.rulebook.Edition;
@@ -85,6 +86,13 @@ public class BookDao extends AbstractEntityDao<Book> {
     public final List<Book> findByEdition(long editionId) {
         String query = String.format("%s=\'%s\'", COLUMN_EDITION_ID, editionId);
         return select(query);
+    }
+
+    public static List<Book> getDefaultActiveBooks(Context context) {
+        BookDao bookDao = new BookDao(context);
+        Book playersHandbook = bookDao.findById(6);
+        bookDao.close();
+        return Lists.newArrayList(playersHandbook);
     }
 
 }

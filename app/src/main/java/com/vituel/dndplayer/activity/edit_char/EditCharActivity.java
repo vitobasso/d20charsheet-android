@@ -51,6 +51,7 @@ public class EditCharActivity extends MainNavigationActvity implements PagerActi
         if (mode == Mode.EDIT) {
             base = cache.getOpenedChar();
         } else {
+            cache.reset();
             base = createNewCharacter();
         }
 
@@ -107,7 +108,6 @@ public class EditCharActivity extends MainNavigationActvity implements PagerActi
         base.setTendencyLoyality("NEUTRAL");
         base.setTendencyMoral("NEUTRAL");
         base.setStandardAbilityMods();
-
         return base;
     }
 
