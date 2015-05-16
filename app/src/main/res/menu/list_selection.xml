@@ -10,7 +10,7 @@
     <item
         android:id="@+id/action_remove"
         android:title="@string/remove"
-        android:icon="@drawable/ic_action_remove"
+        android:icon="@android:drawable/ic_menu_delete"
         android:showAsAction="ifRoom"
         android:orderInCategory="2" />
 </menu>
