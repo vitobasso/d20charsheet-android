@@ -10,9 +10,12 @@ import com.vituel.dndplayer.MemoryCache;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.activity.select.SelectCharActivity;
 import com.vituel.dndplayer.activity.summary.SummaryActivity;
+import com.vituel.dndplayer.dao.entity.BookDao;
 import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.character.CharBase;
+import com.vituel.dndplayer.model.rulebook.Book;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static com.vituel.dndplayer.activity.edit_char.EditCharActivity.Mode.CREATE;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
@@ -69,6 +72,8 @@ public class StartupActivity extends Activity {
     }
 
     private void findCharacterToOpen() {
+        setDefaultRulebooksActive();
+
         CharDao dataSource = new CharDao(this);
 
         long charId = pref.getLong(PREF_OPENED_CHARACTER, 0);
@@ -108,11 +113,11 @@ public class StartupActivity extends Activity {
         startActivityForResult(intent, REQUEST_CHAR);
     }
 
-
     private void goToSelectChar() {
         Intent intent = new Intent(this, SelectCharActivity.class);
         startActivityForResult(intent, REQUEST_CHAR);
     }
+
 
     private void goToSummary(CharBase charToOpen) {
         pref.edit().putLong(PREF_OPENED_CHARACTER, charToOpen.getId()).apply();
@@ -121,6 +126,13 @@ public class StartupActivity extends Activity {
         Intent intent = new Intent(this, SummaryActivity.class);
         startActivity(intent);
         finish();
+    }
+
+    private void setDefaultRulebooksActive() {
+        BookDao bookDao = new BookDao(this);
+        Book playersHandbook = bookDao.findById(6);
+        bookDao.close();
+        cache.setActiveRulebooks(newArrayList(playersHandbook));
     }
 
 }

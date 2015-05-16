@@ -10,6 +10,7 @@ import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.MainNavigationActvity;
 import com.vituel.dndplayer.activity.abstraction.PagerActivity;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
+import com.vituel.dndplayer.dao.dependant.CharBookDao;
 import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.character.CharBase;
 
@@ -106,6 +107,7 @@ public class EditCharActivity extends MainNavigationActvity implements PagerActi
         base.setTendencyLoyality("NEUTRAL");
         base.setTendencyMoral("NEUTRAL");
         base.setStandardAbilityMods();
+
         return base;
     }
 
@@ -119,6 +121,12 @@ public class EditCharActivity extends MainNavigationActvity implements PagerActi
         CharDao dataSource = new CharDao(this);
         dataSource.save(base);
         dataSource.close();
+
+        //save books
+        CharBookDao charBookDao = new CharBookDao(this);
+        charBookDao.saveOverwrite(base.getId(), cache.getActiveRulebooks());
+        charBookDao.close();
+
     }
 
     @Override
