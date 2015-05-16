@@ -41,21 +41,21 @@ public abstract class AbstractDao<T> {
     }
 
     public Cursor listAllCursor() {
-        return selectCursor(null);
+        return cursor(null);
     }
 
     public final List<T> listAll() {
         Cursor cursor = listAllCursor();
-        return cursorToList(cursor);
+        return list(cursor);
     }
 
-    public Cursor selectCursor(String selection) {
+    public Cursor cursor(String selection) {
         return database.query(tableName(), allColumns(), selection, null, null, null, orderBy());
     }
 
     protected final List<T> select(String selection) {
-        Cursor cursor = selectCursor(selection);
-        return cursorToList(cursor);
+        Cursor cursor = cursor(selection);
+        return list(cursor);
     }
 
     public long count() {
@@ -76,7 +76,7 @@ public abstract class AbstractDao<T> {
         return str.toString();
     }
 
-    protected final List<T> cursorToList(Cursor cursor) {
+    protected final List<T> list(Cursor cursor) {
         List<T> list = new ArrayList<>();
 
         cursor.moveToFirst();
@@ -88,6 +88,16 @@ public abstract class AbstractDao<T> {
         cursor.close();
 
         return list;
+    }
+
+    protected final T firstResult(Cursor cursor) {
+        cursor.moveToFirst();
+        T entity = null;
+        if (cursor.getCount() != 0) {
+            entity = fromCursor(cursor);
+        }
+        cursor.close();
+        return entity;
     }
 
     protected final void removeForQuery(String selection) {

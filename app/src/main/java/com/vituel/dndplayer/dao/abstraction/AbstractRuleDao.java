@@ -32,13 +32,13 @@ public abstract class AbstractRuleDao<T extends Rule> extends AbstractEntityDao<
     }
 
     @Override
-    public Cursor selectCursor(String selection) {
+    public Cursor cursor(String selection) {
         String bookIds = getRulebookIdsAsString();
         if (!ignoreActiveBooks && bookIds != null) {
             String bookSelection = format("%s in (%s)", COLUMN_BOOK_ID, bookIds);
             selection = appendWhereClause(bookSelection, selection);
         }
-        return super.selectCursor(selection);
+        return super.cursor(selection);
     }
 
     @Override

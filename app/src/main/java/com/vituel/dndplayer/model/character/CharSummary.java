@@ -316,6 +316,8 @@ public class CharSummary {
         skillDao.close();
 
         if (skill == null) {
+            String msg = String.format("Couldn't find skill by name: '%s'", skillName);
+            Log.w(getClass().getSimpleName(), msg);
             return null;
         } else {
             CharSkill skillBonus = new CharSkill(skill);

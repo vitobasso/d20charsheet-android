@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 
 import com.vituel.dndplayer.model.AbstractEntity;
 
@@ -28,35 +27,19 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
     }
 
     public final T findById(long id) {
-        Cursor cursor = selectCursor(COLUMN_ID + " = " + id);
-        cursor.moveToFirst();
-        if (cursor.getCount() != 0) {
-            T result = fromCursor(cursor);
-            cursor.close();
-            return result;
-        } else {
-            return null;
-        }
+        Cursor cursor = cursor(COLUMN_ID + " = " + id);
+        return firstResult(cursor);
     }
 
     public final T findByName(String name) {
         String query = String.format("%s=\'%s\'", COLUMN_NAME, name);
-        Cursor cursor = selectCursor(query);
-        cursor.moveToFirst();
-        T result = null;
-        if (cursor.getCount() != 0) {
-            result = fromCursor(cursor);
-        } else {
-            String msg = String.format("Couldn't find name '%s' in table '%s'", name, tableName());
-            Log.w(getClass().getSimpleName(), msg);
-        }
-        cursor.close();
-        return result;
+        Cursor cursor = cursor(query);
+        return firstResult(cursor);
     }
 
     public final Cursor filterByNameCursor(String name) {
         String query = MessageFormat.format("{0} like ''%{1}%''", COLUMN_NAME, name);
-        return selectCursor(query);
+        return cursor(query);
     }
 
     public final void save(Collection<T> list) {
