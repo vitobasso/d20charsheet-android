@@ -32,6 +32,7 @@ import java.util.regex.Pattern;
 
 /**
  * Created by Victor on 07/03/14.
+ * TODO separate gui and navigation utils
  */
 public class ActivityUtil {
 
@@ -51,10 +52,6 @@ public class ActivityUtil {
     public static final String EXTRA_TYPE = "TYPE";
     public static final String EXTRA_REQUEST = "REQUEST";
     public static final String EXTRA_PAGE = "PAGE";
-
-    public static final String PREF = "dndplayer";
-    public static final String PREF_OPENED_CHARACTER = "opened_character";
-    public static final String PREF_FIRST_RUN = "first_run";
 
     public static boolean defaultOnOptionsItemSelected(MenuItem item, Activity activity) {
         switch (item.getItemId()) {

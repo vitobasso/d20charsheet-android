@@ -2,7 +2,6 @@ package com.vituel.dndplayer.activity;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -12,13 +11,11 @@ import com.vituel.dndplayer.activity.select.SelectCharActivity;
 import com.vituel.dndplayer.activity.summary.SummaryActivity;
 import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.character.CharBase;
+import com.vituel.dndplayer.util.AppPreferences;
 
 import static com.vituel.dndplayer.activity.edit_char.EditCharActivity.Mode.CREATE;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
-import static com.vituel.dndplayer.util.ActivityUtil.PREF;
-import static com.vituel.dndplayer.util.ActivityUtil.PREF_FIRST_RUN;
-import static com.vituel.dndplayer.util.ActivityUtil.PREF_OPENED_CHARACTER;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CHAR;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_LOAD;
 
@@ -30,16 +27,15 @@ public class StartupActivity extends Activity {
     public static final String TAG = StartupActivity.class.getSimpleName();
 
     protected MemoryCache cache;
-    protected SharedPreferences pref;
+    protected AppPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cache = (MemoryCache) getApplicationContext();
-        pref = getSharedPreferences(PREF, MODE_PRIVATE);
+        pref = new AppPreferences(this);
 
-        boolean isFirstRun = pref.getBoolean(PREF_FIRST_RUN, true);
-        if (isFirstRun) {
+        if (pref.isFirstRun()) {
             goToLoading();
         } else {
             findCharacterToOpen();
@@ -53,7 +49,7 @@ public class StartupActivity extends Activity {
             case RESULT_OK:
                 switch (requestCode) {
                     case REQUEST_LOAD:
-                        pref.edit().putBoolean(PREF_FIRST_RUN, false).apply();
+                        pref.setFirstRun(false);
                         findCharacterToOpen();
                         break;
                     case REQUEST_CHAR:
@@ -71,14 +67,14 @@ public class StartupActivity extends Activity {
     private void findCharacterToOpen() {
         CharDao dataSource = new CharDao(this);
 
-        long charId = pref.getLong(PREF_OPENED_CHARACTER, 0);
+        long charId = pref.getLastOpenedChar();
         if (charId != 0) {
             CharBase lastOpenedChar = dataSource.findById(charId);
             if (lastOpenedChar != null) {
                 goToSummary(lastOpenedChar);
             } else {
                 Log.w(TAG, "Char not found. Id=" + charId);
-                pref.edit().putLong(PREF_OPENED_CHARACTER, 0).apply();
+                pref.clearOpenedChar();
                 selectOrCreateCharacter(dataSource);
             }
         } else {
@@ -115,7 +111,7 @@ public class StartupActivity extends Activity {
 
 
     private void goToSummary(CharBase charToOpen) {
-        pref.edit().putLong(PREF_OPENED_CHARACTER, charToOpen.getId()).apply();
+        pref.setOpenedChar(charToOpen.getId());
         cache.setOpenedChar(charToOpen);
 
         Intent intent = new Intent(this, SummaryActivity.class);

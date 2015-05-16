@@ -2,7 +2,6 @@ package com.vituel.dndplayer.activity.abstraction;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,6 +11,7 @@ import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.activity.select.SelectBooksActivity;
 import com.vituel.dndplayer.activity.select.SelectCharActivity;
 import com.vituel.dndplayer.activity.summary.SummaryActivity;
+import com.vituel.dndplayer.util.AppPreferences;
 
 import java.security.InvalidParameterException;
 
@@ -23,7 +23,6 @@ import static com.vituel.dndplayer.activity.edit_char.EditCharActivity.Mode;
 import static com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter.PAGE_BASIC;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
-import static com.vituel.dndplayer.util.ActivityUtil.PREF;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CHAR;
 
 /**
@@ -32,7 +31,7 @@ import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CHAR;
 public abstract class MainNavigationActvity extends DoubleDrawerActivity {
 
     protected MemoryCache cache;
-    protected SharedPreferences pref;
+    protected AppPreferences pref;
 
     public enum NavigationItem {
         SUMMARY, EDIT, BOOKS, OPEN
@@ -42,7 +41,7 @@ public abstract class MainNavigationActvity extends DoubleDrawerActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cache = (MemoryCache) getApplicationContext();
-        pref = getSharedPreferences(PREF, MODE_PRIVATE);
+        pref = new AppPreferences(this);
     }
 
     @Override
