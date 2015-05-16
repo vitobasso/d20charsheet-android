@@ -72,6 +72,7 @@ public class EditCharActivity extends MainNavigationActvity implements PagerActi
                 goToBooks();
                 break;
             case OPEN:
+                backToSummaryIfCharOpen();
                 goToOpenChar();
                 break;
         }

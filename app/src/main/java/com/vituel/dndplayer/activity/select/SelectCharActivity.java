@@ -17,7 +17,6 @@ import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.MainNavigationActvity;
-import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.parser.json.CharJsonParser;
@@ -25,9 +24,7 @@ import com.vituel.dndplayer.parser.json.CharJsonParser;
 import java.util.List;
 
 import static android.widget.AdapterView.OnItemLongClickListener;
-import static com.vituel.dndplayer.activity.edit_char.EditCharActivity.Mode.CREATE;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
 import static com.vituel.dndplayer.util.ActivityUtil.backToSummary;
 import static com.vituel.dndplayer.util.ActivityUtil.internationalize;
@@ -70,11 +67,11 @@ public class SelectCharActivity extends MainNavigationActvity {
                 backToSummary(this);
                 break;
             case EDIT:
-                backToSummary(this);
-                goToEditChar();
+                backToSummaryIfCharOpen();
+                goToEditOrCreateChar();
                 break;
             case BOOKS:
-                backToSummary(this);
+                backToSummaryIfCharOpen();
                 goToBooks();
                 break;
         }
@@ -188,12 +185,6 @@ public class SelectCharActivity extends MainNavigationActvity {
             view.setText(description);
             return view;
         }
-    }
-
-    private void goToCreateChar() {
-        Intent intent = new Intent(this, EditCharActivity.class);
-        intent.putExtra(EXTRA_MODE, CREATE);
-        startActivityForResult(intent, REQUEST_CREATE);
     }
 
 }

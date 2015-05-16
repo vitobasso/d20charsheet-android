@@ -24,10 +24,13 @@ import static com.vituel.dndplayer.activity.abstraction.MainNavigationActvity.Na
 import static com.vituel.dndplayer.activity.abstraction.MainNavigationActvity.NavigationItem.OPEN;
 import static com.vituel.dndplayer.activity.abstraction.MainNavigationActvity.NavigationItem.SUMMARY;
 import static com.vituel.dndplayer.activity.edit_char.EditCharActivity.Mode;
+import static com.vituel.dndplayer.activity.edit_char.EditCharActivity.Mode.CREATE;
 import static com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter.PAGE_BASIC;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CHAR;
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
+import static com.vituel.dndplayer.util.ActivityUtil.backToSummary;
 
 /**
  * Created by Victor on 09/05/2015.
@@ -91,6 +94,12 @@ public abstract class MainNavigationActvity extends DoubleDrawerActivity {
         startActivityForResult(editIntent, REQUEST_CHAR);
     }
 
+    protected void goToCreateChar() {
+        Intent intent = new Intent(this, EditCharActivity.class);
+        intent.putExtra(EXTRA_MODE, CREATE);
+        startActivityForResult(intent, REQUEST_CREATE);
+    }
+
     protected void goToBooks() {
         Intent booksIntent = new Intent(this, SelectBooksActivity.class);
         startActivityForResult(booksIntent, REQUEST_CHAR);
@@ -99,6 +108,20 @@ public abstract class MainNavigationActvity extends DoubleDrawerActivity {
     protected void goToOpenChar() {
         Intent openIntent = new Intent(this, SelectCharActivity.class);
         startActivityForResult(openIntent, REQUEST_CHAR);
+    }
+
+    protected void backToSummaryIfCharOpen() {
+        if (cache.isCharOpened()) {
+            backToSummary(this);
+        }
+    }
+
+    protected void goToEditOrCreateChar() {
+        if (cache.isCharOpened()) {
+            goToEditChar();
+        } else {
+            goToCreateChar();
+        }
     }
 
     protected abstract void navigateTo(NavigationItem nextActivity);

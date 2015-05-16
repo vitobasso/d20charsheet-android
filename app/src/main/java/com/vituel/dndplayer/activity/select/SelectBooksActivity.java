@@ -27,7 +27,6 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import static com.vituel.dndplayer.util.ActivityUtil.backToSummary;
 import static com.vituel.dndplayer.util.ActivityUtil.defaultOnOptionsItemSelected;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.populateCheckBox;
@@ -69,14 +68,14 @@ public class SelectBooksActivity extends MainNavigationActvity {
     protected void navigateTo(NavigationItem nextActivity) {
         switch (nextActivity) {
             case SUMMARY:
-                backToSummary(this);
+                backToSummaryIfCharOpen();
                 break;
             case EDIT:
-                backToSummary(this);
-                goToEditChar();
+                backToSummaryIfCharOpen();
+                goToEditOrCreateChar();
                 break;
             case OPEN:
-                backToSummary(this);
+                backToSummaryIfCharOpen();
                 goToOpenChar();
                 break;
         }

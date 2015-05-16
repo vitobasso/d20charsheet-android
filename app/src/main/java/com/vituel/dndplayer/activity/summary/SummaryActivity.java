@@ -37,7 +37,6 @@ public class SummaryActivity extends MainNavigationActvity implements PagerActiv
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(new SummaryPagerAdapter(getSupportFragmentManager(), this));
         pager.setCurrentItem(PAGE_BASIC);
