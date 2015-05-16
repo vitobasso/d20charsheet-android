@@ -67,14 +67,14 @@ public class StartupActivity extends Activity {
     private void findCharacterToOpen() {
         CharDao dataSource = new CharDao(this);
 
-        long charId = pref.getOpenedChar();
+        long charId = pref.getLastOpenedCharId();
         if (charId != 0) {
             CharBase lastOpenedChar = dataSource.findById(charId);
             if (lastOpenedChar != null) {
                 goToSummary(lastOpenedChar);
             } else {
                 Log.w(TAG, "Char not found. Id=" + charId);
-                pref.clearOpenedChar();
+                pref.clearLastOpenedChar();
                 selectOrCreateCharacter(dataSource);
             }
         } else {
@@ -111,7 +111,7 @@ public class StartupActivity extends Activity {
 
 
     private void goToSummary(CharBase charToOpen) {
-        pref.setOpenedChar(charToOpen.getId());
+        pref.setLastOpenedCharId(charToOpen.getId());
         cache.setOpenedChar(charToOpen);
 
         Intent intent = new Intent(this, SummaryActivity.class);

@@ -11,7 +11,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class AppPreferences {
 
     public static final String PREF = "dndplayer";
-    public static final String PREF_OPENED_CHARACTER = "opened_character";
+    public static final String PREF_LAST_OPENED_CHAR = "last_opened_character";
     public static final String PREF_FIRST_RUN = "first_run";
 
     protected SharedPreferences pref;
@@ -28,16 +28,20 @@ public class AppPreferences {
         pref.edit().putBoolean(PREF_FIRST_RUN, isFirstRun).apply();
     }
 
-    public long getOpenedChar() {
-        return pref.getLong(PREF_OPENED_CHARACTER, 0);
+    public long getLastOpenedCharId() {
+        return pref.getLong(PREF_LAST_OPENED_CHAR, 0);
     }
 
-    public void clearOpenedChar() {
-        setOpenedChar(0);
+    public void clearLastOpenedChar() {
+        setLastOpenedCharId(0);
     }
 
-    public void setOpenedChar(long charId) {
-        pref.edit().putLong(PREF_OPENED_CHARACTER, charId).apply();
+    public void setLastOpenedCharId(long charId) {
+        pref.edit().putLong(PREF_LAST_OPENED_CHAR, charId).apply();
+    }
+
+    public boolean isLastOpenedCharKnown() {
+        return getLastOpenedCharId() != 0;
     }
 
 }

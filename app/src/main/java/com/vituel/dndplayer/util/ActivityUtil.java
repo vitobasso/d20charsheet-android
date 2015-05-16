@@ -340,4 +340,20 @@ public class ActivityUtil {
         return buffer.toString();
     }
 
+    public static void setTextViewEnabled(Object root, int viewRes, boolean enabled) {
+        TextView textView = findView(root, viewRes);
+        int colorId = enabled ? android.R.color.black : android.R.color.darker_gray;
+        Context context = getContextFromActivityOrView(root);
+        textView.setTextColor(context.getResources().getColor(colorId));
+    }
+
+    private static Context getContextFromActivityOrView(Object activityOrView) {
+        if (activityOrView instanceof Context) {
+            return (Context) activityOrView;
+        } else {
+            View view = (View) activityOrView;
+            return view.getContext();
+        }
+    }
+
 }
