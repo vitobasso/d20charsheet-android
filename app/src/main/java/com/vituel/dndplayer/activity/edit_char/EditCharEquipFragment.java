@@ -27,7 +27,6 @@ import static com.vituel.dndplayer.util.ActivityUtil.inflate;
  */
 public class EditCharEquipFragment extends PagerFragment<CharBase, EditCharActivity> {
 
-    private LinearLayout itemsRoot;
     private CharEquip equipment;
 
     @Override
@@ -37,25 +36,28 @@ public class EditCharEquipFragment extends PagerFragment<CharBase, EditCharActiv
 
     @Override
     protected void onPopulate() {
-        itemsRoot = findView(root, R.id.list);
+        LinearLayout itemsRoot = findView(root, R.id.list);
         itemsRoot.removeAllViews();
         equipment = data.getEquipment();
 
         List<EquipSlot> list = equipment.listEquip();
         for (EquipSlot equipSlot : list) {
-
-            LinearLayout row = inflate(activity, itemsRoot, R.layout.edit_char_equip_row);
-            TextView slotView = findView(row, R.id.slot);
-            TextView itemView = findView(row, R.id.item);
-
-            slotView.setText(equipSlot.getName(activity));
-
-            Item item = equipSlot.getItem();
-            if (item != null) {
-                itemView.setText(item.toString());
-            }
-            itemView.setOnClickListener(new ItemListener(equipSlot));
+            populateSlot(itemsRoot, equipSlot);
         }
+    }
+
+    private void populateSlot(LinearLayout itemsRoot, EquipSlot equipSlot) {
+        LinearLayout row = inflate(activity, itemsRoot, R.layout.edit_char_equip_row);
+        TextView slotView = findView(row, R.id.slot);
+        TextView itemView = findView(row, R.id.item);
+
+        slotView.setText(equipSlot.getName(activity));
+
+        Item item = equipSlot.getItem();
+        if (item != null) {
+            itemView.setText(item.toString());
+        }
+        itemView.setOnClickListener(new ItemListener(equipSlot));
     }
 
     @Override

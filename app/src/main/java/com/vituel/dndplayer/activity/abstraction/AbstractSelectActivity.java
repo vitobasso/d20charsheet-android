@@ -100,12 +100,17 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Cursor cursor = (Cursor) listView.getItemAtPosition(position);
-            T selected = getDataSource().fromCursor(cursor);
+            AbstractEntityDao<T> dao = createDataSource();
+            try {
+                T selected = dao.fromCursor(cursor);
 
-            if (request != REQUEST_EDIT) {
-                select(selected);
-            } else {
-                edit(selected);
+                if (request != REQUEST_EDIT) {
+                    select(selected);
+                } else {
+                    edit(selected);
+                }
+            } finally {
+                dao.close();
             }
         }
     }
@@ -185,8 +190,13 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
         ResourceCursorAdapter adapter = new ResourceCursorAdapter(this, getRowLayout(), null, false) {
             @Override
             public void bindView(View view, Context context, Cursor cursor) {
-                T entity = getDataSource().fromCursorBrief(cursor);
-                onPopulateRow(view, entity);
+                AbstractEntityDao<T> dao = createDataSource(); //doesn't need the db actually, just converting the cursor to entity
+                try {
+                    T entity = dao.fromCursorBrief(cursor);
+                    onPopulateRow(view, entity);
+                } finally {
+                    dao.close();
+                }
                 setFontRecursively(activity, view, MAIN_FONT);
             }
         };
@@ -194,21 +204,24 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
             @Override
             public Cursor runQuery(CharSequence constraint) {
                 //TODO should move to Loader to run in background?
-                return onQueryFiltered(getDataSource(), constraint.toString());
+                AbstractEntityDao<T> dao = createDataSource();
+                return onQueryFiltered(dao, constraint.toString()); //TODO leaking dao?
             }
-
         });
         return adapter;
     }
 
     private class LoaderObserver implements LoaderManager.LoaderCallbacks<Cursor> {
 
+        private AbstractEntityDao<T> dao;
+
         @Override
         public Loader<Cursor> onCreateLoader(int id, Bundle args) {
             return new CursorLoader(activity){
                 @Override
                 public Cursor loadInBackground() {
-                    return onQuery(getDataSource());
+                    dao = createDataSource();
+                    return onQuery(dao);
                 }
             };
         }
@@ -217,6 +230,7 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
         public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
             CursorAdapter adapter = (CursorAdapter) listView.getAdapter();
             adapter.changeCursor(data);
+            dao.close();
         }
 
         @Override
@@ -229,18 +243,20 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
     private T getElementAt(int position) {
         CursorAdapter adapter = (CursorAdapter) listView.getAdapter();
         Cursor cursor = (Cursor) adapter.getItem(position);
-        return getDataSource().fromCursor(cursor);
+        AbstractEntityDao<T> dao = createDataSource();
+        try {
+            return dao.fromCursor(cursor);
+        } finally {
+            dao.close();
+        }
     }
 
 
     private void editSelected() {
         SparseBooleanArray checked = listView.getCheckedItemPositions();
-        for (int i = 0; i < checked.size(); i++) {
-            int position = checked.keyAt(i);
-            T element = getElementAt(position);
-            edit(element);
-            break;
-        }
+        int position = checked.keyAt(0);
+        T element = getElementAt(position);
+        edit(element);
     }
 
     private void removeSelected() {
@@ -269,9 +285,12 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
 
     private void remove(T element) {
         //deleteAll from db
-        AbstractEntityDao<T> dataSource = getDataSource();
-        dataSource.remove(element);
-        dataSource.close();
+        AbstractEntityDao<T> dataSource = createDataSource();
+        try {
+            dataSource.remove(element);
+        } finally {
+            dataSource.close();
+        }
 
         getLoaderManager().restartLoader(0, null, loaderObserver);
     }
@@ -287,14 +306,17 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
 
     private void save(T created) {
         //save to db
-        AbstractEntityDao<T> dataSource = getDataSource();
-        dataSource.save(created);
-        dataSource.close();
+        AbstractEntityDao<T> dataSource = createDataSource();
+        try {
+            dataSource.save(created);
+        } finally {
+            dataSource.close();
+        }
 
         getLoaderManager().restartLoader(0, null, loaderObserver);
     }
 
-    protected abstract AbstractEntityDao<T> getDataSource();
+    protected abstract AbstractEntityDao<T> createDataSource();
 
     protected abstract Class<? extends AbstractEditActivity> getEditActivityClass();
 

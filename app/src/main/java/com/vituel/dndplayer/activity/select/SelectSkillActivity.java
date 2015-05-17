@@ -13,7 +13,7 @@ import com.vituel.dndplayer.model.Skill;
 public class SelectSkillActivity extends AbstractSelectActivity<Skill> {
 
     @Override
-    protected AbstractEntityDao<Skill> getDataSource() {
+    protected AbstractEntityDao<Skill> createDataSource() {
         return new SkillDao(this);
     }
 

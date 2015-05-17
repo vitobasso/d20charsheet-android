@@ -13,7 +13,7 @@ import com.vituel.dndplayer.model.Clazz;
 public class SelectClassActivity extends AbstractSelectActivity<Clazz> {
 
     @Override
-    protected AbstractEntityDao<Clazz> getDataSource() {
+    protected AbstractEntityDao<Clazz> createDataSource() {
         return new ClassDao(this);
     }
 

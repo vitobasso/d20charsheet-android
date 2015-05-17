@@ -13,7 +13,7 @@ import com.vituel.dndplayer.model.Race;
 public class SelectRaceActivity extends AbstractSelectActivity<Race> {
 
     @Override
-    protected AbstractEntityDao<Race> getDataSource() {
+    protected AbstractEntityDao<Race> createDataSource() {
         return new RaceDao(this);
     }
 

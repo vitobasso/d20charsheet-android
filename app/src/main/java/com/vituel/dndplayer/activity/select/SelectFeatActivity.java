@@ -13,7 +13,7 @@ import com.vituel.dndplayer.model.Feat;
 public class SelectFeatActivity extends AbstractSelectEffectActivity<Feat> {
 
     @Override
-    protected AbstractEntityDao<Feat> getDataSource() {
+    protected AbstractEntityDao<Feat> createDataSource() {
         return new FeatDao(this);
     }
 

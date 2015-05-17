@@ -21,7 +21,7 @@ public class SelectItemActivity extends AbstractSelectEffectActivity<Item> {
     private EquipSlot slot;
 
     @Override
-    protected AbstractEntityDao<Item> getDataSource() {
+    protected AbstractEntityDao<Item> createDataSource() {
         return new ItemDao(this);
     }
 

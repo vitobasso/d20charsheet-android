@@ -13,7 +13,7 @@ import com.vituel.dndplayer.model.TempEffect;
 public class SelectTempEffectActivity extends AbstractSelectEffectActivity<TempEffect> {
 
     @Override
-    protected AbstractEntityDao<TempEffect> getDataSource() {
+    protected AbstractEntityDao<TempEffect> createDataSource() {
         return new TempEffectDao(this);
     }
 
