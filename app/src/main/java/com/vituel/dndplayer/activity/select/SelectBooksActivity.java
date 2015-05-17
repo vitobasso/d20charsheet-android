@@ -27,7 +27,6 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import static com.vituel.dndplayer.util.ActivityUtil.defaultOnOptionsItemSelected;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.populateCheckBox;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
@@ -194,7 +193,7 @@ public class SelectBooksActivity extends MainNavigationActvity {
                 return true;
 
             default:
-                return defaultOnOptionsItemSelected(item, this);
+                return false;
         }
     }
 

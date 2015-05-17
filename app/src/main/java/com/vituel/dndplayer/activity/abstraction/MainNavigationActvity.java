@@ -82,6 +82,13 @@ public abstract class MainNavigationActvity extends DoubleDrawerActivity {
         }
     }
 
+    protected void goToSummary() {
+        finish();
+        Intent summaryIntent = new Intent(this, SummaryActivity.class);
+        summaryIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(summaryIntent);
+    }
+
     protected void goToEditChar() {
         goToEditChar(PAGE_BASIC);
     }
@@ -118,10 +125,6 @@ public abstract class MainNavigationActvity extends DoubleDrawerActivity {
         }
     }
 
-    protected void goToSummary() {
-        ActivityUtil.backToSummary(this);
-    }
-
     protected void goToEditOrCreateChar() {
         if (cache.isCharOpened()) {
             goToSummary();
@@ -133,7 +136,7 @@ public abstract class MainNavigationActvity extends DoubleDrawerActivity {
 
     protected abstract void navigateTo(NavigationItem nextActivity);
 
-    // Manages navigation restrictions when there's no character to open
+    // Manages navigation restrictions when creating the first character
     private class LeftDrawerAdapter extends ArrayAdapter<String> {
         public LeftDrawerAdapter(String[] drawerItems) {
             super(MainNavigationActvity.this, R.layout.simple_row, R.id.name, drawerItems);

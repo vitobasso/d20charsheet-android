@@ -36,7 +36,6 @@ import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
-import static com.vituel.dndplayer.util.ActivityUtil.defaultOnOptionsItemSelected;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
@@ -139,7 +138,7 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
                 startActivityForResult(intent, REQUEST_CREATE);
                 return true;
             default:
-                return defaultOnOptionsItemSelected(menuItem, this);
+                return false;
         }
     }
 

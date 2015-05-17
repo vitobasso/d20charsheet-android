@@ -12,7 +12,6 @@ import com.vituel.dndplayer.util.ReflectionUtil;
 
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
-import static com.vituel.dndplayer.util.ActivityUtil.defaultOnOptionsItemSelected;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
@@ -41,7 +40,6 @@ public abstract class AbstractEditActivity<T extends AbstractEntity> extends Act
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.edit, menu);
-        getMenuInflater().inflate(R.menu.back_to_summary, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -67,7 +65,7 @@ public abstract class AbstractEditActivity<T extends AbstractEntity> extends Act
                 return true;
 
             default:
-                return defaultOnOptionsItemSelected(item, this);
+                return false;
         }
     }
 

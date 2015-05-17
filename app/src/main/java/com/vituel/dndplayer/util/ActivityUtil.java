@@ -2,13 +2,11 @@ package com.vituel.dndplayer.util;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,7 +17,6 @@ import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.activity.summary.SummaryActivity;
 import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.util.gui.CustomFontSpinnerAdapter;
 import com.vituel.dndplayer.util.gui.EnumI18nSpinnerAdapter;
@@ -52,24 +49,6 @@ public class ActivityUtil {
     public static final String EXTRA_TYPE = "TYPE";
     public static final String EXTRA_REQUEST = "REQUEST";
     public static final String EXTRA_PAGE = "PAGE";
-
-    public static boolean defaultOnOptionsItemSelected(MenuItem item, Activity activity) {
-        switch (item.getItemId()) {
-            case R.id.action_summary:
-                backToSummary(activity);
-                return true;
-
-            default:
-                return false;
-        }
-    }
-
-    public static void backToSummary(Activity activity) {
-        activity.finish();
-        Intent summaryIntent = new Intent(activity, SummaryActivity.class);
-        summaryIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        activity.startActivity(summaryIntent);
-    }
 
     @SuppressWarnings("unchecked")
     public static <T extends View> T findView(ViewGroup parent, int... ids) {
