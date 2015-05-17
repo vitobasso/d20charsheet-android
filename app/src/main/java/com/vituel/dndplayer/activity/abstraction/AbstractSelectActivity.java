@@ -205,7 +205,7 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
             public Cursor runQuery(CharSequence constraint) {
                 //TODO should move to Loader to run in background?
                 AbstractEntityDao<T> dao = createDataSource();
-                return onQueryFiltered(dao, constraint.toString()); //TODO leaking dao?
+                return onQueryFiltered(dao, constraint.toString()); //TODO leaking cursor & dao?
             }
         });
         return adapter;

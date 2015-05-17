@@ -77,27 +77,31 @@ public abstract class AbstractDao<T> {
     }
 
     protected final List<T> list(Cursor cursor) {
-        List<T> list = new ArrayList<>();
-
-        cursor.moveToFirst();
-        while (!cursor.isAfterLast()) {
-            T c = fromCursor(cursor);
-            list.add(c);
-            cursor.moveToNext();
+        try {
+            List<T> list = new ArrayList<>();
+            cursor.moveToFirst();
+            while (!cursor.isAfterLast()) {
+                T c = fromCursor(cursor);
+                list.add(c);
+                cursor.moveToNext();
+            }
+            return list;
+        } finally {
+            cursor.close();
         }
-        cursor.close();
-
-        return list;
     }
 
     protected final T firstResult(Cursor cursor) {
-        cursor.moveToFirst();
-        T entity = null;
-        if (cursor.getCount() != 0) {
-            entity = fromCursor(cursor);
+        try {
+            cursor.moveToFirst();
+            if (cursor.getCount() != 0) {
+                return fromCursor(cursor);
+            } else {
+                return null;
+            }
+        } finally {
+            cursor.close();
         }
-        cursor.close();
-        return entity;
     }
 
     protected final void removeForQuery(String selection) {
