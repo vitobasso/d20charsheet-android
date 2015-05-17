@@ -26,7 +26,6 @@ import java.util.List;
 import static android.widget.AdapterView.OnItemLongClickListener;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
-import static com.vituel.dndplayer.util.ActivityUtil.backToSummary;
 import static com.vituel.dndplayer.util.ActivityUtil.internationalize;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
@@ -64,14 +63,13 @@ public class SelectCharActivity extends MainNavigationActvity {
     protected void navigateTo(NavigationItem nextActivity) {
         switch (nextActivity) {
             case SUMMARY:
-                backToSummary(this);
+                goToSummary();
                 break;
             case EDIT:
-                backToSummaryIfCharOpen();
                 goToEditOrCreateChar();
                 break;
             case BOOKS:
-                backToSummaryIfCharOpen();
+                backToBase();
                 goToBooks();
                 break;
         }
@@ -126,7 +124,7 @@ public class SelectCharActivity extends MainNavigationActvity {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             cache.setOpenedChar(list.get(i));
-            backToSummary(activity);
+            goToSummary();
         }
     }
 

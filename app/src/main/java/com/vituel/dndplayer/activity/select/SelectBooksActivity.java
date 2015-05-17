@@ -68,14 +68,13 @@ public class SelectBooksActivity extends MainNavigationActvity {
     protected void navigateTo(NavigationItem nextActivity) {
         switch (nextActivity) {
             case SUMMARY:
-                backToSummaryIfCharOpen();
+                goToSummary();
                 break;
             case EDIT:
-                backToSummaryIfCharOpen();
                 goToEditOrCreateChar();
                 break;
             case OPEN:
-                backToSummaryIfCharOpen();
+                backToBase();
                 goToOpenChar();
                 break;
         }

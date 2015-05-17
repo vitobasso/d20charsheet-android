@@ -30,7 +30,6 @@ import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CHAR;
 import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
-import static com.vituel.dndplayer.util.ActivityUtil.backToSummary;
 
 /**
  * Created by Victor on 09/05/2015.
@@ -97,6 +96,7 @@ public abstract class MainNavigationActvity extends DoubleDrawerActivity {
     protected void goToCreateChar() {
         Intent intent = new Intent(this, EditCharActivity.class);
         intent.putExtra(EXTRA_MODE, CREATE);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivityForResult(intent, REQUEST_CREATE);
     }
 
@@ -110,14 +110,21 @@ public abstract class MainNavigationActvity extends DoubleDrawerActivity {
         startActivityForResult(openIntent, REQUEST_CHAR);
     }
 
-    protected void backToSummaryIfCharOpen() {
+    protected void backToBase() {
         if (cache.isCharOpened()) {
-            backToSummary(this);
+            goToSummary();
+        } else {
+            goToCreateChar();
         }
+    }
+
+    protected void goToSummary() {
+        ActivityUtil.backToSummary(this);
     }
 
     protected void goToEditOrCreateChar() {
         if (cache.isCharOpened()) {
+            goToSummary();
             goToEditChar();
         } else {
             goToCreateChar();

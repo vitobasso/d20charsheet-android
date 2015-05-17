@@ -18,7 +18,6 @@ import static com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter.PAGE_
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
 import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
-import static com.vituel.dndplayer.util.ActivityUtil.cancel;
 import static com.vituel.dndplayer.util.ActivityUtil.findFragment;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
@@ -66,13 +65,13 @@ public class EditCharActivity extends MainNavigationActvity implements PagerActi
     protected void navigateTo(NavigationItem nextActivity) {
         switch (nextActivity) {
             case SUMMARY:
-                cancel(this);
+                goToSummary();
                 break;
             case BOOKS:
                 goToBooks();
                 break;
             case OPEN:
-                backToSummaryIfCharOpen();
+                backToBase();
                 goToOpenChar();
                 break;
         }

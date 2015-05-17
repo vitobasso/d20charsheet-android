@@ -64,11 +64,6 @@ public class ActivityUtil {
         }
     }
 
-    public static void cancel(Activity activity) {
-        activity.setResult(Activity.RESULT_CANCELED);
-        activity.finish();
-    }
-
     public static void backToSummary(Activity activity) {
         activity.finish();
         Intent summaryIntent = new Intent(activity, SummaryActivity.class);
