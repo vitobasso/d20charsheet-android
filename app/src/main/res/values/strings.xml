@@ -84,14 +84,35 @@
     <string name="profane">Profane</string>
     <string name="sacred">Sacred</string>
 
-    <!-- conditional predicates -->
+    <!-- conditionals -->
     <string name="when">when</string>
     <string name="using">using</string>
     <string name="against">against</string>
     <string name="related_to">related to</string>
-    <string name="hp_temp_long">Temporary HP</string>
-    <string name="dmg_nonlethal">Nonlethal damage</string>
-    <string name="dmg_lethal">Lethal damage</string>
+    <string name="melee">melee</string>
+    <string name="ranged">ranged</string>
+    <string name="not_moving">not moving</string>
+    <string name="poison">poison</string>
+    <string name="disease">disease</string>
+    <string name="fear">fear</string>
+    <string name="enchantment">enchantment</string>
+    <string name="aging">aging</string>
+    <string name="burst">burst</string>
+    <string name="aberration">aberration</string>
+    <string name="animal">animal</string>
+    <string name="construct">construct</string>
+    <string name="dragon">dragon</string>
+    <string name="elemental">elemental</string>
+    <string name="fey">fey</string>
+    <string name="giants">giant</string>
+    <string name="humanoid">humanoid</string>
+    <string name="magical_beast">magical beast</string>
+    <string name="monstrous_humanoid">monstrous humanoid</string>
+    <string name="ooze">ooze</string>
+    <string name="outsider">outsider</string>
+    <string name="plant">plant</string>
+    <string name="undead">undead</string>
+    <string name="vermin">vermin</string>
 
     <!-- equip slots -->
     <string name="held">Held</string>
@@ -214,5 +235,8 @@
     <string name="items">Items</string>
     <string name="effects">Effects</string>
     <string name="class_traits">Class traits</string>
+    <string name="hp_temp_long">Temporary HP</string>
+    <string name="dmg_nonlethal">Nonlethal damage</string>
+    <string name="dmg_lethal">Lethal damage</string>
 
 </resources>

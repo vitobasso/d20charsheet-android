@@ -10,6 +10,7 @@ import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.model.effect.Condition;
 import com.vituel.dndplayer.util.database.DBTask;
 import com.vituel.dndplayer.util.gui.GroupedListAdapter;
+import com.vituel.dndplayer.util.i18n.ConditionI18n;
 import com.vituel.dndplayer.util.i18n.ConditionPredicateStringConverter;
 
 import java.util.Set;
@@ -24,6 +25,7 @@ public class ConditionAdapter extends GroupedListAdapter<Condition, Predicate> i
     private final SummaryActivity activity;
     private final CharBase charBase;
     private final Set<Condition> activeConditions;
+    private final ConditionI18n conditionI18n;
     private final ConditionPredicateStringConverter predicateI18n;
 
     public ConditionAdapter(SummaryActivity activity) {
@@ -32,6 +34,7 @@ public class ConditionAdapter extends GroupedListAdapter<Condition, Predicate> i
         this.activity = activity;
         this.charBase = activity.getData().getBase();
         this.activeConditions = charBase.getActiveConditions();
+        this.conditionI18n = new ConditionI18n(activity);
         this.predicateI18n = new ConditionPredicateStringConverter(activity);
     }
 
@@ -47,7 +50,7 @@ public class ConditionAdapter extends GroupedListAdapter<Condition, Predicate> i
 
     @Override
     protected String itemToString(Condition item) {
-        return item.getName();
+        return conditionI18n.translateName(item).toString();
     }
 
     @Override

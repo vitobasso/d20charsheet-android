@@ -84,14 +84,35 @@
     <string name="profane">Profano</string>
     <string name="sacred">Sagrado</string>
 
-    <!-- conditional predicates -->
+    <!-- conditionals -->
     <string name="when">quando</string>
     <string name="using">usando</string>
     <string name="against">contra</string>
     <string name="related_to">relacionado a</string>
-    <string name="hp_temp_long">PV Temporário</string>
-    <string name="dmg_nonlethal">Dano por Contusão</string>
-    <string name="dmg_lethal">Dano Letal</string>
+    <string name="melee">corpo-a-corpo</string>
+    <string name="ranged">à distância</string>
+    <string name="not_moving">parado</string>
+    <string name="poison">veneno</string>
+    <string name="disease">doença</string>
+    <string name="fear">medo</string>
+    <string name="enchantment">encantamento</string>
+    <string name="aging">idade</string>
+    <string name="burst">explosão</string>
+    <string name="aberration">aberração</string>
+    <string name="animal">animal</string>
+    <string name="construct">constructo</string>
+    <string name="dragon">dragão</string>
+    <string name="elemental">elementail</string>
+    <string name="fey">fada</string>
+    <string name="giants">gigante</string>
+    <string name="humanoid">humanoide</string>
+    <string name="magical_beast">besta mágica</string>
+    <string name="monstrous_humanoid">humanóide monstruoso</string>
+    <string name="ooze">limo</string>
+    <string name="outsider">extraplanar</string>
+    <string name="plant">planta</string>
+    <string name="undead">morto-vivo</string>
+    <string name="vermin">verme</string>
 
     <!-- equip slots -->
     <string name="held">Arma/Escudo</string>
@@ -214,5 +235,8 @@
     <string name="items">Itens</string>
     <string name="effects">Efeitos</string>
     <string name="class_traits">Traços de classe</string>
+    <string name="hp_temp_long">PV Temporário</string>
+    <string name="dmg_nonlethal">Dano por Contusão</string>
+    <string name="dmg_lethal">Dano Letal</string>
 
 </resources>
