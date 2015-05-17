@@ -11,6 +11,8 @@ import com.vituel.dndplayer.parser.exception.ParseFieldException;
 import com.vituel.dndplayer.parser.exception.ParseFormatException;
 import com.vituel.dndplayer.parser.exception.ParseNullValueException;
 
+import java.util.Map;
+
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 /**
@@ -20,10 +22,11 @@ public abstract class AbstractEffectParser<T extends AbstractEntity & EffectSour
 
     public static final String EFFECT_COL_PATTERN = "effect[ _]?\\d+";
 
-    private ModifierParser modifierParser = new ModifierParser();
+    private ModifierParser modifierParser;
 
-    protected AbstractEffectParser(Context ctx, String path) {
+    protected AbstractEffectParser(Context ctx, String path, Map<String,String> skillNameMap) {
         super(ctx, path);
+        modifierParser = new ModifierTranslatedParser(ctx, skillNameMap);
     }
 
     protected Effect readEffect(String[] line, T source) throws ParseFieldException {

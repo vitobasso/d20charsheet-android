@@ -30,6 +30,7 @@ import com.vituel.dndplayer.parser.exception.ParseEntityException;
 import com.vituel.dndplayer.util.gui.LoaderObserver;
 
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * Created by Victor on 26/03/14.
@@ -49,13 +50,17 @@ public class LibraryLoader {
     public void loadDB() {
         loadTable(new EditionParser(ctx, "data/csv/editions.csv"), R.string.editions, new EditionDao(ctx));
         loadTable(new BookParser(ctx, "data/csv/books.csv"), R.string.rulebooks, new BookDao(ctx));
-        loadTable(new RaceParser(ctx, "data/csv/races.csv"), R.string.races, new RaceDao(ctx));
+
+        SkillParser skillParser = new SkillParser(ctx, "data/csv/skills.csv");
+        loadTable(skillParser, R.string.skills, new SkillDao(ctx));
+        Map<String, String> skillNameMap = skillParser.getTranslatedNameMap();
+
+        loadTable(new RaceParser(ctx, "data/csv/races.csv", skillNameMap), R.string.races, new RaceDao(ctx));
         loadTable(new ClassParser(ctx, "data/csv/classes.csv"), R.string.classes, new ClassDao(ctx));
-        loadTable(new ClassTraitParser(ctx, "data/csv/class_traits.csv"), R.string.class_traits, new ClassTraitDao(ctx));
-        loadTable(new ItemParser(ctx, "data/csv/items.csv"), R.string.items, new ItemDao(ctx));
-        loadTable(new FeatParser(ctx, "data/csv/feats.csv"), R.string.feats, new FeatDao(ctx));
-        loadTable(new SkillParser(ctx, "data/csv/skills.csv"), R.string.skills, new SkillDao(ctx));
-        loadTable(new TempEffectParser(ctx, "data/csv/temp_effects.csv"), R.string.effects, new TempEffectDao(ctx));
+        loadTable(new ClassTraitParser(ctx, "data/csv/class_traits.csv", skillNameMap), R.string.class_traits, new ClassTraitDao(ctx));
+        loadTable(new ItemParser(ctx, "data/csv/items.csv", skillNameMap), R.string.items, new ItemDao(ctx));
+        loadTable(new FeatParser(ctx, "data/csv/feats.csv", skillNameMap), R.string.feats, new FeatDao(ctx));
+        loadTable(new TempEffectParser(ctx, "data/csv/temp_effects.csv", skillNameMap), R.string.effects, new TempEffectDao(ctx));
     }
 
     private <T extends AbstractEntity> void loadTable(AbstractEntityParser<T> parser, int displayNameRes, AbstractDao<T> dao) {

@@ -3,21 +3,24 @@ package com.vituel.dndplayer.util.i18n;
 import android.content.Context;
 
 import com.vituel.dndplayer.R;
-import com.vituel.dndplayer.model.effect.Condition;
 
 /**
  * Created by Victor on 29/09/2014.
  */
-public class ConditionI18n {
+public class ConditionTranslator {
 
     private Context ctx;
 
-    public ConditionI18n(Context ctx) {
+    public ConditionTranslator(Context ctx) {
         this.ctx = ctx;
     }
 
-    public CharSequence translateName(Condition condition) {
-        switch (condition.getName()) {
+    public String translate(String conditionName) {
+        return findResourceForName(conditionName).toString();
+    }
+
+    private CharSequence findResourceForName(String conditionName) {
+        switch (conditionName) {
             case "melee":
                 return findResource(R.string.melee);
             case "ranged":
@@ -67,7 +70,7 @@ public class ConditionI18n {
             case "vermin":
                 return findResource(R.string.vermin);
             default:
-                return condition.getName();
+                return conditionName;
         }
     }
 

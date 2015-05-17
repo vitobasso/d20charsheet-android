@@ -9,6 +9,8 @@ import com.vituel.dndplayer.model.item.WeaponProperties;
 import com.vituel.dndplayer.parser.exception.ParseEnumException;
 import com.vituel.dndplayer.parser.exception.ParseFieldException;
 
+import java.util.Map;
+
 import static com.vituel.dndplayer.model.effect.ModifierTarget.AC;
 import static com.vituel.dndplayer.model.effect.ModifierTarget.MAX_DEX;
 import static com.vituel.dndplayer.model.item.Item.ItemType;
@@ -26,8 +28,8 @@ import static com.vituel.dndplayer.model.item.SlotType.WAIST;
  */
 public class ItemParser extends AbstractEffectParser<Item> {
 
-    public ItemParser(Context ctx, String path) {
-        super(ctx, path);
+    public ItemParser(Context ctx, String path, Map<String,String> skillNameMap) {
+        super(ctx, path, skillNameMap);
     }
 
     @Override
