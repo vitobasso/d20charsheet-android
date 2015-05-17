@@ -1,95 +1,84 @@
 
+- clean the logs
+- race traits
+
+
 BUGS
 
-- skill list in Summary rolls to top when toggling conditions
-- can add the same skill twice
-- can add the same feat twice
-- temp HP effect
-- when has 2+ classes, class fields change when moving away from EditCharBasicFragment and back
-- nullpointer after renaming equiped weapon (at Attack.applyModifier, DAMAGE, getWeapon() is null)
-- can't remove trained skills (CAB + EditText bug)
-- null pointer after deleting item/feat/etc used by char
-- crash when editing entity w/ enum, when translated (can't find enum from translated string)
-- can't create new bonus (ability modifier): empty spinners
-- filter not working on SelectItemActivity
-- crashes on first run (when chached char is null)
-    - go to rulebooks
-    - go to edit
+    - skill list in Summary rolls to top when toggling conditions
+    - can add the same skill/feat/temp effect twice
+    - temp HP effect
+    - when has 2+ classes, class fields change when moving away from EditCharBasicFragment and back
+    - nullpointer after renaming equiped weapon (at Attack.applyModifier, DAMAGE, getWeapon() is null)
+    - can't remove trained skills (CAB + EditText bug)
+    - null pointer after deleting item/feat/etc used by char
+    - crash when editing entity w/ enum, when translated (can't find enum from translated string)
+    - can't create new bonus (ability modifier): empty spinners
 
 
 IMPROVEMENTS
 
-#summary
-- ability damage
-- touch AC
+# summary
+    - ability damage
+    - touch AC
+    # breakdown
+        - breakdown of composite attributes (critical, speed, damage, damage reduction)
+        - show conditions on breakdown
+        - show inactive conditions faded on breakdown
+        - show race/class traits on breakdown
+        - show dialog as balloon (http://www.londatiga.net/it/how-to-create-quickaction-dialog-in-android/)
 
-#summary breakdown
-- breakdown of composite attributes (critical, speed, damage, damage reduction)
-- show conditions on breakdown
-- show inactive conditions faded on breakdown
-- show race/class traits on breakdown
-- show dialog as balloon (http://www.londatiga.net/it/how-to-create-quickaction-dialog-in-android/)
+# edit char
+    - separar ataques e links em outro pager: config/tweak/ajustes
+    - multi select on CAB
 
-#edit
-- filter type options upon selecting target
-- show NumberPicker when touching EditTexts with a plain integer?
-- custom keyboard on fields: damage, critical?
-- create modifier w/ conditional
-- separar ataques e links em outro pager: config/tweak/ajustes
-- select by CAB multiple choice
+# edit
+    - filter type options upon selecting target
+    - show NumberPicker when touching EditTexts with a plain integer?
+    - custom keyboard on fields: damage, critical?
+    - create modifier w/ conditional
+    - field for skill name on "edit temp effect" & "edit item"
+    - show weapon properties as mods in "select item"
+    - show slot descriptions on "edit item"
 
-#conditions
-- animate when hiding/showing
-- touch to hide/show
+# items
+    - item models (long sword vs. long sword +2)
+    - filter by weapon vs sheld, 1 vs 2handed, melee vs ranged
 
-#temp effects
-- field for skill name on "edit temp effect"
+# others
+    - parse modifiers w/ comma separated conditions
+    - mutually excluding conditions
+    - source book
 
-#items
-- show weapon properties as mods in "select item"
-- field for skill name on "edit item"
-- show slot descriptions on "edit item"
-- item models (long sword vs. long sword +2)
-- weapon status modifier on edit screen
-- filter by weapon vs sheld, 1 vs 2handed, melee vs ranged
-
-#others
-- parse modifiers w/ comma separated conditions
-- mutually excluding conditions
-- source book
-
-#performance
-- load partially on select activity (only id, name, effects). load the rest after selection. (specially classes/races which have traits)
-- avoid full queries when opening char
+# performance
+    - avoid full queries when opening char
 
 FEATURES
 
-- import/export
-    - library
-        - how to preserve char with dependencies to removed stuff?
-    - char
-- translate to PT
-- port to tablet
-- baggage (+ weight calculation)
-- spells
-- xp
-- animal companion, mount, followers
-- export to pdf/printable
+    - import/export
+        - library
+            - how to preserve char with dependencies to removed stuff?
+        - char
+    - port to tablet
+    - baggage (+ weight calculation)
+    - spells
+    - xp
+    - animal companion, mount, followers
+    - export to pdf/printable
 
 
 REFACTOR
 
-- unify attribute calculation (summary and breakdown)
-- organize BreakdownDialog
-- ViewPager & Fragments without support library
-- matar resources compostos "Select Char", "Edit Char". concatenar resources simples.
+    - unify attribute calculation (summary and breakdown)
+    - organize BreakdownDialog
+    - matar resources compostos "Select Char", "Edit Char". concatenar resources simples.
 
 
 PROJECT
 
-- ORMLite? greenDAO?
-- groovy
+    - ORMLite? greenDAO?
+    - groovy
     https://github.com/melix/groovy-android-gradle-plugin
-- scala
+    - scala
     https://github.com/pocorall/scaloid
     http://macroid.github.io/index.html
