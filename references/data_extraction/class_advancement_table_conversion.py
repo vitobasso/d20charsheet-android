@@ -9,7 +9,7 @@ cleanRegex = r'_\\.*|^"? *\| *| *\| *"?$| *-- *(?=\|)|_\. *|(?<=\d)st (?=\|)|(?<
 
 babMap = [None, 'POOR', 'AVERAGE', 'GOOD']
 resistMap = ['POOR', None, 'GOOD']
-traitCount = 0
+trait_count = 0
 
 class ClassAdv:
     def __init__(self):
@@ -100,7 +100,7 @@ def createTraitsWriter(outf):
 
 
 def writeTraitRow(writer, row, level, name):
-    global traitCount
+    global trait_count
     traitCount += 1 #TODO override: regex pegando o nome repetido com +X
     row = dict(id=traitCount, rulebook_id=row['rulebook_id'], class_id=row['id'], level=level, name=name)
     writer.writerow(row)
