@@ -8,7 +8,16 @@ import com.vituel.dndplayer.model.effect.EffectSource;
  */
 public class RaceTrait extends AbstractEntity implements EffectSource {
 
+    private Race race;
     private Effect effect;
+
+    public Race getRace() {
+        return race;
+    }
+
+    public void setRace(Race race) {
+        this.race = race;
+    }
 
     @Override
     public Effect getEffect() {

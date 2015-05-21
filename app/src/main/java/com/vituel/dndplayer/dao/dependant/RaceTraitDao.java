@@ -74,4 +74,12 @@ public class RaceTraitDao extends AbstractAssociationDao<RaceTrait> {
         return effectDao.loadEffectSource(cursor, new RaceTrait(), 0, 1, 3);
     }
 
+    @Override
+    public void insert(RaceTrait entity) {
+        ContentValues values = toContentValues(entity.getRace().getId(), entity);
+        values.put(COLUMN_ID, entity.getId());
+        long id = database.insertOrThrow(tableName(), "_id", values);
+        entity.setId(id);
+    }
+
 }

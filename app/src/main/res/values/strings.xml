@@ -91,12 +91,17 @@
     <string name="related_to">related to</string>
     <string name="melee">melee</string>
     <string name="ranged">ranged</string>
+    <string name="thrown_weapons">thrown weapons</string>
+    <string name="sling">sling</string>
     <string name="not_moving">not moving</string>
     <string name="poison">poison</string>
     <string name="disease">disease</string>
     <string name="fear">fear</string>
-    <string name="enchantment">enchantment</string>
+    <string name="sleep">sleep</string>
     <string name="aging">aging</string>
+    <string name="spell">spell</string>
+    <string name="enchantment">enchantment</string>
+    <string name="illusion">illusion</string>
     <string name="burst">burst</string>
     <string name="aberration">aberration</string>
     <string name="animal">animal</string>
@@ -104,7 +109,7 @@
     <string name="dragon">dragon</string>
     <string name="elemental">elemental</string>
     <string name="fey">fey</string>
-    <string name="giants">giant</string>
+    <string name="giant">giant</string>
     <string name="humanoid">humanoid</string>
     <string name="magical_beast">magical beast</string>
     <string name="monstrous_humanoid">monstrous humanoid</string>
@@ -113,6 +118,12 @@
     <string name="plant">plant</string>
     <string name="undead">undead</string>
     <string name="vermin">vermin</string>
+    <string name="kobold">kobold</string>
+    <string name="goblinoid">goblinoid</string>
+    <string name="goblin">goblin</string>
+    <string name="orc">orc</string>
+    <string name="stone">stone</string>
+    <string name="metal">metal</string>
 
     <!-- equip slots -->
     <string name="held">Held</string>
@@ -231,6 +242,7 @@
     <string name="close">Close</string>
     <string name="editions">Editions</string>
     <string name="races">Races</string>
+    <string name="race_traits">Race traits</string>
     <string name="classes">Classes</string>
     <string name="items">Items</string>
     <string name="effects">Effects</string>

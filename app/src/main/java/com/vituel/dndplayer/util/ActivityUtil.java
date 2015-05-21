@@ -305,13 +305,22 @@ public class ActivityUtil {
         Matcher matcher = pattern.matcher(input);
         StringBuffer buffer = new StringBuffer();
         while(matcher.find()){
-            String resName = matcher.group(1);
-            int resId = context.getResources().getIdentifier(resName, "string", context.getPackageName());
-            String replacement = resId > 0 ? context.getString(resId) : matcher.group();
+            String resourceName = matcher.group(1);
+            String originalString = matcher.group();
+            String replacement = getStringResource(context, resourceName, originalString);
             matcher.appendReplacement(buffer, replacement);
         }
         matcher.appendTail(buffer);
         return buffer.toString();
+    }
+
+    public static String getStringResource(Context context, String resourceName, String defaultString) {
+        int resId = getStringResourceId(context, resourceName);
+        return resId > 0 ? context.getString(resId) : defaultString;
+    }
+
+    public static int getStringResourceId(Context context, String resourceName) {
+        return context.getResources().getIdentifier(resourceName, "string", context.getPackageName());
     }
 
     public static void setTextViewEnabled(Object root, int viewRes, boolean enabled) {

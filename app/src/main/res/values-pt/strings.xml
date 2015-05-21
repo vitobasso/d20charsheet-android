@@ -91,12 +91,17 @@
     <string name="related_to">relacionado a</string>
     <string name="melee">corpo-a-corpo</string>
     <string name="ranged">à distância</string>
+    <string name="thrown_weapons">armas de arremesso</string>
+    <string name="sling">funda</string>
     <string name="not_moving">parado</string>
     <string name="poison">veneno</string>
     <string name="disease">doença</string>
     <string name="fear">medo</string>
-    <string name="enchantment">encantamento</string>
+    <string name="sleep">sono</string>
     <string name="aging">idade</string>
+    <string name="spell">mágica</string>
+    <string name="enchantment">encantamento</string>
+    <string name="illusion">ilusão</string>
     <string name="burst">explosão</string>
     <string name="aberration">aberração</string>
     <string name="animal">animal</string>
@@ -104,7 +109,7 @@
     <string name="dragon">dragão</string>
     <string name="elemental">elementail</string>
     <string name="fey">fada</string>
-    <string name="giants">gigante</string>
+    <string name="giant">gigante</string>
     <string name="humanoid">humanoide</string>
     <string name="magical_beast">besta mágica</string>
     <string name="monstrous_humanoid">humanóide monstruoso</string>
@@ -113,6 +118,12 @@
     <string name="plant">planta</string>
     <string name="undead">morto-vivo</string>
     <string name="vermin">verme</string>
+    <string name="kobold">kobold</string>
+    <string name="goblinoid">goblinóide</string>
+    <string name="goblin">goblin</string>
+    <string name="orc">orc</string>
+    <string name="stone">pedra</string>
+    <string name="metal">metal</string>
 
     <!-- equip slots -->
     <string name="held">Arma/Escudo</string>
@@ -231,6 +242,7 @@
     <string name="close">Fechar</string>
     <string name="editions">Edições</string>
     <string name="races">Raças</string>
+    <string name="race_traits">Traços de raça</string>
     <string name="classes">Classes</string>
     <string name="items">Itens</string>
     <string name="effects">Efeitos</string>

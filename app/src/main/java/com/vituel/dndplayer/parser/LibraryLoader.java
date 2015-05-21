@@ -7,6 +7,7 @@ import android.util.Log;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.abstraction.AbstractDao;
 import com.vituel.dndplayer.dao.dependant.ClassTraitDao;
+import com.vituel.dndplayer.dao.dependant.RaceTraitDao;
 import com.vituel.dndplayer.dao.entity.BookDao;
 import com.vituel.dndplayer.dao.entity.ClassDao;
 import com.vituel.dndplayer.dao.entity.EditionDao;
@@ -24,6 +25,7 @@ import com.vituel.dndplayer.parser.csv.EditionParser;
 import com.vituel.dndplayer.parser.csv.FeatParser;
 import com.vituel.dndplayer.parser.csv.ItemParser;
 import com.vituel.dndplayer.parser.csv.RaceParser;
+import com.vituel.dndplayer.parser.csv.RaceTraitParser;
 import com.vituel.dndplayer.parser.csv.SkillParser;
 import com.vituel.dndplayer.parser.csv.TempEffectParser;
 import com.vituel.dndplayer.parser.exception.ParseEntityException;
@@ -56,6 +58,7 @@ public class LibraryLoader {
         Map<String, String> skillNameMap = skillParser.getTranslatedNameMap();
 
         loadTable(new RaceParser(ctx, "data/csv/races.csv", skillNameMap), R.string.races, new RaceDao(ctx));
+        loadTable(new RaceTraitParser(ctx, "data/csv/race_traits.csv", skillNameMap), R.string.race_traits, new RaceTraitDao(ctx));
         loadTable(new ClassParser(ctx, "data/csv/classes.csv"), R.string.classes, new ClassDao(ctx));
         loadTable(new ClassTraitParser(ctx, "data/csv/class_traits.csv", skillNameMap), R.string.class_traits, new ClassTraitDao(ctx));
         loadTable(new ItemParser(ctx, "data/csv/items.csv", skillNameMap), R.string.items, new ItemDao(ctx));
