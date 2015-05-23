@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class SkillParser extends AbstractEntityParser<Skill> {
 
-    private Map<String, String> translatedNameMap = new HashMap<>();
+    private Map<String, String> translationMap = new HashMap<>();
 
     public SkillParser(Context ctx, String path) {
         super(ctx, path);
@@ -37,11 +37,11 @@ public class SkillParser extends AbstractEntityParser<Skill> {
 
     private void addToTranslatedNameMap(String[] line, Skill result) throws ParseFieldException {
         String englishName = readString(line, HEADER_NAME_DEFAULT);
-        translatedNameMap.put(englishName, result.getName());
+        translationMap.put(englishName, result.getName());
     }
 
-    public Map<String, String> getTranslatedNameMap() {
-        return translatedNameMap;
+    public Map<String, String> getTranslationMap() {
+        return translationMap;
     }
 
 }

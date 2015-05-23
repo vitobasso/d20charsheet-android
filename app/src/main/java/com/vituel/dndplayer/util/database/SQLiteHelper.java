@@ -21,6 +21,7 @@ import com.vituel.dndplayer.dao.dependant.WeaponDao;
 import com.vituel.dndplayer.dao.entity.BookDao;
 import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.dao.entity.ClassDao;
+import com.vituel.dndplayer.dao.entity.ConditionDao;
 import com.vituel.dndplayer.dao.entity.EditionDao;
 import com.vituel.dndplayer.dao.entity.EffectDao;
 import com.vituel.dndplayer.dao.entity.FeatDao;
@@ -59,6 +60,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         database.execSQL(EffectDao.CREATE_TABLE);
         database.execSQL(ModifierDao.CREATE_TABLE);
         database.execSQL(SkillDao.CREATE_TABLE);
+        database.execSQL(ConditionDao.CREATE_TABLE);
 
         //char
         database.execSQL(CharDao.CREATE_TABLE);
@@ -93,6 +95,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + EffectDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + ModifierDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + SkillDao.TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + ConditionDao.TABLE);
 
         //char
         db.execSQL("DROP TABLE IF EXISTS " + CharDao.TABLE);

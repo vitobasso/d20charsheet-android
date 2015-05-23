@@ -5,30 +5,27 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vituel.dndplayer.dao.abstraction.AbstractDao;
+import com.vituel.dndplayer.dao.abstraction.AbstractAssociationDao;
+import com.vituel.dndplayer.dao.entity.ConditionDao;
 import com.vituel.dndplayer.model.effect.Condition;
 
-import java.util.List;
-import java.util.Set;
-
-import static com.vituel.dndplayer.model.effect.Condition.Predicate;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
-import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 
 
-public class ActiveConditionDao extends AbstractDao<Condition> {
+public class ActiveConditionDao extends AbstractAssociationDao<Condition> {
 
     public static final String TABLE = "active_condition";
 
     private static final String COLUMN_CHAR_ID = "char_id";
-    private static final String COLUMN_PREDICATE = "predicate";
+    private static final String COLUMN_CONDITION_ID = "condition_id";
 
     public static final String CREATE_TABLE = "create table " + TABLE + "("
             + COLUMN_ID + " integer primary key autoincrement, "
             + COLUMN_CHAR_ID + " integer not null, "
-            + COLUMN_NAME + " text not null, "
-            + COLUMN_PREDICATE + " text not null"
+            + COLUMN_CONDITION_ID + " integer not null"
             + ");";
+
+    private ConditionDao conditionDao = new ConditionDao(context, database);
 
     public ActiveConditionDao(Context context) {
         super(context);
@@ -46,46 +43,26 @@ public class ActiveConditionDao extends AbstractDao<Condition> {
         return new String[]{
                 COLUMN_ID,
                 COLUMN_CHAR_ID,
-                COLUMN_NAME,
-                COLUMN_PREDICATE
+                COLUMN_CONDITION_ID
         };
     }
 
-    public void save(Set<Condition> conds, long charId){
-        removeAllForChar(charId);
-        for(Condition cond : conds){
-            save(cond, charId);
-        }
+    @Override
+    protected String parentColumn() {
+        return COLUMN_CHAR_ID;
     }
 
-    private void save(Condition cond, long charId) {
+    @Override
+    protected ContentValues toContentValues(long charId, Condition condiiton) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_NAME, cond.getName());
-        values.put(COLUMN_PREDICATE, cond.getPredicate().toString());
+        values.put(COLUMN_CONDITION_ID, condiiton.getId());
         values.put(COLUMN_CHAR_ID, charId);
-        database.insert(tableName(), null, values);
-    }
-
-    public List<Condition> findByChar(long charId) {
-        return select(queryByChar(charId));
+        return values;
     }
 
     @Override
     public Condition fromCursor(Cursor cursor) {
-
-        Condition cond = new Condition();
-        cond.setName(cursor.getString(2));
-        cond.setPredicate(Predicate.valueOf(cursor.getString(3)));
-
-        return cond;
-    }
-
-    private void removeAllForChar(long charId) {
-        removeForQuery(queryByChar(charId));
-    }
-
-    private String queryByChar(long charId){
-        return String.format("%s=%d", COLUMN_CHAR_ID, charId);
+        return conditionDao.findById(cursor.getLong(2));
     }
 
 }

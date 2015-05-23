@@ -1,5 +1,6 @@
 package com.vituel.dndplayer.model.effect;
 
+import com.google.common.base.Objects;
 import com.vituel.dndplayer.model.AbstractEntity;
 
 import java.security.InvalidParameterException;
@@ -29,6 +30,8 @@ public class Condition extends AbstractEntity {
 
     private Predicate predicate;
 
+    private Condition parent;
+
     public Predicate getPredicate() {
         return predicate;
     }
@@ -37,16 +40,24 @@ public class Condition extends AbstractEntity {
         this.predicate = predicate;
     }
 
+    public Condition getParent() {
+        return parent;
+    }
+
+    public void setParent(Condition parent) {
+        this.parent = parent;
+    }
+
     @Override
     public int hashCode() {
-        return name.hashCode();
+        return Objects.hashCode(predicate, name);
     }
 
     @Override
     public boolean equals(Object o) {
         if (o instanceof Condition) {
             Condition other = (Condition) o;
-            return getPredicate() == other.getPredicate() && name.equals(other.name);
+            return predicate == other.predicate && name.equals(other.name);
         } else {
             return false;
         }
@@ -56,4 +67,5 @@ public class Condition extends AbstractEntity {
     public String toString() {
         return String.format("%s %s", getPredicate(),name);
     }
+
 }

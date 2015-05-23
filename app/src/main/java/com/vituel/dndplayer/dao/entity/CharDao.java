@@ -369,7 +369,7 @@ public class CharDao extends AbstractEntityDao<CharBase> {
 
         //load active conditions
         ActiveConditionDao condDao = new ActiveConditionDao(context, database);
-        c.setActiveConditions(new HashSet<>(condDao.findByChar(c.getId())));
+        c.setActiveConditions(new HashSet<>(condDao.findByParent(c.getId())));
 
         return c;
     }

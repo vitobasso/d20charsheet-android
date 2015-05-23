@@ -115,12 +115,12 @@ public abstract class GroupedListAdapter<T, G> extends BaseAdapter {
         Map<G, List<T>> map = new TreeMap<>();
         for (T item : items) {
             G pred = getGroup(item);
-            List<T> set = map.get(pred);
-            if (set == null) {
-                set = new ArrayList<>();
-                map.put(pred, set);
+            List<T> list = map.get(pred);
+            if (list == null) {
+                list = new ArrayList<>();
+                map.put(pred, list);
             }
-            set.add(item);
+            list.add(item);
         }
         return map;
     }

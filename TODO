@@ -1,8 +1,4 @@
 
-- clean the logs
-- race traits
-
-
 BUGS
 
     - skill list in Summary rolls to top when toggling conditions
@@ -45,9 +41,12 @@ IMPROVEMENTS
     - item models (long sword vs. long sword +2)
     - filter by weapon vs sheld, 1 vs 2handed, melee vs ranged
 
+# conditions
+    - remove "against" from csvs
+    - inheritance
+    - order by parent
+
 # others
-    - parse modifiers w/ comma separated conditions
-    - mutually excluding conditions
     - source book
 
 # performance

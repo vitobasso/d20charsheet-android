@@ -3,17 +3,16 @@ package com.vituel.dndplayer.parser.csv;
 import android.content.Context;
 
 import com.vituel.dndplayer.model.TempEffect;
+import com.vituel.dndplayer.parser.LibraryLoader;
 import com.vituel.dndplayer.parser.exception.ParseFieldException;
-
-import java.util.Map;
 
 /**
  * Created by Victor on 19/04/2015.
  */
 public class TempEffectParser extends AbstractEffectParser<TempEffect> {
 
-    public TempEffectParser(Context ctx, String path, Map<String,String> skillNameMap) {
-        super(ctx, path, skillNameMap);
+    public TempEffectParser(Context ctx, String filePath, LibraryLoader.Cache loadingCache) {
+        super(ctx, filePath, loadingCache);
     }
 
     @Override

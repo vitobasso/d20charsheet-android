@@ -215,17 +215,18 @@ public class CharSummary {
 
         if (!amount.isFixed()) {
             Log.w(getClass().getSimpleName(), "Could not apply modifier. Amount isn't fixed. " + modifier.getTarget());
-            return;
+            return; //TODO throw exception instead
         }
         int fixedAmount = amount.toInt();
 
         if (condition != null) {
             getReferencedConditions().add(condition);
-            if (!getBase().getActiveConditions().contains(condition)) {
+            if (!isConditionEnabled(condition)) {
                 return;
             }
         }
 
+        //TODO split: skill, attack, others
         switch (target) {
             case HP:
                 setHitPoints(getHitPoints() + fixedAmount);
@@ -308,6 +309,26 @@ public class CharSummary {
                 Log.w(getClass().getSimpleName(), "Couldn't set target for effect. Target: " + target);
         }
 
+    }
+
+    private boolean isConditionEnabled(Condition condition) {
+        Set<Condition> activeConditions = getBase().getActiveConditions();
+        for (Condition activeCondition : activeConditions) {
+            if (isConditionInHierarchy(condition, activeCondition)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean isConditionInHierarchy(Condition checkingCondition, Condition activeCondition) {
+        while (activeCondition != null) {
+            if (activeCondition.equals(checkingCondition)) {
+                return true;
+            }
+            activeCondition = activeCondition.getParent();
+        }
+        return false;
     }
 
     private CharSkill addSkill(String skillName) {

@@ -7,11 +7,10 @@ import com.vituel.dndplayer.model.effect.Effect;
 import com.vituel.dndplayer.model.effect.EffectSource;
 import com.vituel.dndplayer.model.effect.Modifier;
 import com.vituel.dndplayer.model.effect.ModifierTarget;
+import com.vituel.dndplayer.parser.LibraryLoader;
 import com.vituel.dndplayer.parser.exception.ParseFieldException;
 import com.vituel.dndplayer.parser.exception.ParseFormatException;
 import com.vituel.dndplayer.parser.exception.ParseNullValueException;
-
-import java.util.Map;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
 
@@ -24,9 +23,9 @@ public abstract class AbstractEffectParser<T extends AbstractEntity & EffectSour
 
     private ModifierParser modifierParser;
 
-    protected AbstractEffectParser(Context ctx, String path, Map<String,String> skillNameMap) {
+    protected AbstractEffectParser(Context ctx, String path, LibraryLoader.Cache loadingCache) {
         super(ctx, path);
-        modifierParser = new ModifierTranslatedParser(ctx, skillNameMap);
+        modifierParser = new ModifierTranslatedParser(ctx, loadingCache);
     }
 
     protected Effect readEffect(String[] line, T source) throws ParseFieldException {

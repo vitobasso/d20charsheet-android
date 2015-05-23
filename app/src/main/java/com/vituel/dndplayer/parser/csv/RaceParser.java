@@ -4,9 +4,8 @@ import android.content.Context;
 
 import com.vituel.dndplayer.model.Race;
 import com.vituel.dndplayer.model.Size;
+import com.vituel.dndplayer.parser.LibraryLoader;
 import com.vituel.dndplayer.parser.exception.ParseFieldException;
-
-import java.util.Map;
 
 import static com.vituel.dndplayer.model.effect.ModifierTarget.CHA;
 import static com.vituel.dndplayer.model.effect.ModifierTarget.CON;
@@ -21,8 +20,8 @@ import static com.vituel.dndplayer.model.effect.ModifierTarget.WIS;
  */
 public class RaceParser extends AbstractEffectParser<Race> {
 
-    public RaceParser(Context ctx, String filePath, Map<String,String> skillNameMap) {
-        super(ctx, filePath, skillNameMap);
+    public RaceParser(Context ctx, String filePath, LibraryLoader.Cache loadingCache) {
+        super(ctx, filePath, loadingCache);
     }
 
     @Override

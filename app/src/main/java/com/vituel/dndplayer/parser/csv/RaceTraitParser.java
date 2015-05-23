@@ -4,17 +4,16 @@ import android.content.Context;
 
 import com.vituel.dndplayer.model.Race;
 import com.vituel.dndplayer.model.RaceTrait;
+import com.vituel.dndplayer.parser.LibraryLoader;
 import com.vituel.dndplayer.parser.exception.ParseFieldException;
-
-import java.util.Map;
 
 /**
  * Created by Victor on 21/04/2015.
  */
 public class RaceTraitParser extends AbstractEffectParser<RaceTrait> {
 
-    public RaceTraitParser(Context ctx, String path, Map<String, String> skillNameMap) {
-        super(ctx, path, skillNameMap);
+    public RaceTraitParser(Context ctx, String filePath, LibraryLoader.Cache loadingCache) {
+        super(ctx, filePath, loadingCache);
     }
 
     @Override
