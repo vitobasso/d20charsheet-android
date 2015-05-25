@@ -1,7 +1,5 @@
 package com.vituel.dndplayer.parser.csv;
 
-import android.content.Context;
-
 import com.vituel.dndplayer.model.effect.Condition;
 import com.vituel.dndplayer.model.effect.Modifier;
 import com.vituel.dndplayer.parser.LibraryLoader;
@@ -19,7 +17,7 @@ public class ModifierTranslatedParser extends ModifierParser {
     private Map<String, String> skillNameMap;
     private Map<Condition, Condition> conditionMap;
 
-    public ModifierTranslatedParser(Context context, LibraryLoader.Cache loadingCache) {
+    public ModifierTranslatedParser(LibraryLoader.Cache loadingCache) {
         this.skillNameMap = loadingCache.skillNameMap;
         this.conditionMap = loadingCache.cachedConditions;
     }

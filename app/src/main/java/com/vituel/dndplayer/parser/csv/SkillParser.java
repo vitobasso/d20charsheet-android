@@ -6,15 +6,15 @@ import com.vituel.dndplayer.model.Skill;
 import com.vituel.dndplayer.model.effect.ModifierSource;
 import com.vituel.dndplayer.parser.exception.ParseFieldException;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by Victor on 25/04/2015.
  */
 public class SkillParser extends AbstractEntityParser<Skill> {
 
-    private Map<String, String> translationMap = new HashMap<>();
+    private Map<String, String> translationMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
     public SkillParser(Context ctx, String path) {
         super(ctx, path);

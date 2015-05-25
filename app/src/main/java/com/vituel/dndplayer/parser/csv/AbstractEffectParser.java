@@ -25,7 +25,7 @@ public abstract class AbstractEffectParser<T extends AbstractEntity & EffectSour
 
     protected AbstractEffectParser(Context ctx, String path, LibraryLoader.Cache loadingCache) {
         super(ctx, path);
-        modifierParser = new ModifierTranslatedParser(ctx, loadingCache);
+        modifierParser = new ModifierTranslatedParser(loadingCache);
     }
 
     protected Effect readEffect(String[] line, T source) throws ParseFieldException {
