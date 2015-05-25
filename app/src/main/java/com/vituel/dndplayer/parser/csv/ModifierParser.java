@@ -73,9 +73,9 @@ public class ModifierParser {
             Condition cond = new Condition();
             cond.setName(name);
 
-            Predicate pred = target.getDefaultConditionPredicate();
-            if (predStr != null) {
-                pred = Predicate.fromString(predStr);
+            Predicate pred = Predicate.fromString(predStr);
+            if (predStr == null) {
+                pred = target.getDefaultConditionPredicate();
             }
             cond.setPredicate(pred);
 

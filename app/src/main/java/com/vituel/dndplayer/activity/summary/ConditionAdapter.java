@@ -12,8 +12,6 @@ import com.vituel.dndplayer.util.database.DBTask;
 import com.vituel.dndplayer.util.gui.GroupedListAdapter;
 import com.vituel.dndplayer.util.i18n.ConditionPredicateStringConverter;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Set;
 
 import static com.vituel.dndplayer.model.effect.Condition.Predicate;
@@ -70,23 +68,10 @@ public class ConditionAdapter extends GroupedListAdapter<Condition, Predicate> i
         if (activeConditions.contains(condition)) {
             activeConditions.remove(condition);
         } else {
-            deactivateAllWithPredicate(condition.getPredicate());
             activeConditions.add(condition);
         }
 
         new UpdateTask().execute();
-    }
-
-    private void deactivateAllWithPredicate(Predicate predicate) {
-        List<Condition> conditionsToRemove = new ArrayList<>();
-        for (Condition activeCondition : activeConditions) {
-            if (activeCondition.getPredicate() == predicate) {
-                conditionsToRemove.add(activeCondition);
-            }
-        }
-        for (Condition condition : conditionsToRemove) {
-            activeConditions.remove(condition);
-        }
     }
 
     private class UpdateTask extends DBTask<ActiveConditionDao> {

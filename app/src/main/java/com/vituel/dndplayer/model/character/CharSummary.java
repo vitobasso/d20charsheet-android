@@ -18,7 +18,6 @@ import com.vituel.dndplayer.model.effect.Modifier;
 import com.vituel.dndplayer.model.effect.ModifierSource;
 import com.vituel.dndplayer.model.effect.ModifierTarget;
 import com.vituel.dndplayer.model.item.WeaponProperties;
-import com.vituel.dndplayer.util.i18n.ModifierStringConverter;
 
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
@@ -49,7 +48,6 @@ import static com.vituel.dndplayer.model.effect.ModifierTarget.WIS;
 public class CharSummary {
 
     private Context context;
-    private ModifierStringConverter modStr;
 
     private CharBase base;
     private int hitPoints;
@@ -76,7 +74,6 @@ public class CharSummary {
 
     public CharSummary(Context context, CharBase base) {
         this.context = context;
-        this.modStr = new ModifierStringConverter(context);
         this.setBase(base);
 
         //init
@@ -321,9 +318,9 @@ public class CharSummary {
         return false;
     }
 
-    private boolean isConditionInHierarchy(Condition checkingCondition, Condition activeCondition) {
+    private boolean isConditionInHierarchy(Condition conditionBeingChecked, Condition activeCondition) {
         while (activeCondition != null) {
-            if (activeCondition.equals(checkingCondition)) {
+            if (activeCondition.equals(conditionBeingChecked)) {
                 return true;
             }
             activeCondition = activeCondition.getParent();
