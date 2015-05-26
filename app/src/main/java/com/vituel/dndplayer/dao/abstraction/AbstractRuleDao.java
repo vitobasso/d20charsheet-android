@@ -43,7 +43,7 @@ public abstract class AbstractRuleDao<T extends Rule> extends AbstractEntityDao<
 
     @Override
     protected String orderBy() {
-        return COLUMN_BOOK_ID;
+        return COLUMN_BOOK_ID + ", " + COLUMN_NAME;
     }
 
     @Override

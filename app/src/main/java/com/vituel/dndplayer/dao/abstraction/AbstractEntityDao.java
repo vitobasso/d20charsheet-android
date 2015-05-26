@@ -81,6 +81,11 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
         postRemove(entity);
     }
 
+    @Override
+    protected String orderBy() {
+        return COLUMN_NAME;
+    }
+
     protected abstract ContentValues toContentValues(T entity);
 
     protected void postSave(T entity) {}

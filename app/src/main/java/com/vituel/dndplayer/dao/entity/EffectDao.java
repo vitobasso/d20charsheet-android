@@ -108,4 +108,8 @@ public class EffectDao extends AbstractEntityDao<Effect> {
         return newEntity;
     }
 
+    @Override
+    protected String orderBy() { // TODO needed this because table has no "name" column. shouldn't extend AbstractEntityDao then.
+        return null;
+    }
 }
