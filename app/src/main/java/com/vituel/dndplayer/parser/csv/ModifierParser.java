@@ -67,21 +67,26 @@ public class ModifierParser {
         Pattern p = Pattern.compile("((when|using|against|related to) )?(.+)");
         Matcher m = p.matcher(str);
         if (m.find()) {
-            String predStr = m.group(2);
+            String predicateStr = m.group(2);
             String name = m.group(3);
 
             Condition cond = new Condition();
             cond.setName(name);
 
-            Predicate pred = Predicate.fromString(predStr);
-            if (predStr == null) {
-                pred = target.getDefaultConditionPredicate();
-            }
-            cond.setPredicate(pred);
+            Predicate predicate = parsePredicate(target, predicateStr);
+            cond.setPredicate(predicate);
 
             return cond;
         } else {
             return null;
+        }
+    }
+
+    private Predicate parsePredicate(ModifierTarget target, String predicateStr) {
+        if (predicateStr == null) {
+            return target.getDefaultConditionPredicate();
+        } else {
+            return Predicate.fromString(predicateStr);
         }
     }
 
