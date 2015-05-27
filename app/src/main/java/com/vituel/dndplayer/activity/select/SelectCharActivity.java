@@ -123,7 +123,9 @@ public class SelectCharActivity extends MainNavigationActvity {
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            cache.setOpenedChar(list.get(i));
+            CharBase charToOpen = list.get(i);
+            cache.setOpenedChar(charToOpen);
+            pref.setLastOpenedCharId(charToOpen.getId());
             goToSummary();
         }
     }
