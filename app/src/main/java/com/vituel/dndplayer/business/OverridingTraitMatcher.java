@@ -15,7 +15,7 @@ import static com.google.common.base.Objects.equal;
  */
 public class OverridingTraitMatcher {
 
-    public static final Pattern PATTERN = Pattern.compile("^([A-Za-z'( ]+[A-Za-z])(.*?\\d.*)?");
+    public static final Pattern PATTERN = Pattern.compile("^([[:alpha:]'( ]+[[:alpha:]])(.*?\\d.*)?");
 
     private final Map<String, String> rootNamesMap;
 
