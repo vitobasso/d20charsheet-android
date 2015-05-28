@@ -3,7 +3,6 @@ BUGS
 
     - skill list in Summary rolls to top when toggling conditions
     - can add the same skill/feat/temp effect twice
-    - temp HP effect
     - when has 2+ classes, class fields change when moving away from EditCharBasicFragment and back
     - nullpointer after renaming equiped weapon (at Attack.applyModifier, DAMAGE, getWeapon() is null)
     - can't remove trained skills (CAB + EditText bug)
@@ -45,9 +44,6 @@ IMPROVEMENTS
     - remove "against" from csvs
     - inheritance
     - order by parent
-
-# others
-    - source book
 
 # performance
     - avoid full queries when opening char
