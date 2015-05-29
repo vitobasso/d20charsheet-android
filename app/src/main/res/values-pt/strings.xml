@@ -109,7 +109,7 @@
     <string name="feet">Pés</string>
 
     <!-- UI -->
-    <string name="app_name">Ficha do Personagem D20</string>
+    <string name="app_name">Ficha d20</string>
     <string name="sheet">Ficha</string>
     <string name="create">Criar</string>
     <string name="select">Selecionar</string>
