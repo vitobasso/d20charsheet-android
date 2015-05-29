@@ -5,12 +5,16 @@
 
     <LinearLayout
         style="@style/summary_label_group"
-        android:layout_width="wrap_content">
+        android:layout_width="76dp">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/summary_title"
+            android:lineSpacingMultiplier="0.8" />
 
         <TextView
             android:id="@+id/description"
-            style="@style/summary_title"
-            android:textSize="16sp" />
+            style="@style/summary_description" />
 
     </LinearLayout>
 

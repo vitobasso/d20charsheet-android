@@ -14,14 +14,14 @@
             android:paddingRight="@dimen/half_padding">
 
         <include
-                layout="@layout/summary_main_field_description"
+                layout="@layout/summary_main_field_subtitle"
                 android:id="@+id/hit_points"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"/>
 
         <include
-                layout="@layout/summary_main_field_description"
+                layout="@layout/summary_main_field_subtitle"
                 android:id="@+id/damage_reduction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -33,37 +33,37 @@
                 android:layout_height="wrap_content">
 
             <include
-                    layout="@layout/summary_main_field_ability"
+                    layout="@layout/summary_main_field_subtitle_ability"
                     android:id="@+id/strength"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
             <include
-                    layout="@layout/summary_main_field_ability"
+                    layout="@layout/summary_main_field_subtitle_ability"
                     android:id="@+id/dexterity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
             <include
-                    layout="@layout/summary_main_field_ability"
+                    layout="@layout/summary_main_field_subtitle_ability"
                     android:id="@+id/constitution"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
             <include
-                    layout="@layout/summary_main_field_ability"
+                    layout="@layout/summary_main_field_subtitle_ability"
                     android:id="@+id/intelligence"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
             <include
-                    layout="@layout/summary_main_field_ability"
+                    layout="@layout/summary_main_field_subtitle_ability"
                     android:id="@+id/wisdom"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
             <include
-                    layout="@layout/summary_main_field_ability"
+                    layout="@layout/summary_main_field_subtitle_ability"
                     android:id="@+id/charisma"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
@@ -80,14 +80,14 @@
             android:paddingLeft="@dimen/half_padding">
 
         <include
-                layout="@layout/summary_main_field_description"
+                layout="@layout/summary_main_field_subtitle"
                 android:id="@+id/armor_class"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"/>
 
         <include
-                layout="@layout/summary_main_field_description"
+                layout="@layout/summary_main_field_subtitle"
                 android:id="@+id/spell_resistance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -99,19 +99,19 @@
                 android:layout_height="wrap_content">
 
             <include
-                    layout="@layout/summary_main_field_simple"
+                    layout="@layout/summary_main_field_simple_resist"
                     android:id="@+id/fortitude"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
             <include
-                    layout="@layout/summary_main_field_simple"
+                    layout="@layout/summary_main_field_simple_resist"
                     android:id="@+id/reflex"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
             <include
-                    layout="@layout/summary_main_field_simple"
+                    layout="@layout/summary_main_field_simple_resist"
                     android:id="@+id/will"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

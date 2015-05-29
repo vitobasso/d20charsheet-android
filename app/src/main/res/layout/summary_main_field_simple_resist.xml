@@ -5,7 +5,7 @@
 
     <LinearLayout
         style="@style/summary_label_group"
-        android:layout_width="wrap_content">
+        android:layout_width="100dp">
 
         <TextView
             android:id="@+id/description"
