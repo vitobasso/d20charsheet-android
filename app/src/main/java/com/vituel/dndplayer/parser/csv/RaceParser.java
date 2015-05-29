@@ -12,6 +12,7 @@ import static com.vituel.dndplayer.model.effect.ModifierTarget.CON;
 import static com.vituel.dndplayer.model.effect.ModifierTarget.DEX;
 import static com.vituel.dndplayer.model.effect.ModifierTarget.INT;
 import static com.vituel.dndplayer.model.effect.ModifierTarget.SIZE;
+import static com.vituel.dndplayer.model.effect.ModifierTarget.SPEED;
 import static com.vituel.dndplayer.model.effect.ModifierTarget.STR;
 import static com.vituel.dndplayer.model.effect.ModifierTarget.WIS;
 
@@ -38,7 +39,7 @@ public class RaceParser extends AbstractEffectParser<Race> {
 
         addModifier(result, SIZE, readSize(split, "size").getIndex());
 
-        readSpeed(split, "speed");
+        addModifier(result, SPEED, readSpeed(split, "speed"));
 
         return result;
     }
