@@ -28,7 +28,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import static com.google.common.base.Strings.isNullOrEmpty;
 import static com.vituel.dndplayer.model.Size.MEDIUM;
+import static com.vituel.dndplayer.model.character.Attack.WeaponReference.MAIN_HAND;
+import static com.vituel.dndplayer.model.character.Attack.WeaponReference.OFFHAND;
 import static com.vituel.dndplayer.model.effect.ModifierTarget.AC;
 import static com.vituel.dndplayer.model.effect.ModifierTarget.CHA;
 import static com.vituel.dndplayer.model.effect.ModifierTarget.CON;
@@ -112,16 +115,48 @@ public class CharSummary {
 
     /**
      * Uses the same model classes (Attack, WeaponProperties) as CharBase but clones them to
-     * allow independent application of modifiers.
+     * apply modifiers independently.
      */
     private void initAttacks() {
         Kryo cloner = new Kryo();
         setAttacks(cloner.copy(getBase().getAttacks())); //cloned objects will be modified by magic bonuses, etc
         for (AttackRound attackRound : getAttacks()) {
-            for (Attack attack : attackRound.getAttacks()) {
-                WeaponProperties weaponBase = base.getWeapon(attack.getWeaponReference());
-                attack.setWeapon(cloner.copy(weaponBase));
+            initAttackRound(cloner, attackRound);
+        }
+    }
+
+    private void initAttackRound(Kryo cloner, AttackRound attackRound) {
+        for (Attack attack : attackRound.getAttacks()) {
+            WeaponProperties weaponBase = base.getWeapon(attack.getWeaponReference());
+            attack.setWeapon(cloner.copy(weaponBase));
+        }
+        if (isNullOrEmpty(attackRound.getName())) {
+            String defaultName = getDefaultAttackRoundName(attackRound);
+            attackRound.setName(defaultName);
+        }
+    }
+
+    private String getDefaultAttackRoundName(AttackRound attackRound) {
+        Set<Attack.WeaponReference> weaponsUsed = new HashSet<>();
+        for (Attack attack : attackRound.getAttacks()) {
+            weaponsUsed.add(attack.getWeaponReference());
+        }
+        return getDefaultAttackRoundName(weaponsUsed);
+    }
+
+    private String getDefaultAttackRoundName(Set<Attack.WeaponReference> weaponsUsed) {
+        String mainWeaponName = base.getWeapon(MAIN_HAND).getName();
+        String offhandWeaponName = base.getWeapon(OFFHAND).getName();
+        if (weaponsUsed.size() == 1) {
+            if (weaponsUsed.contains(MAIN_HAND)) {
+                return mainWeaponName;
+            } else {
+                return offhandWeaponName;
             }
+        } else if (weaponsUsed.size() == 2) {
+            return mainWeaponName + "/" + offhandWeaponName;
+        } else {
+            return context.getString(R.string.attacks);
         }
     }
 

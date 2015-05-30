@@ -62,14 +62,18 @@ public class EditAttackRoundActivity extends AbstractEditActivity<AttackRound> {
         entity.getAttacks().clear();
         ViewGroup effectsRoot = findView(this, R.id.list);
         for (int i = 0; i < effectsRoot.getChildCount(); i++) {
-            ViewGroup group = (ViewGroup) effectsRoot.getChildAt(i);
-            Attack.WeaponReference weaponRef = readSpinner(group, R.id.weapon);
-            int penalty = readInt(group, R.id.penalty);
-            Attack attack = new Attack(name, penalty, weaponRef);
+            Attack attack = readAttackRow(effectsRoot, i, name);
             entity.addAttack(attack);
         }
 
         return entity;
+    }
+
+    private Attack readAttackRow(ViewGroup effectsRoot, int i, String name) {
+        ViewGroup group = (ViewGroup) effectsRoot.getChildAt(i);
+        Attack.WeaponReference weaponRef = readSpinner(group, R.id.weapon);
+        int penalty = readInt(group, R.id.penalty);
+        return new Attack(name, penalty, weaponRef);
     }
 
     @Override

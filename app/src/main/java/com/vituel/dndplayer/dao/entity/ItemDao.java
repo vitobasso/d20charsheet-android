@@ -124,6 +124,7 @@ public class ItemDao extends AbstractRuleDao<Item> {
         if (itemType == WEAPON) {
             WeaponItem w = (WeaponItem) item;
             WeaponProperties weapon = weaponDao.findByItem(item.getId());
+            weapon.setName(w.getName());
             w.setWeaponProperties(weapon);
         }
 

@@ -28,6 +28,7 @@ import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.inflate;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.ActivityUtil.populateTextViewOrHide;
 
 /**
  * Created by Victor on 21/03/14.
@@ -46,7 +47,7 @@ public class EditCharAttacksFragment extends AbstractSimpleListFragment<CharBase
 
     @Override
     protected void onPopulateRow(View view, AttackRound attackRound) {
-        populateTextView(view, R.id.name, attackRound.getName());
+        populateTextViewOrHide(view, R.id.name, attackRound.getName());
 
         ViewGroup listRoot = findView(view, R.id.list);
         listRoot.removeAllViews();
@@ -96,7 +97,6 @@ public class EditCharAttacksFragment extends AbstractSimpleListFragment<CharBase
                         listData.add(edited);
                         break;
                     case REQUEST_EDIT:
-                        assert clickedIndex >= 0;
                         listData.set(clickedIndex, edited);
                         break;
                 }

@@ -120,6 +120,7 @@
     <string name="char_remove">Remove Character</string>
     <string name="equip">Equipment</string>
     <string name="attacks">Attacks</string>
+    <string name="attack">Attack</string>
     <string name="attack_edit">Edit Attack</string>
     <string name="bonuses">Bonuses</string>
     <string name="modlink_edit">Edit Modifier Links</string>
@@ -215,5 +216,6 @@
     <string name="hp_temp_long">Temporary HP</string>
     <string name="dmg_nonlethal">Nonlethal damage</string>
     <string name="dmg_lethal">Lethal damage</string>
+    <string name="attack_round_name_hint">By default the name of the equipped weapon</string>
 
 </resources>

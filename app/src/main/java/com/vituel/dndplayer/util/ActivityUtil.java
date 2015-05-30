@@ -220,8 +220,19 @@ public class ActivityUtil {
         return view;
     }
 
+
     public static <T extends TextView> T populateTextView(Object root, int viewRes, int value) {
         return populateTextView(root, viewRes, "" + value);
+    }
+
+    public static <T extends TextView> T populateTextViewOrHide(Object root, int viewRes, Object value) {
+        if (value == null || value.toString().isEmpty()) {
+            T view = findView(root, viewRes);
+            view.setVisibility(View.GONE);
+            return view;
+        } else {
+            return populateTextView(root, viewRes, value);
+        }
     }
 
     public static String readString(Object root, int... viewRes) {

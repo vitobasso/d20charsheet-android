@@ -120,6 +120,7 @@
     <string name="char_remove">Remover Personagens</string>
     <string name="equip">Equipamento</string>
     <string name="attacks">Attaques</string>
+    <string name="attack">Attaque</string>
     <string name="attack_edit">Editar Ataque</string>
     <string name="bonuses">Bônus</string>
     <string name="modlink_edit">Editar Ligações</string>
@@ -215,5 +216,6 @@
     <string name="hp_temp_long">PV Temporário</string>
     <string name="dmg_nonlethal">Dano por Contusão</string>
     <string name="dmg_lethal">Dano Letal</string>
+    <string name="attack_round_name_hint">Por padrão o nome da arma equipada</string>
 
 </resources>

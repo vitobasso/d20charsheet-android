@@ -148,8 +148,7 @@ public class CharBase extends AbstractEntity {
 
     public void createStandardAttacks() {
         //full attack
-        String name = getWeapon(MAIN_HAND).getName();
-        AttackRound fullAtk = new AttackRound(name);
+        AttackRound fullAtk = new AttackRound();
         int[] bonuses = AttackUtil.fullAttackPenalties(getBaseAttack());
         for (int bonus : bonuses) {
             Attack attack = new Attack(bonus, MAIN_HAND);
