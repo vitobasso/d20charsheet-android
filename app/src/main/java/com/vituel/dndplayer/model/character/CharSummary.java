@@ -80,11 +80,11 @@ public class CharSummary {
         this.setBase(base);
 
         //init
-        initBasic();
+        initBasics();
         initAttacks();
 
         //effects from race, class, feats, equipment and effects
-        applyModifiers(getBaseModifiers());
+        applyModifiers(createBaseModifiers());
         if (base.getRace() != null) {
             apply(base.getRace());
             applyEffects(base.getRace().getTraits());
@@ -98,14 +98,14 @@ public class CharSummary {
         applyEffects(base.getActiveTempEffects());
 
         //effects from other attributes
-        applyModifiers(getAbilityModifiers().keySet());
-        applyModifiers(getSizeModifiers());
+        applyModifiers(createAbilityModifiers().keySet());
+        applyModifiers(createSizeModifiers());
 
         //tempHP
         setHitPoints(getHitPoints() + base.getDamageTaken().getTempHp()); //breakdown is managed in DamageGuiManager, separately from other effects
     }
 
-    private void initBasic() {
+    private void initBasics() {
         setAttacks(new ArrayList<AttackRound>());
         setSize(MEDIUM);
         setSkills(new HashMap<String, CharSkill>());
@@ -131,20 +131,20 @@ public class CharSummary {
             attack.setWeapon(cloner.copy(weaponBase));
         }
         if (isNullOrEmpty(attackRound.getName())) {
-            String defaultName = getDefaultAttackRoundName(attackRound);
+            String defaultName = createDefaultAttackRoundName(attackRound);
             attackRound.setName(defaultName);
         }
     }
 
-    private String getDefaultAttackRoundName(AttackRound attackRound) {
+    private String createDefaultAttackRoundName(AttackRound attackRound) {
         Set<Attack.WeaponReference> weaponsUsed = new HashSet<>();
         for (Attack attack : attackRound.getAttacks()) {
             weaponsUsed.add(attack.getWeaponReference());
         }
-        return getDefaultAttackRoundName(weaponsUsed);
+        return createDefaultAttackRoundName(weaponsUsed);
     }
 
-    private String getDefaultAttackRoundName(Set<Attack.WeaponReference> weaponsUsed) {
+    private String createDefaultAttackRoundName(Set<Attack.WeaponReference> weaponsUsed) {
         String mainWeaponName = base.getWeapon(MAIN_HAND).getName();
         String offhandWeaponName = base.getWeapon(OFFHAND).getName();
         if (weaponsUsed.size() == 1) {
@@ -160,7 +160,7 @@ public class CharSummary {
         }
     }
 
-    public List<Modifier> getBaseModifiers() {
+    public List<Modifier> createBaseModifiers() {
         List<Modifier> modifiers = new ArrayList<>();
 
         //hp and ac
@@ -183,7 +183,7 @@ public class CharSummary {
         return modifiers;
     }
 
-    public Map<Modifier, String> getAbilityModifiers() {
+    public Map<Modifier, String> createAbilityModifiers() {
         Map<Modifier, String> result = new HashMap<>();
 
         //hp = con * level
@@ -204,7 +204,7 @@ public class CharSummary {
         return result;
     }
 
-    public List<Modifier> getSizeModifiers() {
+    public List<Modifier> createSizeModifiers() {
         List<Modifier> modifiers = new ArrayList<>();
         modifiers.add(new Modifier(HIT, getSize().getCombatModifier()));
         modifiers.add(new Modifier(AC, getSize().getCombatModifier()));

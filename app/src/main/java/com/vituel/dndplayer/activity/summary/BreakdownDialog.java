@@ -59,7 +59,7 @@ public class BreakdownDialog {
             ViewGroup baseGroup = findView(rootView, R.id.base);
 
             //base
-            int count = inflater.appendRows(baseGroup, charSummary.getBaseModifiers(), "Base");
+            int count = inflater.appendRows(baseGroup, charSummary.createBaseModifiers(), "Base");
 
             //attack specific
             if (attackRoundIndex != null) {
@@ -73,10 +73,10 @@ public class BreakdownDialog {
             }
 
             //size
-            count += inflater.appendRows(baseGroup, charSummary.getSizeModifiers(), "Size");
+            count += inflater.appendRows(baseGroup, charSummary.createSizeModifiers(), "Size");
 
             //attributes
-            count += inflater.appendRows(baseGroup, charSummary.getAbilityModifiers());
+            count += inflater.appendRows(baseGroup, charSummary.createAbilityModifiers());
 
             //feats
             count += inflater.appendRows(rootView, base.getFeats(), false);
