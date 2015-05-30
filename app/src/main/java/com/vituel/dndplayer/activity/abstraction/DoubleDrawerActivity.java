@@ -158,6 +158,17 @@ public abstract class DoubleDrawerActivity extends FragmentActivity {
             drawerLayout.closeDrawer(drawer);
         } else {
             drawerLayout.openDrawer(drawer);
+            drawerLayout.closeDrawer(getTheOppositeDrawer(drawer));
+        }
+    }
+
+    private View getTheOppositeDrawer(View thisDrawer) {
+        if (thisDrawer == rightList) {
+            return leftList;
+        } else if (thisDrawer == leftList) {
+            return rightList;
+        } else {
+            return null;
         }
     }
 
