@@ -39,7 +39,7 @@
             android:label="@string/rulebooks"/>
 
         <activity
-            android:name=".activity.LoadingActivity"
+            android:name=".activity.ImportRulesActivity"
             android:label="@string/loading"/>
 
         <activity

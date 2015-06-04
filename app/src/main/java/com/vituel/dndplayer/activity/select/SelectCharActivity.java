@@ -18,8 +18,8 @@ import android.widget.TextView;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.MainNavigationActvity;
 import com.vituel.dndplayer.dao.entity.CharDao;
+import com.vituel.dndplayer.io.char_io.CharJsonParser;
 import com.vituel.dndplayer.model.character.CharBase;
-import com.vituel.dndplayer.parser.json.CharJsonParser;
 
 import java.util.List;
 

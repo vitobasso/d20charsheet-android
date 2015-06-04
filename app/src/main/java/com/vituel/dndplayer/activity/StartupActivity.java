@@ -94,7 +94,7 @@ public class StartupActivity extends Activity {
     }
 
     private void goToLoading() {
-        Intent intent = new Intent(this, LoadingActivity.class);
+        Intent intent = new Intent(this, ImportRulesActivity.class);
         startActivityForResult(intent, REQUEST_LOAD);
     }
 
