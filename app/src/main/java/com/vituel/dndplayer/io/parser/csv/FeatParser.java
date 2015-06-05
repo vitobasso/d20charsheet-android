@@ -6,13 +6,15 @@ import com.vituel.dndplayer.io.parser.RulesImporter;
 import com.vituel.dndplayer.io.parser.exception.ParseFieldException;
 import com.vituel.dndplayer.model.Feat;
 
+import java.io.File;
+
 /**
  * Created by Victor on 19/04/2015.
  */
 public class FeatParser extends AbstractEffectParser<Feat> {
 
-    public FeatParser(Context ctx, String filePath, RulesImporter.Cache loadingCache) {
-        super(ctx, filePath, loadingCache);
+    public FeatParser(Context ctx, File file, RulesImporter.Cache loadingCache) {
+        super(ctx, file, loadingCache);
     }
 
     @Override

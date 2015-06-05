@@ -6,6 +6,7 @@ import com.vituel.dndplayer.io.parser.exception.ParseException;
 import com.vituel.dndplayer.io.parser.exception.ParseFieldException;
 import com.vituel.dndplayer.model.AbstractEntity;
 
+import java.io.File;
 import java.util.Locale;
 
 /**
@@ -17,8 +18,8 @@ public abstract class AbstractEntityParser<T extends AbstractEntity> extends Abs
     protected final String HEADER_NAME_DEFAULT = "name";
     protected final String HEADER_NAME = getNameHeaderForLocale();
 
-    public AbstractEntityParser(Context ctx, String path) {
-        super(ctx, path);
+    public AbstractEntityParser(Context ctx, File file) {
+        super(ctx, file);
     }
 
     public String getNameHeaderForLocale() {

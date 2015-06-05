@@ -222,7 +222,6 @@ public class ActivityUtil {
         return view;
     }
 
-
     public static <T extends TextView> T populateTextView(Object root, int viewRes, int value) {
         return populateTextView(root, viewRes, "" + value);
     }

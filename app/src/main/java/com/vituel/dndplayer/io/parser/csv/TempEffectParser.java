@@ -6,13 +6,15 @@ import com.vituel.dndplayer.io.parser.RulesImporter;
 import com.vituel.dndplayer.io.parser.exception.ParseFieldException;
 import com.vituel.dndplayer.model.TempEffect;
 
+import java.io.File;
+
 /**
  * Created by Victor on 19/04/2015.
  */
 public class TempEffectParser extends AbstractEffectParser<TempEffect> {
 
-    public TempEffectParser(Context ctx, String filePath, RulesImporter.Cache loadingCache) {
-        super(ctx, filePath, loadingCache);
+    public TempEffectParser(Context ctx, File file, RulesImporter.Cache loadingCache) {
+        super(ctx, file, loadingCache);
     }
 
     @Override

@@ -10,6 +10,8 @@ import com.vituel.dndplayer.model.item.SlotType;
 import com.vituel.dndplayer.model.item.WeaponItem;
 import com.vituel.dndplayer.model.item.WeaponProperties;
 
+import java.io.File;
+
 import static com.vituel.dndplayer.model.effect.ModifierTarget.AC;
 import static com.vituel.dndplayer.model.effect.ModifierTarget.MAX_DEX;
 import static com.vituel.dndplayer.model.item.Item.ItemType;
@@ -27,8 +29,8 @@ import static com.vituel.dndplayer.model.item.SlotType.WAIST;
  */
 public class ItemParser extends AbstractEffectParser<Item> {
 
-    public ItemParser(Context ctx, String filePath, RulesImporter.Cache loadingCache) {
-        super(ctx, filePath, loadingCache);
+    public ItemParser(Context ctx, File file, RulesImporter.Cache loadingCache) {
+        super(ctx, file, loadingCache);
     }
 
     @Override

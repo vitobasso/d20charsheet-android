@@ -32,12 +32,6 @@ public class ImportRulesActivity extends Activity implements ImporterObserver {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.progress);
         progressBar = findView(this, R.id.progress);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //TODO check if not executing (in case screen went off and on again)
         goToDownload();
     }
 

@@ -6,6 +6,7 @@ import com.vituel.dndplayer.io.parser.exception.ParseFieldException;
 import com.vituel.dndplayer.model.Skill;
 import com.vituel.dndplayer.model.effect.ModifierSource;
 
+import java.io.File;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -16,8 +17,8 @@ public class SkillParser extends AbstractEntityParser<Skill> {
 
     private Map<String, String> translationMap = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
-    public SkillParser(Context ctx, String path) {
-        super(ctx, path);
+    public SkillParser(Context ctx, File file) {
+        super(ctx, file);
     }
 
     @Override

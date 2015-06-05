@@ -126,6 +126,10 @@ public class RulesDownloader {
     }
 
     private File getRulesDir() {
+        return RulesDownloader.getRulesDir(context);
+    }
+
+    public static File getRulesDir(Context context) {
         File dir = context.getFilesDir();
         return new File(dir, DIR_NAME);
     }

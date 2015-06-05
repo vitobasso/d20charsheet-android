@@ -7,13 +7,15 @@ import com.vituel.dndplayer.io.parser.exception.ParseFieldException;
 import com.vituel.dndplayer.model.ClassTrait;
 import com.vituel.dndplayer.model.Clazz;
 
+import java.io.File;
+
 /**
  * Created by Victor on 21/04/2015.
  */
 public class ClassTraitParser extends AbstractEffectParser<ClassTrait> {
 
-    public ClassTraitParser(Context ctx, String filePath, RulesImporter.Cache loadingCache) {
-        super(ctx, filePath, loadingCache);
+    public ClassTraitParser(Context ctx, File file, RulesImporter.Cache loadingCache) {
+        super(ctx, file, loadingCache);
     }
 
     @Override

@@ -6,13 +6,15 @@ import com.vituel.dndplayer.io.parser.exception.ParseFieldException;
 import com.vituel.dndplayer.model.rulebook.Book;
 import com.vituel.dndplayer.model.rulebook.Edition;
 
+import java.io.File;
+
 /**
  * Created by Victor on 12/04/2015.
  */
 public class BookParser extends AbstractEntityParser<Book> {
 
-    public BookParser(Context ctx, String filePath) {
-        super(ctx, filePath);
+    public BookParser(Context ctx, File file) {
+        super(ctx, file);
     }
 
     @Override

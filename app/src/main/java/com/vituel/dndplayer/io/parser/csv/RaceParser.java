@@ -7,6 +7,8 @@ import com.vituel.dndplayer.io.parser.exception.ParseFieldException;
 import com.vituel.dndplayer.model.Race;
 import com.vituel.dndplayer.model.Size;
 
+import java.io.File;
+
 import static com.vituel.dndplayer.model.effect.ModifierTarget.CHA;
 import static com.vituel.dndplayer.model.effect.ModifierTarget.CON;
 import static com.vituel.dndplayer.model.effect.ModifierTarget.DEX;
@@ -21,8 +23,8 @@ import static com.vituel.dndplayer.model.effect.ModifierTarget.WIS;
  */
 public class RaceParser extends AbstractEffectParser<Race> {
 
-    public RaceParser(Context ctx, String filePath, RulesImporter.Cache loadingCache) {
-        super(ctx, filePath, loadingCache);
+    public RaceParser(Context ctx, File file, RulesImporter.Cache loadingCache) {
+        super(ctx, file, loadingCache);
     }
 
     @Override

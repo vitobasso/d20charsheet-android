@@ -5,6 +5,7 @@ import android.content.Context;
 import com.vituel.dndplayer.io.parser.exception.ParseFieldException;
 import com.vituel.dndplayer.model.effect.Condition;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,8 +18,8 @@ public class ConditionParser extends AbstractEntityParser<Condition> {
 
     private Map<Condition, Condition> translationMap = new HashMap<>();
 
-    public ConditionParser(Context ctx, String path) {
-        super(ctx, path);
+    public ConditionParser(Context ctx, File file) {
+        super(ctx, file);
     }
 
     @Override

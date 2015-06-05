@@ -14,6 +14,8 @@ import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.rulebook.Book;
 
 import java.io.Closeable;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,16 +28,16 @@ import au.com.bytecode.opencsv.CSVReader;
 public abstract class AbstractCsvParser<T> extends AbstractParser implements Closeable {
 
     private Context ctx;
-    private String filePath;
+    private File file;
 
     private BiMap<Integer, String> headers;
     private CSVReader reader;
     private int count;
     private String[] nextLine;
 
-    public AbstractCsvParser(Context ctx, String path) {
+    public AbstractCsvParser(Context ctx, File file) {
         this.ctx = ctx;
-        filePath = path;
+        this.file = file;
     }
 
     public boolean hasNext() throws IOException {
@@ -54,7 +56,7 @@ public abstract class AbstractCsvParser<T> extends AbstractParser implements Clo
 
     private void initIfNecessary() throws IOException {
         if (reader == null) {
-            InputStream in = ctx.getAssets().open(filePath);
+            InputStream in = new FileInputStream(file);
             reader = new CSVReader(new InputStreamReader(in, Charsets.UTF_8), ';', '"');
             headers = readHeaders();
             nextLine = reader.readNext();
@@ -75,7 +77,7 @@ public abstract class AbstractCsvParser<T> extends AbstractParser implements Clo
             return parse(line);
         } catch (ParseFieldException e) {
             String columnName = headers.get(e.getColumnIndex());
-            throw new ParseEntityException(lineIndex, line, columnName, filePath, e);
+            throw new ParseEntityException(lineIndex, line, columnName, file.getAbsolutePath(), e);
         }
     }
 
@@ -170,10 +172,6 @@ public abstract class AbstractCsvParser<T> extends AbstractParser implements Clo
 
     public int getCount() {
         return count;
-    }
-
-    public String getFilePath() {
-        return filePath;
     }
 
     public BiMap<Integer, String> getHeaders() {

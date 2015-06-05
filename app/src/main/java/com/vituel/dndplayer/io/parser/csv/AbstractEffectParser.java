@@ -12,6 +12,8 @@ import com.vituel.dndplayer.model.effect.EffectSource;
 import com.vituel.dndplayer.model.effect.Modifier;
 import com.vituel.dndplayer.model.effect.ModifierTarget;
 
+import java.io.File;
+
 import static com.google.common.base.Strings.isNullOrEmpty;
 
 /**
@@ -23,8 +25,8 @@ public abstract class AbstractEffectParser<T extends AbstractEntity & EffectSour
 
     private ModifierParser modifierParser;
 
-    protected AbstractEffectParser(Context ctx, String path, RulesImporter.Cache loadingCache) {
-        super(ctx, path);
+    protected AbstractEffectParser(Context ctx, File file, RulesImporter.Cache loadingCache) {
+        super(ctx, file);
         modifierParser = new ModifierTranslatedParser(loadingCache);
     }
 

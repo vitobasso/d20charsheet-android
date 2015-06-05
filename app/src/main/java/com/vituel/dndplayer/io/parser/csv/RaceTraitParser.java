@@ -7,13 +7,15 @@ import com.vituel.dndplayer.io.parser.exception.ParseFieldException;
 import com.vituel.dndplayer.model.Race;
 import com.vituel.dndplayer.model.RaceTrait;
 
+import java.io.File;
+
 /**
  * Created by Victor on 21/04/2015.
  */
 public class RaceTraitParser extends AbstractEffectParser<RaceTrait> {
 
-    public RaceTraitParser(Context ctx, String filePath, RulesImporter.Cache loadingCache) {
-        super(ctx, filePath, loadingCache);
+    public RaceTraitParser(Context ctx, File file, RulesImporter.Cache loadingCache) {
+        super(ctx, file, loadingCache);
     }
 
     @Override
