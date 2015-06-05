@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -31,16 +32,20 @@
             android:label="@string/edit"/>
 
         <activity
+            android:name=".activity.DownloadRulesActivity"
+            android:label="@string/loading"/>
+
+        <activity
+            android:name=".activity.ImportRulesActivity"
+            android:label="@string/loading"/>
+
+        <activity
             android:name=".activity.select.SelectCharActivity"
             android:label="@string/chars"/>
 
         <activity
             android:name=".activity.select.SelectBooksActivity"
             android:label="@string/rulebooks"/>
-
-        <activity
-            android:name=".activity.ImportRulesActivity"
-            android:label="@string/loading"/>
 
         <activity
             android:name=".activity.select.SelectClassActivity"

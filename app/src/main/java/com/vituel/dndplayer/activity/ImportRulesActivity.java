@@ -1,6 +1,7 @@
 package com.vituel.dndplayer.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +13,7 @@ import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.io.parser.ImporterObserver;
 import com.vituel.dndplayer.io.parser.RulesImporter;
 
+import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_LOAD;
 import static com.vituel.dndplayer.util.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.ActivityUtil.inflate;
 import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
@@ -36,7 +38,18 @@ public class ImportRulesActivity extends Activity implements ImporterObserver {
     protected void onStart() {
         super.onStart();
         //TODO check if not executing (in case screen went off and on again)
-        new Task().execute();
+        goToDownload();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (resultCode) {
+            case RESULT_OK:
+                new Task().execute();
+            default:
+                showErrorMessage();
+        }
     }
 
     private class Task extends AsyncTask<Void, Void, Void> {
@@ -54,8 +67,8 @@ public class ImportRulesActivity extends Activity implements ImporterObserver {
             setResult(RESULT_OK);
             finish();
         }
-    }
 
+    }
     @Override
     public void onStartLoadingFile(final String fileName) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
@@ -78,6 +91,16 @@ public class ImportRulesActivity extends Activity implements ImporterObserver {
                 populateTextView(activity, R.id.name, name);
             }
         });
+    }
+
+    private void goToDownload() {
+        Intent intent = new Intent(this, DownloadRulesActivity.class);
+        startActivityForResult(intent, REQUEST_LOAD);
+    }
+
+    private void showErrorMessage() {
+        String message = activity.getString(R.string.failed_rules_download);
+        populateTextView(activity, R.id.name, message);
     }
 
 }

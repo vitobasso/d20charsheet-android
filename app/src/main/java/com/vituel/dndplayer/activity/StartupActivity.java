@@ -36,7 +36,7 @@ public class StartupActivity extends Activity {
         pref = new AppPreferences(this);
 
         if (pref.isFirstRun()) {
-            goToLoading();
+            goToImport();
         } else {
             findCharacterToOpen();
         }
@@ -93,7 +93,7 @@ public class StartupActivity extends Activity {
         }
     }
 
-    private void goToLoading() {
+    private void goToImport() {
         Intent intent = new Intent(this, ImportRulesActivity.class);
         startActivityForResult(intent, REQUEST_LOAD);
     }

@@ -42,6 +42,8 @@ public class ActivityUtil {
     public static final int REQUEST_LOAD = 6;
     public static final int REQUEST_CHAR = 7;
 
+    public static final int RESULT_FAILED = 2;
+
     public static final String EXTRA_CHAR = "CHAR";
     public static final String EXTRA_MODE = "MODE";
     public static final String EXTRA_SELECTED = "SELECTED";

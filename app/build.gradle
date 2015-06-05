@@ -54,5 +54,10 @@ dependencies {
     compile 'com.googlecode.jcsv:jcsv:1.4.0'
     compile 'com.google.guava:guava:18.0'
     compile 'net.sf.opencsv:opencsv:2.3'
+    compile 'org.apache.httpcomponents:httpclient:4.4.1'
+    compile 'commons-io:commons-io:2.4'
+    compile('org.rauschig:jarchivelib:0.3.0') {
+        exclude module: 'commons-compress' // avoid error: "Multiple dex files define Lorg/apache/commons/compress/archivers/ArchiveEntry;"
+    }
 //    compile 'com.googlecode.lambdaj:lambdaj:2.3.3' // error while running preDex
 }
