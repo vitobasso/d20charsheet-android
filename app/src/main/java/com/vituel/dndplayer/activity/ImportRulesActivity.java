@@ -41,6 +41,7 @@ public class ImportRulesActivity extends Activity implements ImporterObserver {
         switch (resultCode) {
             case RESULT_OK:
                 new Task().execute();
+                break;
             default:
                 showErrorMessage();
         }

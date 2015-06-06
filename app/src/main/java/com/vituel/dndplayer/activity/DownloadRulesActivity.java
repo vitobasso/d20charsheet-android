@@ -26,13 +26,12 @@ public class DownloadRulesActivity extends Activity implements DownloadObserver 
     public static final String TAG = DownloadRulesActivity.class.getSimpleName();
 
     private DownloadRulesActivity activity = this;
-    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.progress);
-        progressBar = findView(this, R.id.progress);
+        ProgressBar progressBar = findView(this, R.id.progress);
         progressBar.setIndeterminate(true);
     }
 
