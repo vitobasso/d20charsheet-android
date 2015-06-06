@@ -2,6 +2,7 @@ package com.vituel.dndplayer.model;
 
 import com.vituel.dndplayer.model.effect.Effect;
 import com.vituel.dndplayer.model.effect.EffectSource;
+import com.vituel.dndplayer.model.rulebook.Rule;
 
 /**
  * Effects to be toggled on/off as opposed to fixed effects (from equip, class, race, feats).
@@ -9,7 +10,7 @@ import com.vituel.dndplayer.model.effect.EffectSource;
  * <p/>
  * Created by Victor on 21/03/14.
  */
-public class TempEffect extends AbstractEntity implements EffectSource {
+public class TempEffect extends Rule implements EffectSource {
 
     private Effect effect;
 

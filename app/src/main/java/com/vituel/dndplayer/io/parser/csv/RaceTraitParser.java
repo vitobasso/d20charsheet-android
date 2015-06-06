@@ -14,7 +14,7 @@ import java.io.File;
  */
 public class RaceTraitParser extends AbstractEffectParser<RaceTrait> {
 
-    public RaceTraitParser(Context ctx, File file, RulesImporter.Cache loadingCache) {
+    public RaceTraitParser(Context ctx, File file, RulesImporter.ParserCache loadingCache) {
         super(ctx, file, loadingCache);
     }
 
@@ -24,6 +24,7 @@ public class RaceTraitParser extends AbstractEffectParser<RaceTrait> {
 
         Race race = new Race();
         race.setId(readInt(line, "race_id"));
+        result.setBook(readRulebook(line));
         result.setRace(race);
 
         return result;

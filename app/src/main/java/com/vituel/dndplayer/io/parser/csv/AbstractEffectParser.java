@@ -25,7 +25,7 @@ public abstract class AbstractEffectParser<T extends AbstractEntity & EffectSour
 
     private ModifierParser modifierParser;
 
-    protected AbstractEffectParser(Context ctx, File file, RulesImporter.Cache loadingCache) {
+    protected AbstractEffectParser(Context ctx, File file, RulesImporter.ParserCache loadingCache) {
         super(ctx, file);
         modifierParser = new ModifierTranslatedParser(loadingCache);
     }

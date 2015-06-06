@@ -2,11 +2,12 @@ package com.vituel.dndplayer.model;
 
 import com.vituel.dndplayer.model.effect.Effect;
 import com.vituel.dndplayer.model.effect.EffectSource;
+import com.vituel.dndplayer.model.rulebook.Rule;
 
 /**
  * Created by Victor on 05/04/14.
  */
-public class ClassTrait extends AbstractEntity implements EffectSource {
+public class ClassTrait extends Rule implements EffectSource {
 
     private Clazz clazz;
     private Effect effect = new Effect();

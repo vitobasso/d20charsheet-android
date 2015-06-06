@@ -13,14 +13,14 @@ import java.io.File;
  */
 public class FeatParser extends AbstractEffectParser<Feat> {
 
-    public FeatParser(Context ctx, File file, RulesImporter.Cache loadingCache) {
+    public FeatParser(Context ctx, File file, RulesImporter.ParserCache loadingCache) {
         super(ctx, file, loadingCache);
     }
 
     @Override
     protected Feat parse(String[] split, Feat result) throws ParseFieldException {
         readEffect(split, result);
-        result.setBook(readRulebook(split, "rulebook_id"));
+        result.setBook(readRulebook(split));
         return result;
     }
 

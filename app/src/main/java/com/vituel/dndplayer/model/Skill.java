@@ -1,11 +1,12 @@
 package com.vituel.dndplayer.model;
 
 import com.vituel.dndplayer.model.effect.ModifierSource;
+import com.vituel.dndplayer.model.rulebook.Rule;
 
 /**
  * Created by Victor on 25/02/14.
  */
-public class Skill extends AbstractEntity {
+public class Skill extends Rule {
 
     private ModifierSource keyAbility;
     private boolean armorPenaltyApplies;

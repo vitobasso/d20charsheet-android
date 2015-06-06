@@ -13,12 +13,13 @@ import java.io.File;
  */
 public class TempEffectParser extends AbstractEffectParser<TempEffect> {
 
-    public TempEffectParser(Context ctx, File file, RulesImporter.Cache loadingCache) {
+    public TempEffectParser(Context ctx, File file, RulesImporter.ParserCache loadingCache) {
         super(ctx, file, loadingCache);
     }
 
     @Override
     protected TempEffect parse(String[] line, TempEffect result) throws ParseFieldException {
+        result.setBook(readRulebook(line));
         result.setEffect(readEffect(line, result));
         return result;
     }

@@ -23,11 +23,11 @@ public class SkillParser extends AbstractEntityParser<Skill> {
 
     @Override
     protected Skill parse(String[] line, Skill result) throws ParseFieldException {
+        result.setBook(readRulebook(line));
         result.setKeyAbility(readEnum(ModifierSource.class, line, "key ability"));
         result.setArmorPenaltyApplies(readBoolean(line, "armor penalty"));
 
         addToTranslatedNameMap(line, result);
-
         return result;
     }
 

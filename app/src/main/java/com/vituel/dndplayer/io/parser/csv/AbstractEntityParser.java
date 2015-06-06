@@ -5,6 +5,7 @@ import android.content.Context;
 import com.vituel.dndplayer.io.parser.exception.ParseException;
 import com.vituel.dndplayer.io.parser.exception.ParseFieldException;
 import com.vituel.dndplayer.model.AbstractEntity;
+import com.vituel.dndplayer.model.rulebook.Book;
 
 import java.io.File;
 import java.util.Locale;
@@ -17,6 +18,7 @@ public abstract class AbstractEntityParser<T extends AbstractEntity> extends Abs
     protected final String HEADER_ID = "id";
     protected final String HEADER_NAME_DEFAULT = "name";
     protected final String HEADER_NAME = getNameHeaderForLocale();
+    protected final String HEADER_BOOK = "rulebook_id";
 
     public AbstractEntityParser(Context ctx, File file) {
         super(ctx, file);
@@ -47,6 +49,10 @@ public abstract class AbstractEntityParser<T extends AbstractEntity> extends Abs
         } catch (ParseException e) {
             return readString(line, HEADER_NAME_DEFAULT);
         }
+    }
+
+    protected Book readRulebook(String[] line) throws ParseFieldException {
+        return readRulebook(line, HEADER_BOOK);
     }
 
     protected abstract T parse(String[] line, T result) throws ParseFieldException;

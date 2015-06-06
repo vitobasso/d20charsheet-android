@@ -23,14 +23,14 @@ import static com.vituel.dndplayer.model.effect.ModifierTarget.WIS;
  */
 public class RaceParser extends AbstractEffectParser<Race> {
 
-    public RaceParser(Context ctx, File file, RulesImporter.Cache loadingCache) {
+    public RaceParser(Context ctx, File file, RulesImporter.ParserCache loadingCache) {
         super(ctx, file, loadingCache);
     }
 
     @Override
     protected Race parse(String[] split, Race result) throws ParseFieldException {
 
-        result.setBook(readRulebook(split, "rulebook_id"));
+        result.setBook(readRulebook(split));
 
         parseModifier(result, split, "str", STR);
         parseModifier(result, split, "dex", DEX);

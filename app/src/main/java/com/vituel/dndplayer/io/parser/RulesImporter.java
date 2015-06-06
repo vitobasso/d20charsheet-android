@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.SQLException;
 import android.util.Log;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
+import com.vituel.dndplayer.MemoryCache;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.abstraction.AbstractDao;
 import com.vituel.dndplayer.dao.dependant.ClassTraitDao;
@@ -33,9 +36,12 @@ import com.vituel.dndplayer.io.parser.csv.TempEffectParser;
 import com.vituel.dndplayer.io.parser.exception.ParseEntityException;
 import com.vituel.dndplayer.model.AbstractEntity;
 import com.vituel.dndplayer.model.effect.Condition;
+import com.vituel.dndplayer.model.rulebook.Book;
+import com.vituel.dndplayer.model.rulebook.Rule;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -48,37 +54,48 @@ public class RulesImporter {
     private Context ctx;
     private File dir;
     private ImporterObserver observer;
+    private MemoryCache memoryCache;
+    private Collection<Book> selectedBooks;
 
     public RulesImporter(Context ctx, ImporterObserver observer) {
         this.ctx = ctx;
         this.dir = RulesDownloader.getRulesDir(ctx);
         this.observer = observer;
+        memoryCache = (MemoryCache) ctx.getApplicationContext();
     }
 
     public void loadDB() {
-        loadTable(new EditionParser(ctx, getFile("editions.csv")), R.string.editions, new EditionDao(ctx));
-        loadTable(new BookParser(ctx, getFile("books.csv")), R.string.rulebooks, new BookDao(ctx));
-
-        Cache cache = new Cache();
-
-        ConditionParser conditionParser = new ConditionParser(ctx, getFile("conditions.csv"));
-        loadTable(conditionParser, R.string.conditionals, new ConditionDao(ctx));
-        cache.cachedConditions = conditionParser.getTranslationMap();
-
-        SkillParser skillParser = new SkillParser(ctx, getFile("skills.csv"));
-        loadTable(skillParser, R.string.skills, new SkillDao(ctx));
-        cache.skillNameMap = skillParser.getTranslationMap();
-
-        loadTable(new RaceParser(ctx, getFile("races.csv"), cache), R.string.races, new RaceDao(ctx));
-        loadTable(new RaceTraitParser(ctx, getFile("race_traits.csv"), cache), R.string.race_traits, new RaceTraitDao(ctx));
-        loadTable(new ClassParser(ctx, getFile("classes.csv")), R.string.classes, new ClassDao(ctx));
-        loadTable(new ClassTraitParser(ctx, getFile("class_traits.csv"), cache), R.string.class_traits, new ClassTraitDao(ctx));
-        loadTable(new ItemParser(ctx, getFile("items.csv"), cache), R.string.items, new ItemDao(ctx));
-        loadTable(new FeatParser(ctx, getFile("feats.csv"), cache), R.string.feats, new FeatDao(ctx));
-        loadTable(new TempEffectParser(ctx, getFile("temp_effects.csv"), cache), R.string.effects, new TempEffectDao(ctx));
+        loadBooks();
+        selectedBooks = memoryCache.getActiveRulebooks();
+        ParserCache parserCache = loadConditionsAndSkills();
+        loadEntities(new RaceParser(ctx, getFile("races.csv"), parserCache), R.string.races, new RaceDao(ctx));
+        loadEntities(new RaceTraitParser(ctx, getFile("race_traits.csv"), parserCache), R.string.race_traits, new RaceTraitDao(ctx));
+        loadEntities(new ClassParser(ctx, getFile("classes.csv")), R.string.classes, new ClassDao(ctx));
+        loadEntities(new ClassTraitParser(ctx, getFile("class_traits.csv"), parserCache), R.string.class_traits, new ClassTraitDao(ctx));
+        loadEntities(new ItemParser(ctx, getFile("items.csv"), parserCache), R.string.items, new ItemDao(ctx));
+        loadEntities(new FeatParser(ctx, getFile("feats.csv"), parserCache), R.string.feats, new FeatDao(ctx));
+        loadEntities(new TempEffectParser(ctx, getFile("temp_effects.csv"), parserCache), R.string.effects, new TempEffectDao(ctx));
     }
 
-    private <T extends AbstractEntity> void loadTable(AbstractEntityParser<T> parser, int displayNameRes, AbstractDao<T> dao) {
+    private void loadBooks() {
+        loadEntities(new EditionParser(ctx, getFile("editions.csv")), R.string.editions, new EditionDao(ctx));
+        loadEntities(new BookParser(ctx, getFile("books.csv")), R.string.rulebooks, new BookDao(ctx));
+    }
+
+    private ParserCache loadConditionsAndSkills() {
+        ParserCache parserCache = new ParserCache();
+
+        ConditionParser conditionParser = new ConditionParser(ctx, getFile("conditions.csv"));
+        loadEntities(conditionParser, R.string.conditionals, new ConditionDao(ctx));
+        parserCache.cachedConditions = conditionParser.getTranslationMap();
+
+        SkillParser skillParser = new SkillParser(ctx, getFile("skills.csv"));
+        loadEntities(skillParser, R.string.skills, new SkillDao(ctx));
+        parserCache.skillNameMap = skillParser.getTranslationMap();
+        return parserCache;
+    }
+
+    private <T extends AbstractEntity> void loadEntities(AbstractEntityParser<T> parser, int displayNameRes, AbstractDao<T> dao) {
         try {
             String displayName = ctx.getResources().getString(displayNameRes);
             observer.onStartLoadingFile(displayName);
@@ -95,13 +112,34 @@ public class RulesImporter {
     private <T extends AbstractEntity> void loadEntity(AbstractEntityParser<T> parser, AbstractDao<T> dao) {
         try {
             T entity = parser.next();
-            dao.insert(entity);
-            observer.onFinishLoadingRow(entity.getName(), parser.getCount());
+            if (shouldImport(entity)) {
+                dao.insert(entity);
+                observer.onFinishLoadingRow(entity.getName(), parser.getCount());
+            }
         } catch (ParseEntityException | SQLException e) {
             Log.w(TAG, e.getMessage());
         } catch (Exception e) {
             Log.e(TAG, "Unexpected exception when importing to " + dao.getClass().getSimpleName(), e);
         }
+    }
+
+    private <T extends AbstractEntity> boolean shouldImport(T entity) {
+        if (entity instanceof Rule) {
+            return isEntityInSelectedBook((Rule) entity);
+        } else {
+            return true;
+        }
+    }
+
+    private <T extends Rule> boolean isEntityInSelectedBook(T entity) {
+        final long bookId = entity.getBook().getId();
+        Predicate<Book> sameId = new Predicate<Book>() {
+            @Override
+            public boolean apply(Book input) {
+                return input != null && input.getId() == bookId;
+            }
+        };
+        return Iterables.any(selectedBooks, sameId); //TODO sort csv and selectedBooks to reduce complexity
     }
 
     private <T extends AbstractEntity> void close(AbstractEntityParser<T> parser, AbstractDao<T> dao) {
@@ -115,13 +153,13 @@ public class RulesImporter {
 
     public int getTotalFiles() {
         return 11;
-    }
+    } //TODO get w/ the csvs somehow? even row counts?
 
     private File getFile(String fileName) {
         return new File(dir, fileName);
     }
 
-    public static class Cache {
+    public static class ParserCache {
         public Map<Condition, Condition> cachedConditions;
         public Map<String, String> skillNameMap;
     }

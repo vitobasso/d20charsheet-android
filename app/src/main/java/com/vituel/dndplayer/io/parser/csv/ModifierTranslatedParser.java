@@ -17,7 +17,7 @@ public class ModifierTranslatedParser extends ModifierParser {
     private Map<String, String> skillNameMap;
     private Map<Condition, Condition> conditionMap;
 
-    public ModifierTranslatedParser(RulesImporter.Cache loadingCache) {
+    public ModifierTranslatedParser(RulesImporter.ParserCache loadingCache) {
         this.skillNameMap = loadingCache.skillNameMap;
         this.conditionMap = loadingCache.cachedConditions;
     }

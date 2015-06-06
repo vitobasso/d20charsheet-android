@@ -29,7 +29,7 @@ import static com.vituel.dndplayer.model.item.SlotType.WAIST;
  */
 public class ItemParser extends AbstractEffectParser<Item> {
 
-    public ItemParser(Context ctx, File file, RulesImporter.Cache loadingCache) {
+    public ItemParser(Context ctx, File file, RulesImporter.ParserCache loadingCache) {
         super(ctx, file, loadingCache);
     }
 
@@ -38,7 +38,7 @@ public class ItemParser extends AbstractEffectParser<Item> {
         result.setSlotType(readSlot(split, "slot"));
         result.setWeight(readDoubleNullable(split, "weight"));
         result.setPrice(readDoubleNullable(split, "price_gp"));
-        result.setBook(readRulebook(split, "rulebook_id"));
+        result.setBook(readRulebook(split));
 
         ItemType type = readType(split, "slot");
         if (type == WEAPON) {

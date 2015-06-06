@@ -14,7 +14,7 @@ import java.io.File;
  */
 public class ClassTraitParser extends AbstractEffectParser<ClassTrait> {
 
-    public ClassTraitParser(Context ctx, File file, RulesImporter.Cache loadingCache) {
+    public ClassTraitParser(Context ctx, File file, RulesImporter.ParserCache loadingCache) {
         super(ctx, file, loadingCache);
     }
 
@@ -25,6 +25,7 @@ public class ClassTraitParser extends AbstractEffectParser<ClassTrait> {
 
         Clazz clazz = new Clazz();
         clazz.setId(readInt(line, "class_id"));
+        result.setBook(readRulebook(line));
         result.setClazz(clazz);
 
         return result;

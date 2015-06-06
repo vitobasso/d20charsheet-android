@@ -22,7 +22,7 @@ public class ClassParser extends AbstractEntityParser<Clazz> {
         result.setFortitudeProg(readEnum(Clazz.ResistProgression.class, split, "fort"));
         result.setReflexProg(readEnum(Clazz.ResistProgression.class, split, "refl"));
         result.setWillProg(readEnum(Clazz.ResistProgression.class, split, "will"));
-        result.setBook(readRulebook(split, "rulebook_id"));
+        result.setBook(readRulebook(split));
         return result;
     }
 
