@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.vituel.dndplayer.io.downloader.exception.CreateFileException;
 import com.vituel.dndplayer.io.downloader.exception.HttpStatusException;
+import com.vituel.dndplayer.util.LoggingUtil;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.http.HttpEntity;
@@ -52,18 +53,20 @@ public class RulesDownloader {
     }
 
     public void downloadRules() throws IOException {
-        notifyObserver(preparing);
+        long startTime = System.currentTimeMillis(); //TODO use AOP instead?
+        doDownloadRules();
+        LoggingUtil.logTime(TAG, startTime, "download rules");
+    }
+
+    private void doDownloadRules() throws IOException {
         clearDir();
-        notifyObserver(downloading);
         downloadArchive();
-        notifyObserver(extracting);
         extract();
-        notifyObserver(cleaning);
-        moveContentsOutOfExtractedDir();
-        deleteAllButCsvFiles();
+        cleanUnnecessaryFiles();
     }
 
     private void downloadArchive() throws IOException {
+        notifyObserver(downloading);
         Log.i(TAG, "Downloading " + ARCHIVE_URL);
         HttpGet request = new HttpGet(ARCHIVE_URL);
         HttpResponse response = client.execute(request);
@@ -78,9 +81,16 @@ public class RulesDownloader {
     }
 
     private void extract() throws IOException {
+        notifyObserver(extracting);
         File dir = getRulesDir();
         Log.i(TAG, "Extracting rules archive to " + dir.getAbsolutePath());
         archiver.extract(getArchiveFile(), dir);
+    }
+
+    private void cleanUnnecessaryFiles() throws IOException {
+        notifyObserver(cleaning);
+        moveContentsOutOfExtractedDir();
+        deleteAllButCsvFiles();
     }
 
     private void moveContentsOutOfExtractedDir() throws IOException {
@@ -111,6 +121,7 @@ public class RulesDownloader {
     }
 
     private void clearDir() throws IOException {
+        notifyObserver(preparing);
         File dir = getRulesDir();
         if (dir.exists()) {
             forceDelete(dir);

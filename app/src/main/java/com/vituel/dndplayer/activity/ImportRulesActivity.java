@@ -53,7 +53,7 @@ public class ImportRulesActivity extends Activity implements ImporterObserver {
         protected Void doInBackground(Void... params) {
             RulesImporter loader = new RulesImporter(activity, activity);
             progressBar.setMax(loader.getTotalFiles());
-            loader.loadDB();
+            loader.importCsvs();
             return null;
         }
 
