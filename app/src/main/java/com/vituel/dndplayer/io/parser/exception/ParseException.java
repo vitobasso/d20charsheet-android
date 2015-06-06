@@ -3,7 +3,7 @@ package com.vituel.dndplayer.io.parser.exception;
 /**
  * Created by Victor on 13/04/2015.
  */
-public abstract class ParseException extends Exception {
+public abstract class ParseException extends RuntimeException {
 
     public ParseException(String detailMessage, Throwable throwable) {
         super(detailMessage, throwable);

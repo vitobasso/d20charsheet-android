@@ -64,7 +64,7 @@ public class ImportRulesActivity extends Activity implements ImporterObserver {
 
     }
     @Override
-    public void onStartLoadingFile(final String fileName) {
+    public void onStartImportingFile(final String fileName) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
@@ -77,7 +77,7 @@ public class ImportRulesActivity extends Activity implements ImporterObserver {
     }
 
     @Override
-    public void onFinishLoadingRow(final String name, final int count) {
+    public void onFinishImportingRow(final String name, final int count) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {

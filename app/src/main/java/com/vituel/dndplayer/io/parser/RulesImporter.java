@@ -4,9 +4,6 @@ import android.content.Context;
 import android.database.SQLException;
 import android.util.Log;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
-import com.vituel.dndplayer.MemoryCache;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.dao.abstraction.AbstractDao;
 import com.vituel.dndplayer.dao.dependant.ClassTraitDao;
@@ -36,12 +33,9 @@ import com.vituel.dndplayer.io.parser.csv.TempEffectParser;
 import com.vituel.dndplayer.io.parser.exception.ParseEntityException;
 import com.vituel.dndplayer.model.AbstractEntity;
 import com.vituel.dndplayer.model.effect.Condition;
-import com.vituel.dndplayer.model.rulebook.Book;
-import com.vituel.dndplayer.model.rulebook.Rule;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Collection;
 import java.util.Map;
 
 /**
@@ -50,58 +44,51 @@ import java.util.Map;
 public class RulesImporter {
 
     public static final String TAG = RulesImporter.class.getSimpleName();
+    public static final int BATCH_SIZE = 100;
 
     private Context ctx;
     private File dir;
     private ImporterObserver observer;
-    private MemoryCache memoryCache;
-    private Collection<Book> selectedBooks;
 
     public RulesImporter(Context ctx, ImporterObserver observer) {
         this.ctx = ctx;
         this.dir = RulesDownloader.getRulesDir(ctx);
         this.observer = observer;
-        memoryCache = (MemoryCache) ctx.getApplicationContext();
     }
 
     public void loadDB() {
-        loadBooks();
-        selectedBooks = memoryCache.getActiveRulebooks();
-        ParserCache parserCache = loadConditionsAndSkills();
-        loadEntities(new RaceParser(ctx, getFile("races.csv"), parserCache), R.string.races, new RaceDao(ctx));
-        loadEntities(new RaceTraitParser(ctx, getFile("race_traits.csv"), parserCache), R.string.race_traits, new RaceTraitDao(ctx));
-        loadEntities(new ClassParser(ctx, getFile("classes.csv")), R.string.classes, new ClassDao(ctx));
-        loadEntities(new ClassTraitParser(ctx, getFile("class_traits.csv"), parserCache), R.string.class_traits, new ClassTraitDao(ctx));
-        loadEntities(new ItemParser(ctx, getFile("items.csv"), parserCache), R.string.items, new ItemDao(ctx));
-        loadEntities(new FeatParser(ctx, getFile("feats.csv"), parserCache), R.string.feats, new FeatDao(ctx));
-        loadEntities(new TempEffectParser(ctx, getFile("temp_effects.csv"), parserCache), R.string.effects, new TempEffectDao(ctx));
+        importBooks();
+        ParserCache parserCache = importConditionsAndSkills();
+        importAll(new RaceParser(ctx, getFile("races.csv"), parserCache), R.string.races, new RaceDao(ctx));
+        importAll(new RaceTraitParser(ctx, getFile("race_traits.csv"), parserCache), R.string.race_traits, new RaceTraitDao(ctx));
+        importAll(new ClassParser(ctx, getFile("classes.csv")), R.string.classes, new ClassDao(ctx));
+        importAll(new ClassTraitParser(ctx, getFile("class_traits.csv"), parserCache), R.string.class_traits, new ClassTraitDao(ctx));
+        importAll(new ItemParser(ctx, getFile("items.csv"), parserCache), R.string.items, new ItemDao(ctx));
+        importAll(new FeatParser(ctx, getFile("feats.csv"), parserCache), R.string.feats, new FeatDao(ctx));
+        importAll(new TempEffectParser(ctx, getFile("temp_effects.csv"), parserCache), R.string.effects, new TempEffectDao(ctx));
     }
 
-    private void loadBooks() {
-        loadEntities(new EditionParser(ctx, getFile("editions.csv")), R.string.editions, new EditionDao(ctx));
-        loadEntities(new BookParser(ctx, getFile("books.csv")), R.string.rulebooks, new BookDao(ctx));
+    private void importBooks() {
+        importAll(new EditionParser(ctx, getFile("editions.csv")), R.string.editions, new EditionDao(ctx));
+        importAll(new BookParser(ctx, getFile("books.csv")), R.string.rulebooks, new BookDao(ctx));
     }
 
-    private ParserCache loadConditionsAndSkills() {
+    private ParserCache importConditionsAndSkills() {
         ParserCache parserCache = new ParserCache();
 
         ConditionParser conditionParser = new ConditionParser(ctx, getFile("conditions.csv"));
-        loadEntities(conditionParser, R.string.conditionals, new ConditionDao(ctx));
+        importAll(conditionParser, R.string.conditionals, new ConditionDao(ctx));
         parserCache.cachedConditions = conditionParser.getTranslationMap();
 
         SkillParser skillParser = new SkillParser(ctx, getFile("skills.csv"));
-        loadEntities(skillParser, R.string.skills, new SkillDao(ctx));
+        importAll(skillParser, R.string.skills, new SkillDao(ctx));
         parserCache.skillNameMap = skillParser.getTranslationMap();
         return parserCache;
     }
 
-    private <T extends AbstractEntity> void loadEntities(AbstractEntityParser<T> parser, int displayNameRes, AbstractDao<T> dao) {
+    private <T extends AbstractEntity> void importAll(AbstractEntityParser<T> parser, int displayNameRes, AbstractDao<T> dao) {
         try {
-            String displayName = ctx.getResources().getString(displayNameRes);
-            observer.onStartLoadingFile(displayName);
-            while (parser.hasNext()) {
-                loadEntity(parser, dao);
-            }
+            tryImportAll(parser, displayNameRes, dao);
         } catch (IOException e) {
             Log.e(TAG, "IOException exception when importing to " + dao.getClass().getSimpleName(), e);
         } finally {
@@ -109,13 +96,36 @@ public class RulesImporter {
         }
     }
 
-    private <T extends AbstractEntity> void loadEntity(AbstractEntityParser<T> parser, AbstractDao<T> dao) {
+    private <T extends AbstractEntity> void tryImportAll(AbstractEntityParser<T> parser, int displayNameRes, AbstractDao<T> dao) throws IOException {
+        String displayName = ctx.getResources().getString(displayNameRes);
+        observer.onStartImportingFile(displayName);
+        while (parser.hasNext()) {
+            importBatch(parser, dao);
+        }
+    }
+
+    private <T extends AbstractEntity> void importBatch(AbstractEntityParser<T> parser, AbstractDao<T> dao) throws IOException {
         try {
-            T entity = parser.next();
-            if (shouldImport(entity)) {
-                dao.insert(entity);
-                observer.onFinishLoadingRow(entity.getName(), parser.getCount());
-            }
+            dao.beginTransaction();
+            tryImportBatch(parser, dao);
+            dao.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.e(TAG, "Batch import was interrupted.", e);
+            throw e;
+        } finally {
+            dao.endTransaction();
+        }
+    }
+
+    private <T extends AbstractEntity> void tryImportBatch(AbstractEntityParser<T> parser, AbstractDao<T> dao) throws IOException {
+        for (int i = 0; i < BATCH_SIZE && parser.hasNext(); i++) {
+            importEntity(parser, dao);
+        }
+    }
+
+    private <T extends AbstractEntity> void importEntity(AbstractEntityParser<T> parser, AbstractDao<T> dao) {
+        try {
+            tryImportEntity(parser, dao);
         } catch (ParseEntityException | SQLException e) {
             Log.w(TAG, e.getMessage());
         } catch (Exception e) {
@@ -123,27 +133,26 @@ public class RulesImporter {
         }
     }
 
-    private <T extends AbstractEntity> boolean shouldImport(T entity) {
-        if (entity instanceof Rule) {
-            return isEntityInSelectedBook((Rule) entity);
-        } else {
-            return true;
-        }
-    }
-
-    private <T extends Rule> boolean isEntityInSelectedBook(T entity) {
-        final long bookId = entity.getBook().getId();
-        Predicate<Book> sameId = new Predicate<Book>() {
-            @Override
-            public boolean apply(Book input) {
-                return input != null && input.getId() == bookId;
-            }
-        };
-        return Iterables.any(selectedBooks, sameId); //TODO sort csv and selectedBooks to reduce complexity
+    private <T extends AbstractEntity> void tryImportEntity(AbstractEntityParser<T> parser, AbstractDao<T> dao) throws IOException {
+        T entity = parser.next();
+        dao.insert(entity);
+        observer.onFinishImportingRow(entity.getName(), parser.getCount());
     }
 
     private <T extends AbstractEntity> void close(AbstractEntityParser<T> parser, AbstractDao<T> dao) {
-        dao.close();
+        closeDao(dao);
+        closeParser(parser);
+    }
+
+    private <T extends AbstractEntity> void closeDao(AbstractDao<T> dao) {
+        try {
+            dao.close();
+        } catch (RuntimeException e) {
+            Log.e(TAG, "Failed to close dao.", e);
+        }
+    }
+
+    private <T extends AbstractEntity> void closeParser(AbstractEntityParser<T> parser) {
         try {
             parser.close();
         } catch (IOException e) {

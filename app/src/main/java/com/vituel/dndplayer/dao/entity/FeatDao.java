@@ -27,7 +27,7 @@ public class FeatDao extends AbstractRuleDao<Feat> {
             + "FOREIGN KEY(" + COLUMN_EFFECT_ID + ") REFERENCES " + EffectDao.TABLE + "(" + COLUMN_ID + ")"
             + ");";
 
-    private EffectDao effectDao = new EffectDao(context);
+    private EffectDao effectDao = new EffectDao(context, database);
 
     public FeatDao(Context context) {
         super(context);

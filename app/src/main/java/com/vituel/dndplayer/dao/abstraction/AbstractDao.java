@@ -114,6 +114,18 @@ public abstract class AbstractDao<T> {
         }
     }
 
+    public void beginTransaction() {
+        database.beginTransaction();
+    }
+
+    public void setTransactionSuccessful() {
+        database.setTransactionSuccessful();
+    }
+
+    public void endTransaction() {
+        database.endTransaction();
+    }
+
     protected String orderBy() {
         return null;
     }
