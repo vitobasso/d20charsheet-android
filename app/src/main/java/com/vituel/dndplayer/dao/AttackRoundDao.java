@@ -28,7 +28,7 @@ public class AttackRoundDao extends AbstractDao<AttackRound> {
     public static final String CREATE_TABLE = "create table " + TABLE + "("
             + COLUMN_ID + " integer primary key, "
             + COLUMN_CHAR_ID + " integer not null, "
-            + COLUMN_NAME + " text not null, "
+            + COLUMN_NAME + " text, "
             + "FOREIGN KEY(" + COLUMN_CHAR_ID + ") REFERENCES " + CharDao.TABLE + "(" + COLUMN_ID + ")"
             + ");";
 
