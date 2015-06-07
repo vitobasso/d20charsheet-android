@@ -27,7 +27,7 @@ import au.com.bytecode.opencsv.CSVReader;
  */
 public abstract class AbstractCsvParser<T> extends AbstractParser implements Closeable {
 
-    private Context ctx;
+    private Context ctx; //TODO not used? remove?
     private File file;
 
     private BiMap<Integer, String> headers;

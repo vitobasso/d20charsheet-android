@@ -65,7 +65,7 @@ public class ImportRulesActivity extends Activity implements ImporterObserver {
 
     }
     @Override
-    public void onStartImportingFile(final String fileName) {
+    public void onStartFile(final String fileName) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
@@ -78,12 +78,11 @@ public class ImportRulesActivity extends Activity implements ImporterObserver {
     }
 
     @Override
-    public void onFinishImportingRow(final String name, final int count) {
+    public void onFinishBatch(final int count) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
                 populateTextView(currentRow, R.id.count, count);
-                populateTextView(activity, R.id.name, name);
             }
         });
     }

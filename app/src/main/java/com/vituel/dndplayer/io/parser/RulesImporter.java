@@ -106,7 +106,7 @@ public class RulesImporter {
 
     private <T extends AbstractEntity> void tryImportCsv(AbstractEntityParser<T> parser, int displayNameRes, AbstractDao<T> dao) throws IOException {
         String displayName = ctx.getResources().getString(displayNameRes);
-        observer.onStartImportingFile(displayName);
+        observer.onStartFile(displayName);
         while (parser.hasNext()) {
             importBatch(parser, dao);
         }
@@ -130,6 +130,7 @@ public class RulesImporter {
         for (int i = 0; i < BATCH_SIZE && parser.hasNext(); i++) {
             importEntity(parser, bulkInserter);
         }
+        observer.onFinishBatch(parser.getCount());
     }
 
     private <T extends AbstractEntity> void importEntity(AbstractEntityParser<T> parser, BulkInserter<T> bulkInserter) {
@@ -145,7 +146,6 @@ public class RulesImporter {
     private <T extends AbstractEntity> void tryImportEntity(AbstractEntityParser<T> parser, BulkInserter<T> bulkInserter) throws IOException {
         T entity = parser.next();
         bulkInserter.insert(entity);
-        observer.onFinishImportingRow(entity.getName(), parser.getCount());
     }
 
     private <T extends AbstractEntity> void close(AbstractEntityParser<T> parser, AbstractDao<T> dao) {

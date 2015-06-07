@@ -5,8 +5,8 @@ package com.vituel.dndplayer.io.parser;
  */
 public interface ImporterObserver {
 
-    void onStartImportingFile(String fileName);
+    void onStartFile(String fileName);
 
-    void onFinishImportingRow(String name, int count);
+    void onFinishBatch(int count);
 
 }
