@@ -6,31 +6,26 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.dao.abstraction.AbstractAssociationDao;
-import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.dao.entity.ClassDao;
 import com.vituel.dndplayer.model.ClassLevel;
+import com.vituel.dndplayer.model.Clazz;
+import com.vituel.dndplayer.util.database.Table;
 
-import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
 
 /**
  * Created by Victor on 06/03/14.
  */
 public class CharClassDao extends AbstractAssociationDao<ClassLevel> {
 
-    public static final String TABLE = "character_class";
-
     private static final String COLUMN_CHAR_ID = "character_id";
     private static final String COLUMN_CLASS_ID = "class_id";
     private static final String COLUMN_LEVEL = "level";
 
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key, "
-            + COLUMN_CHAR_ID + " integer, "
-            + COLUMN_CLASS_ID + " integer, "
-            + COLUMN_LEVEL + " integer, "
-            + "FOREIGN KEY(" + COLUMN_CHAR_ID + ") REFERENCES " + CharDao.TABLE + "(" + COLUMN_ID + "), "
-            + "FOREIGN KEY(" + COLUMN_CLASS_ID + ") REFERENCES " + ClassDao.TABLE + "(" + COLUMN_ID + ")"
-            + ");";
+    public static final Table TABLE = new Table("character_class")
+            .col(COLUMN_CHAR_ID, INTEGER)
+            .col(COLUMN_CLASS_ID, INTEGER)
+            .col(COLUMN_LEVEL, INTEGER);
 
     private ClassDao classDao = new ClassDao(context);
 
@@ -43,18 +38,8 @@ public class CharClassDao extends AbstractAssociationDao<ClassLevel> {
     }
 
     @Override
-    protected String tableName() {
+    public Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_CHAR_ID,
-                COLUMN_CLASS_ID,
-                COLUMN_LEVEL
-        };
     }
 
     @Override
@@ -74,9 +59,10 @@ public class CharClassDao extends AbstractAssociationDao<ClassLevel> {
     @Override
     public ClassLevel fromCursor(Cursor cursor) {
         ClassLevel classLevel = new ClassLevel();
-        long classId = cursor.getLong(2);
-        classLevel.setLevel(cursor.getInt(3));
-        classLevel.setClazz(classDao.findById(classId));
+        classLevel.setLevel(getInt(cursor, COLUMN_LEVEL));
+        long classId = getLong(cursor, COLUMN_CLASS_ID);
+        Clazz clazz = classDao.findById(classId);
+        classLevel.setClazz(clazz);
         return classLevel;
     }
 

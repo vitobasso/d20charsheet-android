@@ -64,15 +64,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
         //char
         database.execSQL(CharDao.TABLE.toSql());
-        database.execSQL(CharBookDao.CREATE_TABLE);
-        database.execSQL(CharClassDao.CREATE_TABLE);
-        database.execSQL(CharFeatDao.CREATE_TABLE);
-        database.execSQL(CharTempEffectDao.CREATE_TABLE);
-        database.execSQL(CharSkillDao.CREATE_TABLE);
-        database.execSQL(ActiveConditionDao.CREATE_TABLE);
-        database.execSQL(AttackRoundDao.CREATE_TABLE);
-        database.execSQL(AttackDao.CREATE_TABLE);
-        database.execSQL(AbilityModifierDao.CREATE_TABLE);
+        database.execSQL(CharBookDao.TABLE.toSql());
+        database.execSQL(CharClassDao.TABLE.toSql());
+        database.execSQL(CharFeatDao.TABLE.toSql());
+        database.execSQL(CharTempEffectDao.TABLE.toSql());
+        database.execSQL(CharSkillDao.TABLE.toSql());
+        database.execSQL(ActiveConditionDao.TABLE.toSql());
+        database.execSQL(AttackRoundDao.TABLE.toSql());
+        database.execSQL(AttackDao.TABLE.toSql());
+        database.execSQL(AbilityModifierDao.TABLE.toSql());
     }
 
     @Override

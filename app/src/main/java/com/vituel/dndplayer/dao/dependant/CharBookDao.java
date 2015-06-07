@@ -7,28 +7,22 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.dao.abstraction.AbstractAssociationDao;
 import com.vituel.dndplayer.dao.entity.BookDao;
-import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.rulebook.Book;
+import com.vituel.dndplayer.util.database.Table;
 
-import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
 
 /**
  * Created by Victor on 12/04/2015.
  */
 public class CharBookDao extends AbstractAssociationDao<Book> {
 
-    public static final String TABLE = "char_book";
-
     private static String COLUMN_CHAR_ID = "char_id";
     private static String COLUMN_BOOK_ID = "book_id";
 
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_CHAR_ID + " integer not null, "
-            + COLUMN_BOOK_ID + " integer not null, "
-            + "FOREIGN KEY(" + COLUMN_CHAR_ID + ") REFERENCES " + CharDao.TABLE + "(" + COLUMN_ID + "), "
-            + "FOREIGN KEY(" + COLUMN_BOOK_ID + ") REFERENCES " + BookDao.TABLE + "(" + COLUMN_ID + ")"
-            + ");";
+    public static final Table TABLE = new Table("char_book")
+            .colNotNull(COLUMN_CHAR_ID, INTEGER)
+            .colNotNull(COLUMN_BOOK_ID, INTEGER);
 
     private BookDao bookDao = new BookDao(context, database);
 
@@ -41,17 +35,8 @@ public class CharBookDao extends AbstractAssociationDao<Book> {
     }
 
     @Override
-    protected String tableName() {
+    public Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_CHAR_ID,
-                COLUMN_BOOK_ID
-        };
     }
 
     @Override
@@ -69,6 +54,7 @@ public class CharBookDao extends AbstractAssociationDao<Book> {
 
     @Override
     public Book fromCursor(Cursor cursor) {
-        return bookDao.findById(cursor.getInt(2));
+        return bookDao.findById(getInt(cursor, COLUMN_BOOK_ID));
     }
+
 }

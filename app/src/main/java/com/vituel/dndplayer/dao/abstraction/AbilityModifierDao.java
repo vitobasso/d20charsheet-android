@@ -9,13 +9,14 @@ import com.vituel.dndplayer.model.effect.AbilityModifier;
 import com.vituel.dndplayer.model.effect.ModifierSource;
 import com.vituel.dndplayer.model.effect.ModifierTarget;
 import com.vituel.dndplayer.model.effect.Multiplier;
+import com.vituel.dndplayer.util.database.Table;
 
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
+import static com.vituel.dndplayer.util.database.ColumnType.TEXT;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 
 
 public class AbilityModifierDao extends AbstractAssociationDao<AbilityModifier> {
-
-    public static final String TABLE = "ability_modifier";
 
     private static final String COLUMN_CHAR_ID = "char_id";
     private static final String COLUMN_ABILITY = "ability";
@@ -23,15 +24,12 @@ public class AbilityModifierDao extends AbstractAssociationDao<AbilityModifier> 
     private static final String COLUMN_TARGET = "target";
     private static final String COLUMN_TARGET_VARIATION = "variation"; //specific skills are treated as variations of the "SKILL" target (because skills are dynamic)
 
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_CHAR_ID + " integer not null, "
-            + COLUMN_ABILITY + " text not null, "
-            + COLUMN_MULTIPLIER + " integer not null, "
-            + COLUMN_TARGET + " text not null, "
-            + COLUMN_TARGET_VARIATION + " text"
-            + ");";
-
+    public static final Table TABLE = new Table("ability_modifier")
+            .colNotNull(COLUMN_CHAR_ID, INTEGER)
+            .colNotNull(COLUMN_ABILITY, TEXT)
+            .colNotNull(COLUMN_MULTIPLIER, INTEGER)
+            .colNotNull(COLUMN_TARGET, TEXT)
+            .col(COLUMN_TARGET_VARIATION, TEXT);
 
     public AbilityModifierDao(Context context) {
         super(context);
@@ -42,20 +40,8 @@ public class AbilityModifierDao extends AbstractAssociationDao<AbilityModifier> 
     }
 
     @Override
-    protected String tableName() {
+    public Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_CHAR_ID,
-                COLUMN_ABILITY,
-                COLUMN_MULTIPLIER,
-                COLUMN_TARGET,
-                COLUMN_TARGET_VARIATION
-        };
     }
 
     @Override
@@ -78,11 +64,11 @@ public class AbilityModifierDao extends AbstractAssociationDao<AbilityModifier> 
     public AbilityModifier fromCursor(Cursor cursor) {
 
         AbilityModifier e = new AbilityModifier();
-        e.setId(cursor.getLong(0));
-        e.setAbility(ModifierSource.valueOf(cursor.getString(2)));
-        e.setMultiplier(Multiplier.valueOf(cursor.getString(3)));
-        e.setTarget(ModifierTarget.valueOf(cursor.getString(4)));
-        e.setVariation(cursor.getString(5));
+        e.setId(getLong(cursor, COLUMN_ID));
+        e.setAbility(ModifierSource.valueOf(getString(cursor, COLUMN_ABILITY)));
+        e.setMultiplier(Multiplier.valueOf(getString(cursor, COLUMN_MULTIPLIER)));
+        e.setTarget(ModifierTarget.valueOf(getString(cursor, COLUMN_TARGET)));
+        e.setVariation(getString(cursor, COLUMN_TARGET_VARIATION));
 
         return e;
     }

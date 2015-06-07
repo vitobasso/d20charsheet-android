@@ -8,22 +8,19 @@ import android.database.sqlite.SQLiteDatabase;
 import com.vituel.dndplayer.dao.abstraction.AbstractAssociationDao;
 import com.vituel.dndplayer.dao.entity.ConditionDao;
 import com.vituel.dndplayer.model.effect.Condition;
+import com.vituel.dndplayer.util.database.Table;
 
-import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
 
 
 public class ActiveConditionDao extends AbstractAssociationDao<Condition> {
 
-    public static final String TABLE = "active_condition";
-
     private static final String COLUMN_CHAR_ID = "char_id";
     private static final String COLUMN_CONDITION_ID = "condition_id";
 
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_CHAR_ID + " integer not null, "
-            + COLUMN_CONDITION_ID + " integer not null"
-            + ");";
+    public static final Table TABLE = new Table("active_condition")
+            .colNotNull(COLUMN_CHAR_ID, INTEGER)
+            .colNotNull(COLUMN_CONDITION_ID, INTEGER);
 
     private ConditionDao conditionDao = new ConditionDao(context, database);
 
@@ -35,16 +32,9 @@ public class ActiveConditionDao extends AbstractAssociationDao<Condition> {
         super(context, database);
     }
 
-    protected String tableName() {
+    @Override
+    public Table getTable() {
         return TABLE;
-    }
-
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_CHAR_ID,
-                COLUMN_CONDITION_ID
-        };
     }
 
     @Override
@@ -62,7 +52,7 @@ public class ActiveConditionDao extends AbstractAssociationDao<Condition> {
 
     @Override
     public Condition fromCursor(Cursor cursor) {
-        return conditionDao.findById(cursor.getLong(2));
+        return conditionDao.findById(getLong(cursor, COLUMN_CONDITION_ID));
     }
 
 }

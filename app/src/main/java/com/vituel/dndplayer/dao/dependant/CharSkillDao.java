@@ -6,32 +6,26 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.dao.abstraction.AbstractAssociationDao;
-import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.dao.entity.SkillDao;
 import com.vituel.dndplayer.model.Skill;
 import com.vituel.dndplayer.model.character.CharSkill;
+import com.vituel.dndplayer.util.database.Table;
 
-import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
 
 /**
  * Created by Victor on 06/03/14.
  */
 public class CharSkillDao extends AbstractAssociationDao<CharSkill> {
 
-    public static final String TABLE = "char_skill";
-
     private static final String COLUMN_CHAR_ID = "char_id";
     private static final String COLUMN_SKILL_ID = "skill_id";
     private static final String COLUMN_GRAD = "grad";
 
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key, "
-            + COLUMN_CHAR_ID + " integer not null, "
-            + COLUMN_SKILL_ID + " integer not null, "
-            + COLUMN_GRAD + " integer not null, "
-            + "FOREIGN KEY(" + COLUMN_CHAR_ID + ") REFERENCES " + CharDao.TABLE + "(" + COLUMN_ID + "), "
-            + "FOREIGN KEY(" + COLUMN_SKILL_ID + ") REFERENCES " + SkillDao.TABLE + "(" + COLUMN_ID + ")"
-            + ");";
+    public static final Table TABLE = new Table("char_skill")
+            .colNotNull(COLUMN_CHAR_ID, INTEGER)
+            .colNotNull(COLUMN_SKILL_ID, INTEGER)
+            .colNotNull(COLUMN_GRAD, INTEGER);
 
     public CharSkillDao(Context context) {
         super(context);
@@ -42,18 +36,8 @@ public class CharSkillDao extends AbstractAssociationDao<CharSkill> {
     }
 
     @Override
-    protected String tableName() {
+    public Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_CHAR_ID,
-                COLUMN_SKILL_ID,
-                COLUMN_GRAD
-        };
     }
 
     @Override
@@ -72,13 +56,13 @@ public class CharSkillDao extends AbstractAssociationDao<CharSkill> {
 
     @Override
     public CharSkill fromCursor(Cursor cursor) {
-        long id = cursor.getLong(2);
+        long skillId = getLong(cursor, COLUMN_SKILL_ID);
 
         SkillDao skillDao = new SkillDao(context, database);
-        Skill skill = skillDao.findById(id);
+        Skill skill = skillDao.findById(skillId);
 
         CharSkill charSkill = new CharSkill(skill);
-        charSkill.setScore(cursor.getInt(3));
+        charSkill.setScore(getInt(cursor, COLUMN_GRAD));
 
         return charSkill;
     }

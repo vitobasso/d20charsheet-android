@@ -6,13 +6,15 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.dao.abstraction.AbstractDao;
-import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.character.Attack;
 import com.vituel.dndplayer.model.character.AttackRound;
+import com.vituel.dndplayer.util.database.Table;
 
 import java.text.MessageFormat;
 import java.util.List;
 
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
+import static com.vituel.dndplayer.util.database.ColumnType.TEXT;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 
 /**
@@ -20,17 +22,12 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
  */
 public class AttackRoundDao extends AbstractDao<AttackRound> {
 
-    public static final String TABLE = "attack_round";
-
     private static final String COLUMN_CHAR_ID = "char_id";
     private static final String COLUMN_NAME = "attack_name";
 
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key, "
-            + COLUMN_CHAR_ID + " integer not null, "
-            + COLUMN_NAME + " text, "
-            + "FOREIGN KEY(" + COLUMN_CHAR_ID + ") REFERENCES " + CharDao.TABLE + "(" + COLUMN_ID + ")"
-            + ");";
+    public static final Table TABLE = new Table("attack_round")
+            .colNotNull(COLUMN_CHAR_ID, INTEGER)
+            .col(COLUMN_NAME, TEXT);
 
     private AttackDao attackDao = new AttackDao(context, database);
 
@@ -43,17 +40,8 @@ public class AttackRoundDao extends AbstractDao<AttackRound> {
     }
 
     @Override
-    protected String tableName() {
+    public Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_CHAR_ID,
-                COLUMN_NAME
-        };
     }
 
     public void save(List<AttackRound> rounds, long charId) {
@@ -69,7 +57,6 @@ public class AttackRoundDao extends AbstractDao<AttackRound> {
 
         long id = database.insert(tableName(), null, values);
         round.setId(id);
-        assert id > 0;
 
         attackDao.removeAllForAttackRound(id);
         attackDao.save(round.getAttacks(), id);
@@ -82,9 +69,8 @@ public class AttackRoundDao extends AbstractDao<AttackRound> {
 
     @Override
     public AttackRound fromCursor(Cursor cursor) {
-        int id = cursor.getInt(0);
-        String name = cursor.getString(2);
-        assert id > 0;
+        long id = getLong(cursor, COLUMN_ID);
+        String name = getString(cursor, COLUMN_NAME);
         List<Attack> attacks = attackDao.findByAttackRound(id);
 
         AttackRound round = new AttackRound(name);

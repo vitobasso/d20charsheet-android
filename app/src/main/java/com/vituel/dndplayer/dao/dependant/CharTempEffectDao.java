@@ -6,31 +6,24 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.dao.abstraction.AbstractAssociationDao;
-import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.dao.entity.TempEffectDao;
 import com.vituel.dndplayer.model.TempEffect;
 import com.vituel.dndplayer.model.character.CharTempEffect;
-import com.vituel.dndplayer.util.database.SQLiteHelper;
+import com.vituel.dndplayer.util.database.Table;
 
-import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
 
 
 public class CharTempEffectDao extends AbstractAssociationDao<CharTempEffect> {
-
-    public static final String TABLE = "active_temp_effect";
 
     private static final String COLUMN_CHAR_ID = "char_id";
     private static final String COLUMN_TEMP_ID = "temp_effect_id";
     private static final String COLUMN_ACTIVE = "active";
 
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_CHAR_ID + " integer not null, "
-            + COLUMN_TEMP_ID + " integer not null, "
-            + COLUMN_ACTIVE + " integer not null, "
-            + "FOREIGN KEY(" + COLUMN_CHAR_ID + ") REFERENCES " + CharDao.TABLE + "(" + SQLiteHelper.COLUMN_ID + "), "
-            + "FOREIGN KEY(" + COLUMN_TEMP_ID + ") REFERENCES " + TempEffectDao.TABLE + "(" + SQLiteHelper.COLUMN_ID + ")"
-            + ");";
+    public static final Table TABLE = new Table("active_temp_effect")
+            .colNotNull(COLUMN_CHAR_ID, INTEGER)
+            .colNotNull(COLUMN_TEMP_ID, INTEGER)
+            .colNotNull(COLUMN_ACTIVE, INTEGER);
 
     private TempEffectDao tempEffectDao = new TempEffectDao(context, database);
 
@@ -43,18 +36,8 @@ public class CharTempEffectDao extends AbstractAssociationDao<CharTempEffect> {
     }
 
     @Override
-    protected String tableName() {
+    public Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_CHAR_ID,
-                COLUMN_TEMP_ID,
-                COLUMN_ACTIVE
-        };
     }
 
     @Override
@@ -76,7 +59,7 @@ public class CharTempEffectDao extends AbstractAssociationDao<CharTempEffect> {
 
         //basic fields
         CharTempEffect result = new CharTempEffect();
-        result.setActive(cursor.getInt(3) != 0);
+        result.setActive(getInt(cursor, COLUMN_ACTIVE) != 0);
 
         //temp effect
         TempEffect tempEffect = tempEffectDao.findById(cursor.getLong(2));
