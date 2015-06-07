@@ -47,23 +47,23 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase database) {
 
         //library
-        database.execSQL(EditionDao.CREATE_TABLE);
-        database.execSQL(BookDao.CREATE_TABLE);
-        database.execSQL(RaceDao.CREATE_TABLE);
-        database.execSQL(RaceTraitDao.CREATE_TABLE);
+        database.execSQL(EditionDao.TABLE.toSql());
+        database.execSQL(BookDao.TABLE.toSql());
+        database.execSQL(RaceDao.TABLE.toSql());
+        database.execSQL(RaceTraitDao.TABLE.toSql());
         database.execSQL(ClassDao.TABLE.toSql());
         database.execSQL(ClassTraitDao.TABLE.toSql());
-        database.execSQL(ItemDao.CREATE_TABLE);
-        database.execSQL(WeaponDao.CREATE_TABLE);
-        database.execSQL(FeatDao.CREATE_TABLE);
-        database.execSQL(TempEffectDao.CREATE_TABLE);
-        database.execSQL(EffectDao.CREATE_TABLE);
-        database.execSQL(ModifierDao.CREATE_TABLE);
-        database.execSQL(SkillDao.CREATE_TABLE);
-        database.execSQL(ConditionDao.CREATE_TABLE);
+        database.execSQL(ItemDao.TABLE.toSql());
+        database.execSQL(WeaponDao.TABLE.toSql());
+        database.execSQL(FeatDao.TABLE.toSql());
+        database.execSQL(TempEffectDao.TABLE.toSql());
+        database.execSQL(EffectDao.TABLE.toSql());
+        database.execSQL(ModifierDao.TABLE.toSql());
+        database.execSQL(SkillDao.TABLE.toSql());
+        database.execSQL(ConditionDao.TABLE.toSql());
 
         //char
-        database.execSQL(CharDao.CREATE_TABLE);
+        database.execSQL(CharDao.TABLE.toSql());
         database.execSQL(CharBookDao.CREATE_TABLE);
         database.execSQL(CharClassDao.CREATE_TABLE);
         database.execSQL(CharFeatDao.CREATE_TABLE);

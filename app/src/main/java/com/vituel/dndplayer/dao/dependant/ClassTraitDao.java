@@ -65,7 +65,7 @@ public class ClassTraitDao extends AbstractAssociationDao<ClassTrait> {
         classTrait.setLevel(cursor.getInt(4));
 
         Clazz clazz = new Clazz();
-        clazz.setId(cursor.getInt(TABLE.getIndex(COLUMN_CLASS_ID)));
+        clazz.setId(getInt(cursor, COLUMN_CLASS_ID));
         classTrait.setClazz(clazz);
 
         return classTrait;

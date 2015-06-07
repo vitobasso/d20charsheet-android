@@ -54,9 +54,9 @@ public abstract class AbstractRuleDao<T extends Rule> extends AbstractEntityDao<
         return values;
     }
 
-    protected void setRulebook(Rule rule, Cursor cursor, int col) {
+    protected void setRulebook(Rule rule, Cursor cursor) {
         Book book = new Book();
-        book.setId(cursor.getInt(col));
+        book.setId(getInt(cursor, COLUMN_BOOK_ID));
         rule.setBook(book);
     }
 

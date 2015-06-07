@@ -8,7 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
 import com.vituel.dndplayer.model.rulebook.Edition;
 import com.vituel.dndplayer.model.rulebook.RuleSystem;
+import com.vituel.dndplayer.util.database.Table;
 
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
+import static com.vituel.dndplayer.util.database.ColumnType.TEXT;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 
@@ -17,17 +20,14 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
  */
 public class EditionDao extends AbstractEntityDao<Edition> {
 
-    public static final String TABLE = "edition";
 
     private static String COLUMN_SYSTEM = "system";
     private static String COLUMN_CORE = "core";
 
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_NAME + " text not null, "
-            + COLUMN_SYSTEM + " text not null, "
-            + COLUMN_CORE + " integer not null "
-            + ");";
+    public static final Table TABLE = new Table("edition")
+            .colNotNull(COLUMN_NAME, TEXT)
+            .colNotNull(COLUMN_SYSTEM, TEXT)
+            .colNotNull(COLUMN_CORE, INTEGER);
 
     public EditionDao(Context context) {
         super(context);
@@ -38,18 +38,8 @@ public class EditionDao extends AbstractEntityDao<Edition> {
     }
 
     @Override
-    protected String tableName() {
+    public Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_NAME,
-                COLUMN_SYSTEM,
-                COLUMN_CORE
-        };
     }
 
     @Override
@@ -64,10 +54,10 @@ public class EditionDao extends AbstractEntityDao<Edition> {
     @Override
     public Edition fromCursor(Cursor cursor) {
         Edition edition = new Edition();
-        edition.setId(cursor.getInt(0));
-        edition.setName(cursor.getString(1));
-        edition.setSystem(RuleSystem.valueOf(cursor.getString(2)));
-        edition.setCore(cursor.getInt(3) != 0);
+        edition.setId(getInt(cursor, COLUMN_ID));
+        edition.setName(getString(cursor, COLUMN_NAME));
+        edition.setSystem(RuleSystem.valueOf(getString(cursor, COLUMN_SYSTEM)));
+        edition.setCore(getInt(cursor, COLUMN_CORE) != 0);
         return edition;
     }
 }

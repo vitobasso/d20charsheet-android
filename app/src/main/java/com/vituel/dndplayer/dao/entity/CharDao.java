@@ -17,168 +17,117 @@ import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.model.character.CharEquip;
 import com.vituel.dndplayer.model.character.CharTempEffect;
 import com.vituel.dndplayer.model.character.DamageTaken;
+import com.vituel.dndplayer.util.database.Table;
 
 import java.util.HashSet;
 import java.util.List;
 
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
+import static com.vituel.dndplayer.util.database.ColumnType.REAL;
+import static com.vituel.dndplayer.util.database.ColumnType.TEXT;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 
 public class CharDao extends AbstractEntityDao<CharBase> {
 
-    public static final String TABLE = "character";
+    private static final String
+            COLUMN_RACE_ID = "race_id",
+            COLUMN_TENDENCY_MORAL = "tendency_moral",
+            COLUMN_TENDENCY_LOYALTY = "tendency_loyalty",
+            COLUMN_DIVINITY = "divinity",
+            COLUMN_GENDER = "gender",
+            COLUMN_AGE = "age",
+            COLUMN_HEIGHT = "height",
+            COLUMN_WEIGHT = "weight",
+            COLUMN_PLAYER = "player",
+            COLUMN_GM = "gm_name",
+            COLUMN_CAMPAIGN = "campaign",
+            COLUMN_CREATION_DATE = "creation_date",
+            COLUMN_BASE_HP = "base_hp",
+            COLUMN_BASE_STR = "base_str",
+            COLUMN_BASE_DEX = "base_dex",
+            COLUMN_BASE_CON = "base_con",
+            COLUMN_BASE_INT = "base_int",
+            COLUMN_BASE_WIS = "base_wis",
+            COLUMN_BASE_CHA = "base_cha",
+            COLUMN_DAMAGE_HP_LETHAL = "damage_hp_lethal",
+            COLUMN_DAMAGE_HP_NONLETHAL = "damage_hp_nonlethal",
+            COLUMN_TEMP_HP = "temp_hp",
+            COLUMN_DAMAGE_STR = "damage_str",
+            COLUMN_DAMAGE_DEX = "damage_dex",
+            COLUMN_DAMAGE_CON = "damage_con",
+            COLUMN_DAMAGE_INT = "damage_int",
+            COLUMN_DAMAGE_WIS = "damage_wis",
+            COLUMN_DAMAGE_CHA = "damage_cha",
+            COLUMN_DAMAGE_LEVEL = "damage_level",
+            COLUMN_EQUIP_MAINHAND = "equip_mainhand",
+            COLUMN_EQUIP_OFFHAND = "equip_offhand",
+            COLUMN_EQUIP_BODY = "equip_body",
+            COLUMN_EQUIP_HEAD = "equip_head",
+            COLUMN_EQUIP_EYES = "equip_eyes",
+            COLUMN_EQUIP_NECK = "equip_neck",
+            COLUMN_EQUIP_TORSO = "equip_torso",
+            COLUMN_EQUIP_WAIST = "equip_waist",
+            COLUMN_EQUIP_SHOULDERS = "equip_shoulders",
+            COLUMN_EQUIP_ARMS = "equip_arms",
+            COLUMN_EQUIP_HANDS = "equip_hands",
+            COLUMN_EQUIP_FINGER1 = "equip_finger1",
+            COLUMN_EQUIP_FINGER2 = "equip_finger2",
+            COLUMN_EQUIP_FEET = "equip_feet";
 
-    private static final String COLUMN_RACE_ID = "race_id";
-    private static final String COLUMN_TENDENCY_MORAL = "tendency_moral";
-    private static final String COLUMN_TENDENCY_LOYALTY = "tendency_loyalty";
-    private static final String COLUMN_DIVINITY = "divinity";
-    private static final String COLUMN_GENDER = "gender";
-    private static final String COLUMN_AGE = "age";
-    private static final String COLUMN_HEIGHT = "height";
-    private static final String COLUMN_WEIGHT = "weight";
-    private static final String COLUMN_PLAYER = "player";
-    private static final String COLUMN_GM = "gm_name";
-    private static final String COLUMN_CAMPAIGN = "campaign";
-    private static final String COLUMN_CREATION_DATE = "creation_date";
-    private static final String COLUMN_BASE_HP = "base_hp";
-    private static final String COLUMN_BASE_STR = "base_str";
-    private static final String COLUMN_BASE_DEX = "base_dex";
-    private static final String COLUMN_BASE_CON = "base_con";
-    private static final String COLUMN_BASE_INT = "base_int";
-    private static final String COLUMN_BASE_WIS = "base_wis";
-    private static final String COLUMN_BASE_CHA = "base_cha";
-    private static final String COLUMN_DAMAGE_HP_LETHAL = "damage_hp_lethal";
-    private static final String COLUMN_DAMAGE_HP_NONLETHAL = "damage_hp_nonlethal";
-    private static final String COLUMN_TEMP_HP = "temp_hp";
-    private static final String COLUMN_DAMAGE_STR = "damage_str";
-    private static final String COLUMN_DAMAGE_DEX = "damage_dex";
-    private static final String COLUMN_DAMAGE_CON = "damage_con";
-    private static final String COLUMN_DAMAGE_INT = "damage_int";
-    private static final String COLUMN_DAMAGE_WIS = "damage_wis";
-    private static final String COLUMN_DAMAGE_CHA = "damage_cha";
-    private static final String COLUMN_DAMAGE_LEVEL = "damage_level";
-    private static final String COLUMN_EQUIP_MAINHAND = "equip_mainhand";
-    private static final String COLUMN_EQUIP_OFFHAND = "equip_offhand";
-    private static final String COLUMN_EQUIP_BODY = "equip_body";
-    private static final String COLUMN_EQUIP_HEAD = "equip_head";
-    private static final String COLUMN_EQUIP_EYES = "equip_eyes";
-    private static final String COLUMN_EQUIP_NECK = "equip_neck";
-    private static final String COLUMN_EQUIP_TORSO = "equip_torso";
-    private static final String COLUMN_EQUIP_WAIST = "equip_waist";
-    private static final String COLUMN_EQUIP_SHOULDERS = "equip_shoulders";
-    private static final String COLUMN_EQUIP_ARMS = "equip_arms";
-    private static final String COLUMN_EQUIP_HANDS = "equip_hands";
-    private static final String COLUMN_EQUIP_FINGER1 = "equip_finger1";
-    private static final String COLUMN_EQUIP_FINGER2 = "equip_finger2";
-    private static final String COLUMN_EQUIP_FEET = "equip_feet";
-
-
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_NAME + " text not null, "
-            + COLUMN_RACE_ID + " integer, "
-            + COLUMN_TENDENCY_MORAL + " text, "
-            + COLUMN_TENDENCY_LOYALTY + " text, "
-            + COLUMN_DIVINITY + " text, "
-            + COLUMN_GENDER + " text, "
-            + COLUMN_AGE + " integer, "
-            + COLUMN_HEIGHT + " real, "
-            + COLUMN_WEIGHT + " real, "
-            + COLUMN_PLAYER + " text, "
-            + COLUMN_GM + " text, "
-            + COLUMN_CAMPAIGN + " text, "
-            + COLUMN_CREATION_DATE + " text, "
-            + COLUMN_BASE_HP + " integer not null, "
-            + COLUMN_BASE_STR + " integer not null, "
-            + COLUMN_BASE_DEX + " integer not null, "
-            + COLUMN_BASE_CON + " integer not null, "
-            + COLUMN_BASE_INT + " integer not null, "
-            + COLUMN_BASE_WIS + " integer not null, "
-            + COLUMN_BASE_CHA + " integer not null, "
-            + COLUMN_DAMAGE_HP_LETHAL + " integer not null, "
-            + COLUMN_DAMAGE_HP_NONLETHAL + " integer not null, "
-            + COLUMN_TEMP_HP + " integer not null, "
-            + COLUMN_DAMAGE_STR + " integer not null, "
-            + COLUMN_DAMAGE_DEX + " integer not null, "
-            + COLUMN_DAMAGE_CON + " integer not null, "
-            + COLUMN_DAMAGE_INT + " integer not null, "
-            + COLUMN_DAMAGE_WIS + " integer not null, "
-            + COLUMN_DAMAGE_CHA + " integer not null, "
-            + COLUMN_DAMAGE_LEVEL + " integer not null, "
-            + COLUMN_EQUIP_MAINHAND + " integer, "
-            + COLUMN_EQUIP_OFFHAND + " integer, "
-            + COLUMN_EQUIP_BODY + " integer, "
-            + COLUMN_EQUIP_HEAD + " integer, "
-            + COLUMN_EQUIP_EYES + " integer, "
-            + COLUMN_EQUIP_NECK + " integer, "
-            + COLUMN_EQUIP_TORSO + " integer, "
-            + COLUMN_EQUIP_WAIST + " integer, "
-            + COLUMN_EQUIP_SHOULDERS + " integer, "
-            + COLUMN_EQUIP_ARMS + " integer, "
-            + COLUMN_EQUIP_HANDS + " integer, "
-            + COLUMN_EQUIP_FINGER1 + " integer, "
-            + COLUMN_EQUIP_FINGER2 + " integer, "
-            + COLUMN_EQUIP_FEET + " integer"
-            + ");";
+    public static final Table TABLE = new Table("character")
+            .colNotNull(COLUMN_NAME, TEXT)
+            .col(COLUMN_RACE_ID, INTEGER)
+            .col(COLUMN_TENDENCY_MORAL, TEXT)
+            .col(COLUMN_TENDENCY_LOYALTY, TEXT)
+            .col(COLUMN_DIVINITY, TEXT)
+            .col(COLUMN_GENDER, TEXT)
+            .col(COLUMN_AGE, INTEGER)
+            .col(COLUMN_HEIGHT, REAL)
+            .col(COLUMN_WEIGHT, REAL)
+            .col(COLUMN_PLAYER, TEXT)
+            .col(COLUMN_GM, TEXT)
+            .col(COLUMN_CAMPAIGN, TEXT)
+            .col(COLUMN_CREATION_DATE, TEXT)
+            .colNotNull(COLUMN_BASE_HP, INTEGER)
+            .colNotNull(COLUMN_BASE_STR, INTEGER)
+            .colNotNull(COLUMN_BASE_DEX, INTEGER)
+            .colNotNull(COLUMN_BASE_CON, INTEGER)
+            .colNotNull(COLUMN_BASE_INT, INTEGER)
+            .colNotNull(COLUMN_BASE_WIS, INTEGER)
+            .colNotNull(COLUMN_BASE_CHA, INTEGER)
+            .colNotNull(COLUMN_DAMAGE_HP_LETHAL, INTEGER)
+            .colNotNull(COLUMN_DAMAGE_HP_NONLETHAL, INTEGER)
+            .colNotNull(COLUMN_TEMP_HP, INTEGER)
+            .colNotNull(COLUMN_DAMAGE_STR, INTEGER)
+            .colNotNull(COLUMN_DAMAGE_DEX, INTEGER)
+            .colNotNull(COLUMN_DAMAGE_CON, INTEGER)
+            .colNotNull(COLUMN_DAMAGE_INT, INTEGER)
+            .colNotNull(COLUMN_DAMAGE_WIS, INTEGER)
+            .colNotNull(COLUMN_DAMAGE_CHA, INTEGER)
+            .colNotNull(COLUMN_DAMAGE_LEVEL, INTEGER)
+            .col(COLUMN_EQUIP_MAINHAND, INTEGER)
+            .col(COLUMN_EQUIP_OFFHAND, INTEGER)
+            .col(COLUMN_EQUIP_BODY, INTEGER)
+            .col(COLUMN_EQUIP_HEAD, INTEGER)
+            .col(COLUMN_EQUIP_EYES, INTEGER)
+            .col(COLUMN_EQUIP_NECK, INTEGER)
+            .col(COLUMN_EQUIP_TORSO, INTEGER)
+            .col(COLUMN_EQUIP_WAIST, INTEGER)
+            .col(COLUMN_EQUIP_SHOULDERS, INTEGER)
+            .col(COLUMN_EQUIP_ARMS, INTEGER)
+            .col(COLUMN_EQUIP_HANDS, INTEGER)
+            .col(COLUMN_EQUIP_FINGER1, INTEGER)
+            .col(COLUMN_EQUIP_FINGER2, INTEGER)
+            .col(COLUMN_EQUIP_FEET, INTEGER);
 
     public CharDao(Context context) {
         super(context);
     }
 
     @Override
-    protected String tableName() {
+    protected Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_NAME,
-                COLUMN_RACE_ID,
-                COLUMN_TENDENCY_MORAL,
-                COLUMN_TENDENCY_LOYALTY,
-                COLUMN_DIVINITY,
-                COLUMN_GENDER,
-                COLUMN_AGE,
-                COLUMN_HEIGHT,
-                COLUMN_WEIGHT,
-                COLUMN_PLAYER,
-                COLUMN_GM,
-                COLUMN_CAMPAIGN,
-                COLUMN_CREATION_DATE,
-                COLUMN_BASE_HP,
-                COLUMN_BASE_STR,
-                COLUMN_BASE_DEX,
-                COLUMN_BASE_CON,
-                COLUMN_BASE_INT,
-                COLUMN_BASE_WIS,
-                COLUMN_BASE_CHA,
-                COLUMN_DAMAGE_HP_LETHAL,
-                COLUMN_DAMAGE_HP_LETHAL,
-                COLUMN_TEMP_HP,
-                COLUMN_DAMAGE_STR,
-                COLUMN_DAMAGE_DEX,
-                COLUMN_DAMAGE_CON,
-                COLUMN_DAMAGE_INT,
-                COLUMN_DAMAGE_WIS,
-                COLUMN_DAMAGE_CHA,
-                COLUMN_DAMAGE_LEVEL,
-                COLUMN_EQUIP_MAINHAND,
-                COLUMN_EQUIP_OFFHAND,
-                COLUMN_EQUIP_BODY,
-                COLUMN_EQUIP_HEAD,
-                COLUMN_EQUIP_EYES,
-                COLUMN_EQUIP_NECK,
-                COLUMN_EQUIP_TORSO,
-                COLUMN_EQUIP_WAIST,
-                COLUMN_EQUIP_SHOULDERS,
-                COLUMN_EQUIP_ARMS,
-                COLUMN_EQUIP_HANDS,
-                COLUMN_EQUIP_FINGER1,
-                COLUMN_EQUIP_FINGER2,
-                COLUMN_EQUIP_FEET
-        };
     }
 
     @Override
@@ -279,59 +228,59 @@ public class CharDao extends AbstractEntityDao<CharBase> {
     public CharBase fromCursor(Cursor cursor) {
 
         CharBase c = new CharBase();
-        c.setId(cursor.getLong(0));
-        c.setName(cursor.getString(1));
-        c.setTendencyMoral(cursor.getString(3));
-        c.setTendencyLoyality(cursor.getString(4));
-        c.setDivinity(cursor.getString(5));
-        c.setGender(cursor.getString(6));
-        c.setAge(cursor.getInt(7));
-        c.setHeight(cursor.getDouble(8));
-        c.setWeight(cursor.getDouble(9));
-        c.setPlayer(cursor.getString(10));
-        c.setDungeonMaster(cursor.getString(11));
-        c.setCampaign(cursor.getString(12));
-        c.setCreationDate(cursor.getString(13));
-        c.setHitPoints(cursor.getInt(14));
-        c.setStrength(cursor.getInt(15));
-        c.setDexterity(cursor.getInt(16));
-        c.setConstitution(cursor.getInt(17));
-        c.setIntelligence(cursor.getInt(18));
-        c.setWisdom(cursor.getInt(19));
-        c.setCharisma(cursor.getInt(20));
+        c.setId(getLong(cursor, COLUMN_ID));
+        c.setName(getString(cursor, COLUMN_NAME));
+        c.setTendencyMoral(getString(cursor, COLUMN_TENDENCY_MORAL));
+        c.setTendencyLoyality(getString(cursor, COLUMN_TENDENCY_LOYALTY));
+        c.setDivinity(getString(cursor, COLUMN_DIVINITY));
+        c.setGender(getString(cursor, COLUMN_GENDER));
+        c.setAge(getInt(cursor, COLUMN_AGE));
+        c.setHeight(getDouble(cursor, COLUMN_HEIGHT));
+        c.setWeight(getDouble(cursor, COLUMN_WEIGHT));
+        c.setPlayer(getString(cursor, COLUMN_PLAYER));
+        c.setDungeonMaster(getString(cursor, COLUMN_GM));
+        c.setCampaign(getString(cursor, COLUMN_CAMPAIGN));
+        c.setCreationDate(getString(cursor, COLUMN_CREATION_DATE));
+        c.setHitPoints(getInt(cursor, COLUMN_BASE_HP));
+        c.setStrength(getInt(cursor, COLUMN_BASE_STR));
+        c.setDexterity(getInt(cursor, COLUMN_BASE_DEX));
+        c.setConstitution(getInt(cursor, COLUMN_BASE_CON));
+        c.setIntelligence(getInt(cursor, COLUMN_BASE_INT));
+        c.setWisdom(getInt(cursor, COLUMN_BASE_WIS));
+        c.setCharisma(getInt(cursor, COLUMN_BASE_CHA));
 
         //damage
         DamageTaken dmg = new DamageTaken();
-        dmg.setLethal(cursor.getInt(21));
-        dmg.setNonlethal(cursor.getInt(22));
-        dmg.setTempHp(cursor.getInt(23));
-        dmg.setStrength(cursor.getInt(24));
-        dmg.setDexterity(cursor.getInt(25));
-        dmg.setConstitution(cursor.getInt(26));
-        dmg.setIntelligence(cursor.getInt(27));
-        dmg.setWisdom(cursor.getInt(28));
-        dmg.setCharisma(cursor.getInt(29));
-        dmg.setLevel(cursor.getInt(30));
+        dmg.setLethal(getInt(cursor, COLUMN_DAMAGE_LEVEL));
+        dmg.setNonlethal(getInt(cursor, COLUMN_DAMAGE_HP_NONLETHAL));
+        dmg.setTempHp(getInt(cursor, COLUMN_TEMP_HP));
+        dmg.setStrength(getInt(cursor, COLUMN_DAMAGE_STR));
+        dmg.setDexterity(getInt(cursor, COLUMN_DAMAGE_DEX));
+        dmg.setConstitution(getInt(cursor, COLUMN_DAMAGE_CON));
+        dmg.setIntelligence(getInt(cursor, COLUMN_DAMAGE_INT));
+        dmg.setWisdom(getInt(cursor, COLUMN_DAMAGE_WIS));
+        dmg.setCharisma(getInt(cursor, COLUMN_DAMAGE_CHA));
+        dmg.setLevel(getInt(cursor, COLUMN_DAMAGE_LEVEL));
         c.setDamageTaken(dmg);
 
         //equip
         ItemDao itemDao = new ItemDao(context, database);
         itemDao.setIgnoreBookSelection(true);
         c.setEquipment(new CharEquip());
-        c.getEquipment().getMainHand().setItem(itemDao.findById(cursor.getInt(31)));
-        c.getEquipment().getOffhand().setItem(itemDao.findById(cursor.getInt(32)));
-        c.getEquipment().getBody().setItem(itemDao.findById(cursor.getInt(33)));
-        c.getEquipment().getHead().setItem(itemDao.findById(cursor.getInt(34)));
-        c.getEquipment().getEyes().setItem(itemDao.findById(cursor.getInt(35)));
-        c.getEquipment().getNeck().setItem(itemDao.findById(cursor.getInt(36)));
-        c.getEquipment().getTorso().setItem(itemDao.findById(cursor.getInt(37)));
-        c.getEquipment().getWaist().setItem(itemDao.findById(cursor.getInt(38)));
-        c.getEquipment().getShoulders().setItem(itemDao.findById(cursor.getInt(39)));
-        c.getEquipment().getArms().setItem(itemDao.findById(cursor.getInt(40)));
-        c.getEquipment().getHands().setItem(itemDao.findById(cursor.getInt(41)));
-        c.getEquipment().getFinger1().setItem(itemDao.findById(cursor.getInt(42)));
-        c.getEquipment().getFinger2().setItem(itemDao.findById(cursor.getInt(43)));
-        c.getEquipment().getFeet().setItem(itemDao.findById(cursor.getInt(44)));
+        c.getEquipment().getMainHand().setItem(itemDao.findById(getInt(cursor, COLUMN_EQUIP_MAINHAND)));
+        c.getEquipment().getOffhand().setItem(itemDao.findById(getInt(cursor, COLUMN_EQUIP_OFFHAND)));
+        c.getEquipment().getBody().setItem(itemDao.findById(getInt(cursor, COLUMN_EQUIP_BODY)));
+        c.getEquipment().getHead().setItem(itemDao.findById(getInt(cursor, COLUMN_EQUIP_HEAD)));
+        c.getEquipment().getEyes().setItem(itemDao.findById(getInt(cursor, COLUMN_EQUIP_EYES)));
+        c.getEquipment().getNeck().setItem(itemDao.findById(getInt(cursor, COLUMN_EQUIP_NECK)));
+        c.getEquipment().getTorso().setItem(itemDao.findById(getInt(cursor, COLUMN_EQUIP_TORSO)));
+        c.getEquipment().getWaist().setItem(itemDao.findById(getInt(cursor, COLUMN_EQUIP_WAIST)));
+        c.getEquipment().getShoulders().setItem(itemDao.findById(getInt(cursor, COLUMN_EQUIP_SHOULDERS)));
+        c.getEquipment().getArms().setItem(itemDao.findById(getInt(cursor, COLUMN_EQUIP_ARMS)));
+        c.getEquipment().getHands().setItem(itemDao.findById(getInt(cursor, COLUMN_EQUIP_HANDS)));
+        c.getEquipment().getFinger1().setItem(itemDao.findById(getInt(cursor, COLUMN_EQUIP_FINGER1)));
+        c.getEquipment().getFinger2().setItem(itemDao.findById(getInt(cursor, COLUMN_EQUIP_FINGER2)));
+        c.getEquipment().getFeet().setItem(itemDao.findById(getInt(cursor, COLUMN_EQUIP_FEET)));
 
         //ability modifiers
         AbilityModifierDao abilityModDao = new AbilityModifierDao(context, database);

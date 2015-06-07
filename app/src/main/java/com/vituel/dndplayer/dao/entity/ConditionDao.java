@@ -7,7 +7,10 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
 import com.vituel.dndplayer.model.effect.Condition;
+import com.vituel.dndplayer.util.database.Table;
 
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
+import static com.vituel.dndplayer.util.database.ColumnType.TEXT;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 
@@ -16,17 +19,13 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
  */
 public class ConditionDao extends AbstractEntityDao<Condition> {
 
-    public static final String TABLE = "condition";
-
     private static String COLUMN_PREDICATE = "predicate";
     private static String COLUMN_PARENT_ID = "parent_id";
 
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_NAME + " text not null, "
-            + COLUMN_PREDICATE + " text not null, "
-            + COLUMN_PARENT_ID + " integer"
-            + ");";
+    public static final Table TABLE = new Table("condition")
+            .colNotNull(COLUMN_NAME, TEXT)
+            .colNotNull(COLUMN_PREDICATE, TEXT)
+            .col(COLUMN_PARENT_ID, INTEGER);
 
     public ConditionDao(Context context) {
         super(context);
@@ -37,18 +36,8 @@ public class ConditionDao extends AbstractEntityDao<Condition> {
     }
 
     @Override
-    protected String tableName() {
+    public Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_NAME,
-                COLUMN_PREDICATE,
-                COLUMN_PARENT_ID
-        };
     }
 
     @Override
@@ -65,11 +54,11 @@ public class ConditionDao extends AbstractEntityDao<Condition> {
     @Override
     public Condition fromCursor(Cursor cursor) {
         Condition condition = new Condition();
-        condition.setId(cursor.getInt(0));
-        condition.setName(cursor.getString(1));
-        condition.setPredicate(Condition.Predicate.valueOf(cursor.getString(2)));
+        condition.setId(getLong(cursor, COLUMN_ID));
+        condition.setName(getString(cursor, COLUMN_NAME));
+        condition.setPredicate(Condition.Predicate.valueOf(getString(cursor, COLUMN_PREDICATE)));
 
-        Condition parent = findById(cursor.getInt(3));
+        Condition parent = findById(getInt(cursor, COLUMN_PARENT_ID));
         condition.setParent(parent);
         return condition;
     }

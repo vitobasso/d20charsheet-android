@@ -9,9 +9,12 @@ import com.google.common.collect.Lists;
 import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
 import com.vituel.dndplayer.model.rulebook.Book;
 import com.vituel.dndplayer.model.rulebook.Edition;
+import com.vituel.dndplayer.util.database.Table;
 
 import java.util.List;
 
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
+import static com.vituel.dndplayer.util.database.ColumnType.TEXT;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 
@@ -20,19 +23,15 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
  */
 public class BookDao extends AbstractEntityDao<Book> {
 
-    public static final String TABLE = "book";
-
     private static String COLUMN_EDITION_ID = "edition_id";
     private static String COLUMN_ABBREVIATION = "abbreviation";
     private static String COLUMN_YEAR = "year";
 
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_EDITION_ID + " integer not null, "
-            + COLUMN_NAME + " text not null, "
-            + COLUMN_ABBREVIATION + " text not null, "
-            + COLUMN_YEAR + " integer "
-            + ");";
+    public static final Table TABLE = new Table("book")
+            .colNotNull(COLUMN_EDITION_ID, INTEGER)
+            .colNotNull(COLUMN_NAME, TEXT)
+            .colNotNull(COLUMN_ABBREVIATION, TEXT)
+            .col(COLUMN_YEAR, INTEGER);
 
     private EditionDao editionDao = new EditionDao(context, database);
 
@@ -45,19 +44,8 @@ public class BookDao extends AbstractEntityDao<Book> {
     }
 
     @Override
-    protected String tableName() {
+    public Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_EDITION_ID,
-                COLUMN_NAME,
-                COLUMN_ABBREVIATION,
-                COLUMN_YEAR
-        };
     }
 
     @Override
@@ -73,12 +61,12 @@ public class BookDao extends AbstractEntityDao<Book> {
     @Override
     public Book fromCursor(Cursor cursor) {
         Book book = new Book();
-        book.setId(cursor.getInt(0));
-        book.setName(cursor.getString(2));
-        book.setAbbreviation(cursor.getString(3));
-        book.setYear(cursor.getInt(4));
+        book.setId(getInt(cursor, COLUMN_ID));
+        book.setName(getString(cursor, COLUMN_NAME));
+        book.setAbbreviation(getString(cursor, COLUMN_ABBREVIATION));
+        book.setYear(getInt(cursor, COLUMN_YEAR));
 
-        Edition edition = editionDao.findById(cursor.getInt(1));
+        Edition edition = editionDao.findById(getInt(cursor, COLUMN_EDITION_ID));
         book.setEdition(edition);
         return book;
     }

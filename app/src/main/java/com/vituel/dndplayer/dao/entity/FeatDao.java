@@ -7,9 +7,11 @@ import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.dao.abstraction.AbstractRuleDao;
 import com.vituel.dndplayer.model.Feat;
+import com.vituel.dndplayer.util.database.Table;
 
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
+import static com.vituel.dndplayer.util.database.ColumnType.TEXT;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
-import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 
 /**
@@ -17,15 +19,10 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
  */
 public class FeatDao extends AbstractRuleDao<Feat> {
 
-    public static final String TABLE = "feat";
-
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_BOOK_ID + " integer not null, "
-            + COLUMN_NAME + " text not null, "
-            + COLUMN_EFFECT_ID + " integer, "
-            + "FOREIGN KEY(" + COLUMN_EFFECT_ID + ") REFERENCES " + EffectDao.TABLE + "(" + COLUMN_ID + ")"
-            + ");";
+    public static final Table TABLE = new Table("feat")
+            .colNotNull(COLUMN_BOOK_ID, INTEGER)
+            .colNotNull(COLUMN_NAME, TEXT)
+            .col(COLUMN_EFFECT_ID, INTEGER);
 
     private EffectDao effectDao = new EffectDao(context, database);
 
@@ -38,18 +35,8 @@ public class FeatDao extends AbstractRuleDao<Feat> {
     }
 
     @Override
-    protected String tableName() {
+    public Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_BOOK_ID,
-                COLUMN_NAME,
-                COLUMN_EFFECT_ID
-        };
     }
 
     @Override
@@ -60,8 +47,8 @@ public class FeatDao extends AbstractRuleDao<Feat> {
 
     @Override
     public Feat fromCursor(Cursor cursor) {
-        Feat result = effectDao.loadEffectSource(cursor, new Feat(), 0, 2, 3);
-        setRulebook(result, cursor, 1);
+        Feat result = effectDao.loadEffectSource(cursor, new Feat(), TABLE);
+        setRulebook(result, cursor);
         return result;
     }
 

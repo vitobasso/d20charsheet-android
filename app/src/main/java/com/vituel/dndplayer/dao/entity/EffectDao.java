@@ -20,11 +20,7 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
  */
 public class EffectDao extends AbstractEntityDao<Effect> {
 
-    public static final String TABLE = "effect";
-
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key autoincrement"
-            + ");";
+    public static final Table TABLE = new Table("effect");
 
     private ModifierDao modifierDao = new ModifierDao(context, database);
 
@@ -37,15 +33,8 @@ public class EffectDao extends AbstractEntityDao<Effect> {
     }
 
     @Override
-    protected String tableName() {
+    protected Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID
-        };
     }
 
     @Override
@@ -68,7 +57,7 @@ public class EffectDao extends AbstractEntityDao<Effect> {
 
         //basic fields
         Effect result = new Effect();
-        result.setId(cursor.getLong(0));
+        result.setId(getLong(cursor, COLUMN_ID));
 
         //modifiers
         result.setModifiers(modifierDao.findByParent(result.getId()));
@@ -93,7 +82,15 @@ public class EffectDao extends AbstractEntityDao<Effect> {
         return values;
     }
 
+    public <T extends EffectSource> T loadEffectSource(Cursor cursor, T newEntity, Table table) {
+        int idCol = table.getIndex(COLUMN_ID);
+        int nameCol = table.getIndex(COLUMN_NAME);
+        int effectCol = table.getIndex(COLUMN_EFFECT_ID);
+        return loadEffectSource(cursor, newEntity, idCol, nameCol, effectCol);
+    }
+
     public <T extends EffectSource> T loadEffectSource(Cursor cursor, T newEntity, int idCol, int nameCol, int effectCol) {
+    //TODO make private when all daos have Table
 
         //basic fields
         newEntity.setId(cursor.getLong(idCol));
@@ -107,13 +104,6 @@ public class EffectDao extends AbstractEntityDao<Effect> {
         }
 
         return newEntity;
-    }
-
-    public <T extends EffectSource> T loadEffectSource(Cursor cursor, T newEntity, Table table) {
-        int idCol = table.getIndex(COLUMN_ID);
-        int nameCol = table.getIndex(COLUMN_NAME);
-        int effectCol = table.getIndex(COLUMN_EFFECT_ID);
-        return loadEffectSource(cursor, newEntity, idCol, nameCol, effectCol);
     }
 
     @Override

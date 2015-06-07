@@ -153,4 +153,20 @@ public abstract class AbstractDao<T> {
         return fromCursor(cursor);
     }
 
+    protected String getString(Cursor cursor, String columnName) {
+        return cursor.getString(getTable().getIndex(columnName));
+    }
+
+    protected int getInt(Cursor cursor, String columnName) {
+        return cursor.getInt(getTable().getIndex(columnName));
+    }
+
+    protected long getLong(Cursor cursor, String columnName) {
+        return cursor.getLong(getTable().getIndex(columnName));
+    }
+
+    protected double getDouble(Cursor cursor, String columnName) {
+        return cursor.getDouble(getTable().getIndex(columnName));
+    }
+
 }

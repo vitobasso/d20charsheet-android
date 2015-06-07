@@ -12,34 +12,30 @@ import com.vituel.dndplayer.model.item.Item;
 import com.vituel.dndplayer.model.item.SlotType;
 import com.vituel.dndplayer.model.item.WeaponItem;
 import com.vituel.dndplayer.model.item.WeaponProperties;
+import com.vituel.dndplayer.util.database.Table;
 
 import java.text.MessageFormat;
-import java.util.List;
 
 import static com.vituel.dndplayer.model.item.Item.ItemType;
 import static com.vituel.dndplayer.model.item.Item.ItemType.WEAPON;
 import static com.vituel.dndplayer.model.item.Item.ItemType.valueOf;
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
+import static com.vituel.dndplayer.util.database.ColumnType.TEXT;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
-import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 
 
 public class ItemDao extends AbstractRuleDao<Item> {
 
-    public static final String TABLE = "item";
-
     private static final String COLUMN_SLOT_TYPE = "slot_type"; //held, head, torso, ring, etc
     private static final String COLUMN_ITEM_TYPE = "item_type"; //weapon, shield, armor
 
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_BOOK_ID + " integer not null, "
-            + COLUMN_NAME + " text not null, "
-            + COLUMN_SLOT_TYPE + " text, "
-            + COLUMN_ITEM_TYPE + " text, "
-            + COLUMN_EFFECT_ID + " integer, "
-            + "FOREIGN KEY(" + COLUMN_EFFECT_ID + ") REFERENCES " + EffectDao.TABLE + "(" + COLUMN_ID + ")"
-            + ");";
+    public static final Table TABLE = new Table("item")
+            .colNotNull(COLUMN_BOOK_ID, INTEGER)
+            .colNotNull(COLUMN_NAME, TEXT)
+            .col(COLUMN_SLOT_TYPE, TEXT)
+            .col(COLUMN_ITEM_TYPE, TEXT)
+            .col(COLUMN_EFFECT_ID, INTEGER);
 
     private WeaponDao weaponDao = new WeaponDao(context, database);
     private EffectDao effectDao = new EffectDao(context, database);
@@ -53,20 +49,8 @@ public class ItemDao extends AbstractRuleDao<Item> {
     }
 
     @Override
-    protected String tableName() {
+    public Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_BOOK_ID,
-                COLUMN_NAME,
-                COLUMN_SLOT_TYPE,
-                COLUMN_ITEM_TYPE,
-                COLUMN_EFFECT_ID
-        };
     }
 
     @Override
@@ -108,17 +92,17 @@ public class ItemDao extends AbstractRuleDao<Item> {
         //find type
         ItemType itemType;
         try {
-            itemType = valueOf(cursor.getString(4));
+            itemType = valueOf(getString(cursor, COLUMN_ITEM_TYPE));
         } catch (IllegalArgumentException | NullPointerException e) {
             itemType = null;
         }
 
         //basic fields
         Item item = itemType == WEAPON ? new WeaponItem() : new Item();
-        effectDao.loadEffectSource(cursor, item, 0, 2, 5);
+        effectDao.loadEffectSource(cursor, item, TABLE);
         item.setItemType(itemType);
-        item.setSlotType(SlotType.valueOf(cursor.getString(3)));
-        setRulebook(item, cursor, 1);
+        item.setSlotType(SlotType.valueOf(getString(cursor, COLUMN_SLOT_TYPE)));
+        setRulebook(item, cursor);
 
         //weapon fields
         if (itemType == WEAPON) {
@@ -129,11 +113,6 @@ public class ItemDao extends AbstractRuleDao<Item> {
         }
 
         return item;
-    }
-
-    public List<Item> findBySlot(SlotType slotType) {
-        Cursor cursor = findBySlotCursor(slotType);
-        return list(cursor);
     }
 
     public Cursor findBySlotCursor(SlotType slotType) {

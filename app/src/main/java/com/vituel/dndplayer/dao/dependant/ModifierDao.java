@@ -12,12 +12,13 @@ import com.vituel.dndplayer.model.effect.Condition;
 import com.vituel.dndplayer.model.effect.Modifier;
 import com.vituel.dndplayer.model.effect.ModifierTarget;
 import com.vituel.dndplayer.model.effect.ModifierType;
+import com.vituel.dndplayer.util.database.Table;
 
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
+import static com.vituel.dndplayer.util.database.ColumnType.TEXT;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 
 public class ModifierDao extends AbstractAssociationDao<Modifier> {
-
-    public static final String TABLE = "modifier";
 
     private static final String COLUMN_EFFECT_ID = "effect_id";
     private static final String COLUMN_TARGET = "target";
@@ -26,15 +27,13 @@ public class ModifierDao extends AbstractAssociationDao<Modifier> {
     private static final String COLUMN_TYPE = "type"; //enhancement, luck, armor, etc
     private static final String COLUMN_CONDITION_ID = "cond_name";
 
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_EFFECT_ID + " integer not null, "
-            + COLUMN_TARGET + " text not null, "
-            + COLUMN_TARGET_VARIATION + " text, "
-            + COLUMN_AMOUNT + " text not null, "
-            + COLUMN_TYPE + " text, "
-            + COLUMN_CONDITION_ID + " integer"
-            + ");";
+    public static final Table TABLE = new Table("modifier")
+            .colNotNull(COLUMN_EFFECT_ID, INTEGER)
+            .colNotNull(COLUMN_TARGET, TEXT)
+            .col(COLUMN_TARGET_VARIATION, TEXT)
+            .colNotNull(COLUMN_AMOUNT, TEXT)
+            .col(COLUMN_TYPE, TEXT)
+            .col(COLUMN_CONDITION_ID, INTEGER);
 
     private ConditionDao conditionDao = new ConditionDao(context, database);
 
@@ -47,21 +46,8 @@ public class ModifierDao extends AbstractAssociationDao<Modifier> {
     }
 
     @Override
-    protected String tableName() {
+    public Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_EFFECT_ID,
-                COLUMN_TARGET,
-                COLUMN_TARGET_VARIATION,
-                COLUMN_AMOUNT,
-                COLUMN_TYPE,
-                COLUMN_CONDITION_ID
-        };
     }
 
     @Override
@@ -90,17 +76,17 @@ public class ModifierDao extends AbstractAssociationDao<Modifier> {
     public Modifier fromCursor(Cursor cursor) {
 
         Modifier result = new Modifier();
-        result.setId(cursor.getLong(0));
-        result.setTarget(ModifierTarget.valueOf(cursor.getString(2)));
-        result.setVariation(cursor.getString(3));
-        result.setAmount(new DiceRoll(cursor.getString(4)));
-        String typeStr = cursor.getString(5);
+        result.setId(getLong(cursor, COLUMN_ID));
+        result.setTarget(ModifierTarget.valueOf(getString(cursor, COLUMN_TARGET)));
+        result.setVariation(getString(cursor, COLUMN_TARGET_VARIATION));
+        result.setAmount(new DiceRoll(getString(cursor, COLUMN_AMOUNT)));
+        String typeStr = getString(cursor, COLUMN_TYPE);
         if (typeStr != null) {
             result.setType(ModifierType.valueOf(typeStr));
         }
 
         //condition
-        Condition condition = conditionDao.findById(cursor.getLong(6));
+        Condition condition = conditionDao.findById(getLong(cursor, COLUMN_CONDITION_ID));
         result.setCondition(condition);
 
         return result;

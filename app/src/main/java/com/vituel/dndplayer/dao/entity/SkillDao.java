@@ -8,7 +8,10 @@ import android.database.sqlite.SQLiteDatabase;
 import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
 import com.vituel.dndplayer.model.Skill;
 import com.vituel.dndplayer.model.effect.ModifierSource;
+import com.vituel.dndplayer.util.database.Table;
 
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
+import static com.vituel.dndplayer.util.database.ColumnType.TEXT;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 
@@ -17,17 +20,13 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
  */
 public class SkillDao extends AbstractEntityDao<Skill> {
 
-    public static final String TABLE = "skill";
-
     private static final String COLUMN_KEY_ABILITY = "key_ability";
     private static final String COLUMN_ARMOR_PENALITY = "armor_penality_applies";
 
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_NAME + " text not null, "
-            + COLUMN_KEY_ABILITY + " text not null, "
-            + COLUMN_ARMOR_PENALITY + " integer not null"
-            + ");";
+    public static final Table TABLE = new Table("skill")
+            .colNotNull(COLUMN_NAME, TEXT)
+            .colNotNull(COLUMN_KEY_ABILITY, TEXT)
+            .colNotNull(COLUMN_ARMOR_PENALITY, INTEGER);
 
     public SkillDao(Context context) {
         super(context);
@@ -39,18 +38,8 @@ public class SkillDao extends AbstractEntityDao<Skill> {
     }
 
     @Override
-    protected String tableName() {
+    public Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_NAME,
-                COLUMN_KEY_ABILITY,
-                COLUMN_ARMOR_PENALITY
-        };
     }
 
     @Override
@@ -67,10 +56,10 @@ public class SkillDao extends AbstractEntityDao<Skill> {
     public Skill fromCursor(Cursor cursor) {
 
         //basic fields
-        long id = cursor.getLong(0);
-        String name = cursor.getString(1);
-        ModifierSource ability = ModifierSource.valueOf(cursor.getString(2));
-        boolean armorPenality = cursor.getInt(3) != 0;
+        long id = getLong(cursor, COLUMN_ID);
+        String name = getString(cursor, COLUMN_NAME);
+        ModifierSource ability = ModifierSource.valueOf(getString(cursor, COLUMN_KEY_ABILITY));
+        boolean armorPenality = getInt(cursor, COLUMN_ARMOR_PENALITY) != 0;
 
         Skill result = new Skill(name);
         result.setId(id);

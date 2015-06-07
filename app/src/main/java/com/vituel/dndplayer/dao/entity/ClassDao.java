@@ -62,10 +62,10 @@ public class ClassDao extends AbstractRuleDao<Clazz> {
     public Clazz fromCursor(Cursor cursor) {
 
         Clazz result = fromCursorBrief(cursor);
-        result.setAttackProg(AttackProgression.valueOf(cursor.getString(TABLE.getIndex(COLUMN_ATTACK))));
-        result.setFortitudeProg(ResistProgression.valueOf(cursor.getString(TABLE.getIndex(COLUMN_FORTITUDE))));
-        result.setReflexProg(ResistProgression.valueOf(cursor.getString(TABLE.getIndex(COLUMN_REFLEX))));
-        result.setWillProg(ResistProgression.valueOf(cursor.getString(TABLE.getIndex(COLUMN_WILL))));
+        result.setAttackProg(AttackProgression.valueOf(getString(cursor, COLUMN_ATTACK)));
+        result.setFortitudeProg(ResistProgression.valueOf(getString(cursor, COLUMN_FORTITUDE)));
+        result.setReflexProg(ResistProgression.valueOf(getString(cursor, COLUMN_REFLEX)));
+        result.setWillProg(ResistProgression.valueOf(getString(cursor, COLUMN_WILL)));
 
         //traits
         List<ClassTrait> traits = classTraitDao.findByParent(result.getId());
@@ -87,9 +87,9 @@ public class ClassDao extends AbstractRuleDao<Clazz> {
     @Override
     public Clazz fromCursorBrief(Cursor cursor) {
         Clazz result = new Clazz();
-        result.setId(cursor.getLong(TABLE.getIndex(COLUMN_ID)));
-        result.setName(cursor.getString(TABLE.getIndex(COLUMN_NAME)));
-        setRulebook(result, cursor, TABLE.getIndex(COLUMN_BOOK_ID));
+        result.setId(getLong(cursor, COLUMN_ID));
+        result.setName(getString(cursor, COLUMN_NAME));
+        setRulebook(result, cursor);
         return result;
     }
 }

@@ -9,9 +9,12 @@ import com.vituel.dndplayer.dao.abstraction.AbstractAssociationDao;
 import com.vituel.dndplayer.model.Critical;
 import com.vituel.dndplayer.model.DiceRoll;
 import com.vituel.dndplayer.model.item.WeaponProperties;
+import com.vituel.dndplayer.util.database.Table;
 
 import java.util.List;
 
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
+import static com.vituel.dndplayer.util.database.ColumnType.TEXT;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 
 /**
@@ -19,20 +22,16 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
  */
 public class WeaponDao extends AbstractAssociationDao<WeaponProperties> {
 
-    public static final String TABLE = "weapon";
-
     private static final String COLUMN_ITEM_ID = "item_id";
     private static final String COLUMN_DAMAGE = "damage";
     private static final String COLUMN_CRIT_RANGE = "crit_range";
     private static final String COLUMN_CRIT_MULT = "crit_mult";
 
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_ITEM_ID + " integer, "
-            + COLUMN_DAMAGE + " text not null, "
-            + COLUMN_CRIT_RANGE + " integer not null, "
-            + COLUMN_CRIT_MULT + " integer not null"
-            + ");";
+    public static final Table TABLE = new Table("weapon")
+            .col(COLUMN_ITEM_ID, INTEGER)
+            .colNotNull(COLUMN_DAMAGE, TEXT)
+            .colNotNull(COLUMN_CRIT_RANGE, INTEGER)
+            .colNotNull(COLUMN_CRIT_MULT, INTEGER);
 
     public WeaponDao(Context context) {
         super(context);
@@ -43,19 +42,8 @@ public class WeaponDao extends AbstractAssociationDao<WeaponProperties> {
     }
 
     @Override
-    protected String tableName() {
+    public Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_ITEM_ID,
-                COLUMN_DAMAGE,
-                COLUMN_CRIT_RANGE,
-                COLUMN_CRIT_MULT
-        };
     }
 
     @Override
@@ -76,10 +64,10 @@ public class WeaponDao extends AbstractAssociationDao<WeaponProperties> {
     @Override
     public WeaponProperties fromCursor(Cursor cursor) {
 
-        long id = cursor.getLong(0);
-        DiceRoll damage = new DiceRoll(cursor.getString(2));
-        int criticalRange = cursor.getInt(3);
-        int criticalMultiplier = cursor.getInt(4);
+        long id = getLong(cursor, COLUMN_ID);
+        DiceRoll damage = new DiceRoll(getString(cursor, COLUMN_DAMAGE));
+        int criticalRange = getInt(cursor, COLUMN_CRIT_RANGE);
+        int criticalMultiplier = getInt(cursor, COLUMN_CRIT_MULT);
         Critical critical = new Critical(criticalRange, criticalMultiplier);
 
         WeaponProperties weapon = new WeaponProperties();

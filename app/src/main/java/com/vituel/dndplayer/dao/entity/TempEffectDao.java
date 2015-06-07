@@ -8,9 +8,11 @@ import android.database.sqlite.SQLiteDatabase;
 import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
 import com.vituel.dndplayer.dao.dependant.CharTempEffectDao;
 import com.vituel.dndplayer.model.TempEffect;
+import com.vituel.dndplayer.util.database.Table;
 
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
+import static com.vituel.dndplayer.util.database.ColumnType.TEXT;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
-import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 
 /**
@@ -18,14 +20,9 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
  */
 public class TempEffectDao extends AbstractEntityDao<TempEffect> {
 
-    public static final String TABLE = "temp_effect";
-
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_NAME + " text not null, "
-            + COLUMN_EFFECT_ID + " integer not null, "
-            + "FOREIGN KEY(" + COLUMN_EFFECT_ID + ") REFERENCES " + EffectDao.TABLE + "(" + COLUMN_ID + ")"
-            + ");";
+    public static final Table TABLE = new Table("temp_effect")
+            .colNotNull(COLUMN_NAME, TEXT)
+            .colNotNull(COLUMN_EFFECT_ID, INTEGER);
 
     private EffectDao effectDao = new EffectDao(context, database);
 
@@ -38,17 +35,8 @@ public class TempEffectDao extends AbstractEntityDao<TempEffect> {
     }
 
     @Override
-    protected String tableName() {
+    public Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_NAME,
-                COLUMN_EFFECT_ID
-        };
     }
 
     @Override
@@ -58,7 +46,7 @@ public class TempEffectDao extends AbstractEntityDao<TempEffect> {
 
     @Override
     public TempEffect fromCursor(Cursor cursor) {
-        return effectDao.loadEffectSource(cursor, new TempEffect(), 0, 1, 2);
+        return effectDao.loadEffectSource(cursor, new TempEffect(), TABLE);
     }
 
     @Override

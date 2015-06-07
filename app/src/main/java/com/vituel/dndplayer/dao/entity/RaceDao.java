@@ -9,9 +9,12 @@ import com.vituel.dndplayer.dao.abstraction.AbstractRuleDao;
 import com.vituel.dndplayer.dao.dependant.RaceTraitDao;
 import com.vituel.dndplayer.model.Race;
 import com.vituel.dndplayer.model.RaceTrait;
+import com.vituel.dndplayer.util.database.Table;
 
 import java.util.List;
 
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
+import static com.vituel.dndplayer.util.database.ColumnType.TEXT;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
@@ -21,15 +24,10 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
  */
 public class RaceDao extends AbstractRuleDao<Race> {
 
-    public static final String TABLE = "race";
-
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_BOOK_ID + " integer not null, "
-            + COLUMN_NAME + " text not null, "
-            + COLUMN_EFFECT_ID + " integer not null, "
-            + "FOREIGN KEY(" + COLUMN_EFFECT_ID + ") REFERENCES " + EffectDao.TABLE + "(" + COLUMN_ID + ")"
-            + ");";
+    public static final Table TABLE = new Table("race")
+            .colNotNull(COLUMN_BOOK_ID, INTEGER)
+            .colNotNull(COLUMN_NAME, TEXT)
+            .colNotNull(COLUMN_EFFECT_ID, INTEGER);
 
     private EffectDao effectDao = new EffectDao(context, database);
     private RaceTraitDao raceTraitDao = new RaceTraitDao(context, database);
@@ -43,18 +41,8 @@ public class RaceDao extends AbstractRuleDao<Race> {
     }
 
     @Override
-    protected String tableName() {
+    public Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_BOOK_ID,
-                COLUMN_NAME,
-                COLUMN_EFFECT_ID
-        };
     }
 
     @Override
@@ -65,7 +53,7 @@ public class RaceDao extends AbstractRuleDao<Race> {
 
     @Override
     public Race fromCursor(Cursor cursor) {
-        Race result = effectDao.loadEffectSource(cursor, new Race(), 0, 2, 3);
+        Race result = effectDao.loadEffectSource(cursor, new Race(), TABLE);
 
         //racial traits
         List<RaceTrait> traits = raceTraitDao.findByParent(result.getId());
@@ -77,9 +65,9 @@ public class RaceDao extends AbstractRuleDao<Race> {
     @Override
     public Race fromCursorBrief(Cursor cursor) {
         Race result = new Race();
-        result.setId(cursor.getLong(0));
-        result.setName(cursor.getString(2));
-        setRulebook(result, cursor, 1);
+        result.setId(getLong(cursor, COLUMN_ID));
+        result.setName(getString(cursor, COLUMN_NAME));
+        setRulebook(result, cursor);
         return result;
     }
 
