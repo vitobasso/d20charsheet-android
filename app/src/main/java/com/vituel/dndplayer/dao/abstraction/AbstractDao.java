@@ -6,6 +6,7 @@ import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.util.database.SQLiteHelper;
+import com.vituel.dndplayer.util.database.Table;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,6 +34,18 @@ public abstract class AbstractDao<T> {
     protected AbstractDao(Context context, SQLiteDatabase database) {
         this.context = context;
         this.database = database;
+    }
+
+    protected Table getTable() { //TODO make it abstract, when all daos implement it
+        throw new UnsupportedOperationException();
+    }
+
+    protected String tableName() {
+        return getTable().getName();
+    }
+
+    protected String[] allColumns() { //TODO remove when all daos implement getTable
+        return getTable().getColumnNames();
     }
 
     public final void close() {
@@ -108,35 +121,31 @@ public abstract class AbstractDao<T> {
         database.delete(tableName(), selection, null);
     }
 
-    public void insert(Collection<T> list) {
+    public void insert(Collection<T> list) { //TODO remove when BulkInserter is ready
         for (T obj : list) {
             insert(obj);
         }
     }
 
-    public void beginTransaction() {
+    public void insert(T entity) { //TODO remove when BulkInserter is ready
+        throw new UnsupportedOperationException();
+    }
+
+    public void beginTransaction() { //TODO remove when BulkInserter is ready
         database.beginTransaction();
     }
 
-    public void setTransactionSuccessful() {
+    public void setTransactionSuccessful() { //TODO remove when BulkInserter is ready
         database.setTransactionSuccessful();
     }
 
-    public void endTransaction() {
+    public void endTransaction() { //TODO remove when BulkInserter is ready
         database.endTransaction();
     }
 
     protected String orderBy() {
         return null;
     }
-
-    public void insert(T entity) {
-        throw new UnsupportedOperationException();
-    }
-
-    protected abstract String tableName();
-
-    protected abstract String[] allColumns();
 
     public abstract T fromCursor(Cursor cursor);
 

@@ -8,6 +8,7 @@ import com.vituel.dndplayer.dao.abstraction.AbstractRuleDao;
 import com.vituel.dndplayer.dao.dependant.ClassTraitDao;
 import com.vituel.dndplayer.model.ClassTrait;
 import com.vituel.dndplayer.model.Clazz;
+import com.vituel.dndplayer.util.database.Table;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,28 +16,26 @@ import java.util.List;
 import static com.vituel.dndplayer.model.Clazz.AttackProgression;
 import static com.vituel.dndplayer.model.Clazz.ResistProgression;
 import static com.vituel.dndplayer.util.JavaUtil.getAndIfOverflowsCreate;
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
+import static com.vituel.dndplayer.util.database.ColumnType.TEXT;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
 
 
 public class ClassDao extends AbstractRuleDao<Clazz> {
 
-    public static final String TABLE = "class";
-
     private static final String COLUMN_ATTACK = "attack";
     private static final String COLUMN_FORTITUDE = "fortitude";
     private static final String COLUMN_REFLEX = "reflex";
     private static final String COLUMN_WILL = "will";
 
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key autoincrement, "
-            + COLUMN_BOOK_ID + " integer not null, "
-            + COLUMN_NAME + " text not null, "
-            + COLUMN_ATTACK + " text not null, "
-            + COLUMN_FORTITUDE + " text not null, "
-            + COLUMN_REFLEX + " text not null, "
-            + COLUMN_WILL + " text not null"
-            + ");";
+    public static final Table TABLE = new Table("class")
+            .colNotNull(COLUMN_BOOK_ID, INTEGER)
+            .colNotNull(COLUMN_NAME, TEXT)
+            .colNotNull(COLUMN_ATTACK, TEXT)
+            .colNotNull(COLUMN_FORTITUDE, TEXT)
+            .colNotNull(COLUMN_REFLEX, TEXT)
+            .colNotNull(COLUMN_WILL, TEXT);
 
     private ClassTraitDao classTraitDao = new ClassTraitDao(context, database);;
 
@@ -45,21 +44,8 @@ public class ClassDao extends AbstractRuleDao<Clazz> {
     }
 
     @Override
-    protected String tableName() {
+    protected Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_BOOK_ID,
-                COLUMN_NAME,
-                COLUMN_ATTACK,
-                COLUMN_FORTITUDE,
-                COLUMN_REFLEX,
-                COLUMN_WILL
-        };
     }
 
     @Override
@@ -76,10 +62,10 @@ public class ClassDao extends AbstractRuleDao<Clazz> {
     public Clazz fromCursor(Cursor cursor) {
 
         Clazz result = fromCursorBrief(cursor);
-        result.setAttackProg(AttackProgression.valueOf(cursor.getString(3)));
-        result.setFortitudeProg(ResistProgression.valueOf(cursor.getString(4)));
-        result.setReflexProg(ResistProgression.valueOf(cursor.getString(5)));
-        result.setWillProg(ResistProgression.valueOf(cursor.getString(6)));
+        result.setAttackProg(AttackProgression.valueOf(cursor.getString(TABLE.getIndex(COLUMN_ATTACK))));
+        result.setFortitudeProg(ResistProgression.valueOf(cursor.getString(TABLE.getIndex(COLUMN_FORTITUDE))));
+        result.setReflexProg(ResistProgression.valueOf(cursor.getString(TABLE.getIndex(COLUMN_REFLEX))));
+        result.setWillProg(ResistProgression.valueOf(cursor.getString(TABLE.getIndex(COLUMN_WILL))));
 
         //traits
         List<ClassTrait> traits = classTraitDao.findByParent(result.getId());
@@ -101,9 +87,9 @@ public class ClassDao extends AbstractRuleDao<Clazz> {
     @Override
     public Clazz fromCursorBrief(Cursor cursor) {
         Clazz result = new Clazz();
-        result.setId(cursor.getLong(0));
-        result.setName(cursor.getString(2));
-        setRulebook(result, cursor, 1);
+        result.setId(cursor.getLong(TABLE.getIndex(COLUMN_ID)));
+        result.setName(cursor.getString(TABLE.getIndex(COLUMN_NAME)));
+        setRulebook(result, cursor, TABLE.getIndex(COLUMN_BOOK_ID));
         return result;
     }
 }

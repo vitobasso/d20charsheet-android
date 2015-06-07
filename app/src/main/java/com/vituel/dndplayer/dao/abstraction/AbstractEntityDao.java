@@ -56,7 +56,7 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
         postSave(entity);
     }
 
-    private final long insertOrUpdate(ContentValues values, long id) {
+    private long insertOrUpdate(ContentValues values, long id) {
         if (id == 0) {
             values.remove(COLUMN_ID);
             id = database.insert(tableName(), "_id", values);

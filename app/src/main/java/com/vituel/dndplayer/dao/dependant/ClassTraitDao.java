@@ -6,11 +6,13 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.dao.abstraction.AbstractAssociationDao;
-import com.vituel.dndplayer.dao.entity.ClassDao;
 import com.vituel.dndplayer.dao.entity.EffectDao;
 import com.vituel.dndplayer.model.ClassTrait;
 import com.vituel.dndplayer.model.Clazz;
+import com.vituel.dndplayer.util.database.Table;
 
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
+import static com.vituel.dndplayer.util.database.ColumnType.TEXT;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
@@ -20,20 +22,14 @@ import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_NAME;
  */
 public class ClassTraitDao extends AbstractAssociationDao<ClassTrait> {
 
-    public static final String TABLE = "trait_link";
-
     private static final String COLUMN_CLASS_ID = "class_id";
     private static final String COLUMN_LEVEL = "level"; //for class traits
 
-    public static final String CREATE_TABLE = "create table " + TABLE + "("
-            + COLUMN_ID + " integer primary key, "
-            + COLUMN_NAME + " text, "
-            + COLUMN_CLASS_ID + " integer not null, "
-            + COLUMN_EFFECT_ID + " integer, "
-            + COLUMN_LEVEL + " integer, "
-            + "FOREIGN KEY(" + COLUMN_CLASS_ID + ") REFERENCES " + ClassDao.TABLE + "(" + COLUMN_ID + "), "
-            + "FOREIGN KEY(" + COLUMN_EFFECT_ID + ") REFERENCES " + EffectDao.TABLE + "(" + COLUMN_ID + ")"
-            + ");";
+    public static final Table TABLE = new Table("trait_link")
+            .col(COLUMN_NAME, TEXT)
+            .colNotNull(COLUMN_CLASS_ID, INTEGER)
+            .col(COLUMN_EFFECT_ID, INTEGER)
+            .col(COLUMN_LEVEL, INTEGER);
 
     private EffectDao effectDao = new EffectDao(context, database);
 
@@ -46,19 +42,8 @@ public class ClassTraitDao extends AbstractAssociationDao<ClassTrait> {
     }
 
     @Override
-    protected String tableName() {
+    protected Table getTable() {
         return TABLE;
-    }
-
-    @Override
-    protected String[] allColumns() {
-        return new String[]{
-                COLUMN_ID,
-                COLUMN_NAME,
-                COLUMN_CLASS_ID,
-                COLUMN_EFFECT_ID,
-                COLUMN_LEVEL
-        };
     }
 
     @Override
@@ -76,11 +61,11 @@ public class ClassTraitDao extends AbstractAssociationDao<ClassTrait> {
 
     @Override
     public ClassTrait fromCursor(Cursor cursor) {
-        ClassTrait classTrait = effectDao.loadEffectSource(cursor, new ClassTrait(), 0, 1, 3);
+        ClassTrait classTrait = effectDao.loadEffectSource(cursor, new ClassTrait(), TABLE);
         classTrait.setLevel(cursor.getInt(4));
 
         Clazz clazz = new Clazz();
-        clazz.setId(cursor.getInt(2));
+        clazz.setId(cursor.getInt(TABLE.getIndex(COLUMN_CLASS_ID)));
         classTrait.setClazz(clazz);
 
         return classTrait;

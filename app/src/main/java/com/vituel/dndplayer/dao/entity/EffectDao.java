@@ -9,6 +9,7 @@ import com.vituel.dndplayer.dao.abstraction.AbstractEntityDao;
 import com.vituel.dndplayer.dao.dependant.ModifierDao;
 import com.vituel.dndplayer.model.effect.Effect;
 import com.vituel.dndplayer.model.effect.EffectSource;
+import com.vituel.dndplayer.util.database.Table;
 
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_EFFECT_ID;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
@@ -106,6 +107,13 @@ public class EffectDao extends AbstractEntityDao<Effect> {
         }
 
         return newEntity;
+    }
+
+    public <T extends EffectSource> T loadEffectSource(Cursor cursor, T newEntity, Table table) {
+        int idCol = table.getIndex(COLUMN_ID);
+        int nameCol = table.getIndex(COLUMN_NAME);
+        int effectCol = table.getIndex(COLUMN_EFFECT_ID);
+        return loadEffectSource(cursor, newEntity, idCol, nameCol, effectCol);
     }
 
     @Override

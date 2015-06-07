@@ -51,8 +51,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         database.execSQL(BookDao.CREATE_TABLE);
         database.execSQL(RaceDao.CREATE_TABLE);
         database.execSQL(RaceTraitDao.CREATE_TABLE);
-        database.execSQL(ClassDao.CREATE_TABLE);
-        database.execSQL(ClassTraitDao.CREATE_TABLE);
+        database.execSQL(ClassDao.TABLE.toSql());
+        database.execSQL(ClassTraitDao.TABLE.toSql());
         database.execSQL(ItemDao.CREATE_TABLE);
         database.execSQL(WeaponDao.CREATE_TABLE);
         database.execSQL(FeatDao.CREATE_TABLE);
