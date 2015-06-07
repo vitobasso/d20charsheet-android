@@ -75,7 +75,7 @@ public class EffectDao extends AbstractEntityDao<Effect> {
 
         Effect effect = source.getEffect();
         if (effect != null) {
-            save(effect);
+            save(effect); //TODO when called from bulk insert, inserts outside bulk (no transaction, no prepared statement)
             values.put(COLUMN_EFFECT_ID, effect.getId());
         }
 

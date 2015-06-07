@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import com.vituel.dndplayer.dao.abstraction.AbstractAssociationDao;
 import com.vituel.dndplayer.dao.entity.EffectDao;
 import com.vituel.dndplayer.model.RaceTrait;
+import com.vituel.dndplayer.util.database.BulkInserter;
 import com.vituel.dndplayer.util.database.Table;
 
 import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
@@ -60,12 +61,15 @@ public class RaceTraitDao extends AbstractAssociationDao<RaceTrait> {
         return effectDao.loadEffectSource(cursor, new RaceTrait(), TABLE);
     }
 
-    @Override
-    public void insert(RaceTrait entity) {
-        ContentValues values = toContentValues(entity.getRace().getId(), entity);
-        values.put(COLUMN_ID, entity.getId());
-        long id = database.insertOrThrow(tableName(), COLUMN_ID, values);
-        entity.setId(id);
+    public BulkInserter<RaceTrait> createBulkInserter() {
+        return new BulkInserter<RaceTrait>(database, getTable()) {
+            public void insert(RaceTrait entity) {
+                long parentId = entity.getRace().getId();
+                ContentValues values = toContentValues(parentId, entity);
+                values.put(COLUMN_ID, entity.getId());
+                insert(values);
+            }
+        };
     }
 
 }

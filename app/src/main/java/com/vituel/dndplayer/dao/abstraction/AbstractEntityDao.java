@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.vituel.dndplayer.model.AbstractEntity;
+import com.vituel.dndplayer.util.database.BulkInserter;
 
 import java.text.MessageFormat;
 import java.util.Collection;
@@ -66,16 +67,6 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
         return id;
     }
 
-    @Override
-    public final void insert(T entity) {
-        ContentValues values = toContentValues(entity);
-        values.put(COLUMN_ID, entity.getId());
-        long id = database.insertOrThrow(tableName(), "_id", values);
-        entity.setId(id);
-
-        postSave(entity);
-    }
-
     public final void remove(T entity) {
         removeForQuery(COLUMN_ID + " = " + entity.getId());
         postRemove(entity);
@@ -91,5 +82,16 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
     protected void postSave(T entity) {}
 
     protected void postRemove(T entity) {}
+
+    public BulkInserter<T> createBulkInserter() {
+        return new BulkInserter<T>(database, getTable()) {
+            public void insert(T entity) {
+                ContentValues values = toContentValues(entity);
+                values.put(COLUMN_ID, entity.getId());
+                insert(values);
+                postSave(entity); //TODO inserting outside bulk (no transaction, no prepared statement)
+            }
+        };
+    }
 
 }

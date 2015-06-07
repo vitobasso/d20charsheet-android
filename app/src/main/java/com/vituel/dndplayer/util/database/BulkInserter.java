@@ -7,20 +7,22 @@ import android.database.sqlite.SQLiteStatement;
 import com.google.common.base.Joiner;
 import com.google.common.base.Strings;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.security.InvalidParameterException;
+
 /**
  * Created by Victor on 06/06/2015.
  */
-public class BulkInserter<T> {
+public abstract class BulkInserter<T> {
 
     private SQLiteDatabase database;
-    private String tableName;
-    private String[] columnNames;
+    private Table table;
     private SQLiteStatement statement;
 
-    public BulkInserter(SQLiteDatabase database, String tableName, String[] columnNames) {
+    public BulkInserter(SQLiteDatabase database, Table table) {
         this.database = database;
-        this.tableName = tableName;
-        this.columnNames = columnNames;
+        this.table = table;
     }
 
     public void begin() {
@@ -29,25 +31,32 @@ public class BulkInserter<T> {
         statement = database.compileStatement(sql);
     }
 
+    public abstract void insert(T entity);
+
     public void insert(ContentValues values) {
         for (String column : values.keySet()) {
-            bindValue(values, column);
+            int index = table.getIndex(column);
+            Object value = values.get(column);
+            bindValue(index + 1, value);
         }
         statement.execute();
         statement.clearBindings();
     }
 
-    private void bindValue(ContentValues values, String column) {
-        Object value = values.get(column);
-//        if (value instanceof Long) {
-//            statement.bindLong(?, (Long) value);
-//        } else if (value instanceof Double) {
-//            statement.bindDouble(?, (Double) value);
-//        } else if (value instanceof String) {
-//            statement.bindString(?, (String) value);
-//        } else {
-//            throw new InvalidParameterException(value.getClass().getSimpleName());
-//        }
+    private void bindValue(int index, Object value) {
+        if (value == null) {
+            statement.bindNull(index);
+        } else if (value instanceof String) {
+            statement.bindString(index, (String) value);
+        } else if (value instanceof Long || value instanceof Integer) {
+            statement.bindLong(index, ((Number) value).longValue());
+        } else if (value instanceof Double || value instanceof Float) {
+            statement.bindDouble(index, ((Number) value).doubleValue());
+        } else if (value instanceof Boolean) {
+            statement.bindLong(index, ((Boolean) value) ? 1 : 0);
+        } else {
+            throw new InvalidParameterException(value.getClass().getSimpleName());
+        }
     }
 
     public void markAsSuccessful() {
@@ -59,10 +68,10 @@ public class BulkInserter<T> {
     }
 
     private String createSql() {
-        String columnsStr = Joiner.on(',').join(columnNames);
-        String placehodersStr = Strings.repeat("?,", columnNames.length);
-        placehodersStr = placehodersStr.substring(0, placehodersStr.length() - 1);
-        return String.format("INSERT INTO %s (%s) VALUES (%s)", tableName, columnsStr, placehodersStr);
+        String columnsStr = Joiner.on(',').join(table.getColumnNames());
+        String placehodersStr = Strings.repeat("?,", table.countColumns());
+        placehodersStr = StringUtils.removeEnd(placehodersStr, ",");
+        return String.format("INSERT INTO %s (%s) VALUES (%s)", table.getName(), columnsStr, placehodersStr);
     }
 
 }

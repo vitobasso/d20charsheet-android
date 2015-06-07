@@ -9,6 +9,7 @@ import com.vituel.dndplayer.dao.abstraction.AbstractAssociationDao;
 import com.vituel.dndplayer.dao.entity.EffectDao;
 import com.vituel.dndplayer.model.ClassTrait;
 import com.vituel.dndplayer.model.Clazz;
+import com.vituel.dndplayer.util.database.BulkInserter;
 import com.vituel.dndplayer.util.database.Table;
 
 import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
@@ -25,7 +26,7 @@ public class ClassTraitDao extends AbstractAssociationDao<ClassTrait> {
     private static final String COLUMN_CLASS_ID = "class_id";
     private static final String COLUMN_LEVEL = "level"; //for class traits
 
-    public static final Table TABLE = new Table("trait_link")
+    public static final Table TABLE = new Table("class_trait")
             .col(COLUMN_NAME, TEXT)
             .colNotNull(COLUMN_CLASS_ID, INTEGER)
             .col(COLUMN_EFFECT_ID, INTEGER)
@@ -71,12 +72,15 @@ public class ClassTraitDao extends AbstractAssociationDao<ClassTrait> {
         return classTrait;
     }
 
-    @Override
-    public void insert(ClassTrait entity) {
-        ContentValues values = toContentValues(entity.getClazz().getId(), entity);
-        values.put(COLUMN_ID, entity.getId());
-        long id = database.insertOrThrow(tableName(), "_id", values);
-        entity.setId(id);
+    public BulkInserter<ClassTrait> createBulkInserter() {
+        return new BulkInserter<ClassTrait>(database, getTable()) {
+            public void insert(ClassTrait entity) {
+                long parentId = entity.getClazz().getId();
+                ContentValues values = toContentValues(parentId, entity);
+                values.put(COLUMN_ID, entity.getId());
+                insert(values);
+            }
+        };
     }
 
 }

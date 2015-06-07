@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
+import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;
+
 /**
  * Created by Victor on 06/06/2015.
  */
@@ -34,7 +37,7 @@ public class Table {
     }
 
     private void addPrimaryKey() {
-        Column column = new Column(SQLiteHelper.COLUMN_ID, ColumnType.INTEGER, true, true);
+        Column column = new Column(COLUMN_ID, INTEGER, true, true);
         add(column);
     }
 
@@ -70,6 +73,10 @@ public class Table {
             names[i] = columns.get(i).getName();
         }
         return names;
+    }
+
+    public int countColumns() {
+        return columns.size();
     }
 
     public String getName() {

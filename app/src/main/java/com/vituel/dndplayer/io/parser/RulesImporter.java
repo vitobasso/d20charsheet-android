@@ -34,6 +34,7 @@ import com.vituel.dndplayer.io.parser.exception.ParseEntityException;
 import com.vituel.dndplayer.model.AbstractEntity;
 import com.vituel.dndplayer.model.effect.Condition;
 import com.vituel.dndplayer.util.LoggingUtil;
+import com.vituel.dndplayer.util.database.BulkInserter;
 
 import java.io.File;
 import java.io.IOException;
@@ -112,37 +113,38 @@ public class RulesImporter {
     }
 
     private <T extends AbstractEntity> void importBatch(AbstractEntityParser<T> parser, AbstractDao<T> dao) throws IOException {
+        BulkInserter<T> bulkInserter = dao.createBulkInserter();
         try {
-            dao.beginTransaction();
-            tryImportBatch(parser, dao);
-            dao.setTransactionSuccessful();
+            bulkInserter.begin();
+            tryImportBatch(parser, bulkInserter);
+            bulkInserter.markAsSuccessful();
         } catch (Exception e) {
             Log.e(TAG, "Batch import was interrupted.", e);
             throw e;
         } finally {
-            dao.endTransaction();
+            bulkInserter.endTransaction();
         }
     }
 
-    private <T extends AbstractEntity> void tryImportBatch(AbstractEntityParser<T> parser, AbstractDao<T> dao) throws IOException {
+    private <T extends AbstractEntity> void tryImportBatch(AbstractEntityParser<T> parser, BulkInserter<T> bulkInserter) throws IOException {
         for (int i = 0; i < BATCH_SIZE && parser.hasNext(); i++) {
-            importEntity(parser, dao);
+            importEntity(parser, bulkInserter);
         }
     }
 
-    private <T extends AbstractEntity> void importEntity(AbstractEntityParser<T> parser, AbstractDao<T> dao) {
+    private <T extends AbstractEntity> void importEntity(AbstractEntityParser<T> parser, BulkInserter<T> bulkInserter) {
         try {
-            tryImportEntity(parser, dao);
+            tryImportEntity(parser, bulkInserter);
         } catch (ParseEntityException | SQLException e) {
             Log.w(TAG, e.getMessage());
         } catch (Exception e) {
-            Log.e(TAG, "Unexpected exception when importing to " + dao.getClass().getSimpleName(), e);
+            Log.e(TAG, "Unexpected exception when importing to " + bulkInserter.getClass().getSimpleName(), e);
         }
     }
 
-    private <T extends AbstractEntity> void tryImportEntity(AbstractEntityParser<T> parser, AbstractDao<T> dao) throws IOException {
+    private <T extends AbstractEntity> void tryImportEntity(AbstractEntityParser<T> parser, BulkInserter<T> bulkInserter) throws IOException {
         T entity = parser.next();
-        dao.insert(entity);
+        bulkInserter.insert(entity);
         observer.onFinishImportingRow(entity.getName(), parser.getCount());
     }
 

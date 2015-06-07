@@ -1,5 +1,6 @@
 package com.vituel.dndplayer.model.character;
 
+import com.google.common.base.Objects;
 import com.vituel.dndplayer.model.AbstractEntity;
 import com.vituel.dndplayer.model.effect.Modifier;
 
@@ -49,4 +50,25 @@ public class AttackRound extends AbstractEntity {
         return modifiers;
     }
 
+    @Override
+    public boolean equals(Object another) {
+        if (another instanceof AttackRound) {
+            AttackRound anotherAttack = (AttackRound) another;
+            if (id != 0 && anotherAttack.id != 0) {
+                return id == anotherAttack.id;
+            } else if(id == 0 && anotherAttack.id == 0) {
+                return super.equals(another);
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        if (id != 0) {
+            return Objects.hashCode(id);
+        } else {
+            return super.hashCode();
+        }
+    }
 }

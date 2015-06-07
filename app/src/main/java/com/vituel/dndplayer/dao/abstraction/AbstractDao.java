@@ -5,11 +5,11 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.vituel.dndplayer.util.database.BulkInserter;
 import com.vituel.dndplayer.util.database.SQLiteHelper;
 import com.vituel.dndplayer.util.database.Table;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import static com.google.common.base.Strings.isNullOrEmpty;
@@ -36,9 +36,7 @@ public abstract class AbstractDao<T> {
         this.database = database;
     }
 
-    protected Table getTable() { //TODO make it abstract, when all daos implement it
-        throw new UnsupportedOperationException();
-    }
+    protected abstract Table getTable();
 
     protected String tableName() {
         return getTable().getName();
@@ -121,28 +119,6 @@ public abstract class AbstractDao<T> {
         database.delete(tableName(), selection, null);
     }
 
-    public void insert(Collection<T> list) { //TODO remove when BulkInserter is ready
-        for (T obj : list) {
-            insert(obj);
-        }
-    }
-
-    public void insert(T entity) { //TODO remove when BulkInserter is ready
-        throw new UnsupportedOperationException();
-    }
-
-    public void beginTransaction() { //TODO remove when BulkInserter is ready
-        database.beginTransaction();
-    }
-
-    public void setTransactionSuccessful() { //TODO remove when BulkInserter is ready
-        database.setTransactionSuccessful();
-    }
-
-    public void endTransaction() { //TODO remove when BulkInserter is ready
-        database.endTransaction();
-    }
-
     protected String orderBy() {
         return null;
     }
@@ -151,6 +127,10 @@ public abstract class AbstractDao<T> {
 
     public T fromCursorBrief(Cursor cursor) {
         return fromCursor(cursor);
+    }
+
+    public BulkInserter<T> createBulkInserter() {
+        throw new UnsupportedOperationException();
     }
 
     protected String getString(Cursor cursor, String columnName) {
