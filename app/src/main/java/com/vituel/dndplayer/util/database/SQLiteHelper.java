@@ -32,6 +32,8 @@ import com.vituel.dndplayer.dao.entity.TempEffectDao;
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 
+    public static final String TAG = SQLiteHelper.class.getSimpleName();
+
     public static final String DATABASE_NAME = "dndplayer.db";
     public static final int DATABASE_VERSION = 1;
 
@@ -45,7 +47,19 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase database) {
+        createAllTables(database);
+    }
 
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        String msg = String.format("Upgrading database from version %s to %s, which will destroy all old data.", oldVersion, newVersion);
+        Log.w(TAG, msg);
+
+        dropAllTables(db);
+        createAllTables(db);
+    }
+
+    private void createAllTables(SQLiteDatabase database) {
         //library
         database.execSQL(EditionDao.TABLE.toSql());
         database.execSQL(BookDao.TABLE.toSql());
@@ -75,12 +89,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         database.execSQL(AbilityModifierDao.TABLE.toSql());
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.w(SQLiteHelper.class.getName(),
-                "Upgrading database from version " + oldVersion + " to "
-                        + newVersion + ", which will destroy all old data");
-
+    private void dropAllTables(SQLiteDatabase db) {
         //library
         db.execSQL("DROP TABLE IF EXISTS " + EditionDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + BookDao.TABLE);
@@ -108,8 +117,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + AttackRoundDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + AttackDao.TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + AbilityModifierDao.TABLE);
-        onCreate(db);
-
     }
 
 }
