@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.business;
+package com.vituel.dndplayer.util.business;
 
 import com.vituel.dndplayer.model.AbstractEntity;
 

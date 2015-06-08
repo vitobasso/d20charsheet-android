@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.AbstractSimpleListFragment;
 import com.vituel.dndplayer.activity.edit.EditAttackRoundActivity;
-import com.vituel.dndplayer.business.AttackUtil;
 import com.vituel.dndplayer.dao.AttackRoundDao;
 import com.vituel.dndplayer.model.character.Attack;
 import com.vituel.dndplayer.model.character.AttackRound;
 import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.util.app.ActivityUtil;
+import com.vituel.dndplayer.util.business.AttackUtil;
 
 import java.util.List;
 import java.util.Map;

@@ -2,8 +2,8 @@ package com.vituel.dndplayer.model;
 
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-import com.vituel.dndplayer.business.OverridingTraitMatcher;
 import com.vituel.dndplayer.model.rulebook.Rule;
+import com.vituel.dndplayer.util.business.OverridingTraitMatcher;
 
 import java.util.ArrayList;
 import java.util.List;

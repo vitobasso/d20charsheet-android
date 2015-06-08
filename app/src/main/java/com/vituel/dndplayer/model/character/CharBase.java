@@ -1,6 +1,5 @@
 package com.vituel.dndplayer.model.character;
 
-import com.vituel.dndplayer.business.AttackUtil;
 import com.vituel.dndplayer.model.AbstractEntity;
 import com.vituel.dndplayer.model.ClassLevel;
 import com.vituel.dndplayer.model.Feat;
@@ -14,6 +13,7 @@ import com.vituel.dndplayer.model.item.EquipSlot;
 import com.vituel.dndplayer.model.item.Item;
 import com.vituel.dndplayer.model.item.WeaponItem;
 import com.vituel.dndplayer.model.item.WeaponProperties;
+import com.vituel.dndplayer.util.business.AttackUtil;
 
 import java.security.InvalidParameterException;
 import java.text.MessageFormat;

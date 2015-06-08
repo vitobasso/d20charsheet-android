@@ -8,7 +8,6 @@ import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
-import com.vituel.dndplayer.business.AttackUtil;
 import com.vituel.dndplayer.model.character.Attack;
 import com.vituel.dndplayer.model.character.AttackRound;
 import com.vituel.dndplayer.model.character.CharSummary;
@@ -16,6 +15,7 @@ import com.vituel.dndplayer.model.effect.ModifierSource;
 import com.vituel.dndplayer.model.effect.ModifierTarget;
 import com.vituel.dndplayer.util.app.ActivityUtil;
 import com.vituel.dndplayer.util.app.AppCommons;
+import com.vituel.dndplayer.util.business.AttackUtil;
 import com.vituel.dndplayer.util.font.FontUtil;
 import com.vituel.dndplayer.util.gui.GuiInflater;
 import com.vituel.dndplayer.util.gui.RecursiveViewCaller;
