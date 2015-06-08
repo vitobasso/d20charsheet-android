@@ -208,11 +208,11 @@
     <string name="close">Fechar</string>
     <string name="editions">Edições</string>
     <string name="races">Raças</string>
-    <string name="race_traits">Traços de raça</string>
+    <string name="race_traits">Habilidades de raça</string>
     <string name="classes">Classes</string>
     <string name="items">Itens</string>
     <string name="effects">Efeitos</string>
-    <string name="class_traits">Traços de classe</string>
+    <string name="class_traits">Habilidades de classe</string>
     <string name="hp_temp_long">PV Temporário</string>
     <string name="dmg_nonlethal">Dano por Contusão</string>
     <string name="dmg_lethal">Dano Letal</string>
