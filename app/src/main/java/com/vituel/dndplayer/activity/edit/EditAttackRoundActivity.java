@@ -11,13 +11,13 @@ import com.vituel.dndplayer.model.character.Attack;
 import com.vituel.dndplayer.model.character.AttackRound;
 
 import static com.vituel.dndplayer.model.character.Attack.WeaponReference.MAIN_HAND;
-import static com.vituel.dndplayer.util.ActivityUtil.findView;
-import static com.vituel.dndplayer.util.ActivityUtil.inflate;
-import static com.vituel.dndplayer.util.ActivityUtil.populateSpinnerWithEnum;
-import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
-import static com.vituel.dndplayer.util.ActivityUtil.readInt;
-import static com.vituel.dndplayer.util.ActivityUtil.readSpinner;
-import static com.vituel.dndplayer.util.ActivityUtil.readString;
+import static com.vituel.dndplayer.util.app.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.inflate;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateSpinnerWithEnum;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.readInt;
+import static com.vituel.dndplayer.util.app.ActivityUtil.readSpinner;
+import static com.vituel.dndplayer.util.app.ActivityUtil.readString;
 
 public class EditAttackRoundActivity extends AbstractEditActivity<AttackRound> {
 

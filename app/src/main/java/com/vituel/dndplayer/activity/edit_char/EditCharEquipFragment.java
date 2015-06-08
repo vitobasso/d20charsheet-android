@@ -16,11 +16,11 @@ import com.vituel.dndplayer.model.item.Item;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_TYPE;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
-import static com.vituel.dndplayer.util.ActivityUtil.findView;
-import static com.vituel.dndplayer.util.ActivityUtil.inflate;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_SELECTED;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_TYPE;
+import static com.vituel.dndplayer.util.app.ActivityUtil.REQUEST_SELECT;
+import static com.vituel.dndplayer.util.app.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.inflate;
 
 /**
  * Created by Victor on 17/03/14.

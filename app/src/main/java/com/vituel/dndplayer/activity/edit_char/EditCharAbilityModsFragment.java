@@ -12,16 +12,16 @@ import com.vituel.dndplayer.activity.edit.EditAbilityModActivity;
 import com.vituel.dndplayer.dao.abstraction.AbilityModifierDao;
 import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.model.effect.AbilityModifier;
-import com.vituel.dndplayer.util.ActivityUtil;
+import com.vituel.dndplayer.util.app.ActivityUtil;
 
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_EDIT;
-import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_EDITED;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_SELECTED;
+import static com.vituel.dndplayer.util.app.ActivityUtil.REQUEST_CREATE;
+import static com.vituel.dndplayer.util.app.ActivityUtil.REQUEST_EDIT;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateTextView;
 
 /**
  * Created by Victor on 21/03/14.

@@ -10,8 +10,8 @@ import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.AbstractEntity;
 import com.vituel.dndplayer.util.ReflectionUtil;
 
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_EDITED;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_EDITED;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_SELECTED;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;

@@ -19,8 +19,8 @@ import com.vituel.dndplayer.R;
 
 import static android.support.v4.widget.DrawerLayout.LOCK_MODE_LOCKED_CLOSED;
 import static android.support.v4.widget.DrawerLayout.LOCK_MODE_UNLOCKED;
-import static com.vituel.dndplayer.util.ActivityUtil.findView;
-import static com.vituel.dndplayer.util.ActivityUtil.inflate;
+import static com.vituel.dndplayer.util.app.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.inflate;
 
 /**
  * Created by Victor on 08/05/2015.

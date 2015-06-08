@@ -13,11 +13,11 @@ import com.vituel.dndplayer.model.effect.ModifierSource;
 import com.vituel.dndplayer.model.effect.ModifierTarget;
 import com.vituel.dndplayer.model.effect.Multiplier;
 
-import static com.vituel.dndplayer.util.ActivityUtil.findView;
-import static com.vituel.dndplayer.util.ActivityUtil.populateSpinnerWithEnum;
-import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
-import static com.vituel.dndplayer.util.ActivityUtil.readSpinner;
-import static com.vituel.dndplayer.util.ActivityUtil.readString;
+import static com.vituel.dndplayer.util.app.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateSpinnerWithEnum;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.readSpinner;
+import static com.vituel.dndplayer.util.app.ActivityUtil.readString;
 
 public class EditAbilityModActivity extends AbstractEditActivity<AbilityModifier> {
 

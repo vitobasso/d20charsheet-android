@@ -15,10 +15,10 @@ import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.character.CharBase;
 
 import static com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter.PAGE_BASIC;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
-import static com.vituel.dndplayer.util.ActivityUtil.findFragment;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_CHAR;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_MODE;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_PAGE;
+import static com.vituel.dndplayer.util.app.ActivityUtil.findFragment;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 

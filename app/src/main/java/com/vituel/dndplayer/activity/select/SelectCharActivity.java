@@ -24,9 +24,9 @@ import com.vituel.dndplayer.model.character.CharBase;
 import java.util.List;
 
 import static android.widget.AdapterView.OnItemLongClickListener;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
-import static com.vituel.dndplayer.util.ActivityUtil.internationalize;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_CHAR;
+import static com.vituel.dndplayer.util.app.ActivityUtil.REQUEST_CREATE;
+import static com.vituel.dndplayer.util.app.ActivityUtil.internationalize;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 

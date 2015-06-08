@@ -17,11 +17,11 @@ import com.vituel.dndplayer.model.character.CharSkill;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
-import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
-import static com.vituel.dndplayer.util.ActivityUtil.readInt;
-import static com.vituel.dndplayer.util.ActivityUtil.validateText;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_SELECTED;
+import static com.vituel.dndplayer.util.app.ActivityUtil.REQUEST_SELECT;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.readInt;
+import static com.vituel.dndplayer.util.app.ActivityUtil.validateText;
 
 /**
  * Created by Victor on 21/03/14.

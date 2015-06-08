@@ -13,10 +13,10 @@ import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.io.parser.ImporterObserver;
 import com.vituel.dndplayer.io.parser.RulesImporter;
 
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_LOAD;
-import static com.vituel.dndplayer.util.ActivityUtil.findView;
-import static com.vituel.dndplayer.util.ActivityUtil.inflate;
-import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.REQUEST_LOAD;
+import static com.vituel.dndplayer.util.app.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.inflate;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateTextView;
 
 /**
  * Created by Victor on 21/04/2015.

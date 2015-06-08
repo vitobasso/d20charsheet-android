@@ -13,14 +13,14 @@ import com.vituel.dndplayer.model.effect.ModifierType;
 
 import java.util.List;
 
-import static com.vituel.dndplayer.util.ActivityUtil.findView;
-import static com.vituel.dndplayer.util.ActivityUtil.inflate;
-import static com.vituel.dndplayer.util.ActivityUtil.populateSpinnerWithEnum;
-import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
-import static com.vituel.dndplayer.util.ActivityUtil.readDice;
-import static com.vituel.dndplayer.util.ActivityUtil.readSpinner;
-import static com.vituel.dndplayer.util.ActivityUtil.readString;
-import static com.vituel.dndplayer.util.ActivityUtil.validateText;
+import static com.vituel.dndplayer.util.app.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.inflate;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateSpinnerWithEnum;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.readDice;
+import static com.vituel.dndplayer.util.app.ActivityUtil.readSpinner;
+import static com.vituel.dndplayer.util.app.ActivityUtil.readString;
+import static com.vituel.dndplayer.util.app.ActivityUtil.validateText;
 
 /**
  * Created by Victor on 09/04/2015.

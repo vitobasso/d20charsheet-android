@@ -5,19 +5,19 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.vituel.dndplayer.MemoryCache;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.activity.select.SelectCharActivity;
 import com.vituel.dndplayer.activity.summary.SummaryActivity;
 import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.character.CharBase;
-import com.vituel.dndplayer.util.AppPreferences;
+import com.vituel.dndplayer.util.app.AppGlobals;
+import com.vituel.dndplayer.util.app.AppPreferences;
 
 import static com.vituel.dndplayer.activity.edit_char.EditCharActivity.Mode.CREATE;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CHAR;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_LOAD;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_CHAR;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_MODE;
+import static com.vituel.dndplayer.util.app.ActivityUtil.REQUEST_CHAR;
+import static com.vituel.dndplayer.util.app.ActivityUtil.REQUEST_LOAD;
 
 /**
  * Created by Victor on 10/05/2015.
@@ -26,13 +26,13 @@ public class StartupActivity extends Activity {
 
     public static final String TAG = StartupActivity.class.getSimpleName();
 
-    protected MemoryCache cache;
+    protected AppGlobals cache;
     protected AppPreferences pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        cache = (MemoryCache) getApplicationContext();
+        cache = (AppGlobals) getApplicationContext();
         pref = new AppPreferences(this);
 
         if (pref.isFirstRun()) {

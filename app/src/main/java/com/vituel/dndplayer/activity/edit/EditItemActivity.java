@@ -15,14 +15,14 @@ import com.vituel.dndplayer.model.item.WeaponProperties;
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 import static com.vituel.dndplayer.model.item.Item.ItemType;
-import static com.vituel.dndplayer.util.ActivityUtil.findView;
-import static com.vituel.dndplayer.util.ActivityUtil.populateSpinnerWithEnum;
-import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
-import static com.vituel.dndplayer.util.ActivityUtil.readInt;
-import static com.vituel.dndplayer.util.ActivityUtil.readSpinner;
-import static com.vituel.dndplayer.util.ActivityUtil.readString;
-import static com.vituel.dndplayer.util.ActivityUtil.validateSpinner;
-import static com.vituel.dndplayer.util.ActivityUtil.validateText;
+import static com.vituel.dndplayer.util.app.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateSpinnerWithEnum;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.readInt;
+import static com.vituel.dndplayer.util.app.ActivityUtil.readSpinner;
+import static com.vituel.dndplayer.util.app.ActivityUtil.readString;
+import static com.vituel.dndplayer.util.app.ActivityUtil.validateSpinner;
+import static com.vituel.dndplayer.util.app.ActivityUtil.validateText;
 
 public class EditItemActivity extends AbstractEditEffectActivity<Item> {
 

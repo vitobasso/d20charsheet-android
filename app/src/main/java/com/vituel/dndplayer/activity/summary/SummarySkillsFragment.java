@@ -10,14 +10,14 @@ import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.model.character.CharSkill;
 import com.vituel.dndplayer.model.character.CharSummary;
-import com.vituel.dndplayer.util.AppCommons;
+import com.vituel.dndplayer.util.app.AppCommons;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 import static com.vituel.dndplayer.model.effect.ModifierTarget.SKILL;
-import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateTextView;
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 

@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.text.MessageFormat;
 
-import static com.vituel.dndplayer.util.ActivityUtil.internationalize;
+import static com.vituel.dndplayer.util.app.ActivityUtil.internationalize;
 
 /**
  * Created by Victor on 27/09/2014.

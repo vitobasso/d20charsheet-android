@@ -21,7 +21,7 @@ import com.vituel.dndplayer.util.gui.GuiInflater;
 import com.vituel.dndplayer.util.i18n.ModifierStringConverter;
 
 import static android.view.View.GONE;
-import static com.vituel.dndplayer.util.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 

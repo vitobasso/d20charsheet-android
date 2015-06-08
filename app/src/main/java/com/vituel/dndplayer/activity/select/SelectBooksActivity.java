@@ -8,7 +8,6 @@ import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
 
 import com.google.common.collect.Lists;
-import com.vituel.dndplayer.MemoryCache;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.MainNavigationActvity;
 import com.vituel.dndplayer.dao.dependant.CharBookDao;
@@ -17,6 +16,7 @@ import com.vituel.dndplayer.dao.entity.EditionDao;
 import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.model.rulebook.Book;
 import com.vituel.dndplayer.model.rulebook.Edition;
+import com.vituel.dndplayer.util.app.AppGlobals;
 import com.vituel.dndplayer.util.gui.SimpleExpListAdapter;
 
 import java.text.MessageFormat;
@@ -27,9 +27,9 @@ import java.util.SortedSet;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import static com.vituel.dndplayer.util.ActivityUtil.findView;
-import static com.vituel.dndplayer.util.ActivityUtil.populateCheckBox;
-import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateCheckBox;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateTextView;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 
@@ -53,7 +53,7 @@ public class SelectBooksActivity extends MainNavigationActvity {
         super.onCreate(savedInstanceState);
         setActionbarTitle(this, BOLD_FONT, getTitle());
 
-        MemoryCache cache = (MemoryCache) getApplicationContext();
+        AppGlobals cache = (AppGlobals) getApplicationContext();
         base = cache.getOpenedChar();
         editions = loadEditions();
         booksByEdition = mapBooksByEdition();
@@ -198,7 +198,7 @@ public class SelectBooksActivity extends MainNavigationActvity {
     }
 
     private void updateCharBooksInMemory() {
-        MemoryCache cache = (MemoryCache) getApplicationContext();
+        AppGlobals cache = (AppGlobals) getApplicationContext();
         cache.setActiveRulebooks(checkedBooks);
     }
 

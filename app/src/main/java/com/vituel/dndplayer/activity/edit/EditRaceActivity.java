@@ -11,13 +11,13 @@ import com.vituel.dndplayer.model.Race;
 import com.vituel.dndplayer.model.Size;
 import com.vituel.dndplayer.model.effect.Modifier;
 import com.vituel.dndplayer.model.effect.ModifierTarget;
-import com.vituel.dndplayer.util.ActivityUtil;
+import com.vituel.dndplayer.util.app.ActivityUtil;
 
 import java.util.List;
 
 import static com.vituel.dndplayer.model.effect.ModifierType.RACIAL;
-import static com.vituel.dndplayer.util.ActivityUtil.populateSpinnerWithEnum;
-import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateSpinnerWithEnum;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateTextView;
 
 /**
  * Created by Victor on 30/03/14.

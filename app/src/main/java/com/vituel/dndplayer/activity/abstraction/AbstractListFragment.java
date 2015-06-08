@@ -18,7 +18,7 @@ import com.vituel.dndplayer.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_SELECTED;
 
 /**
  * Fragment with:

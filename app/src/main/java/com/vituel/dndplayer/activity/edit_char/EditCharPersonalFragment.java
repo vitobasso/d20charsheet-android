@@ -5,14 +5,14 @@ import android.view.View;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
 import com.vituel.dndplayer.model.character.CharBase;
-import com.vituel.dndplayer.util.ActivityUtil;
+import com.vituel.dndplayer.util.app.ActivityUtil;
 
-import static com.vituel.dndplayer.util.ActivityUtil.populateStaticSpinner;
-import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
-import static com.vituel.dndplayer.util.ActivityUtil.readFloat;
-import static com.vituel.dndplayer.util.ActivityUtil.readInt;
-import static com.vituel.dndplayer.util.ActivityUtil.readSpinner;
-import static com.vituel.dndplayer.util.ActivityUtil.readString;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateStaticSpinner;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.readFloat;
+import static com.vituel.dndplayer.util.app.ActivityUtil.readInt;
+import static com.vituel.dndplayer.util.app.ActivityUtil.readSpinner;
+import static com.vituel.dndplayer.util.app.ActivityUtil.readString;
 
 /**
  * Created by Victor on 28/02/14.

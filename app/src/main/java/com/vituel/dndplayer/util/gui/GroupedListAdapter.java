@@ -16,7 +16,7 @@ import java.util.TreeMap;
 
 import static android.widget.ListView.CHOICE_MODE_MULTIPLE;
 import static android.widget.ListView.CHOICE_MODE_MULTIPLE_MODAL;
-import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateTextView;
 
 /**
  * Created by Victor on 10/05/2015.

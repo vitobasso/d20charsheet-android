@@ -20,8 +20,8 @@ import com.vituel.dndplayer.util.gui.EffectArrayAdapter;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_SELECTED;
+import static com.vituel.dndplayer.util.app.ActivityUtil.REQUEST_SELECT;
 
 /**
  * Created by Victor on 21/03/14.

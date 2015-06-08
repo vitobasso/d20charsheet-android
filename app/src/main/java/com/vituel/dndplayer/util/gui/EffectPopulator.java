@@ -8,14 +8,14 @@ import android.widget.TextView;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.model.effect.EffectSource;
 import com.vituel.dndplayer.model.effect.Modifier;
-import com.vituel.dndplayer.util.AppCommons;
+import com.vituel.dndplayer.util.app.AppCommons;
 import com.vituel.dndplayer.util.i18n.ModifierStringConverter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.vituel.dndplayer.util.ActivityUtil.findView;
-import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateTextView;
 
 /**
  * Created by Victor on 06/09/14.

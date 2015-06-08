@@ -10,13 +10,13 @@ import com.vituel.dndplayer.dao.entity.CharDao;
 import com.vituel.dndplayer.model.character.CharSummary;
 import com.vituel.dndplayer.model.character.DamageTaken;
 import com.vituel.dndplayer.model.effect.ModifierTarget;
-import com.vituel.dndplayer.util.ActivityUtil;
+import com.vituel.dndplayer.util.app.ActivityUtil;
 import com.vituel.dndplayer.util.gui.GuiInflater;
 
 import static android.view.View.GONE;
 import static android.view.View.OnClickListener;
 import static android.view.View.VISIBLE;
-import static com.vituel.dndplayer.util.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.findView;
 import static com.vituel.dndplayer.util.font.FontUtil.MAIN_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setFontRecursively;
 

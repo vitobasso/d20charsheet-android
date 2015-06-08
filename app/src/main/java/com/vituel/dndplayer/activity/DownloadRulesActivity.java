@@ -14,9 +14,9 @@ import com.vituel.dndplayer.io.downloader.RulesDownloader;
 
 import java.io.IOException;
 
-import static com.vituel.dndplayer.util.ActivityUtil.RESULT_FAILED;
-import static com.vituel.dndplayer.util.ActivityUtil.findView;
-import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.RESULT_FAILED;
+import static com.vituel.dndplayer.util.app.ActivityUtil.findView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateTextView;
 
 /**
  * Created by Victor on 04/06/2015.

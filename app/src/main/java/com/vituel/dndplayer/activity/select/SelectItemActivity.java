@@ -11,7 +11,7 @@ import com.vituel.dndplayer.dao.entity.ItemDao;
 import com.vituel.dndplayer.model.item.EquipSlot;
 import com.vituel.dndplayer.model.item.Item;
 
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_TYPE;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_TYPE;
 
 /**
  * Created by Victor on 17/03/14.

@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.util;
+package com.vituel.dndplayer.util.app;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,7 +10,7 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class AppPreferences {
 
-    public static final String PREF = "dndplayer";
+    public static final String PREF = "d20charsheet";
     public static final String PREF_LAST_OPENED_CHAR = "last_opened_character";
     public static final String PREF_FIRST_RUN = "first_run";
 

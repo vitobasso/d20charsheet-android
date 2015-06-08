@@ -19,8 +19,8 @@ import java.util.List;
 import static com.vituel.dndplayer.activity.summary.SummaryPagerAdapter.PAGE_BASIC;
 import static com.vituel.dndplayer.activity.summary.SummaryPagerAdapter.PAGE_SKILLS;
 import static com.vituel.dndplayer.activity.summary.SummaryPagerAdapter.PAGE_TRAITS;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_CHAR;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CHAR;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_CHAR;
+import static com.vituel.dndplayer.util.app.ActivityUtil.REQUEST_CHAR;
 import static com.vituel.dndplayer.util.font.FontUtil.BOLD_FONT;
 import static com.vituel.dndplayer.util.font.FontUtil.setActionbarTitle;
 

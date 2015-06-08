@@ -8,14 +8,14 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
-import com.vituel.dndplayer.MemoryCache;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.edit_char.EditCharActivity;
 import com.vituel.dndplayer.activity.select.SelectBooksActivity;
 import com.vituel.dndplayer.activity.select.SelectCharActivity;
 import com.vituel.dndplayer.activity.summary.SummaryActivity;
-import com.vituel.dndplayer.util.ActivityUtil;
-import com.vituel.dndplayer.util.AppPreferences;
+import com.vituel.dndplayer.util.app.ActivityUtil;
+import com.vituel.dndplayer.util.app.AppGlobals;
+import com.vituel.dndplayer.util.app.AppPreferences;
 
 import java.security.InvalidParameterException;
 
@@ -26,17 +26,17 @@ import static com.vituel.dndplayer.activity.abstraction.MainNavigationActvity.Na
 import static com.vituel.dndplayer.activity.edit_char.EditCharActivity.Mode;
 import static com.vituel.dndplayer.activity.edit_char.EditCharActivity.Mode.CREATE;
 import static com.vituel.dndplayer.activity.edit_char.EditCharPagerAdapter.PAGE_BASIC;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_MODE;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_PAGE;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CHAR;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_CREATE;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_MODE;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_PAGE;
+import static com.vituel.dndplayer.util.app.ActivityUtil.REQUEST_CHAR;
+import static com.vituel.dndplayer.util.app.ActivityUtil.REQUEST_CREATE;
 
 /**
  * Created by Victor on 09/05/2015.
  */
 public abstract class MainNavigationActvity extends DoubleDrawerActivity {
 
-    protected MemoryCache cache;
+    protected AppGlobals cache;
     protected AppPreferences pref;
 
     public enum NavigationItem {
@@ -45,7 +45,7 @@ public abstract class MainNavigationActvity extends DoubleDrawerActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        cache = (MemoryCache) getApplicationContext();
+        cache = (AppGlobals) getApplicationContext();
         pref = new AppPreferences(this);
         super.onCreate(savedInstanceState); //called after pref so it can be used during onCreate
     }

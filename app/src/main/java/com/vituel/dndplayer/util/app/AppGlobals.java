@@ -1,4 +1,4 @@
-package com.vituel.dndplayer;
+package com.vituel.dndplayer.util.app;
 
 import android.app.Application;
 import android.util.Log;
@@ -14,9 +14,9 @@ import java.util.List;
 /**
  * Created by Victor on 03/05/2015.
  */
-public class MemoryCache extends Application {
+public class AppGlobals extends Application {
 
-    public static final String TAG = MemoryCache.class.getSimpleName();
+    public static final String TAG = AppGlobals.class.getSimpleName();
 
     private CharBase openedChar;
     private Collection<Book> activeRulebooks;

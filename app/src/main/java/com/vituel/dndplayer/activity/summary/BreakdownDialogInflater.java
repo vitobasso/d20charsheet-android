@@ -10,14 +10,14 @@ import com.vituel.dndplayer.model.effect.EffectSource;
 import com.vituel.dndplayer.model.effect.Modifier;
 import com.vituel.dndplayer.model.effect.ModifierTarget;
 import com.vituel.dndplayer.model.effect.ModifierType;
-import com.vituel.dndplayer.util.AppCommons;
+import com.vituel.dndplayer.util.app.AppCommons;
 
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-import static com.vituel.dndplayer.util.ActivityUtil.inflate;
-import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.inflate;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateTextView;
 
 /**
  * Created by Victor on 26/04/14.

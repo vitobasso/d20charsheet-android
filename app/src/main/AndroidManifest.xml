@@ -11,7 +11,7 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/defaultTheme"
-        android:name=".MemoryCache">
+        android:name=".util.app.AppGlobals">
 
         <activity
             android:name=".activity.StartupActivity"

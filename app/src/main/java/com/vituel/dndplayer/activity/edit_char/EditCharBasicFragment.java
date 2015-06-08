@@ -16,21 +16,21 @@ import com.vituel.dndplayer.model.ClassLevel;
 import com.vituel.dndplayer.model.Clazz;
 import com.vituel.dndplayer.model.Race;
 import com.vituel.dndplayer.model.character.CharBase;
-import com.vituel.dndplayer.util.ActivityUtil;
+import com.vituel.dndplayer.util.app.ActivityUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.app.Activity.RESULT_OK;
-import static com.vituel.dndplayer.util.ActivityUtil.EXTRA_SELECTED;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT_CLASS;
-import static com.vituel.dndplayer.util.ActivityUtil.REQUEST_SELECT_RACE;
-import static com.vituel.dndplayer.util.ActivityUtil.inflate;
-import static com.vituel.dndplayer.util.ActivityUtil.populateTextView;
-import static com.vituel.dndplayer.util.ActivityUtil.readInt;
-import static com.vituel.dndplayer.util.ActivityUtil.readString;
-import static com.vituel.dndplayer.util.ActivityUtil.validateText;
-import static com.vituel.dndplayer.util.ActivityUtil.validateTextInt;
+import static com.vituel.dndplayer.util.app.ActivityUtil.EXTRA_SELECTED;
+import static com.vituel.dndplayer.util.app.ActivityUtil.REQUEST_SELECT_CLASS;
+import static com.vituel.dndplayer.util.app.ActivityUtil.REQUEST_SELECT_RACE;
+import static com.vituel.dndplayer.util.app.ActivityUtil.inflate;
+import static com.vituel.dndplayer.util.app.ActivityUtil.populateTextView;
+import static com.vituel.dndplayer.util.app.ActivityUtil.readInt;
+import static com.vituel.dndplayer.util.app.ActivityUtil.readString;
+import static com.vituel.dndplayer.util.app.ActivityUtil.validateText;
+import static com.vituel.dndplayer.util.app.ActivityUtil.validateTextInt;
 
 /**
  * Created by Victor on 28/02/14.

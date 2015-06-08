@@ -5,9 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.vituel.dndplayer.MemoryCache;
 import com.vituel.dndplayer.model.rulebook.Book;
 import com.vituel.dndplayer.model.rulebook.Rule;
+import com.vituel.dndplayer.util.app.AppGlobals;
 
 import java.util.Collection;
 
@@ -61,7 +61,7 @@ public abstract class AbstractRuleDao<T extends Rule> extends AbstractEntityDao<
     }
 
     private String getRulebookIdsAsString() {
-        MemoryCache cache = (MemoryCache) context.getApplicationContext();
+        AppGlobals cache = (AppGlobals) context.getApplicationContext();
         Collection<Book> rulebooks = cache.getActiveRulebooks();
         if (rulebooks == null) {
             return null;

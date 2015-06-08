@@ -9,7 +9,7 @@ import com.vituel.dndplayer.activity.abstraction.AbstractEditActivity;
 import com.vituel.dndplayer.model.Skill;
 import com.vituel.dndplayer.model.effect.ModifierSource;
 
-import static com.vituel.dndplayer.util.ActivityUtil.setSpinnerSelection;
+import static com.vituel.dndplayer.util.app.ActivityUtil.setSpinnerSelection;
 
 /**
  * Created by Victor on 30/03/14.

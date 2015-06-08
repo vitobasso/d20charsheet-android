@@ -34,7 +34,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     public static final String TAG = SQLiteHelper.class.getSimpleName();
 
-    public static final String DATABASE_NAME = "dndplayer.db";
+    public static final String DATABASE_NAME = "d20charsheet.db";
     public static final int DATABASE_VERSION = 1;
 
     public static final String COLUMN_ID = "_id";
