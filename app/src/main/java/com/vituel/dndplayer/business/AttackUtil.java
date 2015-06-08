@@ -1,4 +1,4 @@
-package com.vituel.dndplayer.util;
+package com.vituel.dndplayer.business;
 
 import com.vituel.dndplayer.model.Critical;
 import com.vituel.dndplayer.model.DiceRoll;
@@ -25,10 +25,18 @@ public class AttackUtil {
         return values;
     }
 
+    public static WeaponProperties unnarmedStrike(){
+        //TODO monk dmg
+        WeaponProperties weapon = new WeaponProperties();
+        weapon.setName("$unnarmed_strike");
+        weapon.setDamage(new DiceRoll("1d6"));
+        weapon.setCritical(new Critical(1, 2));
+        return weapon;
+    }
+
     /**
      * Groups Attacks by weapon and builds the bonus sequence string for each weapon.
      *
-     * @param attacks All attacks in an attack round
      * @return Map with representative Attacks as key and the bonuses string as values
      *
      * TODO decide if it's necessary to have independent damage or critical values
@@ -36,38 +44,43 @@ public class AttackUtil {
      * If so, group them based on an "equals" test.
      *
      */
-    public static Map<Attack, String> groupBonusByWeapon(List<Attack> attacks) {
-        Map<Attack, String> grouped = new TreeMap<>(new Comparator<Attack>() {
-            @Override
-            public int compare(Attack lhs, Attack rhs) {
-                //order according to the enum definition
-                return lhs.getWeaponReference().compareTo(rhs.getWeaponReference());
-            }
-        });
-
-        for (Attack attack : attacks) {
-
-            // check if this one is part of a group already picked
-            boolean contains = false;
-            for (Attack groupedAttack : grouped.keySet()) {
-                if (isSameWeapon(attack, groupedAttack)) {
-                    contains = true;
-                    break;
-                }
-            }
-
-            // if it's a new group, add it to the list with the bonus of each member
-            if (!contains) {
-                List<Integer> bonuses = selectBonusesForAttackGroup(attacks, attack);
-                String bonusesString = attackBonusesToString(bonuses);
-                grouped.put(attack, bonusesString);
-            }
-
+    public static Map<Attack, String> groupBonusByWeapon(AttackRound attackRound) {
+        List<Attack> allAttacks = attackRound.getAttacks();
+        Map<Attack, String> grouping = new TreeMap<>(sortByWeapon());
+        for (Attack attack : allAttacks) {
+            addAllBonusesWithSameWeapon(attack, allAttacks, grouping);
         }
-        return grouped;
+        return grouping;
     }
 
-    private static List<Integer> selectBonusesForAttackGroup(List<Attack> list, Attack example) {
+    private static Comparator<Attack> sortByWeapon() {
+        //order according to the enum definition
+        return new Comparator<Attack>() {
+            @Override
+            public int compare(Attack lhs, Attack rhs) {
+                return lhs.getWeaponReference().compareTo(rhs.getWeaponReference());
+            }
+        };
+    }
+
+    private static void addAllBonusesWithSameWeapon(Attack attack, List<Attack> allAttacks, Map<Attack, String> grouping) {
+        if (!isWeaponInMap(attack, grouping)) {
+            List<Integer> bonuses = getAllBonusesOnSameWeapon(allAttacks, attack);
+            String bonusesString = buildAttackBonusString(bonuses);
+            grouping.put(attack, bonusesString);
+        }
+    }
+
+    private static boolean isWeaponInMap(Attack attack, Map<Attack, String> grouping) {
+        for (Attack groupedAttack : grouping.keySet()) {
+            if (isSameWeapon(attack, groupedAttack)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static List<Integer> getAllBonusesOnSameWeapon(List<Attack> list, Attack example) {
         List<Integer> bonuses = new ArrayList<>();
         for (Attack attack : list) {
             if (isSameWeapon(attack, example)) {
@@ -77,7 +90,7 @@ public class AttackUtil {
         return bonuses;
     }
 
-    private static String attackBonusesToString(List<Integer> values) {
+    private static String buildAttackBonusString(List<Integer> values) {
         StringBuilder str = new StringBuilder();
         for (int value : values) {
             if (value >= 0) {
@@ -90,17 +103,8 @@ public class AttackUtil {
         return str.toString();
     }
 
-    private static boolean isSameWeapon(Attack attack1, Attack attack2){
-        return attack1.getWeaponReference() == attack2.getWeaponReference();
-    }
-
-    public static WeaponProperties unnarmedStrike(){
-        //TODO monk dmg
-        WeaponProperties weapon = new WeaponProperties();
-        weapon.setName("$unnarmed_strike");
-        weapon.setDamage(new DiceRoll("1d6"));
-        weapon.setCritical(new Critical(1, 2));
-        return weapon;
+    private static boolean isSameWeapon(Attack left, Attack right){
+        return left.getWeaponReference() == right.getWeaponReference();
     }
 
     public static WeaponProperties getRepresentativeWeapon(AttackRound round, Attack.WeaponReference refType){

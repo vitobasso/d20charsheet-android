@@ -15,7 +15,7 @@ import java.util.List;
 
 import static com.vituel.dndplayer.model.Clazz.AttackProgression;
 import static com.vituel.dndplayer.model.Clazz.ResistProgression;
-import static com.vituel.dndplayer.util.JavaUtil.getAndIfOverflowsCreate;
+import static com.vituel.dndplayer.util.LangUtil.getAndIfOverflowsCreate;
 import static com.vituel.dndplayer.util.database.ColumnType.INTEGER;
 import static com.vituel.dndplayer.util.database.ColumnType.TEXT;
 import static com.vituel.dndplayer.util.database.SQLiteHelper.COLUMN_ID;

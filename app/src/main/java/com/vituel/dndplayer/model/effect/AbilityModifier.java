@@ -3,7 +3,7 @@ package com.vituel.dndplayer.model.effect;
 import android.content.Context;
 
 import com.vituel.dndplayer.model.DiceRoll;
-import com.vituel.dndplayer.util.JavaUtil;
+import com.vituel.dndplayer.util.LangUtil;
 import com.vituel.dndplayer.util.i18n.EnumI18n;
 
 /**
@@ -94,7 +94,7 @@ public class AbilityModifier extends Modifier {
 
     @Override
     public int hashCode() {
-        return JavaUtil.hash(target, variation, ability);
+        return LangUtil.hash(target, variation, ability);
     }
 
     @Override

@@ -9,7 +9,7 @@ import java.lang.reflect.Type;
 
 /**
  * Meant to allow customization of GUI components with hidden fields and methods in the Android framework
- * <p/>
+ *
  * Created by Victor on 10/01/14.
  */
 public class ReflectionUtil {

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.PagerFragment;
+import com.vituel.dndplayer.business.AttackUtil;
 import com.vituel.dndplayer.model.character.Attack;
 import com.vituel.dndplayer.model.character.AttackRound;
 import com.vituel.dndplayer.model.character.CharSummary;
@@ -15,7 +16,6 @@ import com.vituel.dndplayer.model.effect.ModifierSource;
 import com.vituel.dndplayer.model.effect.ModifierTarget;
 import com.vituel.dndplayer.util.ActivityUtil;
 import com.vituel.dndplayer.util.AppCommons;
-import com.vituel.dndplayer.util.AttackUtil;
 import com.vituel.dndplayer.util.font.FontUtil;
 import com.vituel.dndplayer.util.gui.GuiInflater;
 import com.vituel.dndplayer.util.gui.RecursiveViewCaller;
@@ -100,7 +100,7 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
             //TODO decide if it's necessary to have independent damage or critical values
             //on different attacks of same weapon in the same attack round.
             //If so, group them based on an "equals" test.
-            Map<Attack,String> grouped = AttackUtil.groupBonusByWeapon(attackRound.getAttacks());
+            Map<Attack,String> grouped = AttackUtil.groupBonusByWeapon(attackRound);
             for (Attack attack : grouped.keySet()) {
                 ViewGroup groupGroup = inflate(activity, roundGroup, R.layout.summary_main_attack_group);
                 setField(groupGroup, R.id.attack, grouped.get(attack), HIT, i, attack.getWeaponReference());

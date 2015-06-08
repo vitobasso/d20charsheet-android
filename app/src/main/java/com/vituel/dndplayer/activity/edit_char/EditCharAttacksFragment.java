@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 import com.vituel.dndplayer.R;
 import com.vituel.dndplayer.activity.abstraction.AbstractSimpleListFragment;
 import com.vituel.dndplayer.activity.edit.EditAttackRoundActivity;
+import com.vituel.dndplayer.business.AttackUtil;
 import com.vituel.dndplayer.dao.AttackRoundDao;
 import com.vituel.dndplayer.model.character.Attack;
 import com.vituel.dndplayer.model.character.AttackRound;
 import com.vituel.dndplayer.model.character.CharBase;
 import com.vituel.dndplayer.util.ActivityUtil;
-import com.vituel.dndplayer.util.AttackUtil;
 
 import java.util.List;
 import java.util.Map;
@@ -51,7 +51,7 @@ public class EditCharAttacksFragment extends AbstractSimpleListFragment<CharBase
 
         ViewGroup listRoot = findView(view, R.id.list);
         listRoot.removeAllViews();
-        Map<Attack, String> attackGroups = AttackUtil.groupBonusByWeapon(attackRound.getAttacks());
+        Map<Attack, String> attackGroups = AttackUtil.groupBonusByWeapon(attackRound);
         for (Attack attack : attackGroups.keySet()) {
             ViewGroup group = inflate(activity, listRoot, R.layout.edit_attack_list_group_row);
             populateTextView(group, R.id.penalties, attackGroups.get(attack));

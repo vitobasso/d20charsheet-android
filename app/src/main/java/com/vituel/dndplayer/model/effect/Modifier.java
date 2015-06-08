@@ -2,7 +2,7 @@ package com.vituel.dndplayer.model.effect;
 
 import com.vituel.dndplayer.model.AbstractEntity;
 import com.vituel.dndplayer.model.DiceRoll;
-import com.vituel.dndplayer.util.JavaUtil;
+import com.vituel.dndplayer.util.LangUtil;
 
 /**
  * Created by Victor on 25/02/14.
@@ -105,7 +105,7 @@ public class Modifier extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        return JavaUtil.hash(target, variation, amount);
+        return LangUtil.hash(target, variation, amount);
     }
 
     @Override
