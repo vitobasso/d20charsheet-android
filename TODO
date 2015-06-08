@@ -45,13 +45,24 @@ IMPROVEMENTS
     - inheritance
     - order by parent
 
+# books
+    - make it clear the checkbox is for "show/hide" (a header on the list? a toast?)
+
 # performance
     - avoid full queries when opening char
 
 FEATURES
 
     - import/export
-        - library
+        - rules
+            - import rules
+                - clear csvs after import
+                - check for updates
+                    - get last modification time from github
+                    - got o import activity from books? (and back)
+                - show time estimate
+                - show progress for download
+                - clear bad books: web, duplicate monster manual
             - how to preserve char with dependencies to removed stuff?
         - char
     - port to tablet

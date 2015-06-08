@@ -171,7 +171,7 @@ public class RulesImporter {
 
     public int getTotalFiles() {
         return 11;
-    } //TODO get w/ the csvs somehow? even row counts?
+    }
 
     private File getFile(String fileName) {
         return new File(dir, fileName);
