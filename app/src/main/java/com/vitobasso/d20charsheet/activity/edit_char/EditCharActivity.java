@@ -79,7 +79,7 @@ public class EditCharActivity extends MainNavigationActvity implements PagerActi
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.edit, menu);
+        getMenuInflater().inflate(R.menu.save, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

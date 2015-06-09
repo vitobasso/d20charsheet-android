@@ -10,9 +10,12 @@ import static android.content.Context.MODE_PRIVATE;
  */
 public class AppPreferences {
 
-    public static final String PREF = "d20charsheet";
-    public static final String PREF_LAST_OPENED_CHAR = "last_opened_character";
-    public static final String PREF_FIRST_RUN = "first_run";
+    private static final String PREF = "d20charsheet";
+    private static final String PREF_LAST_OPENED_CHAR = "last_opened_character";
+    private static final String PREF_FIRST_RUN = "first_run";
+    private static final String PREF_IMPORT_RULES_URL = "import_rules_url";
+
+    private static final String DEFAULT_IMPORT_RULES_URL = "https://api.github.com/repos/vitobasso/dnd3.5-data/tarball/";
 
     protected SharedPreferences pref;
 
@@ -42,6 +45,14 @@ public class AppPreferences {
 
     public boolean isLastOpenedCharKnown() {
         return getLastOpenedCharId() != 0;
+    }
+
+    public String getImportRulesUrl() {
+        return pref.getString(PREF_IMPORT_RULES_URL, DEFAULT_IMPORT_RULES_URL);
+    }
+
+    public void setImportRuleUrl(String url) {
+        pref.edit().putString(PREF_IMPORT_RULES_URL, url).apply();
     }
 
 }

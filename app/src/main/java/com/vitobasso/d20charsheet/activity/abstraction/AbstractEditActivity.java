@@ -39,7 +39,7 @@ public abstract class AbstractEditActivity<T extends AbstractEntity> extends Act
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.edit, menu);
+        getMenuInflater().inflate(R.menu.save, menu);
         return super.onCreateOptionsMenu(menu);
     }
 

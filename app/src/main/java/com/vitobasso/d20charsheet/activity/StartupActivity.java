@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.vitobasso.d20charsheet.activity.edit_char.EditCharActivity;
+import com.vitobasso.d20charsheet.activity.rules.ImportRulesActivity;
 import com.vitobasso.d20charsheet.activity.select.SelectCharActivity;
 import com.vitobasso.d20charsheet.activity.summary.SummaryActivity;
 import com.vitobasso.d20charsheet.dao.entity.CharDao;

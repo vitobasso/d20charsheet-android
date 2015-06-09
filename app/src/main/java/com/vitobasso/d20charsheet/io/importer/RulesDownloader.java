@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import com.vitobasso.d20charsheet.util.LoggingUtil;
+import com.vitobasso.d20charsheet.util.app.AppPreferences;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
@@ -36,9 +37,6 @@ public class RulesDownloader {
 
     public static final String TAG = RulesDownloader.class.getSimpleName();
 
-    public static final String GITHUB_USER = "vitobasso";
-    public static final String GITHUB_REPO = "dnd3.5-data";
-    public static final String ARCHIVE_URL = "https://api.github.com/repos/" + GITHUB_USER + "/" + GITHUB_REPO + "/tarball/";
     public static final String DIR_NAME = "rules_csv";
     public static final String ARCHIVE_FILE_NAME = "rules.tar.gz";
 
@@ -46,10 +44,12 @@ public class RulesDownloader {
     private Archiver archiver = ArchiverFactory.createArchiver(TAR, GZIP);
     private Context context;
     private DownloadObserver observer;
+    private String rulesUrl;
 
     public RulesDownloader(Context context, DownloadObserver observer) {
         this.context = context;
         this.observer = observer;
+        this.rulesUrl = new AppPreferences(context).getImportRulesUrl();
     }
 
     public void download() {
@@ -70,8 +70,8 @@ public class RulesDownloader {
 
     private void downloadArchive() throws IOException {
         observer.onBeginPhase(DOWNLOAD);
-        Log.i(TAG, "Downloading " + ARCHIVE_URL);
-        HttpGet request = new HttpGet(ARCHIVE_URL);
+        Log.i(TAG, "Downloading from " + rulesUrl);
+        HttpGet request = new HttpGet(rulesUrl);
         HttpResponse response = client.execute(request);
         StatusLine status = response.getStatusLine();
         if (status.getStatusCode() / 100 == 2) {
@@ -125,13 +125,20 @@ public class RulesDownloader {
 
     private File findExtractedDir() {
         for (File file : getRulesDir().listFiles()) {
-            // the name of the root dir inside the archive returned by Github is expected to follow this pattern
-            String prefix = GITHUB_USER + "-" + GITHUB_REPO;
-            if (file.isDirectory() && file.getName().startsWith(prefix)) {
+            if (file.isDirectory() && containsCsvFiles(file)) {
                 return file;
             }
         }
         return null;
+    }
+
+    private boolean containsCsvFiles(File dir) {
+        for (File file : dir.listFiles()) {
+            if (file.getName().endsWith(".csv")) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void clearDir() throws IOException {

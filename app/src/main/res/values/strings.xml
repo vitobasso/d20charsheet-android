@@ -221,6 +221,9 @@
     <string name="extracting">Extracting…</string>
     <string name="cleaning">Cleaning…</string>
     <string name="importing">Importing…</string>
-    <string name="failed_rules_download">Failed to download rules.</string>
+    <string name="failed_rules_download">Failed to import rules.</string>
+    <string name="import_rules">Import rules</string>
+    <string name="import_rules_dialog_message">Import rules from url…</string>
+    <string name="import_rules_dialog_invalid_url">Not a valid url.</string>
 
 </resources>

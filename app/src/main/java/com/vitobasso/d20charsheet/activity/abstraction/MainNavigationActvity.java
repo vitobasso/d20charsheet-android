@@ -10,7 +10,7 @@ import android.widget.ArrayAdapter;
 
 import com.vitobasso.d20charsheet.R;
 import com.vitobasso.d20charsheet.activity.edit_char.EditCharActivity;
-import com.vitobasso.d20charsheet.activity.select.SelectBooksActivity;
+import com.vitobasso.d20charsheet.activity.rules.SelectBooksActivity;
 import com.vitobasso.d20charsheet.activity.select.SelectCharActivity;
 import com.vitobasso.d20charsheet.activity.summary.SummaryActivity;
 import com.vitobasso.d20charsheet.util.app.ActivityUtil;

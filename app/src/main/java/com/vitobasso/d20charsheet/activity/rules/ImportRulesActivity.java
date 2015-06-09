@@ -1,4 +1,4 @@
-package com.vitobasso.d20charsheet.activity;
+package com.vitobasso.d20charsheet.activity.rules;
 
 import android.app.Activity;
 import android.content.Intent;

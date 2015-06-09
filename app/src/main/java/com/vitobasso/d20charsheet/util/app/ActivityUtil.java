@@ -98,9 +98,9 @@ public class ActivityUtil {
     }
 
     @SuppressWarnings("unchecked")
-    public static <T extends View> T inflateDisatached(Context context, ViewGroup parent, int layout) {
-        return (T) ((LayoutInflater) context.getSystemService(
-                Context.LAYOUT_INFLATER_SERVICE)).inflate(layout, parent, false);
+    public static <T extends View> T inflateDetached(Context context, ViewGroup parent, int layout) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        return (T) inflater.inflate(layout, parent, false);
     }
 
     public static Fragment findFragment(FragmentActivity activity, ViewPager pager, int position) {

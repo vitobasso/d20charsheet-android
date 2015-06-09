@@ -1,4 +1,4 @@
-package com.vitobasso.d20charsheet.activity.select;
+package com.vitobasso.d20charsheet.activity.rules;
 
 import android.os.Bundle;
 import android.view.Menu;
@@ -176,7 +176,8 @@ public class SelectBooksActivity extends MainNavigationActvity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.edit, menu);
+        getMenuInflater().inflate(R.menu.save, menu);
+        getMenuInflater().inflate(R.menu.download, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -185,16 +186,22 @@ public class SelectBooksActivity extends MainNavigationActvity {
         super.onOptionsItemSelected(item);
         switch (item.getItemId()) {
             case R.id.action_save:
-                if(base != null) { // should be null in first run (before char was created)
-                    saveCharBooks();
-                }
-                updateCharBooksInMemory();
-                finish();
+                onClickSave();
                 return true;
-
+            case R.id.action_download:
+                onClickDownload();
+                return true;
             default:
                 return false;
         }
+    }
+
+    private void onClickSave() {
+        if(base != null) { // should be null in first run (before char was created)
+            saveCharBooks();
+        }
+        updateCharBooksInMemory();
+        finish();
     }
 
     private void updateCharBooksInMemory() {
@@ -206,6 +213,10 @@ public class SelectBooksActivity extends MainNavigationActvity {
         CharBookDao charBookDao = new CharBookDao(this);
         charBookDao.saveOverwrite(base.getId(), checkedBooks);
         charBookDao.close();
+    }
+
+    private void onClickDownload() {
+        new RulesDownloadDialogBuilder(activity).showDialog();
     }
 
 }

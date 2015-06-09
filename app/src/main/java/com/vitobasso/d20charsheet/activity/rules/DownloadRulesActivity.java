@@ -1,4 +1,4 @@
-package com.vitobasso.d20charsheet.activity;
+package com.vitobasso.d20charsheet.activity.rules;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -51,7 +51,7 @@ public class DownloadRulesActivity extends Activity implements DownloadObserver 
     private class DownloadTask extends Task {
         @Override
         protected void performDownloaderAction() {
-            downloader.download();
+            downloader.download(); //TODO tell user about exception: can't find, unexpected file, etc
         }
     }
 
@@ -115,7 +115,6 @@ public class DownloadRulesActivity extends Activity implements DownloadObserver 
                 throw new IllegalStateException();
         }
     }
-
 
     private abstract class Task extends AsyncTask<Void, Void, Exception> {
 

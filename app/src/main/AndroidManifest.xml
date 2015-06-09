@@ -32,11 +32,11 @@
             android:label="@string/edit"/>
 
         <activity
-            android:name=".activity.DownloadRulesActivity"
+            android:name=".activity.rules.DownloadRulesActivity"
             android:label="@string/loading"/>
 
         <activity
-            android:name=".activity.ImportRulesActivity"
+            android:name=".activity.rules.ImportRulesActivity"
             android:label="@string/loading"/>
 
         <activity
@@ -44,7 +44,7 @@
             android:label="@string/chars"/>
 
         <activity
-            android:name=".activity.select.SelectBooksActivity"
+            android:name=".activity.rules.SelectBooksActivity"
             android:label="@string/rulebooks"/>
 
         <activity
