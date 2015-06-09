@@ -9,11 +9,14 @@ import android.util.Log;
 import android.widget.ProgressBar;
 
 import com.vitobasso.d20charsheet.R;
-import com.vitobasso.d20charsheet.io.downloader.DownloadObserver;
-import com.vitobasso.d20charsheet.io.downloader.RulesDownloadException;
-import com.vitobasso.d20charsheet.io.downloader.RulesDownloader;
+import com.vitobasso.d20charsheet.io.importer.DownloadObserver;
+import com.vitobasso.d20charsheet.io.importer.RulesDownloadException;
+import com.vitobasso.d20charsheet.io.importer.RulesDownloader;
 
-import static com.vitobasso.d20charsheet.io.downloader.DownloadObserver.Phase.DOWNLOAD;
+import static com.vitobasso.d20charsheet.io.importer.DownloadObserver.Phase.DOWNLOAD;
+import static com.vitobasso.d20charsheet.util.app.ActivityUtil.EXTRA_MODE;
+import static com.vitobasso.d20charsheet.util.app.ActivityUtil.REQUEST_CLEAR;
+import static com.vitobasso.d20charsheet.util.app.ActivityUtil.REQUEST_LOAD;
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.RESULT_FAILED;
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.findView;
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.populateTextView;
@@ -33,31 +36,29 @@ public class DownloadRulesActivity extends Activity implements DownloadObserver 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.import_download);
         progressBar = findView(this, R.id.progress);
-        new Task().execute();
+        performTask();
     }
 
-    private class Task extends AsyncTask<Void, Void, Exception> {
-
-        @Override
-        protected Exception doInBackground(Void... params) {
-            try {
-                RulesDownloader downloader = new RulesDownloader(activity, activity);
-                downloader.download();
-                return null;
-            } catch (RulesDownloadException e) {
-                Log.e(TAG, "Failed to download rules", e);
-                return e;
-            }
+    private void performTask() {
+        int mode = getIntent().getIntExtra(EXTRA_MODE, REQUEST_LOAD);
+        if (mode == REQUEST_CLEAR) {
+            new ClearTask().execute();
+        } else {
+            new DownloadTask().execute();
         }
+    }
 
+    private class DownloadTask extends Task {
         @Override
-        protected void onPostExecute(Exception exception) {
-            if (exception == null) {
-                setResult(RESULT_OK);
-            } else {
-                setResult(RESULT_FAILED);
-            }
-            finish();
+        protected void performDownloaderAction() {
+            downloader.download();
+        }
+    }
+
+    private class ClearTask extends Task {
+        @Override
+        protected void performDownloaderAction() {
+            downloader.clear();
         }
     }
 
@@ -91,7 +92,14 @@ public class DownloadRulesActivity extends Activity implements DownloadObserver 
     }
 
     private void updateProgressNumbers(long bytesRead, long totalBytes) {
-        String progress = bytesRead + "/" + totalBytes;
+        long readKb = bytesRead / 1024;
+        long totalKb = totalBytes / 1024;
+        String progress;
+        if (totalKb > 0) {
+            progress = readKb + "/" + totalKb + " kB";
+        } else {
+            progress = readKb + " kB";
+        }
         populateTextView(activity, R.id.progress_numbers, progress);
     }
 
@@ -107,5 +115,39 @@ public class DownloadRulesActivity extends Activity implements DownloadObserver 
                 throw new IllegalStateException();
         }
     }
+
+
+    private abstract class Task extends AsyncTask<Void, Void, Exception> {
+
+        protected RulesDownloader downloader = new RulesDownloader(activity, activity);
+
+        @Override
+        protected Exception doInBackground(Void... params) {
+            try {
+                performDownloaderAction();
+                return null;
+            } catch (RulesDownloadException e) {
+                Log.e(TAG, "Failed to peform rule import task.", e);
+                return e;
+            }
+        }
+
+        protected abstract void performDownloaderAction();
+
+        @Override
+        protected void onPostExecute(Exception exception) {
+            finishTask(exception);
+        }
+    }
+
+    private void finishTask(Exception exception) {
+        if (exception == null) {
+            setResult(RESULT_OK);
+        } else {
+            setResult(RESULT_FAILED);
+        }
+        finish();
+    }
+
 
 }

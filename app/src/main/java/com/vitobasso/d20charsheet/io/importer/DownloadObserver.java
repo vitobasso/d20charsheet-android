@@ -1,4 +1,4 @@
-package com.vitobasso.d20charsheet.io.downloader;
+package com.vitobasso.d20charsheet.io.importer;
 
 /**
  * Created by Victor on 04/06/2015.

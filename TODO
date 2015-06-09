@@ -56,12 +56,9 @@ FEATURES
     - import/export
         - rules
             - import rules
-                - clear csvs after import
                 - check for updates
                     - get last modification time from github
-                    - got o import activity from books? (and back)
-                - show time estimate
-                - show progress for download
+                    - go to import activity from books? (and back)
                 - clear bad books: web, duplicate monster manual
             - how to preserve char with dependencies to removed stuff?
         - char

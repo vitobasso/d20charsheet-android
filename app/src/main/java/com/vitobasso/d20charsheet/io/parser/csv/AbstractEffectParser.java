@@ -2,7 +2,7 @@ package com.vitobasso.d20charsheet.io.parser.csv;
 
 import android.content.Context;
 
-import com.vitobasso.d20charsheet.io.parser.RulesImporter;
+import com.vitobasso.d20charsheet.io.importer.RulesImporter;
 import com.vitobasso.d20charsheet.io.parser.exception.ParseFieldException;
 import com.vitobasso.d20charsheet.io.parser.exception.ParseFormatException;
 import com.vitobasso.d20charsheet.io.parser.exception.ParseNullValueException;

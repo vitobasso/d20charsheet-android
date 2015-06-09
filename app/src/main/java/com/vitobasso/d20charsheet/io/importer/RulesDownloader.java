@@ -1,4 +1,4 @@
-package com.vitobasso.d20charsheet.io.downloader;
+package com.vitobasso.d20charsheet.io.importer;
 
 import android.content.Context;
 import android.util.Log;
@@ -21,9 +21,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static com.vitobasso.d20charsheet.io.downloader.DownloadObserver.Phase.CLEAN;
-import static com.vitobasso.d20charsheet.io.downloader.DownloadObserver.Phase.DOWNLOAD;
-import static com.vitobasso.d20charsheet.io.downloader.DownloadObserver.Phase.EXTRACT;
+import static com.vitobasso.d20charsheet.io.importer.DownloadObserver.Phase.CLEAN;
+import static com.vitobasso.d20charsheet.io.importer.DownloadObserver.Phase.DOWNLOAD;
+import static com.vitobasso.d20charsheet.io.importer.DownloadObserver.Phase.EXTRACT;
+import static org.apache.commons.io.FileUtils.deleteQuietly;
 import static org.apache.commons.io.FileUtils.forceDelete;
 import static org.rauschig.jarchivelib.ArchiveFormat.TAR;
 import static org.rauschig.jarchivelib.CompressionType.GZIP;
@@ -142,6 +143,10 @@ public class RulesDownloader {
         if (!dir.mkdirs()) {
             throw new RulesDownloadException("Filed to create file: " + dir.getAbsolutePath());
         }
+    }
+
+    public void clear() {
+        deleteQuietly(getRulesDir());
     }
 
     private File getArchiveFile() {

@@ -41,6 +41,7 @@ public class ActivityUtil {
     public static final int REQUEST_SELECT_CLASS = 5;
     public static final int REQUEST_LOAD = 6;
     public static final int REQUEST_CHAR = 7;
+    public static final int REQUEST_CLEAR = 8;
 
     public static final int RESULT_FAILED = 2;
 

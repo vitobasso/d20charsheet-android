@@ -1,4 +1,4 @@
-package com.vitobasso.d20charsheet.io.parser;
+package com.vitobasso.d20charsheet.io.importer;
 
 import android.content.Context;
 import android.database.SQLException;
@@ -17,7 +17,6 @@ import com.vitobasso.d20charsheet.dao.entity.ItemDao;
 import com.vitobasso.d20charsheet.dao.entity.RaceDao;
 import com.vitobasso.d20charsheet.dao.entity.SkillDao;
 import com.vitobasso.d20charsheet.dao.entity.TempEffectDao;
-import com.vitobasso.d20charsheet.io.downloader.RulesDownloader;
 import com.vitobasso.d20charsheet.io.parser.csv.AbstractEntityParser;
 import com.vitobasso.d20charsheet.io.parser.csv.BookParser;
 import com.vitobasso.d20charsheet.io.parser.csv.ClassParser;
@@ -106,7 +105,7 @@ public class RulesImporter {
 
     private <T extends AbstractEntity> void tryImportCsv(AbstractEntityParser<T> parser, int displayNameRes, AbstractDao<T> dao) throws IOException {
         String displayName = ctx.getResources().getString(displayNameRes);
-        observer.onStartFile(displayName);
+        observer.onBeginFile(displayName);
         while (parser.hasNext()) {
             importBatch(parser, dao);
         }

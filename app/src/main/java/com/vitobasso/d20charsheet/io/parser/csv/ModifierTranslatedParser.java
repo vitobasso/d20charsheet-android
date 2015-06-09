@@ -1,6 +1,6 @@
 package com.vitobasso.d20charsheet.io.parser.csv;
 
-import com.vitobasso.d20charsheet.io.parser.RulesImporter;
+import com.vitobasso.d20charsheet.io.importer.RulesImporter;
 import com.vitobasso.d20charsheet.io.parser.exception.ParseModifierException;
 import com.vitobasso.d20charsheet.model.effect.Condition;
 import com.vitobasso.d20charsheet.model.effect.Modifier;

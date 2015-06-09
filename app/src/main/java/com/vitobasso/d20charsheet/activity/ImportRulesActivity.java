@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
 import com.vitobasso.d20charsheet.R;
-import com.vitobasso.d20charsheet.io.parser.ImporterObserver;
-import com.vitobasso.d20charsheet.io.parser.RulesImporter;
+import com.vitobasso.d20charsheet.io.importer.ImporterObserver;
+import com.vitobasso.d20charsheet.io.importer.RulesImporter;
 
+import static com.vitobasso.d20charsheet.util.app.ActivityUtil.EXTRA_MODE;
+import static com.vitobasso.d20charsheet.util.app.ActivityUtil.REQUEST_CLEAR;
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.REQUEST_LOAD;
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.findView;
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.inflate;
@@ -38,13 +40,20 @@ public class ImportRulesActivity extends Activity implements ImporterObserver {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        switch (resultCode) {
-            case RESULT_OK:
-                populateTextView(activity, R.id.message, getString(R.string.importing));
-                new Task().execute();
+        switch (requestCode) {
+            case REQUEST_LOAD:
+                switch (resultCode) {
+                    case RESULT_OK:
+                        populateTextView(activity, R.id.message, getString(R.string.importing));
+                        new Task().execute();
+                        break;
+                    default:
+                        showErrorMessage();
+                }
                 break;
-            default:
-                showErrorMessage();
+            case REQUEST_CLEAR:
+                setResult(RESULT_OK);
+                finish();
         }
     }
 
@@ -52,21 +61,25 @@ public class ImportRulesActivity extends Activity implements ImporterObserver {
 
         @Override
         protected Void doInBackground(Void... params) {
-            RulesImporter loader = new RulesImporter(activity, activity);
-            progressBar.setMax(loader.getTotalFiles());
-            loader.importCsvs();
+            importRules();
             return null;
         }
 
         @Override
         protected void onPostExecute(Void aVoid) {
-            setResult(RESULT_OK);
-            finish();
+            goToClearDir();
         }
 
     }
+
+    private void importRules() {
+        RulesImporter loader = new RulesImporter(activity, activity);
+        progressBar.setMax(loader.getTotalFiles());
+        loader.importCsvs();
+    }
+
     @Override
-    public void onStartFile(final String fileName) {
+    public void onBeginFile(final String fileName) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
@@ -90,7 +103,14 @@ public class ImportRulesActivity extends Activity implements ImporterObserver {
 
     private void goToDownload() {
         Intent intent = new Intent(this, DownloadRulesActivity.class);
+        intent.putExtra(EXTRA_MODE, REQUEST_LOAD);
         startActivityForResult(intent, REQUEST_LOAD);
+    }
+
+    private void goToClearDir() {
+        Intent intent = new Intent(this, DownloadRulesActivity.class);
+        intent.putExtra(EXTRA_MODE, REQUEST_CLEAR);
+        startActivityForResult(intent, REQUEST_CLEAR);
     }
 
     private void showErrorMessage() {
