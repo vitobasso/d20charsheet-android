@@ -220,6 +220,7 @@
     <string name="downloading">Downloading…</string>
     <string name="extracting">Extracting…</string>
     <string name="cleaning">Cleaning…</string>
+    <string name="importing">Importing…</string>
     <string name="failed_rules_download">Failed to download rules.</string>
 
 </resources>

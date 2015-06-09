@@ -33,12 +33,6 @@ public class DownloadRulesActivity extends Activity implements DownloadObserver 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.import_download);
         progressBar = findView(this, R.id.progress);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //TODO check if not executing (in case screen went off and on again)
         new Task().execute();
     }
 
@@ -81,16 +75,24 @@ public class DownloadRulesActivity extends Activity implements DownloadObserver 
 
     @Override
     public void onProgress(final long bytesRead, final long totalBytes) {
-        final String progress = bytesRead + "/" + totalBytes;
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                populateTextView(activity, R.id.progress_numbers, progress);
-                progressBar.setMax(100);
-                int percentage = (int) (bytesRead * 100 / totalBytes);
-                progressBar.setProgress(percentage);
+                updateProgressBar(bytesRead, totalBytes);
+                updateProgressNumbers(bytesRead, totalBytes);
             }
         });
+    }
+
+    private void updateProgressBar(long bytesRead, long totalBytes) {
+        progressBar.setMax(100);
+        int percentage = (int) (bytesRead * 100 / totalBytes);
+        progressBar.setProgress(percentage);
+    }
+
+    private void updateProgressNumbers(long bytesRead, long totalBytes) {
+        String progress = bytesRead + "/" + totalBytes;
+        populateTextView(activity, R.id.progress_numbers, progress);
     }
 
     private int getMessageResource(Phase phase) {

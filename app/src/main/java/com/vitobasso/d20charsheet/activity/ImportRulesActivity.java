@@ -40,6 +40,7 @@ public class ImportRulesActivity extends Activity implements ImporterObserver {
         super.onActivityResult(requestCode, resultCode, data);
         switch (resultCode) {
             case RESULT_OK:
+                populateTextView(activity, R.id.message, getString(R.string.importing));
                 new Task().execute();
                 break;
             default:
