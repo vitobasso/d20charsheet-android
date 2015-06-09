@@ -5,8 +5,12 @@ package com.vitobasso.d20charsheet.io.downloader;
  */
 public interface DownloadObserver {
 
-    void onBeginStage(String name);
+    public enum Phase {
+        CLEAN, DOWNLOAD, EXTRACT
+    }
 
-    void onProgress(int progress);
+    void onBeginPhase(Phase name);
+
+    void onProgress(long progress, long totalBytes);
 
 }

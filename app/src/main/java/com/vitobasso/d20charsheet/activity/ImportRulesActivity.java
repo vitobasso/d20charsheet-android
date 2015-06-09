@@ -30,7 +30,7 @@ public class ImportRulesActivity extends Activity implements ImporterObserver {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.progress);
+        setContentView(R.layout.import_parse);
         progressBar = findView(this, R.id.progress);
         goToDownload();
     }
@@ -71,7 +71,7 @@ public class ImportRulesActivity extends Activity implements ImporterObserver {
             public void run() {
                 int prog = progressBar.getProgress();
                 progressBar.setProgress(prog + 1);
-                currentRow = inflate(activity, R.id.list, R.layout.progress_row);
+                currentRow = inflate(activity, R.id.list, R.layout.import_parse_row);
                 populateTextView(currentRow, R.id.table, fileName);
             }
         });
@@ -94,7 +94,7 @@ public class ImportRulesActivity extends Activity implements ImporterObserver {
 
     private void showErrorMessage() {
         String message = activity.getString(R.string.failed_rules_download);
-        populateTextView(activity, R.id.name, message);
+        populateTextView(activity, R.id.message, message);
     }
 
 }

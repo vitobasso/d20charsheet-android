@@ -10,10 +10,10 @@ import android.widget.ProgressBar;
 
 import com.vitobasso.d20charsheet.R;
 import com.vitobasso.d20charsheet.io.downloader.DownloadObserver;
+import com.vitobasso.d20charsheet.io.downloader.RulesDownloadException;
 import com.vitobasso.d20charsheet.io.downloader.RulesDownloader;
 
-import java.io.IOException;
-
+import static com.vitobasso.d20charsheet.io.downloader.DownloadObserver.Phase.DOWNLOAD;
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.RESULT_FAILED;
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.findView;
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.populateTextView;
@@ -26,13 +26,13 @@ public class DownloadRulesActivity extends Activity implements DownloadObserver 
     public static final String TAG = DownloadRulesActivity.class.getSimpleName();
 
     private DownloadRulesActivity activity = this;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.progress);
-        ProgressBar progressBar = findView(this, R.id.progress);
-        progressBar.setIndeterminate(true);
+        setContentView(R.layout.import_download);
+        progressBar = findView(this, R.id.progress);
     }
 
     @Override
@@ -48,9 +48,9 @@ public class DownloadRulesActivity extends Activity implements DownloadObserver 
         protected Exception doInBackground(Void... params) {
             try {
                 RulesDownloader downloader = new RulesDownloader(activity, activity);
-                downloader.downloadRules();
+                downloader.download();
                 return null;
-            } catch (IOException e) {
+            } catch (RulesDownloadException e) {
                 Log.e(TAG, "Failed to download rules", e);
                 return e;
             }
@@ -68,18 +68,42 @@ public class DownloadRulesActivity extends Activity implements DownloadObserver 
     }
 
     @Override
-    public void onBeginStage(final String name) {
+    public void onBeginPhase(final Phase phase) {
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
-                populateTextView(activity, R.id.name, name);
+                progressBar.setIndeterminate(phase != DOWNLOAD);
+                String message = activity.getString(getMessageResource(phase));
+                populateTextView(activity, R.id.message, message);
             }
         });
     }
 
     @Override
-    public void onProgress(int progress) {
+    public void onProgress(final long bytesRead, final long totalBytes) {
+        final String progress = bytesRead + "/" + totalBytes;
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                populateTextView(activity, R.id.progress_numbers, progress);
+                progressBar.setMax(100);
+                int percentage = (int) (bytesRead * 100 / totalBytes);
+                progressBar.setProgress(percentage);
+            }
+        });
+    }
 
+    private int getMessageResource(Phase phase) {
+        switch (phase) {
+            case CLEAN:
+                return R.string.cleaning;
+            case DOWNLOAD:
+                return R.string.downloading;
+            case EXTRACT:
+                return R.string.extracting;
+            default:
+                throw new IllegalStateException();
+        }
     }
 
 }

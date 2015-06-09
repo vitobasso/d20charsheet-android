@@ -217,7 +217,6 @@
     <string name="dmg_nonlethal">Dano por Contusão</string>
     <string name="dmg_lethal">Dano Letal</string>
     <string name="attack_round_name_hint">Por padrão o nome da arma equipada</string>
-    <string name="preparing">Preparando…</string>
     <string name="downloading">Baixando…</string>
     <string name="extracting">Extraindo…</string>
     <string name="cleaning">Limpando…</string>

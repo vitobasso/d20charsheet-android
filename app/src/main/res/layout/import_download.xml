@@ -14,19 +14,21 @@
         android:indeterminate="false"
         android:layout_centerVertical="true"/>
 
-    <LinearLayout
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_below="@id/progress"/>
-
     <TextView
-        android:id="@+id/name"
+        android:id="@+id/message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/list"
+        android:layout_above="@id/progress"
         android:layout_centerHorizontal="true"
+        android:layout_margin="@dimen/standard_padding"/>
+
+    <TextView
+        android:id="@+id/progress_numbers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/progress"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
         android:layout_margin="@dimen/standard_padding"/>
 
 </RelativeLayout>
