@@ -21,7 +21,7 @@ import static com.vitobasso.d20charsheet.util.app.ActivityUtil.REQUEST_LOAD;
 /**
  * Created by Victor on 09/06/2015.
  */
-public class RulesDownloadDialogBuilder {
+public class RulesDownloadDialog {
 
     private Activity activity;
     private AppPreferences pref;
@@ -30,7 +30,7 @@ public class RulesDownloadDialogBuilder {
     private EditText editText;
     private AlertDialog dialog;
 
-    public RulesDownloadDialogBuilder(Activity activity) {
+    public RulesDownloadDialog(Activity activity) {
         this.activity = activity;
         this.pref = new AppPreferences(activity);
         this.builder = new AlertDialog.Builder(activity);
@@ -38,8 +38,7 @@ public class RulesDownloadDialogBuilder {
 
     public void showDialog() {
         setupButtons(builder);
-        String message = activity.getString(R.string.import_rules_dialog_message);
-        builder.setMessage(message);
+        setupTitle();
         setupEditText(builder);
 
         dialog = builder.create();
@@ -48,13 +47,18 @@ public class RulesDownloadDialogBuilder {
     }
 
     private void setupButtons(AlertDialog.Builder builder) {
-        builder.setPositiveButton(activity.getString(android.R.string.ok), null); //overriden after show()
+        builder.setPositiveButton(activity.getString(R.string.import_confirm), null); //to be overriden after dialog.show()
         builder.setNegativeButton(activity.getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
         });
+    }
+
+    private void setupTitle() {
+        String title = activity.getString(R.string.import_rules);
+        builder.setTitle(title);
     }
 
     private void setupEditText(AlertDialog.Builder builder) {
@@ -69,12 +73,12 @@ public class RulesDownloadDialogBuilder {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onClickOk();
+                onClickConfirm();
             }
         });
     }
 
-    private void onClickOk() {
+    private void onClickConfirm() {
         String text = editText.getText().toString();
         if (validateRulesUrl(text)) {
             goToImportWithNewUrl(text);
@@ -101,11 +105,10 @@ public class RulesDownloadDialogBuilder {
     private void goToImport() {
         Intent intent = new Intent(activity, ImportRulesActivity.class);
         activity.startActivityForResult(intent, REQUEST_LOAD);
-        //TODO handle existing ids
     }
 
     private void showInvalidUrlMessage() {
-        String message = activity.getString(R.string.import_rules_dialog_invalid_url);
+        String message = activity.getString(R.string.import_dialog_invalid_url);
         editText.setError(message);
     }
 

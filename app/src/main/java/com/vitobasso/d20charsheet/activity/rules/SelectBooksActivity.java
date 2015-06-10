@@ -216,7 +216,7 @@ public class SelectBooksActivity extends MainNavigationActvity {
     }
 
     private void onClickDownload() {
-        new RulesDownloadDialogBuilder(activity).showDialog();
+        new RulesDownloadDialog(activity).showDialog();
     }
 
 }

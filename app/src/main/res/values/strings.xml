@@ -203,7 +203,6 @@
     <string name="failed_saving">Falied when saving to file.</string>
     <string name="cant_be_empty">Can\'t be empty</string>
     <string name="rulebooks">Rule books</string>
-    <string name="loading">Importing rules…</string>
     <string name="open">Open</string>
     <string name="close">Close</string>
     <string name="editions">Editions</string>
@@ -217,13 +216,15 @@
     <string name="dmg_nonlethal">Nonlethal damage</string>
     <string name="dmg_lethal">Lethal damage</string>
     <string name="attack_round_name_hint">By default the name of the equipped weapon</string>
+    <string name="importing_rules">Importing rules…</string>
     <string name="downloading">Downloading…</string>
     <string name="extracting">Extracting…</string>
-    <string name="cleaning">Cleaning…</string>
     <string name="importing">Importing…</string>
+    <string name="cleaning">Cleaning…</string>
     <string name="failed_rules_download">Failed to import rules.</string>
     <string name="import_rules">Import rules</string>
-    <string name="import_rules_dialog_message">Import rules from url…</string>
-    <string name="import_rules_dialog_invalid_url">Not a valid url.</string>
+    <string name="import_dialog_hint">Rules package url</string>
+    <string name="import_dialog_invalid_url">Not a valid url</string>
+    <string name="import_confirm">Import</string>
 
 </resources>

@@ -33,11 +33,11 @@
 
         <activity
             android:name=".activity.rules.DownloadRulesActivity"
-            android:label="@string/loading"/>
+            android:label="@string/importing_rules"/>
 
         <activity
             android:name=".activity.rules.ImportRulesActivity"
-            android:label="@string/loading"/>
+            android:label="@string/importing_rules"/>
 
         <activity
             android:name=".activity.select.SelectCharActivity"
