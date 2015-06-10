@@ -1,6 +1,7 @@
 package com.vitobasso.d20charsheet.model.character;
 
 import com.vitobasso.d20charsheet.model.AbstractEntity;
+import com.vitobasso.d20charsheet.model.CharEntity;
 import com.vitobasso.d20charsheet.model.ClassLevel;
 import com.vitobasso.d20charsheet.model.Feat;
 import com.vitobasso.d20charsheet.model.Race;
@@ -40,7 +41,7 @@ import static com.vitobasso.d20charsheet.model.effect.ModifierTarget.WILL;
  * <p/>
  * Created by Victor on 27/02/14.
  */
-public class CharBase extends AbstractEntity {
+public class CharBase extends AbstractEntity implements CharEntity {
 
     private int age;
     private double height;

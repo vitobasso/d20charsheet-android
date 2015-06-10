@@ -1,6 +1,7 @@
 package com.vitobasso.d20charsheet.io.char_io;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -9,12 +10,15 @@ import com.vitobasso.d20charsheet.model.character.CharBase;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.MessageFormat;
 
-import static com.vitobasso.d20charsheet.util.app.ActivityUtil.internationalize;
+import static android.content.Intent.ACTION_SEND;
+import static android.content.Intent.EXTRA_SUBJECT;
+import static android.content.Intent.EXTRA_TEXT;
+import static android.content.Intent.createChooser;
 
 /**
  * Created by Victor on 27/09/2014.
@@ -31,20 +35,32 @@ public class CharJsonParser {
 
     public void exportChar(CharBase charBase) {
         try {
-            File dir = context.getExternalFilesDir(null); //TODO file chooser
-            String fileName = charBase.getDescription();
-            fileName = internationalize(fileName, context);
-            File file = new File(dir, fileName);
-
             ObjectMapper parser = buildParser();
-            parser.writeValue(file, charBase);
+            String json = parser.writeValueAsString(charBase);
+            export(json);
 
-            String msg = MessageFormat.format("{0}: {1}", context.getString(R.string.saved_to), file.getAbsolutePath());
-            Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
+//            String msg = String.format("%s: %s", context.getString(R.string.saved_to), file.getAbsolutePath());
+//            Toast.makeText(context, msg, Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             Toast.makeText(context, context.getString(R.string.failed_saving), Toast.LENGTH_LONG).show();
-            Log.e(TAG, "Failed to exportChar char to file.", e);
+            Log.e(TAG, "Failed to export char.", e);
         }
+    }
+
+    private ObjectMapper buildParser() {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(SerializationConfig.Feature.REQUIRE_SETTERS_FOR_GETTERS, true);
+        mapper.configure(SerializationConfig.Feature.CAN_OVERRIDE_ACCESS_MODIFIERS, true);
+        mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
+        return mapper;
+    }
+
+    public void export(String json) {
+        Intent sendIntent = new Intent(ACTION_SEND);
+        sendIntent.setType("text/plain");
+        sendIntent.putExtra(EXTRA_SUBJECT, "Subject");
+        sendIntent.putExtra(EXTRA_TEXT, json);
+        context.startActivity(createChooser(sendIntent, "Export to"));
     }
 
     public void importChar() {
@@ -59,13 +75,6 @@ public class CharJsonParser {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private ObjectMapper buildParser() {
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.configure(SerializationConfig.Feature.REQUIRE_SETTERS_FOR_GETTERS, true);
-        mapper.configure(SerializationConfig.Feature.CAN_OVERRIDE_ACCESS_MODIFIERS, true);
-        return mapper;
     }
 
 }

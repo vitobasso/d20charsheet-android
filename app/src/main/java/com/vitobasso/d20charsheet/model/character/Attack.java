@@ -1,6 +1,7 @@
 package com.vitobasso.d20charsheet.model.character;
 
 import com.vitobasso.d20charsheet.model.AbstractEntity;
+import com.vitobasso.d20charsheet.model.CharEntity;
 import com.vitobasso.d20charsheet.model.DiceRoll;
 import com.vitobasso.d20charsheet.model.effect.Modifier;
 import com.vitobasso.d20charsheet.model.effect.ModifierTarget;
@@ -9,7 +10,7 @@ import com.vitobasso.d20charsheet.model.item.WeaponProperties;
 /**
  * Created by Victor on 01/05/14.
  */
-public class Attack extends AbstractEntity {
+public class Attack extends AbstractEntity implements CharEntity {
 
     public void setAttackBonus(int attackBonus) {
         this.attackBonus = attackBonus;

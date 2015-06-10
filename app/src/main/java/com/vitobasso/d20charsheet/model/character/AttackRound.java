@@ -2,6 +2,7 @@ package com.vitobasso.d20charsheet.model.character;
 
 import com.google.common.base.Objects;
 import com.vitobasso.d20charsheet.model.AbstractEntity;
+import com.vitobasso.d20charsheet.model.CharEntity;
 import com.vitobasso.d20charsheet.model.effect.Modifier;
 
 import java.util.ArrayList;
@@ -10,7 +11,7 @@ import java.util.List;
 /**
  * Created by Victor on 19/03/14.
  */
-public class AttackRound extends AbstractEntity {
+public class AttackRound extends AbstractEntity implements CharEntity {
 
     private List<Attack> attacks = new ArrayList<>();
 

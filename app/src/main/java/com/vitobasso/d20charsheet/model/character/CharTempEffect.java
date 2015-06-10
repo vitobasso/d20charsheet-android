@@ -4,12 +4,15 @@ import com.vitobasso.d20charsheet.model.TempEffect;
 import com.vitobasso.d20charsheet.model.effect.Effect;
 import com.vitobasso.d20charsheet.model.effect.EffectSource;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import java.io.Serializable;
 
 /**
  * Represents active or frequently used Effect to be accessed quickly in the UI.
  * <p/>
  * Created by Victor on 21/03/14.
+ * TODO extend AbstractEntity?
  */
 public class CharTempEffect implements Serializable, Comparable<CharTempEffect>, EffectSource {
 
@@ -47,6 +50,7 @@ public class CharTempEffect implements Serializable, Comparable<CharTempEffect>,
         return tempEffect.getName().compareTo(another.tempEffect.getName());
     }
 
+    @JsonIgnore
     @Override
     public Effect getEffect() {
         return tempEffect.getEffect();
@@ -57,6 +61,7 @@ public class CharTempEffect implements Serializable, Comparable<CharTempEffect>,
         throw new UnsupportedOperationException();
     }
 
+    @JsonIgnore
     @Override
     public String getName() {
         return tempEffect.getName();
@@ -67,6 +72,7 @@ public class CharTempEffect implements Serializable, Comparable<CharTempEffect>,
         throw new UnsupportedOperationException();
     }
 
+    @JsonIgnore
     @Override
     public long getId() {
         return tempEffect.getId();

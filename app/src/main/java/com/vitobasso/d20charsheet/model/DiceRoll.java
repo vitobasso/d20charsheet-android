@@ -1,5 +1,11 @@
 package com.vitobasso.d20charsheet.model;
 
+import com.vitobasso.d20charsheet.io.char_io.DiceRollDeserializer;
+import com.vitobasso.d20charsheet.io.char_io.DiceRollSerializer;
+
+import org.codehaus.jackson.map.annotate.JsonDeserialize;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +15,8 @@ import java.util.regex.Pattern;
 /**
  * Created by Victor on 26/02/14.
  */
+@JsonSerialize(using = DiceRollSerializer.class)
+@JsonDeserialize(using = DiceRollDeserializer.class)
 public class DiceRoll implements Serializable {
 
     private Map<Integer, Integer> dice = new HashMap<>();
@@ -107,7 +115,7 @@ public class DiceRoll implements Serializable {
         return dice.isEmpty();
     }
 
-    public boolean isPositive(){
+    public boolean isPositive() {
         return fixedValue > 0;
     }
 
@@ -123,10 +131,10 @@ public class DiceRoll implements Serializable {
         return result;
     }
 
-    public int toInt(){
-        if(isFixed()){
+    public int toInt() {
+        if (isFixed()) {
             return fixedValue;
-        }else{
+        } else {
             throw new IllegalStateException();
         }
     }
@@ -136,7 +144,7 @@ public class DiceRoll implements Serializable {
         return encode();
     }
 
-    public DiceRoll copy(){
+    public DiceRoll copy() {
         DiceRoll copy = new DiceRoll();
         copy.fixedValue = fixedValue;
         copy.dice = new HashMap<>(dice);

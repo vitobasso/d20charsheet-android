@@ -4,6 +4,8 @@ import com.vitobasso.d20charsheet.model.effect.Effect;
 import com.vitobasso.d20charsheet.model.effect.EffectSource;
 import com.vitobasso.d20charsheet.model.effect.Modifier;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ import static com.vitobasso.d20charsheet.model.effect.ModifierTarget.WILL;
 /**
  * Created by Victor on 31/03/14.
  */
-public class ClassLevel extends AbstractEntity implements EffectSource {
+public class ClassLevel extends AbstractEntity implements EffectSource, CharEntity {
 
     private Clazz clazz;
     private int level;
@@ -31,6 +33,7 @@ public class ClassLevel extends AbstractEntity implements EffectSource {
         return getClazz().getBaseAttack(getLevel());
     }
 
+    @JsonIgnore
     @Override
     public String getName() {
         if (getClazz() != null) {
@@ -57,6 +60,7 @@ public class ClassLevel extends AbstractEntity implements EffectSource {
         return modifiers;
     }
 
+    @JsonIgnore
     @Override
     public Effect getEffect() {
         if (effect == null) {

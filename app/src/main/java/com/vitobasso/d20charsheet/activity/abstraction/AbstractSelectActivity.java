@@ -103,11 +103,10 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
             AbstractEntityDao<T> dao = createDataSource();
             try {
                 T selected = dao.fromCursor(cursor);
-
                 if (request != REQUEST_EDIT) {
-                    select(selected);
+                    finish(selected);
                 } else {
-                    edit(selected);
+                    goToEdit(selected);
                 }
             } finally {
                 dao.close();
@@ -161,10 +160,10 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
             switch (item.getItemId()) {
                 case R.id.action_edit:
                     editSelected();
-                    mode.finish();
+                    return finish(mode);
                 case R.id.action_remove:
                     removeSelected();
-                    mode.finish();
+                    return finish(mode);
                 default:
                     return false;
             }
@@ -184,6 +183,11 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
 
         @Override
         public void onDestroyActionMode(ActionMode mode) {}
+
+        private boolean finish(ActionMode mode) {
+            mode.finish();
+            return true;
+        }
     }
 
     protected ListAdapter createAdapter(){
@@ -251,40 +255,40 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
         }
     }
 
-
-    private void editSelected() {
+    private List<T> getAllSelected() {
         SparseBooleanArray checked = listView.getCheckedItemPositions();
-        int position = checked.keyAt(0);
-        T element = getElementAt(position);
-        edit(element);
-    }
-
-    private void removeSelected() {
-        SparseBooleanArray checked = listView.getCheckedItemPositions();
-
-        //mark elements for removal
         List<T> toRemove = new ArrayList<>();
         for (int i = 0; i < checked.size(); i++) {
             int position = checked.keyAt(i);
             toRemove.add(getElementAt(position));
         }
-
-        //actually remove elements
-        for (T element : toRemove) {
-            remove(element);
-        }
-
+        return toRemove;
     }
 
-    private void edit(T element) {
-        //call edit activity
+    private T getFirstSelected() {
+        SparseBooleanArray checked = listView.getCheckedItemPositions();
+        int position = checked.keyAt(0);
+        return getElementAt(position);
+    }
+
+    private void editSelected() {
+        T element = getFirstSelected();
+        goToEdit(element);
+    }
+
+    private void removeSelected() {
+        for (T element : getAllSelected()) {
+            remove(element);
+        }
+    }
+
+    private void goToEdit(T element) {
         Intent intent = new Intent(activity, getEditActivityClass());
         intent.putExtra(EXTRA_SELECTED, element);
         startActivityForResult(intent, REQUEST_CREATE);
     }
 
     private void remove(T element) {
-        //deleteAll from db
         AbstractEntityDao<T> dataSource = createDataSource();
         try {
             dataSource.remove(element);
@@ -295,17 +299,7 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
         getLoaderManager().restartLoader(0, null, loaderObserver);
     }
 
-    private void select(T element) {
-        //send data back to caller activity
-        Intent resultIntent = new Intent();
-        resultIntent.putExtra(EXTRA_SELECTED, element);
-        onPreFinish(resultIntent);
-        setResult(RESULT_OK, resultIntent);
-        finish();
-    }
-
     private void save(T created) {
-        //save to db
         AbstractEntityDao<T> dataSource = createDataSource();
         try {
             dataSource.save(created);
@@ -314,6 +308,14 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
         }
 
         getLoaderManager().restartLoader(0, null, loaderObserver);
+    }
+
+    private void finish(T element) {
+        Intent resultIntent = new Intent();
+        resultIntent.putExtra(EXTRA_SELECTED, element);
+        onPreFinish(resultIntent);
+        setResult(RESULT_OK, resultIntent);
+        finish();
     }
 
     protected abstract AbstractEntityDao<T> createDataSource();

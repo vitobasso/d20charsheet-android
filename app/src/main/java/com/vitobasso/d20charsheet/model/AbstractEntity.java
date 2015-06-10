@@ -4,8 +4,6 @@ import android.support.annotation.NonNull;
 
 import com.vitobasso.d20charsheet.util.LangUtil;
 
-import org.codehaus.jackson.annotate.JsonIgnore;
-
 import java.io.Serializable;
 
 /**
@@ -13,7 +11,6 @@ import java.io.Serializable;
  */
 public abstract class AbstractEntity implements Comparable<AbstractEntity>, Serializable {
 
-    @JsonIgnore
     protected long id;
 
     protected String name;

@@ -2,9 +2,12 @@ package com.vitobasso.d20charsheet.model.effect;
 
 import android.content.Context;
 
+import com.vitobasso.d20charsheet.model.CharEntity;
 import com.vitobasso.d20charsheet.model.DiceRoll;
 import com.vitobasso.d20charsheet.util.LangUtil;
 import com.vitobasso.d20charsheet.util.i18n.EnumI18n;
+
+import org.codehaus.jackson.annotate.JsonIgnore;
 
 /**
  * Modifier based on an ability.
@@ -18,7 +21,7 @@ import com.vitobasso.d20charsheet.util.i18n.EnumI18n;
  *
  * Created by Victor on 05/04/2015.
  */
-public class AbilityModifier extends Modifier {
+public class AbilityModifier extends Modifier implements CharEntity {
 
     private ModifierSource ability;
     private Multiplier multiplier;
@@ -66,6 +69,7 @@ public class AbilityModifier extends Modifier {
         return multiplier.toLabel() + i18n.get(ability);
     }
 
+    @JsonIgnore
     @Override
     public DiceRoll getAmount() {
         throw new UnsupportedOperationException();

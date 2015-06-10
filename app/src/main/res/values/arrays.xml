@@ -43,10 +43,6 @@
         <item>@string/ord_9</item>
         <item>@string/ord_10</item>
     </array>
-    <array name="select_char_dialog_items">
-        <item>@string/export</item>
-        <item>@string/remove</item>
-    </array>
     <array name="edit_dialog_items">
         <item>@string/save</item>
         <item>@android:string/cancel</item>

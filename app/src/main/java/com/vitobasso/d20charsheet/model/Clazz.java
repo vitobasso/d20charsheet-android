@@ -112,11 +112,6 @@ public class Clazz extends Rule {
     }
 
     @Override
-    public long getId() {
-        return id;
-    }
-
-    @Override
     public int hashCode() {
         return name.hashCode();
     }
@@ -128,10 +123,6 @@ public class Clazz extends Rule {
         } else {
             return false;
         }
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public void setAttackProg(AttackProgression attackProg) {
@@ -153,4 +144,5 @@ public class Clazz extends Rule {
     public void setTraits(List<List<ClassTrait>> traits) {
         this.traits = traits;
     }
+
 }
