@@ -19,6 +19,14 @@ public class Clazz extends Rule {
     private ResistProgression willProg;
     private List<List<ClassTrait>> traits;
 
+    public Clazz() {
+    }
+
+    //used by jackson
+    public Clazz(long id) {
+        super(id);
+    }
+
     public AttackProgression getAttackProg() {
         return attackProg;
     }

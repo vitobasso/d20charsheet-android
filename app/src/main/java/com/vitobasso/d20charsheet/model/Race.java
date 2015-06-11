@@ -15,6 +15,14 @@ public class Race extends Rule implements EffectSource {
 
     private List<RaceTrait> traits;
 
+    public Race() {
+    }
+
+    //used by jackson
+    public Race(long id) {
+        super(id);
+    }
+
     public Effect getEffect() {
         return effect;
     }

@@ -15,11 +15,13 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.vitobasso.d20charsheet.R;
 import com.vitobasso.d20charsheet.activity.abstraction.MainNavigationActvity;
 import com.vitobasso.d20charsheet.dao.entity.CharDao;
-import com.vitobasso.d20charsheet.io.char_io.CharJsonParser;
+import com.vitobasso.d20charsheet.io.char_io.CharExporterImporter;
+import com.vitobasso.d20charsheet.io.char_io.ImportCharException;
 import com.vitobasso.d20charsheet.model.character.CharBase;
 import com.vitobasso.d20charsheet.util.app.ActivityUtil;
 
@@ -38,6 +40,7 @@ public class SelectCharActivity extends MainNavigationActvity {
 
     private List<CharBase> list;
     private ListView listView;
+    private CharExporterImporter exporterImporter;
 
     @Override
     protected int getContentLayout() {
@@ -47,6 +50,8 @@ public class SelectCharActivity extends MainNavigationActvity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        exporterImporter = new CharExporterImporter(SelectCharActivity.this);
 
         CharDao dataSource = new CharDao(this);
         list = dataSource.listAll();
@@ -84,6 +89,7 @@ public class SelectCharActivity extends MainNavigationActvity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.create, menu);
+        getMenuInflater().inflate(R.menu.import_char, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
@@ -94,6 +100,9 @@ public class SelectCharActivity extends MainNavigationActvity {
             case R.id.action_create:
                 goToCreateChar();
                 return true;
+            case R.id.action_import:
+                exporterImporter.importChar();
+                return true;
             default:
                 return false;
         }
@@ -101,14 +110,32 @@ public class SelectCharActivity extends MainNavigationActvity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case REQUEST_CREATE:
-                switch (resultCode) {
-                    case RESULT_OK:
-                        CharBase created = (CharBase) data.getSerializableExtra(EXTRA_CHAR);
-                        save(created);
+        if (requestCode == REQUEST_CREATE) {
+            if (resultCode == RESULT_OK) {
+                CharBase created = (CharBase) data.getSerializableExtra(EXTRA_CHAR);
+                save(created);
+            }
+        } else if (requestCode == CharExporterImporter.REQUEST_EXPORT) {
+            if (resultCode == RESULT_OK) {
+                showToast("Export successful");
+            } else {
+                showToast("Failed to export");
+            }
+        } else if (requestCode == CharExporterImporter.REQUEST_IMPORT) {
+            if (resultCode == RESULT_OK) {
+                try {
+                    CharBase imported = exporterImporter.handleImportResponse(data);
+                    save(imported); //TODO create fromCursorBrief, load after save (to get class & race name)
+                    showToast("Import successful");
+                } catch (ImportCharException e) {
+                    showToast("Failed to import");
                 }
-                break;
+            } else {
+                String appName = data.getComponent().getPackageName();
+                String failMessage = "Failed to get a file from";
+                String message = failMessage + " " + appName;
+                showToast(message);
+            }
         }
     }
 
@@ -193,9 +220,8 @@ public class SelectCharActivity extends MainNavigationActvity {
     }
 
     private void exportSelected() {
-        CharJsonParser writer = new CharJsonParser(SelectCharActivity.this);
         for (CharBase charBase : getSelected()) {
-            writer.exportChar(charBase);
+            exporterImporter.exportChar(charBase);
         }
     }
 
@@ -222,6 +248,10 @@ public class SelectCharActivity extends MainNavigationActvity {
 
         list.remove(charBase);
         updateUI();
+    }
+
+    private void showToast(String message) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 }

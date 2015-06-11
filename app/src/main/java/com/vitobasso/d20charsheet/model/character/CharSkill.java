@@ -13,6 +13,10 @@ public class CharSkill implements Serializable, Comparable<CharSkill>{
     private Skill skill;
     private int score; //graduation for CharBase or final bonus for Character
 
+    // used by jackson
+    public CharSkill() {
+    }
+
     public CharSkill(Skill skill) {
         if(skill == null){
             throw new InvalidParameterException();

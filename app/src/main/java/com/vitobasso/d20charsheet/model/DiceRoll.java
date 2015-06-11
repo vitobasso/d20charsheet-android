@@ -1,10 +1,6 @@
 package com.vitobasso.d20charsheet.model;
 
-import com.vitobasso.d20charsheet.io.char_io.DiceRollDeserializer;
-import com.vitobasso.d20charsheet.io.char_io.DiceRollSerializer;
-
-import org.codehaus.jackson.map.annotate.JsonDeserialize;
-import org.codehaus.jackson.map.annotate.JsonSerialize;
+import org.codehaus.jackson.annotate.JsonValue;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -15,8 +11,6 @@ import java.util.regex.Pattern;
 /**
  * Created by Victor on 26/02/14.
  */
-@JsonSerialize(using = DiceRollSerializer.class)
-@JsonDeserialize(using = DiceRollDeserializer.class)
 public class DiceRoll implements Serializable {
 
     private Map<Integer, Integer> dice = new HashMap<>();
@@ -139,6 +133,7 @@ public class DiceRoll implements Serializable {
         }
     }
 
+    @JsonValue
     @Override
     public String toString() {
         return encode();

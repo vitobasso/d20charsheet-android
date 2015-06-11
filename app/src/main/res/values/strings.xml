@@ -225,6 +225,6 @@
     <string name="import_rules">Import rules</string>
     <string name="import_dialog_hint">Rules package url</string>
     <string name="import_dialog_invalid_url">Not a valid url</string>
-    <string name="import_confirm">Import</string>
+    <string name="import_">Import</string>
 
 </resources>

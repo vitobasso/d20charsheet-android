@@ -58,7 +58,6 @@ FEATURES
             - import rules
                 - clear bad books: web, duplicate monster manual
             - how to preserve char with dependencies to removed stuff?
-        - char
     - port to tablet
     - baggage (+ weight calculation)
     - spells

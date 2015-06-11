@@ -11,6 +11,14 @@ public class Feat extends Rule implements EffectSource {
 
     private Effect effect;
 
+    public Feat() {
+    }
+
+    //used by jackson
+    public Feat(long id) {
+        super(id);
+    }
+
     public Effect getEffect() {
         return effect;
     }

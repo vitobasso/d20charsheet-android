@@ -18,6 +18,10 @@ public class EquipSlot implements Serializable {
     private SlotType slotType;
     private Item item;
 
+    // used by jackson
+    public EquipSlot() {
+    }
+
     public EquipSlot(int nameRes, SlotType slotType) {
         this.setNameRes(nameRes);
         this.setSlotType(slotType);

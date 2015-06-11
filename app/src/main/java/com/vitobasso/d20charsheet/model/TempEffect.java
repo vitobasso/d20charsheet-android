@@ -14,6 +14,14 @@ public class TempEffect extends Rule implements EffectSource {
 
     private Effect effect;
 
+    public TempEffect() {
+    }
+
+    //used by jackson
+    public TempEffect(long id) {
+        super(id);
+    }
+
     public Effect getEffect() {
         return effect;
     }

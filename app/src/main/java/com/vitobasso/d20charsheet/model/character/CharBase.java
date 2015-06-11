@@ -22,9 +22,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 import static com.vitobasso.d20charsheet.model.character.Attack.WeaponReference.MAIN_HAND;
 import static com.vitobasso.d20charsheet.model.effect.ModifierTarget.AC;
@@ -69,7 +67,6 @@ public class CharBase extends AbstractEntity implements CharEntity {
     private List<CharSkill> skills = new ArrayList<>(); //CharSkill objects store graduation values (not final bonus)
 
     private CharEquip equipment = new CharEquip();
-    private Map<Item, Integer> bag = new TreeMap<>();
     private List<CharTempEffect> tempEffects = new ArrayList<>();
     private Set<Condition> activeConditions = new HashSet<>();
 
@@ -380,14 +377,6 @@ public class CharBase extends AbstractEntity implements CharEntity {
 
     public void setEquipment(CharEquip equipment) {
         this.equipment = equipment;
-    }
-
-    public Map<Item, Integer> getBag() {
-        return bag;
-    }
-
-    public void setBag(Map<Item, Integer> bag) {
-        this.bag = bag;
     }
 
     public List<CharTempEffect> getTempEffects() {

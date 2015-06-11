@@ -9,6 +9,14 @@ import org.codehaus.jackson.annotate.JsonValue;
  */
 public abstract class Rule extends AbstractEntity{
 
+    protected Rule() {
+    }
+
+    //used by jackson
+    protected Rule(long id) {
+        this.id = id;
+    }
+
     private Book book;
 
     public Book getBook() {

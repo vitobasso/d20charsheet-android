@@ -312,6 +312,7 @@ public class ActivityUtil {
      * Ideally this would be called in central "populate" methods to avoid missing any strings.
      * For now there's a populate method only for EditText views though, in some cases it will need
      * to be called "manually" before setting text to GUI.
+     * TODO move to i18n util
      */
     public static String internationalize(String input, Context context){
         Pattern pattern = Pattern.compile("\\$(\\w+)");

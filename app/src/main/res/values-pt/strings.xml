@@ -225,6 +225,6 @@
     <string name="import_rules">Importar regras</string>
     <string name="import_dialog_hint">Endereço do pacote de regras</string>
     <string name="import_dialog_invalid_url">Não é uma url válida</string>
-    <string name="import_confirm">Importar</string>
+    <string name="import_">Importar</string>
 
 </resources>

@@ -13,6 +13,14 @@ public class Item extends Rule implements EffectSource {
         WEAPON, PROTECTIVE
     }
 
+    public Item() {
+    }
+
+    //used by jackson
+    public Item(long id) {
+        super(id);
+    }
+
     private SlotType slotType; //slot where item can be equipped in character
     private ItemType itemType; //if not null, defines specific fields (weapon dmg, armor ac, etc)
     private Effect effect;

@@ -47,7 +47,7 @@ public class RulesDownloadDialog {
     }
 
     private void setupButtons(AlertDialog.Builder builder) {
-        builder.setPositiveButton(activity.getString(R.string.import_confirm), null); //to be overriden after dialog.show()
+        builder.setPositiveButton(activity.getString(R.string.import_), null); //to be overriden after dialog.show()
         builder.setNegativeButton(activity.getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

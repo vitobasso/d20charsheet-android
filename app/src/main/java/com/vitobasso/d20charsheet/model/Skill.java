@@ -12,7 +12,11 @@ public class Skill extends Rule {
     private boolean armorPenaltyApplies;
 
     public Skill(){
+    }
 
+    //used by jackson
+    public Skill(long id) {
+        super(id);
     }
 
     public Skill(String name) {
