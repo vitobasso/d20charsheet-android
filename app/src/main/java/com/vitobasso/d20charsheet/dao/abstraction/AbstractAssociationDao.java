@@ -23,7 +23,6 @@ public abstract class AbstractAssociationDao<T> extends AbstractDao<T>{
     protected abstract String parentColumn();
 
     public final List<T> findByParent(long parentId) {
-        assert parentId != 0;
         return select(query(parentId));
     }
 
@@ -43,7 +42,7 @@ public abstract class AbstractAssociationDao<T> extends AbstractDao<T>{
         database.delete(tableName(), query(parentId), null);
     }
 
-    private final String query(long parentId) {
+    private String query(long parentId) {
         return String.format("%s=%d", parentColumn(), parentId);
     }
 

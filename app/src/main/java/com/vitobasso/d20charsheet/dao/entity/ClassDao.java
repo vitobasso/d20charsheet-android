@@ -71,7 +71,7 @@ public class ClassDao extends AbstractRuleDao<Clazz> {
         List<ClassTrait> traits = classTraitDao.findByParent(result.getId());
 
         //organize traits by level
-        result.setTraits(new ArrayList<List<ClassTrait>>());
+        result.setTraits(new ArrayList<List<ClassTrait>>()); //TODO shouldn't the traits be set to result??
         for (ClassTrait trait : traits) {
             List<ClassTrait> listOfSpecificLevel = getAndIfOverflowsCreate(result.getTraits(), trait.getLevel() - 1);
             listOfSpecificLevel.add(trait);

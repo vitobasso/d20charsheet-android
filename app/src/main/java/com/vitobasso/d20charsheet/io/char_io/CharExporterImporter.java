@@ -28,8 +28,7 @@ import static android.content.Intent.createChooser;
  */
 public class CharExporterImporter {
 
-    private static String TAG = CharExporterImporter.class.getName();
-
+    public static final String MIME_TYPE = "application/octet-stream";
     public static final String DIR_NAME = "chars_json";
     public static final int REQUEST_IMPORT = 1;
     public static final int REQUEST_EXPORT = 2;
@@ -54,7 +53,7 @@ public class CharExporterImporter {
 
     public void importChar() {
         Intent intent = new Intent(ACTION_GET_CONTENT);
-        intent.setType("*/*");
+        intent.setType(MIME_TYPE);
         activity.startActivityForResult(intent, REQUEST_IMPORT);
     }
 
@@ -94,14 +93,14 @@ public class CharExporterImporter {
 
     private void openExportDialog(File jsonFile) {
         Intent intent = new Intent(ACTION_SEND);
-        intent.setType("application/octet-stream");
+        intent.setType(MIME_TYPE);
         intent.putExtra(EXTRA_SUBJECT, getSubject());
         intent.putExtra(EXTRA_STREAM, Uri.fromFile(jsonFile));
-        activity.startActivityForResult(createChooser(intent, "Export to"), REQUEST_EXPORT);
+        activity.startActivityForResult(createChooser(intent, "Export to"), REQUEST_EXPORT); //TODO resource
     }
 
     private String getSubject() {
         return "Exported from d20charsheet";
-    }
+    }  //TODO resource
 
 }

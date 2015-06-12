@@ -58,10 +58,11 @@ public class CharClassDao extends AbstractAssociationDao<ClassLevel> {
 
     @Override
     public ClassLevel fromCursor(Cursor cursor) {
-        ClassLevel classLevel = new ClassLevel();
-        classLevel.setLevel(getInt(cursor, COLUMN_LEVEL));
         long classId = getLong(cursor, COLUMN_CLASS_ID);
         Clazz clazz = classDao.findById(classId);
+
+        ClassLevel classLevel = new ClassLevel();
+        classLevel.setLevel(getInt(cursor, COLUMN_LEVEL));
         classLevel.setClazz(clazz);
         return classLevel;
     }

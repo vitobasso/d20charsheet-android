@@ -1,5 +1,6 @@
 package com.vitobasso.d20charsheet.activity.select;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import com.vitobasso.d20charsheet.io.char_io.CharExporterImporter;
 import com.vitobasso.d20charsheet.io.char_io.ImportCharException;
 import com.vitobasso.d20charsheet.model.character.CharBase;
 import com.vitobasso.d20charsheet.util.app.ActivityUtil;
+import com.vitobasso.d20charsheet.util.gui.SimpleMultiChoiceModeListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,19 +52,9 @@ public class SelectCharActivity extends MainNavigationActvity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         exporterImporter = new CharExporterImporter(SelectCharActivity.this);
-
-        CharDao dataSource = new CharDao(this);
-        list = dataSource.listAll();
-        dataSource.close();
-
-        listView = (ListView) findViewById(android.R.id.list);
-        listView.setOnItemClickListener(new ClickListener());
-        listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
-        listView.setMultiChoiceModeListener(new ContextualActionBarListener());
-
-        updateUI();
+        loadList();
+        setupListView();
         setActionbarTitle(this, BOLD_FONT, getTitle());
     }
 
@@ -80,10 +72,6 @@ public class SelectCharActivity extends MainNavigationActvity {
                 goToBooks();
                 break;
         }
-    }
-
-    private void updateUI() {
-        listView.setAdapter(new Adapter(this, list));
     }
 
     @Override
@@ -117,26 +105,48 @@ public class SelectCharActivity extends MainNavigationActvity {
             }
         } else if (requestCode == CharExporterImporter.REQUEST_EXPORT) {
             if (resultCode == RESULT_OK) {
-                showToast("Export successful");
-            } else {
-                showToast("Failed to export");
+                showToast("Export successful"); //TODO resource
+            } else if (resultCode != RESULT_CANCELED) {
+                notifyExportFailedExternal(data);
             }
         } else if (requestCode == CharExporterImporter.REQUEST_IMPORT) {
             if (resultCode == RESULT_OK) {
-                try {
-                    CharBase imported = exporterImporter.handleImportResponse(data);
-                    save(imported); //TODO create fromCursorBrief, load after save (to get class & race name)
-                    showToast("Import successful");
-                } catch (ImportCharException e) {
-                    showToast("Failed to import");
-                }
-            } else {
-                String appName = data.getComponent().getPackageName();
-                String failMessage = "Failed to get a file from";
-                String message = failMessage + " " + appName;
-                showToast(message);
+                handleImport(data);
+            } else if (resultCode != RESULT_CANCELED) {
+                notifyImportFailedExternal(data);
             }
         }
+    }
+
+    private void handleImport(Intent data) {
+        try {
+            CharBase imported = exporterImporter.handleImportResponse(data);
+            save(imported); //TODO create fromCursorBrief, load after save (to get class & race name)
+            showToast("Import successful"); //TODO resource
+        } catch (ImportCharException e) {
+            showToast("Failed to import"); //TODO resource
+        }
+    }
+
+    private void notifyImportFailedExternal(Intent data) {
+        String message = "Failed to get a file from the external app"; //TODO resource
+        message = createExternalFailMessage(data, message);
+        showToast(message);
+    }
+
+    private void notifyExportFailedExternal(Intent data) {
+        String message = "Failed to export file to the external app"; //TODO resource
+        message = createExternalFailMessage(data, message);
+        showToast(message);
+    }
+
+    private String createExternalFailMessage(Intent data, String message) {
+        ComponentName component = data.getComponent();
+        if (component != null) {
+            String appName = component.getPackageName();
+            message += ": " + appName;
+        }
+        return message;
     }
 
     private class ClickListener implements AdapterView.OnItemClickListener {
@@ -165,7 +175,7 @@ public class SelectCharActivity extends MainNavigationActvity {
         }
     }
 
-    private class ContextualActionBarListener implements AbsListView.MultiChoiceModeListener {
+    private class ContextualActionBarListener extends SimpleMultiChoiceModeListener {
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -193,18 +203,6 @@ public class SelectCharActivity extends MainNavigationActvity {
             invalidateOptionsMenu();
         }
 
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            return false;
-        }
-
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {}
-
-        private boolean finish(ActionMode mode) {
-            mode.finish();
-            return true;
-        }
     }
 
     private void save(CharBase charBase) {
@@ -248,6 +246,27 @@ public class SelectCharActivity extends MainNavigationActvity {
 
         list.remove(charBase);
         updateUI();
+    }
+
+    private void loadList() {
+        CharDao dataSource = new CharDao(this);
+        try {
+            list = dataSource.listAllBrief();
+        } finally {
+            dataSource.close();
+        }
+    }
+
+    private void setupListView() {
+        listView = (ListView) findViewById(android.R.id.list);
+        listView.setOnItemClickListener(new ClickListener());
+        listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
+        listView.setMultiChoiceModeListener(new ContextualActionBarListener());
+        updateUI();
+    }
+
+    private void updateUI() {
+        listView.setAdapter(new Adapter(this, list));
     }
 
     private void showToast(String message) {

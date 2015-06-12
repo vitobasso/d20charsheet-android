@@ -26,6 +26,7 @@ import android.widget.SearchView;
 import com.vitobasso.d20charsheet.R;
 import com.vitobasso.d20charsheet.dao.abstraction.AbstractEntityDao;
 import com.vitobasso.d20charsheet.model.AbstractEntity;
+import com.vitobasso.d20charsheet.util.gui.SimpleMultiChoiceModeListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -146,7 +147,7 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
         }
     }
 
-    private class ContextualActionBarListener implements AbsListView.MultiChoiceModeListener {
+    private class ContextualActionBarListener extends SimpleMultiChoiceModeListener {
 
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -176,18 +177,6 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
             invalidateOptionsMenu();
         }
 
-        @Override
-        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-            return false;
-        }
-
-        @Override
-        public void onDestroyActionMode(ActionMode mode) {}
-
-        private boolean finish(ActionMode mode) {
-            mode.finish();
-            return true;
-        }
     }
 
     protected ListAdapter createAdapter(){

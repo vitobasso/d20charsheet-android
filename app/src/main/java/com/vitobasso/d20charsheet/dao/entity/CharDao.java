@@ -322,4 +322,24 @@ public class CharDao extends AbstractEntityDao<CharBase> {
 
         return c;
     }
+
+    @Override
+    public CharBase fromCursorBrief(Cursor cursor) {
+
+        CharBase c = new CharBase();
+        c.setId(getLong(cursor, COLUMN_ID));
+        c.setName(getString(cursor, COLUMN_NAME));
+
+        //load race
+        RaceDao raceDao = new RaceDao(context, database);
+        raceDao.setIgnoreBookSelection(true);
+        c.setRace(raceDao.findById(cursor.getInt(2))); //TODO findByIdBrief
+
+        //load class
+        CharClassDao classDao = new CharClassDao(context, database);
+        classDao.setIgnoreBookSelection(true);
+        c.setClassLevels(classDao.findByParent(c.getId())); //TODO findByIdBrief
+
+        return c;
+    }
 }

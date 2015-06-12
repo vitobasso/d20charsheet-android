@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 
+import com.google.common.base.Function;
 import com.vitobasso.d20charsheet.util.database.BulkInserter;
 import com.vitobasso.d20charsheet.util.database.SQLiteHelper;
 import com.vitobasso.d20charsheet.util.database.Table;
@@ -60,6 +61,11 @@ public abstract class AbstractDao<T> {
         return list(cursor);
     }
 
+    public final List<T> listAllBrief() {
+        Cursor cursor = listAllCursor();
+        return listBrief(cursor);
+    }
+
     public Cursor cursor(String selection) {
         return database.query(tableName(), allColumns(), selection, null, null, null, orderBy());
     }
@@ -88,11 +94,27 @@ public abstract class AbstractDao<T> {
     }
 
     protected final List<T> list(Cursor cursor) {
+        return listTemplate(cursor, new Function<Cursor, T>() {
+            public T apply(Cursor cursor) {
+                return fromCursor(cursor);
+            }
+        });
+    }
+
+    protected final List<T> listBrief(Cursor cursor) {
+        return listTemplate(cursor, new Function<Cursor, T>() {
+            public T apply(Cursor cursor) {
+                return fromCursorBrief(cursor);
+            }
+        });
+    }
+
+    protected final List<T> listTemplate(Cursor cursor, Function<Cursor, T> readCursor) {
         try {
             List<T> list = new ArrayList<>();
             cursor.moveToFirst();
             while (!cursor.isAfterLast()) {
-                T c = fromCursor(cursor);
+                T c = readCursor.apply(cursor);
                 list.add(c);
                 cursor.moveToNext();
             }
