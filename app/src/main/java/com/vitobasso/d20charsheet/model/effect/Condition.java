@@ -3,6 +3,8 @@ package com.vitobasso.d20charsheet.model.effect;
 import com.google.common.base.Objects;
 import com.vitobasso.d20charsheet.model.AbstractEntity;
 
+import org.codehaus.jackson.annotate.JsonValue;
+
 import java.security.InvalidParameterException;
 
 /**
@@ -32,6 +34,14 @@ public class Condition extends AbstractEntity {
 
     private Condition parent;
 
+    public Condition() {
+    }
+
+    //used by jackson
+    public Condition(long id) {
+        this.id = id;
+    }
+
     public Predicate getPredicate() {
         return predicate;
     }
@@ -46,6 +56,12 @@ public class Condition extends AbstractEntity {
 
     public void setParent(Condition parent) {
         this.parent = parent;
+    }
+
+    @JsonValue
+    @Override
+    public long getId() {
+        return super.getId();
     }
 
     @Override

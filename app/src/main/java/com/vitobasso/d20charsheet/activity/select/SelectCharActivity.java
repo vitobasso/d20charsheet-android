@@ -221,8 +221,9 @@ public class SelectCharActivity extends MainNavigationActvity {
     }
 
     private void exportSelected() {
-        for (CharBase charBase : getSelected()) {
-            exporterImporter.exportChar(charBase);
+        for (CharBase briefChar : getSelected()) {
+            CharBase fullChar = loadFullChar(briefChar.getId());
+            exporterImporter.exportChar(fullChar);
         }
     }
 
