@@ -121,7 +121,7 @@ public class SelectCharActivity extends MainNavigationActvity {
     private void handleImport(Intent data) {
         try {
             CharBase imported = exporterImporter.handleImportResponse(data);
-            save(imported); //TODO create fromCursorBrief, load after save (to get class & race name)
+            save(imported);
             showToast("Import successful"); //TODO resource
         } catch (ImportCharException e) {
             showToast("Failed to import"); //TODO resource
@@ -153,9 +153,7 @@ public class SelectCharActivity extends MainNavigationActvity {
 
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-            CharBase charToOpen = list.get(i);
-            cache.setOpenedChar(charToOpen);
-            pref.setLastOpenedCharId(charToOpen.getId());
+            openChar(list.get(i));
             goToSummary();
         }
     }
@@ -205,16 +203,21 @@ public class SelectCharActivity extends MainNavigationActvity {
 
     }
 
+    private void openChar(CharBase charToOpen) {
+        CharBase loadedChar = loadFullChar(charToOpen.getId());
+        cache.setOpenedChar(loadedChar);
+        pref.setLastOpenedCharId(charToOpen.getId());
+    }
+
     private void save(CharBase charBase) {
         CharDao dataSource = new CharDao(this);
         try {
             dataSource.save(charBase);
-        }finally {
+        } finally {
             dataSource.close();
         }
 
-        list.add(charBase);
-        updateUI();
+        addNewCharToUI(charBase.getId());
     }
 
     private void exportSelected() {
@@ -257,11 +260,35 @@ public class SelectCharActivity extends MainNavigationActvity {
         }
     }
 
+    private CharBase loadFullChar(long id) {
+        CharDao dataSource = new CharDao(this);
+        try {
+            return dataSource.findById(id);
+        } finally {
+            dataSource.close();
+        }
+    }
+
+    private CharBase loadBriefChar(long id) {
+        CharDao dataSource = new CharDao(this);
+        try {
+            return dataSource.findBriefById(id);
+        } finally {
+            dataSource.close();
+        }
+    }
+
     private void setupListView() {
         listView = (ListView) findViewById(android.R.id.list);
         listView.setOnItemClickListener(new ClickListener());
         listView.setChoiceMode(AbsListView.CHOICE_MODE_MULTIPLE_MODAL);
         listView.setMultiChoiceModeListener(new ContextualActionBarListener());
+        updateUI();
+    }
+
+    private void addNewCharToUI(long charId) {
+        CharBase reloaded = loadBriefChar(charId);
+        list.add(reloaded);
         updateUI();
     }
 

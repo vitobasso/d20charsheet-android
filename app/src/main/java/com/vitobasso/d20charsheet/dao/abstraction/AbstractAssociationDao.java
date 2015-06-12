@@ -26,6 +26,10 @@ public abstract class AbstractAssociationDao<T> extends AbstractDao<T>{
         return select(query(parentId));
     }
 
+    public final List<T> findBriefByParent(long parentId) {
+        return selectBrief(query(parentId));
+    }
+
     public final void saveOverwrite(long parentId, Collection<T> list) {
         removeAllForParent(parentId);
         for (T obj : list) {

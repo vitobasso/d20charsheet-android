@@ -333,12 +333,12 @@ public class CharDao extends AbstractEntityDao<CharBase> {
         //load race
         RaceDao raceDao = new RaceDao(context, database);
         raceDao.setIgnoreBookSelection(true);
-        c.setRace(raceDao.findById(cursor.getInt(2))); //TODO findByIdBrief
+        c.setRace(raceDao.findBriefById(cursor.getInt(2)));
 
         //load class
         CharClassDao classDao = new CharClassDao(context, database);
         classDao.setIgnoreBookSelection(true);
-        c.setClassLevels(classDao.findByParent(c.getId())); //TODO findByIdBrief
+        c.setClassLevels(classDao.findBriefByParent(c.getId()));
 
         return c;
     }

@@ -9,14 +9,14 @@ import java.util.List;
  */
 public class LangUtil {
 
-    public static <T> List<T> getAndIfOverflowsCreate(List<List<T>> list, int index){
-        if(list.size() <= index){
-            int missing = index - list.size() + 1;
+    public static <T> List<T> ensureListAtIndex(List<List<T>> lists, int index){
+        if(lists.size() <= index){
+            int missing = index - lists.size() + 1;
             for(int i=0; i<missing; i++){
-                list.add(new ArrayList<T>());
+                lists.add(new ArrayList<T>());
             }
         }
-        return list.get(index);
+        return lists.get(index);
     }
 
     public static boolean equals(Object a, Object b){

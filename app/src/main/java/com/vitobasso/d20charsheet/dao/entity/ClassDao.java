@@ -15,7 +15,7 @@ import java.util.List;
 
 import static com.vitobasso.d20charsheet.model.Clazz.AttackProgression;
 import static com.vitobasso.d20charsheet.model.Clazz.ResistProgression;
-import static com.vitobasso.d20charsheet.util.LangUtil.getAndIfOverflowsCreate;
+import static com.vitobasso.d20charsheet.util.LangUtil.ensureListAtIndex;
 import static com.vitobasso.d20charsheet.util.database.ColumnType.INTEGER;
 import static com.vitobasso.d20charsheet.util.database.ColumnType.TEXT;
 import static com.vitobasso.d20charsheet.util.database.SQLiteHelper.COLUMN_ID;
@@ -69,19 +69,27 @@ public class ClassDao extends AbstractRuleDao<Clazz> {
 
         //traits
         List<ClassTrait> traits = classTraitDao.findByParent(result.getId());
-
-        //organize traits by level
-        result.setTraits(new ArrayList<List<ClassTrait>>()); //TODO shouldn't the traits be set to result??
-        for (ClassTrait trait : traits) {
-            List<ClassTrait> listOfSpecificLevel = getAndIfOverflowsCreate(result.getTraits(), trait.getLevel() - 1);
-            listOfSpecificLevel.add(trait);
-
-            //set source name
-            String sourceName = result.getName() + " " + trait.getLevel();
-            trait.getEffect().setSourceName(sourceName);
-        }
+        setSourceNameToTraits(result.getName(), traits);
+        result.setTraits(organizeTraitsByLevel(traits));
 
         return result;
+    }
+
+    private void setSourceNameToTraits(String className, List<ClassTrait> traits) {
+        for (ClassTrait trait : traits) {
+            String sourceName = className + " " + trait.getLevel();
+            trait.getEffect().setSourceName(sourceName);
+        }
+    }
+
+    private ArrayList<List<ClassTrait>> organizeTraitsByLevel(List<ClassTrait> traits) {
+        ArrayList<List<ClassTrait>> traitsByLevel = new ArrayList<>();
+        for (ClassTrait trait : traits) {
+            int index = trait.getLevel() - 1;
+            List<ClassTrait> listOfSpecificLevel = ensureListAtIndex(traitsByLevel, index);
+            listOfSpecificLevel.add(trait);
+        }
+        return traitsByLevel;
     }
 
     @Override

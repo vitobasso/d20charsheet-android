@@ -48,9 +48,6 @@ IMPROVEMENTS
 # books
     - make it clear the checkbox is for "show/hide" (a header on the list? a toast?)
 
-# performance
-    - avoid full queries when opening char
-
 FEATURES
 
     - import/export
@@ -71,6 +68,9 @@ REFACTOR
     - unify attribute calculation (summary and breakdown)
     - organize BreakdownDialog
     - matar resources compostos "Select Char", "Edit Char". concatenar resources simples.
+    - control complexity in daos
+        - "brief" queries (create separate BriefDaos?)
+        - "new dao, try query, finally close" find a way to avoid this repeating pattern (dao wrapper?)
 
 
 PROJECT

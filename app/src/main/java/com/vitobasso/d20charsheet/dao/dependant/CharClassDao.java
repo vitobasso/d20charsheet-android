@@ -67,6 +67,17 @@ public class CharClassDao extends AbstractAssociationDao<ClassLevel> {
         return classLevel;
     }
 
+    @Override
+    public ClassLevel fromCursorBrief(Cursor cursor) {
+        long classId = getLong(cursor, COLUMN_CLASS_ID);
+        Clazz clazz = classDao.findBriefById(classId);
+
+        ClassLevel classLevel = new ClassLevel();
+        classLevel.setLevel(getInt(cursor, COLUMN_LEVEL));
+        classLevel.setClazz(clazz);
+        return classLevel;
+    }
+
     public void setIgnoreBookSelection(boolean ignoreActiveBooks) {
         classDao.setIgnoreBookSelection(ignoreActiveBooks);
     }

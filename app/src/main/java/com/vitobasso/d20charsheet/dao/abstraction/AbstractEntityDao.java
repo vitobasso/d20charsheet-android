@@ -32,6 +32,11 @@ public abstract class AbstractEntityDao<T extends AbstractEntity> extends Abstra
         return firstResult(cursor);
     }
 
+    public final T findBriefById(long id) {
+        Cursor cursor = cursor(COLUMN_ID + " = " + id);
+        return firstResultBrief(cursor);
+    }
+
     public final T findByName(String name) {
         String query = String.format("%s=\'%s\'", COLUMN_NAME, name);
         Cursor cursor = cursor(query);

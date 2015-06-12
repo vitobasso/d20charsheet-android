@@ -75,6 +75,11 @@ public abstract class AbstractDao<T> {
         return list(cursor);
     }
 
+    protected final List<T> selectBrief(String selection) {
+        Cursor cursor = cursor(selection);
+        return listBrief(cursor);
+    }
+
     public long count() {
         return DatabaseUtils.queryNumEntries(database, tableName());
     }
@@ -125,10 +130,26 @@ public abstract class AbstractDao<T> {
     }
 
     protected final T firstResult(Cursor cursor) {
+        return firstResultTemplate(cursor, new Function<Cursor, T>() {
+            public T apply(Cursor cursor) {
+                return fromCursor(cursor);
+            }
+        });
+    }
+
+    protected final T firstResultBrief(Cursor cursor) {
+        return firstResultTemplate(cursor, new Function<Cursor, T>() {
+            public T apply(Cursor cursor) {
+                return fromCursorBrief(cursor);
+            }
+        });
+    }
+
+    protected final T firstResultTemplate(Cursor cursor, Function<Cursor, T> readCursor) {
         try {
             cursor.moveToFirst();
             if (cursor.getCount() != 0) {
-                return fromCursor(cursor);
+                return readCursor.apply(cursor);
             } else {
                 return null;
             }
