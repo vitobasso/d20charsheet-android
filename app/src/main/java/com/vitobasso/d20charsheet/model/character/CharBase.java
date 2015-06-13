@@ -66,15 +66,11 @@ public class CharBase extends AbstractEntity implements CharEntity {
     private List<ClassLevel> classLevels = new ArrayList<>();
     private List<Feat> feats = new ArrayList<>();
     private List<CharSkill> skills = new ArrayList<>(); //CharSkill objects store graduation values (not final bonus)
-
     private CharEquip equipment = new CharEquip();
-    private List<CharTempEffect> tempEffects = new ArrayList<>();
-
     private List<AttackRound> attacks = new ArrayList<>();
     private List<AbilityModifier> abilityMods = new ArrayList<>();
-
     private DamageTaken damageTaken = new DamageTaken();
-
+    private List<CharTempEffect> tempEffects = new ArrayList<>();
     private Set<Condition> activeConditions = new HashSet<>();
     private Set<Book> activeBooks = new HashSet<>();
 

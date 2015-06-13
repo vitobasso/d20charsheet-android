@@ -221,12 +221,17 @@ public class CharDao extends AbstractEntityDao<CharBase> {
         AbilityModifierDao abilityModDao = new AbilityModifierDao(context, database);
         abilityModDao.saveOverwrite(id, entity.getAbilityMods());
 
+        //temp effects
+        CharTempEffectDao tempEffectDao = new CharTempEffectDao(context, database);
+        tempEffectDao.saveOverwrite(id, entity.getTempEffects());
+
         //books
         CharBookDao charBookDao = new CharBookDao(context, database);
         charBookDao.saveOverwrite(id, entity.getActiveBooks());
 
-        //temp effects are saved directly on TempEffectActivityDao from SummaryTempEffectsFragment
-        //active conditions are saved directly on ActiveConditionDao from SummaryActivity
+        //conditions
+        ActiveConditionDao conditionDao = new ActiveConditionDao(context, database);
+        conditionDao.saveOverwrite(id, entity.getActiveConditions());
     }
 
     @Override

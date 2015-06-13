@@ -28,7 +28,6 @@ import static com.vitobasso.d20charsheet.util.app.ActivityUtil.REQUEST_SELECT;
  */
 public class SummaryTempEffectsFragment extends AbstractListFragment<CharSummary, SummaryActivity, CharTempEffect> {
 
-
     @Override
     protected List<CharTempEffect> getListData() {
         return data.getBase().getTempEffects();
@@ -37,16 +36,6 @@ public class SummaryTempEffectsFragment extends AbstractListFragment<CharSummary
     @Override
     protected ListAdapter createAdapter() {
         return new Adapter(getListData());
-    }
-
-    public void save() {
-        //update db
-        CharTempEffectDao dataSource = new CharTempEffectDao(activity);
-        dataSource.saveOverwrite(data.getBase().getId(), listData);
-        dataSource.close();
-
-        //update activity
-        activity.refreshUI();
     }
 
     @Override
@@ -74,14 +63,8 @@ public class SummaryTempEffectsFragment extends AbstractListFragment<CharSummary
             case REQUEST_SELECT:
                 switch (resultCode) {
                     case RESULT_OK:
-
-                        //update list
                         TempEffect selected = (TempEffect) data.getSerializableExtra(EXTRA_SELECTED);
-                        CharTempEffect charTempEffect = new CharTempEffect();
-                        charTempEffect.setTempEffect(selected);
-                        charTempEffect.setActive(true);
-                        listData.add(charTempEffect);
-
+                        updateList(selected);
                         save();
                 }
         }
@@ -103,11 +86,32 @@ public class SummaryTempEffectsFragment extends AbstractListFragment<CharSummary
 
             return group;
         }
-    }
 
+    }
     @Override
     protected void onClickRow(CharTempEffect element) {
         element.toggleActive();
         save();
     }
+
+    private void updateList(TempEffect selected) {
+        CharTempEffect charTempEffect = new CharTempEffect();
+        charTempEffect.setTempEffect(selected);
+        charTempEffect.setActive(true);
+        listData.add(charTempEffect);
+    }
+
+    public void save() {
+        //update db
+        CharTempEffectDao dataSource = new CharTempEffectDao(activity);
+        try {
+            dataSource.saveOverwrite(data.getBase().getId(), listData);
+        } finally {
+            dataSource.close();
+        }
+
+        //update activity
+        activity.refreshUI();
+    }
+
 }

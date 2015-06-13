@@ -55,9 +55,8 @@ FEATURES
                 - clear bad books: web, duplicate monster manual
             - how to preserve char with dependencies to removed stuff?
         - import char
-            - temp effects
-            - conditions
             - msg to the user if there's no app to handle import/export (make suggestions)
+            - resources
     - port to tablet
     - baggage (+ weight calculation)
     - spells

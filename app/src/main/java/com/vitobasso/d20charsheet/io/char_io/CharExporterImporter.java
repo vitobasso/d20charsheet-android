@@ -70,7 +70,6 @@ public class CharExporterImporter {
     private ObjectMapper buildParser() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationConfig.Feature.REQUIRE_SETTERS_FOR_GETTERS, true);
-        mapper.configure(SerializationConfig.Feature.CAN_OVERRIDE_ACCESS_MODIFIERS, true);
         mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
         return mapper;
     }
