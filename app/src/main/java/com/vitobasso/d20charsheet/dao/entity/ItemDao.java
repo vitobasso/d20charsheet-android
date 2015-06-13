@@ -80,9 +80,8 @@ public class ItemDao extends AbstractRuleDao<Item> {
         if (entity.getItemType() == WEAPON) {
             WeaponItem weaponItem = (WeaponItem) entity;
             WeaponProperties weapon = weaponItem.getWeaponProperties();
-            if (weapon.getId() == 0) {
-                weaponDao.save(id, weapon);
-            }
+            weapon.setId(id);
+            weaponDao.save(weapon);
         }
     }
 
@@ -107,7 +106,7 @@ public class ItemDao extends AbstractRuleDao<Item> {
         //weapon fields
         if (itemType == WEAPON) {
             WeaponItem w = (WeaponItem) item;
-            WeaponProperties weapon = weaponDao.findByItem(item.getId());
+            WeaponProperties weapon = weaponDao.findById(item.getId());
             weapon.setName(w.getName());
             w.setWeaponProperties(weapon);
         }
