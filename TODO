@@ -24,7 +24,6 @@ IMPROVEMENTS
         - show dialog as balloon (http://www.londatiga.net/it/how-to-create-quickaction-dialog-in-android/)
 
 # edit char
-    - separar ataques e links em outro pager: config/tweak/ajustes
     - multi select on CAB
 
 # edit
@@ -55,6 +54,10 @@ FEATURES
             - import rules
                 - clear bad books: web, duplicate monster manual
             - how to preserve char with dependencies to removed stuff?
+        - import char
+            - temp effects
+            - conditions
+            - msg to the user if there's no app to handle import/export (make suggestions)
     - port to tablet
     - baggage (+ weight calculation)
     - spells

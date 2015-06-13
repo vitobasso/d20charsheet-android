@@ -30,7 +30,7 @@ public class CharBookDao extends AbstractAssociationDao<Book> {
         super(context);
     }
 
-    protected CharBookDao(Context context, SQLiteDatabase database) {
+    public CharBookDao(Context context, SQLiteDatabase database) {
         super(context, database);
     }
 

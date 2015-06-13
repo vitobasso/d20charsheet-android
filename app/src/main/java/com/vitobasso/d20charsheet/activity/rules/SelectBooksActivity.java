@@ -38,7 +38,7 @@ import static com.vitobasso.d20charsheet.util.font.FontUtil.setActionbarTitle;
  */
 public class SelectBooksActivity extends MainNavigationActvity {
 
-    private CharBase base;
+    private CharBase charBase;
     private SortedSet<Edition> editions;
     private TreeMap<Edition, List<Book>> booksByEdition;
     private SortedSet<Book> checkedBooks;
@@ -54,7 +54,7 @@ public class SelectBooksActivity extends MainNavigationActvity {
         setActionbarTitle(this, BOLD_FONT, getTitle());
 
         AppGlobals cache = (AppGlobals) getApplicationContext();
-        base = cache.getOpenedChar();
+        charBase = cache.getChar();
         editions = loadEditions();
         booksByEdition = mapBooksByEdition();
         checkedBooks = loadCheckedBooks();
@@ -80,11 +80,7 @@ public class SelectBooksActivity extends MainNavigationActvity {
     }
 
     private TreeMap<Edition, List<Book>> mapBooksByEdition() {
-
-        BookDao bookDao = new BookDao(this);
-        List<Book> books = bookDao.listAll();
-        bookDao.close();
-
+        List<Book> books = listAllBooks();
         TreeMap<Edition, List<Book>> map = new TreeMap<>();
         for (Book book : books) {
             List<Book> list = map.get(book.getEdition());
@@ -97,22 +93,27 @@ public class SelectBooksActivity extends MainNavigationActvity {
         return map;
     }
 
+    private List<Book> listAllBooks() {
+        BookDao bookDao = new BookDao(this);
+        try {
+            return bookDao.listAll();
+        } finally {
+            bookDao.close();
+        }
+    }
+
     private SortedSet<Edition> loadEditions() {
         EditionDao editionDao = new EditionDao(this);
-        List<Edition> editions = editionDao.listAll();
-        editionDao.close();
-        return new TreeSet<>(editions);
+        try {
+            List<Edition> editions = editionDao.listAll();
+            return new TreeSet<>(editions);
+        } finally {
+            editionDao.close();
+        }
     }
 
     private SortedSet<Book> loadCheckedBooks() {
-        Collection<Book> checkedBooks;
-        if (base == null) {
-            checkedBooks = cache.getActiveRulebooks();
-        } else {
-            CharBookDao charBookDao = new CharBookDao(this);
-            checkedBooks = charBookDao.findByParent(base.getId());
-            charBookDao.close();
-        }
+        Collection<Book> checkedBooks = cache.getChar().getActiveBooks();
         return new TreeSet<>(checkedBooks);
     }
 
@@ -197,22 +198,20 @@ public class SelectBooksActivity extends MainNavigationActvity {
     }
 
     private void onClickSave() {
-        if(base != null) { // should be null in first run (before char was created)
+        if(cache.isCharOpened()) {
             saveCharBooks();
         }
-        updateCharBooksInMemory();
+        charBase.setActiveBooks(checkedBooks); //updating AppGlobals
         finish();
-    }
-
-    private void updateCharBooksInMemory() {
-        AppGlobals cache = (AppGlobals) getApplicationContext();
-        cache.setActiveRulebooks(checkedBooks);
     }
 
     private void saveCharBooks() {
         CharBookDao charBookDao = new CharBookDao(this);
-        charBookDao.saveOverwrite(base.getId(), checkedBooks);
-        charBookDao.close();
+        try {
+            charBookDao.saveOverwrite(charBase.getId(), checkedBooks);
+        } finally {
+            charBookDao.close();
+        }
     }
 
     private void onClickDownload() {

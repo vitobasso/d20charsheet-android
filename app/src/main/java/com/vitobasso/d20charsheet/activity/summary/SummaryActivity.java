@@ -45,7 +45,7 @@ public class SummaryActivity extends MainNavigationActvity implements PagerActiv
     @Override
     protected void onStart() {
         if (cache.isCharOpened()) {
-            open(cache.getOpenedChar());
+            open(cache.getChar());
         } else {
             goToStartup();
         }

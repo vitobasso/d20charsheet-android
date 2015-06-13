@@ -10,9 +10,9 @@ import com.vitobasso.d20charsheet.R;
 import com.vitobasso.d20charsheet.activity.abstraction.MainNavigationActvity;
 import com.vitobasso.d20charsheet.activity.abstraction.PagerActivity;
 import com.vitobasso.d20charsheet.activity.abstraction.PagerFragment;
-import com.vitobasso.d20charsheet.dao.dependant.CharBookDao;
 import com.vitobasso.d20charsheet.dao.entity.CharDao;
 import com.vitobasso.d20charsheet.model.character.CharBase;
+import com.vitobasso.d20charsheet.util.business.CharBuilder;
 
 import static com.vitobasso.d20charsheet.activity.edit_char.EditCharPagerAdapter.PAGE_BASIC;
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.EXTRA_CHAR;
@@ -48,10 +48,10 @@ public class EditCharActivity extends MainNavigationActvity implements PagerActi
 
         Mode mode = (Mode) getIntent().getSerializableExtra(EXTRA_MODE);
         if (mode == Mode.EDIT) {
-            base = cache.getOpenedChar();
+            base = cache.getChar();
         } else {
-            cache.reset();
-            base = createNewCharacter();
+            base = new CharBuilder(this).newChar();
+            cache.setNewChar(base);
         }
 
         pager = (ViewPager) findViewById(R.id.pager);
@@ -95,22 +95,6 @@ public class EditCharActivity extends MainNavigationActvity implements PagerActi
         }
     }
 
-    private CharBase createNewCharacter() {
-        CharBase base = new CharBase();
-        base.setHitPoints(1);
-        base.setStrength(10);
-        base.setDexterity(10);
-        base.setConstitution(10);
-        base.setIntelligence(10);
-        base.setWisdom(10);
-        base.setCharisma(10);
-        base.setGender("M");
-        base.setTendencyLoyality("NEUTRAL");
-        base.setTendencyMoral("NEUTRAL");
-        base.setStandardAbilityMods();
-        return base;
-    }
-
     private void saveCharacter() {
         //standard attack
         if(base.getAttacks().isEmpty()){
@@ -121,12 +105,6 @@ public class EditCharActivity extends MainNavigationActvity implements PagerActi
         CharDao dataSource = new CharDao(this);
         dataSource.save(base);
         dataSource.close();
-
-        //save books
-        CharBookDao charBookDao = new CharBookDao(this);
-        charBookDao.saveOverwrite(base.getId(), cache.getActiveRulebooks());
-        charBookDao.close();
-
     }
 
     @Override

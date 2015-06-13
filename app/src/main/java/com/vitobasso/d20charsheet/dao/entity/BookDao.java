@@ -5,13 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.vitobasso.d20charsheet.dao.abstraction.AbstractEntityDao;
 import com.vitobasso.d20charsheet.model.rulebook.Book;
 import com.vitobasso.d20charsheet.model.rulebook.Edition;
 import com.vitobasso.d20charsheet.util.database.Table;
 
 import java.util.List;
+import java.util.Set;
 
 import static com.vitobasso.d20charsheet.util.database.ColumnType.INTEGER;
 import static com.vitobasso.d20charsheet.util.database.ColumnType.TEXT;
@@ -76,11 +77,11 @@ public class BookDao extends AbstractEntityDao<Book> {
         return select(query);
     }
 
-    public static List<Book> getDefaultActiveBooks(Context context) {
+    public static Set<Book> getDefaultActiveBooks(Context context) {
         BookDao bookDao = new BookDao(context);
         Book playersHandbook = bookDao.findById(6);
         bookDao.close();
-        return Lists.newArrayList(playersHandbook);
+        return Sets.newHashSet(playersHandbook);
     }
 
 }

@@ -33,10 +33,12 @@ public abstract class AbstractRuleDao<T extends Rule> extends AbstractEntityDao<
 
     @Override
     public Cursor cursor(String selection) {
-        String bookIds = getRulebookIdsAsString();
-        if (!ignoreActiveBooks && bookIds != null) {
-            String bookSelection = format("%s in (%s)", COLUMN_BOOK_ID, bookIds);
-            selection = appendWhereClause(bookSelection, selection);
+        if (!ignoreActiveBooks) {
+            String bookIds = getRulebookIdsAsString();
+            if (bookIds != null) {
+                String bookSelection = format("%s in (%s)", COLUMN_BOOK_ID, bookIds);
+                selection = appendWhereClause(bookSelection, selection);
+            }
         }
         return super.cursor(selection);
     }
@@ -62,7 +64,11 @@ public abstract class AbstractRuleDao<T extends Rule> extends AbstractEntityDao<
 
     private String getRulebookIdsAsString() {
         AppGlobals cache = (AppGlobals) context.getApplicationContext();
-        Collection<Book> rulebooks = cache.getActiveRulebooks();
+        Collection<Book> rulebooks = cache.getChar().getActiveBooks();
+        return buildRulebookIdsString(rulebooks);
+    }
+
+    private String buildRulebookIdsString(Collection<Book> rulebooks) {
         if (rulebooks == null) {
             return null;
         }
@@ -74,7 +80,6 @@ public abstract class AbstractRuleDao<T extends Rule> extends AbstractEntityDao<
             }
             str.append(rulebook.getId());
         }
-
         return str.toString();
     }
 

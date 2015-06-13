@@ -4,10 +4,12 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
+import com.google.common.collect.Sets;
 import com.vitobasso.d20charsheet.dao.ActiveConditionDao;
 import com.vitobasso.d20charsheet.dao.AttackRoundDao;
 import com.vitobasso.d20charsheet.dao.abstraction.AbilityModifierDao;
 import com.vitobasso.d20charsheet.dao.abstraction.AbstractEntityDao;
+import com.vitobasso.d20charsheet.dao.dependant.CharBookDao;
 import com.vitobasso.d20charsheet.dao.dependant.CharClassDao;
 import com.vitobasso.d20charsheet.dao.dependant.CharFeatDao;
 import com.vitobasso.d20charsheet.dao.dependant.CharSkillDao;
@@ -19,7 +21,6 @@ import com.vitobasso.d20charsheet.model.character.CharTempEffect;
 import com.vitobasso.d20charsheet.model.character.DamageTaken;
 import com.vitobasso.d20charsheet.util.database.Table;
 
-import java.util.HashSet;
 import java.util.List;
 
 import static com.vitobasso.d20charsheet.util.database.ColumnType.INTEGER;
@@ -220,6 +221,10 @@ public class CharDao extends AbstractEntityDao<CharBase> {
         AbilityModifierDao abilityModDao = new AbilityModifierDao(context, database);
         abilityModDao.saveOverwrite(id, entity.getAbilityMods());
 
+        //books
+        CharBookDao charBookDao = new CharBookDao(context, database);
+        charBookDao.saveOverwrite(id, entity.getActiveBooks());
+
         //temp effects are saved directly on TempEffectActivityDao from SummaryTempEffectsFragment
         //active conditions are saved directly on ActiveConditionDao from SummaryActivity
     }
@@ -318,7 +323,11 @@ public class CharDao extends AbstractEntityDao<CharBase> {
 
         //load active conditions
         ActiveConditionDao condDao = new ActiveConditionDao(context, database);
-        c.setActiveConditions(new HashSet<>(condDao.findByParent(c.getId())));
+        c.setActiveConditions(Sets.newHashSet(condDao.findByParent(c.getId())));
+
+        //books
+        CharBookDao bookDao = new CharBookDao(context, database);
+        c.setActiveBooks(Sets.newHashSet(bookDao.findByParent(c.getId())));
 
         return c;
     }

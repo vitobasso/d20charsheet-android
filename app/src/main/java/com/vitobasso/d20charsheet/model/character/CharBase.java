@@ -14,6 +14,7 @@ import com.vitobasso.d20charsheet.model.item.EquipSlot;
 import com.vitobasso.d20charsheet.model.item.Item;
 import com.vitobasso.d20charsheet.model.item.WeaponItem;
 import com.vitobasso.d20charsheet.model.item.WeaponProperties;
+import com.vitobasso.d20charsheet.model.rulebook.Book;
 import com.vitobasso.d20charsheet.util.business.AttackUtil;
 
 import java.security.InvalidParameterException;
@@ -68,12 +69,14 @@ public class CharBase extends AbstractEntity implements CharEntity {
 
     private CharEquip equipment = new CharEquip();
     private List<CharTempEffect> tempEffects = new ArrayList<>();
-    private Set<Condition> activeConditions = new HashSet<>();
 
     private List<AttackRound> attacks = new ArrayList<>();
     private List<AbilityModifier> abilityMods = new ArrayList<>();
 
     private DamageTaken damageTaken = new DamageTaken();
+
+    private Set<Condition> activeConditions = new HashSet<>();
+    private Set<Book> activeBooks = new HashSet<>();
 
     public int getExperienceLevel() {
         int sum = 0;
@@ -422,4 +425,13 @@ public class CharBase extends AbstractEntity implements CharEntity {
     public void setDamageTaken(DamageTaken damageTaken) {
         this.damageTaken = damageTaken;
     }
+
+    public Set<Book> getActiveBooks() {
+        return activeBooks;
+    }
+
+    public void setActiveBooks(Set<Book> activeBooks) {
+        this.activeBooks = activeBooks;
+    }
+
 }

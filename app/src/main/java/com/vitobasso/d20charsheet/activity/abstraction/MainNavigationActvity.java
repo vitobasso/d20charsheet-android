@@ -144,12 +144,18 @@ public abstract class MainNavigationActvity extends DoubleDrawerActivity {
 
         @Override
         public boolean isEnabled(int position) {
-            return pref.isLastOpenedCharKnown() || isNavigationAllowedDuringFirstCharCreation(position);
+            if (cache.isCharOpened()) {
+                return true; // enable all
+            } else if (cache.isCharSet()) {
+                return position != SUMMARY.ordinal(); // enable some
+            } else {
+                return false; // enable none
+            }
         }
 
         @Override
         public boolean areAllItemsEnabled() {
-            return pref.isLastOpenedCharKnown();
+            return cache.isCharOpened();
         }
 
         @Override
@@ -159,10 +165,6 @@ public abstract class MainNavigationActvity extends DoubleDrawerActivity {
             return view;
         }
 
-    }
-
-    private boolean isNavigationAllowedDuringFirstCharCreation(int position) {
-        return position == EDIT.ordinal() || position == BOOKS.ordinal();
     }
 
 }
