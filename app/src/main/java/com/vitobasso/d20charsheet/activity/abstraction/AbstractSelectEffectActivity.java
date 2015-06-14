@@ -10,7 +10,7 @@ import com.vitobasso.d20charsheet.util.gui.EffectPopulator;
 /**
  * Created by Victor on 21/04/14.
  */
-public abstract class AbstractSelectEffectActivity<T extends AbstractEntity & EffectSource> extends AbstractSelectActivity<T> {
+public abstract class AbstractSelectEffectActivity<T extends AbstractEntity & EffectSource> extends AbstractSelectEditActivity<T> {
 
     @Override
     protected int getRowLayout() {
