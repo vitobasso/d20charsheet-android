@@ -56,7 +56,6 @@ FEATURES
             - how to preserve char with dependencies to removed stuff?
         - import char
             - msg to the user if there's no app to handle import/export (make suggestions)
-            - resources
     - port to tablet
     - baggage (+ weight calculation)
     - spells

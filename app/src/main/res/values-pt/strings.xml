@@ -226,5 +226,12 @@
     <string name="import_dialog_hint">Endereço do pacote de regras</string>
     <string name="import_dialog_invalid_url">Não é uma url válida</string>
     <string name="import_">Importar</string>
+    <string name="export_via">Exportar usando:</string>
+    <string name="export_subject">Exportado de Ficha d20</string>
+    <string name="export_successful">Exportado com sucesso</string>
+    <string name="import_successful">Importado com sucesso</string>
+    <string name="import_failed">Falha ao importar</string>
+    <string name="import_fail_external">Falha ao copiar arquivo do aplicativo externo</string>
+    <string name="export_fail_external">Falha ao copiar arquivo para o aplicativo externo</string>
 
 </resources>

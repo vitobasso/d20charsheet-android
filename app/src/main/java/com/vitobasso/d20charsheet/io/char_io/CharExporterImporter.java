@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 
+import com.vitobasso.d20charsheet.R;
 import com.vitobasso.d20charsheet.model.character.CharBase;
 import com.vitobasso.d20charsheet.util.business.CharUtil;
 
@@ -95,11 +96,12 @@ public class CharExporterImporter {
         intent.setType(MIME_TYPE);
         intent.putExtra(EXTRA_SUBJECT, getSubject());
         intent.putExtra(EXTRA_STREAM, Uri.fromFile(jsonFile));
-        activity.startActivityForResult(createChooser(intent, "Export to"), REQUEST_EXPORT); //TODO resource
+        String msg = activity.getString(R.string.export_via);
+        activity.startActivityForResult(createChooser(intent, msg), REQUEST_EXPORT);
     }
 
     private String getSubject() {
-        return "Exported from d20charsheet";
-    }  //TODO resource
+        return activity.getString(R.string.export_subject);
+    }
 
 }

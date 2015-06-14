@@ -105,7 +105,7 @@ public class SelectCharActivity extends MainNavigationActvity {
             }
         } else if (requestCode == CharExporterImporter.REQUEST_EXPORT) {
             if (resultCode == RESULT_OK) {
-                showToast("Export successful"); //TODO resource
+                showToast(R.string.export_successful);
             } else if (resultCode != RESULT_CANCELED) {
                 notifyExportFailedExternal(data);
             }
@@ -122,20 +122,20 @@ public class SelectCharActivity extends MainNavigationActvity {
         try {
             CharBase imported = exporterImporter.handleImportResponse(data);
             save(imported);
-            showToast("Import successful"); //TODO resource
+            showToast(R.string.import_successful);
         } catch (ImportCharException e) {
-            showToast("Failed to import"); //TODO resource
+            showToast(R.string.import_failed);
         }
     }
 
     private void notifyImportFailedExternal(Intent data) {
-        String message = "Failed to get a file from the external app"; //TODO resource
+        String message = getString(R.string.import_fail_external);
         message = createExternalFailMessage(data, message);
         showToast(message);
     }
 
     private void notifyExportFailedExternal(Intent data) {
-        String message = "Failed to export file to the external app"; //TODO resource
+        String message = getString(R.string.export_fail_external);
         message = createExternalFailMessage(data, message);
         showToast(message);
     }
@@ -295,6 +295,11 @@ public class SelectCharActivity extends MainNavigationActvity {
 
     private void updateUI() {
         listView.setAdapter(new Adapter(this, list));
+    }
+
+    private void showToast(int messageId) {
+        String message = getString(messageId);
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
     private void showToast(String message) {
