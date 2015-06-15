@@ -29,7 +29,6 @@ public class EffectArrayAdapter<T extends EffectSource> extends ArrayAdapter<T> 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         ViewGroup group = (ViewGroup) super.getView(position, convertView, parent);
-        assert group != null;
         EffectSource source = getItem(position);
 
         EffectPopulator populator = new EffectPopulator(getContext());

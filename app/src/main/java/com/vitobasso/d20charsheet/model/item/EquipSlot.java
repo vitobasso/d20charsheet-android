@@ -60,4 +60,9 @@ public class EquipSlot implements Serializable {
     public void setNameRes(int nameRes) {
         this.nameRes = nameRes;
     }
+
+    @Override
+    public String toString() {
+        return slotType + " " + item;
+    }
 }

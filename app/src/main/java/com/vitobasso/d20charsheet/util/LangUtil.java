@@ -2,6 +2,8 @@ package com.vitobasso.d20charsheet.util;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -25,6 +27,10 @@ public class LangUtil {
 
     public static int hash(Object... fields) {
         return Arrays.hashCode(fields);
+    }
+
+    public static void removeNulls(Collection collection) {
+        collection.removeAll(Collections.singleton(null));
     }
 
 }

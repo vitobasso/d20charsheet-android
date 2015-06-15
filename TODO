@@ -53,7 +53,6 @@ FEATURES
         - rules
             - import rules
                 - clear bad books: web, duplicate monster manual
-            - how to preserve char with dependencies to removed stuff?
         - import char
             - msg to the user if there's no app to handle import/export (make suggestions)
     - port to tablet

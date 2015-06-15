@@ -18,7 +18,7 @@ public class ActiveConditionDao extends AbstractAssociationDao<Condition> {
     private static final String COLUMN_CHAR_ID = "char_id";
     private static final String COLUMN_CONDITION_ID = "condition_id";
 
-    public static final Table TABLE = new Table("active_condition")
+    public static final Table TABLE = new Table("char_condition")
             .colNotNull(COLUMN_CHAR_ID, INTEGER)
             .colNotNull(COLUMN_CONDITION_ID, INTEGER);
 

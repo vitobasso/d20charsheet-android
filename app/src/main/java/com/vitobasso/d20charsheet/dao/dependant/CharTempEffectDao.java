@@ -20,7 +20,7 @@ public class CharTempEffectDao extends AbstractAssociationDao<CharTempEffect> {
     private static final String COLUMN_TEMP_ID = "temp_effect_id";
     private static final String COLUMN_ACTIVE = "active";
 
-    public static final Table TABLE = new Table("active_temp_effect")
+    public static final Table TABLE = new Table("char_temp_effect")
             .colNotNull(COLUMN_CHAR_ID, INTEGER)
             .colNotNull(COLUMN_TEMP_ID, INTEGER)
             .colNotNull(COLUMN_ACTIVE, INTEGER);
@@ -65,9 +65,15 @@ public class CharTempEffectDao extends AbstractAssociationDao<CharTempEffect> {
         TempEffect tempEffect = tempEffectDao.findById(cursor.getLong(2));
         result.setTempEffect(tempEffect);
 
+        if (!validate(result)) { //to avoid null pointer when char points to temp effect that was deleted
+            result = null;
+        }
         return result;
     }
 
+    private boolean validate(CharTempEffect result) { //
+        return result.getTempEffect() != null;
+    }
 
     public final void removeAllForChild(long childId) {
         removeForQuery(String.format("%s=%d", COLUMN_TEMP_ID, childId));

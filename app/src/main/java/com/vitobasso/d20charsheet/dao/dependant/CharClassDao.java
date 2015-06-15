@@ -22,7 +22,7 @@ public class CharClassDao extends AbstractAssociationDao<ClassLevel> {
     private static final String COLUMN_CLASS_ID = "class_id";
     private static final String COLUMN_LEVEL = "level";
 
-    public static final Table TABLE = new Table("character_class")
+    public static final Table TABLE = new Table("char_class")
             .col(COLUMN_CHAR_ID, INTEGER)
             .col(COLUMN_CLASS_ID, INTEGER)
             .col(COLUMN_LEVEL, INTEGER);

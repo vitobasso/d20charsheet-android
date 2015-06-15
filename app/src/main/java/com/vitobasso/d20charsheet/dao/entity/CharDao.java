@@ -15,6 +15,7 @@ import com.vitobasso.d20charsheet.dao.dependant.CharFeatDao;
 import com.vitobasso.d20charsheet.dao.dependant.CharSkillDao;
 import com.vitobasso.d20charsheet.dao.dependant.CharTempEffectDao;
 import com.vitobasso.d20charsheet.model.AbstractEntity;
+import com.vitobasso.d20charsheet.model.Feat;
 import com.vitobasso.d20charsheet.model.character.CharBase;
 import com.vitobasso.d20charsheet.model.character.CharEquip;
 import com.vitobasso.d20charsheet.model.character.CharTempEffect;
@@ -23,6 +24,7 @@ import com.vitobasso.d20charsheet.util.database.Table;
 
 import java.util.List;
 
+import static com.vitobasso.d20charsheet.util.LangUtil.removeNulls;
 import static com.vitobasso.d20charsheet.util.database.ColumnType.INTEGER;
 import static com.vitobasso.d20charsheet.util.database.ColumnType.REAL;
 import static com.vitobasso.d20charsheet.util.database.ColumnType.TEXT;
@@ -313,7 +315,9 @@ public class CharDao extends AbstractEntityDao<CharBase> {
         //load feats
         CharFeatDao charFeatDao = new CharFeatDao(context, database);
         charFeatDao.setIgnoreBookSelection(true);
-        c.setFeats(charFeatDao.findByParent(c.getId()));
+        List<Feat> feats = charFeatDao.findByParent(c.getId());
+        removeNulls(feats); //a null may appear if feat was deleted (cleaned in db next time char is saved)
+        c.setFeats(feats);
 
         //load skills
         CharSkillDao charSkillDao = new CharSkillDao(context, database);
@@ -321,8 +325,9 @@ public class CharDao extends AbstractEntityDao<CharBase> {
 
         //load temporary effects
         CharTempEffectDao activeTempDao = new CharTempEffectDao(context, database);
-        List<CharTempEffect> list = activeTempDao.findByParent(c.getId());
-        for (CharTempEffect acond : list) {
+        List<CharTempEffect> tempEffects = activeTempDao.findByParent(c.getId());
+        removeNulls(tempEffects); //a null may appear if tempEffect was deleted (cleaned in db next time char is saved)
+        for (CharTempEffect acond : tempEffects) {
             c.getTempEffects().add(acond);
         }
 
