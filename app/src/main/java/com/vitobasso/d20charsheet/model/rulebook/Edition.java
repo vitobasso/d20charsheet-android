@@ -12,7 +12,6 @@ import com.vitobasso.d20charsheet.model.AbstractEntity;
 public class Edition extends AbstractEntity {
 
     private RuleSystem system;
-    private boolean isCore;
 
     public RuleSystem getSystem() {
         return system;
@@ -22,27 +21,15 @@ public class Edition extends AbstractEntity {
         this.system = system;
     }
 
-    public boolean isCore() {
-        return isCore;
-    }
-
-    public void setCore(boolean isCore) {
-        this.isCore = isCore;
+    @Override
+    protected boolean subEquals(AbstractEntity o) {
+        Edition other = (Edition) o;
+        return Objects.equal(system, other.system)
+                && Objects.equal(name, other.name);
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || ((Object)this).getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        Edition edition = (Edition) o;
-        return Objects.equal(system, edition.system)
-                && Objects.equal(name, edition.name);
-    }
-
-    @Override
-    public int hashCode() {
+    protected int subHashCode() {
         return Objects.hashCode(system, name);
     }
 
@@ -54,7 +41,6 @@ public class Edition extends AbstractEntity {
             Edition edition = (Edition) another;
             return ComparisonChain.start()
                     .compare(edition.system, system)
-                    .compareTrueFirst(isCore, edition.isCore)
                     .compare(name, edition.name)
                     .result();
         }

@@ -119,20 +119,6 @@ public class Clazz extends Rule {
         }
     }
 
-    @Override
-    public int hashCode() {
-        return name.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o instanceof Clazz) {
-            return name.equals(((Clazz) o).name);
-        } else {
-            return false;
-        }
-    }
-
     public void setAttackProg(AttackProgression attackProg) {
         this.attackProg = attackProg;
     }

@@ -6,6 +6,8 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ComparisonChain;
 import com.vitobasso.d20charsheet.model.AbstractEntity;
 
+import org.codehaus.jackson.annotate.JsonValue;
+
 /**
  * Created by Victor on 12/04/2015.
  */
@@ -14,6 +16,14 @@ public class Book extends AbstractEntity {
     private Edition edition;
     private String abbreviation;
     private Integer year;
+
+    public Book() {
+    }
+
+    //used by jackson
+    public Book(int id) {
+        this.id = id;
+    }
 
     public Edition getEdition() {
         return edition;
@@ -39,22 +49,23 @@ public class Book extends AbstractEntity {
         this.year = year;
     }
 
+    @JsonValue
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || ((Object)this).getClass() != o.getClass()) return false;
-        if (!super.equals(o)) return false;
-
-        Book book = (Book) o;
-
-        return Objects.equal(edition, book.edition)
-                && Objects.equal(name, book.name)
-                && Objects.equal(year, book.year);
+    public long getId() {
+        return super.getId();
     }
 
     @Override
-    public int hashCode() {
+    protected int subHashCode() {
         return Objects.hashCode(edition, name, year);
+    }
+
+    @Override
+    protected boolean subEquals(AbstractEntity another) {
+        Book other = (Book) another;
+        return Objects.equal(edition, other.edition)
+                && Objects.equal(name, other.name)
+                && Objects.equal(year, other.year);
     }
 
     @Override

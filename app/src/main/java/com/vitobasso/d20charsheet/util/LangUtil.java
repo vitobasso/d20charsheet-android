@@ -1,7 +1,6 @@
 package com.vitobasso.d20charsheet.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
@@ -19,14 +18,6 @@ public class LangUtil {
             }
         }
         return lists.get(index);
-    }
-
-    public static boolean equals(Object a, Object b){
-        return a == null ? b == null : a.equals(b);
-    }
-
-    public static int hash(Object... fields) {
-        return Arrays.hashCode(fields);
     }
 
     public static void removeNulls(Collection collection) {

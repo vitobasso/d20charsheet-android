@@ -65,18 +65,15 @@ public class Condition extends AbstractEntity {
     }
 
     @Override
-    public int hashCode() {
+    protected int subHashCode() {
         return Objects.hashCode(predicate, name);
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (o instanceof Condition) {
-            Condition other = (Condition) o;
-            return predicate == other.predicate && name.equals(other.name);
-        } else {
-            return false;
-        }
+    protected boolean subEquals(AbstractEntity another) {
+        Condition other = (Condition) another;
+        return Objects.equal(predicate, other.predicate)
+                && Objects.equal(name, other.name);
     }
 
     @Override

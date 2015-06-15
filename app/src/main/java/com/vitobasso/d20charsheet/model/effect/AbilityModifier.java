@@ -2,9 +2,9 @@ package com.vitobasso.d20charsheet.model.effect;
 
 import android.content.Context;
 
+import com.google.common.base.Objects;
 import com.vitobasso.d20charsheet.model.CharEntity;
 import com.vitobasso.d20charsheet.model.DiceRoll;
-import com.vitobasso.d20charsheet.util.LangUtil;
 import com.vitobasso.d20charsheet.util.i18n.EnumI18n;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -98,7 +98,7 @@ public class AbilityModifier extends Modifier implements CharEntity {
 
     @Override
     public int hashCode() {
-        return LangUtil.hash(target, variation, ability);
+        return Objects.hashCode(target, variation, ability);
     }
 
     @Override

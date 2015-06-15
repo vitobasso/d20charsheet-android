@@ -2,7 +2,7 @@ package com.vitobasso.d20charsheet.model;
 
 import android.support.annotation.NonNull;
 
-import com.vitobasso.d20charsheet.util.LangUtil;
+import com.google.common.base.Objects;
 
 import java.io.Serializable;
 
@@ -40,17 +40,35 @@ public abstract class AbstractEntity implements Comparable<AbstractEntity>, Seri
 
     @Override
     public int hashCode() {
-        return LangUtil.hash(name);
+        if (id > 0) {
+            return Objects.hashCode(id);
+        } else {
+            return subHashCode();
+        }
+    }
+
+    protected int subHashCode() {
+        return Objects.hashCode(name);
     }
 
     @Override
-    public boolean equals(Object another) {
-        if (another instanceof AbstractEntity) {
-            AbstractEntity anotherEntity = ((AbstractEntity) another);
-            return ((Object) this).getClass().equals(another.getClass())
-                    && name.equals(anotherEntity.name);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || ((Object)this).getClass() != o.getClass()) return false;
+
+        if (o instanceof AbstractEntity) {
+            AbstractEntity another = ((AbstractEntity) o);
+            if (id > 0 && another.id > 0) {
+                return Objects.equal(id, another.id);
+            } else {
+                return subEquals(another);
+            }
         }
         return false;
+    }
+
+    protected boolean subEquals(AbstractEntity another) {
+        return Objects.equal(name, another.name);
     }
 
     @Override

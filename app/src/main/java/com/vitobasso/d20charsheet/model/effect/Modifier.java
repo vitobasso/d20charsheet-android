@@ -1,8 +1,8 @@
 package com.vitobasso.d20charsheet.model.effect;
 
+import com.google.common.base.Objects;
 import com.vitobasso.d20charsheet.model.AbstractEntity;
 import com.vitobasso.d20charsheet.model.DiceRoll;
-import com.vitobasso.d20charsheet.util.LangUtil;
 
 /**
  * Created by Victor on 25/02/14.
@@ -105,7 +105,7 @@ public class Modifier extends AbstractEntity {
 
     @Override
     public int hashCode() {
-        return LangUtil.hash(target, variation, amount);
+        return Objects.hashCode(target, variation, amount);
     }
 
     @Override

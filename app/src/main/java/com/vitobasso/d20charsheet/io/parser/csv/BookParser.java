@@ -23,7 +23,7 @@ public class BookParser extends AbstractEntityParser<Book> {
         result.setYear(readIntNullable(split, "year"));
 
         Edition edition = new Edition();
-        edition.setId(readInt(split, "dnd_edition_id"));
+        edition.setId(readInt(split, "edition_id"));
         result.setEdition(edition);
 
         return result;

@@ -20,7 +20,6 @@ public class EditionParser extends AbstractEntityParser<Edition> {
     @Override
     protected Edition parse(String[] line, Edition result) throws ParseFieldException {
         result.setSystem(RuleSystem.fromString(readString(line, "system")));
-        result.setCore(readInt(line, "core") == 1);
         return result;
     }
 

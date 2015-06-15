@@ -10,6 +10,7 @@ import com.vitobasso.d20charsheet.model.character.CharBase;
 import com.vitobasso.d20charsheet.util.business.CharUtil;
 
 import org.apache.commons.io.FileUtils;
+import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.SerializationConfig;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
@@ -71,6 +72,7 @@ public class CharExporterImporter {
     private ObjectMapper buildParser() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.configure(SerializationConfig.Feature.REQUIRE_SETTERS_FOR_GETTERS, true);
+        mapper.configure(DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         mapper.setSerializationInclusion(JsonSerialize.Inclusion.NON_NULL);
         return mapper;
     }

@@ -1,6 +1,5 @@
 package com.vitobasso.d20charsheet.model.character;
 
-import com.google.common.base.Objects;
 import com.vitobasso.d20charsheet.model.AbstractEntity;
 import com.vitobasso.d20charsheet.model.CharEntity;
 import com.vitobasso.d20charsheet.model.effect.Modifier;
@@ -51,25 +50,4 @@ public class AttackRound extends AbstractEntity implements CharEntity {
         return modifiers;
     }
 
-    @Override
-    public boolean equals(Object another) {
-        if (another instanceof AttackRound) {
-            AttackRound anotherAttack = (AttackRound) another;
-            if (id != 0 && anotherAttack.id != 0) {
-                return id == anotherAttack.id;
-            } else if(id == 0 && anotherAttack.id == 0) {
-                return super.equals(another);
-            }
-        }
-        return false;
-    }
-
-    @Override
-    public int hashCode() {
-        if (id != 0) {
-            return Objects.hashCode(id);
-        } else {
-            return super.hashCode();
-        }
-    }
 }

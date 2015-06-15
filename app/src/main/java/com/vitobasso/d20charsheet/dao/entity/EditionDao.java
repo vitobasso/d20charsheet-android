@@ -10,7 +10,6 @@ import com.vitobasso.d20charsheet.model.rulebook.Edition;
 import com.vitobasso.d20charsheet.model.rulebook.RuleSystem;
 import com.vitobasso.d20charsheet.util.database.Table;
 
-import static com.vitobasso.d20charsheet.util.database.ColumnType.INTEGER;
 import static com.vitobasso.d20charsheet.util.database.ColumnType.TEXT;
 import static com.vitobasso.d20charsheet.util.database.SQLiteHelper.COLUMN_ID;
 import static com.vitobasso.d20charsheet.util.database.SQLiteHelper.COLUMN_NAME;
@@ -22,12 +21,10 @@ public class EditionDao extends AbstractEntityDao<Edition> {
 
 
     private static String COLUMN_SYSTEM = "system";
-    private static String COLUMN_CORE = "core";
 
     public static final Table TABLE = new Table("edition")
             .colNotNull(COLUMN_NAME, TEXT)
-            .colNotNull(COLUMN_SYSTEM, TEXT)
-            .colNotNull(COLUMN_CORE, INTEGER);
+            .colNotNull(COLUMN_SYSTEM, TEXT);
 
     public EditionDao(Context context) {
         super(context);
@@ -47,7 +44,6 @@ public class EditionDao extends AbstractEntityDao<Edition> {
         ContentValues values = new ContentValues();
         values.put(COLUMN_NAME, entity.getName());
         values.put(COLUMN_SYSTEM, entity.getSystem().toString());
-        values.put(COLUMN_CORE, entity.isCore());
         return values;
     }
 
@@ -57,7 +53,6 @@ public class EditionDao extends AbstractEntityDao<Edition> {
         edition.setId(getInt(cursor, COLUMN_ID));
         edition.setName(getString(cursor, COLUMN_NAME));
         edition.setSystem(RuleSystem.valueOf(getString(cursor, COLUMN_SYSTEM)));
-        edition.setCore(getInt(cursor, COLUMN_CORE) != 0);
         return edition;
     }
 }
