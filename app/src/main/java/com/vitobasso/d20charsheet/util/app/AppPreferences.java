@@ -15,7 +15,7 @@ public class AppPreferences {
     private static final String PREF_FIRST_RUN = "first_run";
     private static final String PREF_IMPORT_RULES_URL = "import_rules_url";
 
-    private static final String DEFAULT_IMPORT_RULES_URL = "https://api.github.com/repos/vitobasso/dnd3.5-data/tarball/";
+    private static final String DEFAULT_IMPORT_RULES_URL = "https://api.github.com/repos/vitobasso/dnd3.5-data/tarball/0b62546660cf66347d452505f4de427b37b48d4d";
 
     protected SharedPreferences pref;
 
