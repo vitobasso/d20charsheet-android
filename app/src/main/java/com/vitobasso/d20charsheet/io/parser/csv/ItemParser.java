@@ -2,7 +2,6 @@ package com.vitobasso.d20charsheet.io.parser.csv;
 
 import android.content.Context;
 
-import com.vitobasso.d20charsheet.io.importer.RulesImporter;
 import com.vitobasso.d20charsheet.io.parser.exception.ParseEnumException;
 import com.vitobasso.d20charsheet.io.parser.exception.ParseFieldException;
 import com.vitobasso.d20charsheet.model.item.Item;
@@ -29,8 +28,8 @@ import static com.vitobasso.d20charsheet.model.item.SlotType.WAIST;
  */
 public class ItemParser extends AbstractEffectParser<Item> {
 
-    public ItemParser(Context ctx, File file, RulesImporter.ParserCache loadingCache) {
-        super(ctx, file, loadingCache);
+    public ItemParser(Context ctx, File file, ModifierParser modifierParser) {
+        super(ctx, file, modifierParser);
     }
 
     @Override

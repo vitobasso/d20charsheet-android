@@ -50,11 +50,10 @@ IMPROVEMENTS
 FEATURES
 
     - import/export
-        - rules
-            - import rules
-                - clear bad books: web, duplicate monster manual
         - import char
             - msg to the user if there's no app to handle import/export (make suggestions)
+        - import rules
+            - use link to specific commit, to keep app and data compatible even after breaking changes
     - port to tablet
     - baggage (+ weight calculation)
     - spells

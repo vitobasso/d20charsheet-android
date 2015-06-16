@@ -2,7 +2,6 @@ package com.vitobasso.d20charsheet.io.parser.csv;
 
 import android.content.Context;
 
-import com.vitobasso.d20charsheet.io.importer.RulesImporter;
 import com.vitobasso.d20charsheet.io.parser.exception.ParseFieldException;
 import com.vitobasso.d20charsheet.io.parser.exception.ParseFormatException;
 import com.vitobasso.d20charsheet.io.parser.exception.ParseNullValueException;
@@ -25,9 +24,9 @@ public abstract class AbstractEffectParser<T extends AbstractEntity & EffectSour
 
     private ModifierParser modifierParser;
 
-    protected AbstractEffectParser(Context ctx, File file, RulesImporter.ParserCache loadingCache) {
+    protected AbstractEffectParser(Context ctx, File file, ModifierParser modifierParser) {
         super(ctx, file);
-        modifierParser = new ModifierTranslatedParser(loadingCache);
+        this.modifierParser = modifierParser;
     }
 
     protected Effect readEffect(String[] line, T source) throws ParseFieldException {

@@ -1,6 +1,6 @@
 package com.vitobasso.d20charsheet.io.parser.csv;
 
-import com.vitobasso.d20charsheet.io.importer.RulesImporter;
+import com.vitobasso.d20charsheet.io.importer.ImportContext;
 import com.vitobasso.d20charsheet.io.parser.exception.ParseModifierException;
 import com.vitobasso.d20charsheet.model.effect.Condition;
 import com.vitobasso.d20charsheet.model.effect.Modifier;
@@ -17,9 +17,9 @@ public class ModifierTranslatedParser extends ModifierParser {
     private Map<String, String> skillNameMap;
     private Map<Condition, Condition> conditionMap;
 
-    public ModifierTranslatedParser(RulesImporter.ParserCache loadingCache) {
-        this.skillNameMap = loadingCache.skillNameMap;
-        this.conditionMap = loadingCache.cachedConditions;
+    public ModifierTranslatedParser(ImportContext importContext) {
+        this.skillNameMap = importContext.getSkillNameMap();
+        this.conditionMap = importContext.getCachedConditions();
     }
 
     public Modifier parse(String str) throws ParseModifierException {

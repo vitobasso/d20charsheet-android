@@ -2,7 +2,6 @@ package com.vitobasso.d20charsheet.io.parser.csv;
 
 import android.content.Context;
 
-import com.vitobasso.d20charsheet.io.importer.RulesImporter;
 import com.vitobasso.d20charsheet.io.parser.exception.ParseFieldException;
 import com.vitobasso.d20charsheet.model.Race;
 import com.vitobasso.d20charsheet.model.RaceTrait;
@@ -14,8 +13,8 @@ import java.io.File;
  */
 public class RaceTraitParser extends AbstractEffectParser<RaceTrait> {
 
-    public RaceTraitParser(Context ctx, File file, RulesImporter.ParserCache loadingCache) {
-        super(ctx, file, loadingCache);
+    public RaceTraitParser(Context ctx, File file, ModifierParser modifierParser) {
+        super(ctx, file, modifierParser);
     }
 
     @Override
