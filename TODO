@@ -44,16 +44,12 @@ IMPROVEMENTS
     - inheritance
     - order by parent
 
-# books
-    - make it clear the checkbox is for "show/hide" (a header on the list? a toast?)
 
 FEATURES
 
     - import/export
         - import char
             - msg to the user if there's no app to handle import/export (make suggestions)
-        - import rules
-            - use link to specific commit, to keep app and data compatible even after breaking changes
     - port to tablet
     - baggage (+ weight calculation)
     - spells

@@ -233,5 +233,6 @@
     <string name="import_failed">Failed to import</string>
     <string name="import_fail_external">Failed to get a file from the external app</string>
     <string name="export_fail_external">Failed to export file to the external app</string>
+    <string name="select_books_hint">Check which books to use for the character</string>
 
 </resources>

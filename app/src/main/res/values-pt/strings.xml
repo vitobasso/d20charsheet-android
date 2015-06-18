@@ -233,5 +233,6 @@
     <string name="import_failed">Falha ao importar</string>
     <string name="import_fail_external">Falha ao copiar arquivo do aplicativo externo</string>
     <string name="export_fail_external">Falha ao copiar arquivo para o aplicativo externo</string>
+    <string name="select_books_hint">Marque os livros que deseja usar no personagem</string>
 
 </resources>

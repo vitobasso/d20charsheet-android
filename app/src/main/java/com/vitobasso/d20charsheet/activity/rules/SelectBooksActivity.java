@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
+import android.widget.Toast;
 
 import com.google.common.collect.Lists;
 import com.vitobasso.d20charsheet.R;
@@ -61,6 +62,8 @@ public class SelectBooksActivity extends MainNavigationActvity {
 
         ExpandableListView list = findView(this, android.R.id.list);
         list.setAdapter(new Adapter());
+
+        Toast.makeText(this, R.string.select_books_hint, Toast.LENGTH_LONG).show();
     }
 
     @Override
