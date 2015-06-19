@@ -44,7 +44,7 @@ public class BreakdownDialog {
 
     public Dialog buildDialog(ModifierTarget target, String variation, Integer attackRoundIndex, Attack.WeaponReference weaponReference, GuiInflater delegate) {
         BreakdownDialogInflater inflater = new BreakdownDialogInflater(activity, charSummary, target, variation);
-        ViewGroup rootView = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.summary_main_breakdown, null);
+        ViewGroup rootView = (ViewGroup) activity.getLayoutInflater().inflate(R.layout.summary_breakdown, null);
         CharBase base = charSummary.getBase();
 
         //title

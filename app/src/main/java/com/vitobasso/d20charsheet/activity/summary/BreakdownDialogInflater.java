@@ -134,7 +134,7 @@ public class BreakdownDialogInflater {
     }
 
     public ViewGroup appendRow(ViewGroup parentView, String value, String sourceName, int color) {
-        ViewGroup row = inflate(activity, parentView, R.layout.summary_main_breakdown_row);
+        ViewGroup row = inflate(activity, parentView, R.layout.summary_breakdown_row);
 
         TextView valueView = populateTextView(row, R.id.value, value);
         TextView sourceView = populateTextView(row, R.id.source, sourceName);

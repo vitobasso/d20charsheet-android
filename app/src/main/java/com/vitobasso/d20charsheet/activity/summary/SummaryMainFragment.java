@@ -57,7 +57,7 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
 
     @Override
     protected int getLayoutResourceId() {
-        return R.layout.summary_main;
+        return R.layout.summary;
     }
 
     @Override
@@ -93,7 +93,7 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
         atkParent.removeAllViews();
         for (int i = 0; i < data.getAttacks().size(); i++) {
             AttackRound attackRound = data.getAttacks().get(i);
-            ViewGroup roundGroup = inflate(activity, atkParent, R.layout.summary_main_attack_round);
+            ViewGroup roundGroup = inflate(activity, atkParent, R.layout.summary_attack_round);
             populateTextView(roundGroup, R.id.name, attackRound.getName());
 
             //TODO decide if it's necessary to have independent damage or critical values
@@ -101,7 +101,7 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
             //If so, group them based on an "equals" test.
             Map<Attack,String> grouped = AttackUtil.groupBonusByWeapon(attackRound);
             for (Attack attack : grouped.keySet()) {
-                ViewGroup groupGroup = inflate(activity, roundGroup, R.layout.summary_main_attack_group);
+                ViewGroup groupGroup = inflate(activity, roundGroup, R.layout.summary_attack_group);
                 setField(groupGroup, R.id.attack, grouped.get(attack), HIT, i, attack.getWeaponReference());
                 setField(groupGroup, R.id.damage, attack.getWeapon().getDamage().toString(), DAMAGE, i, attack.getWeaponReference());
                 setField(groupGroup, R.id.critical, attack.getWeapon().getCritical().toString(), CRIT_MULT, i, attack.getWeaponReference());
