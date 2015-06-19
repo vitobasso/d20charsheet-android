@@ -8,7 +8,7 @@ import android.view.ViewGroup;
  */
 public abstract class RecursiveViewCaller<T extends View> {
 
-    Class<T> type;
+    private Class<T> type;
 
     protected RecursiveViewCaller(Class<T> type) {
         this.type = type;

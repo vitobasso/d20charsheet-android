@@ -31,7 +31,7 @@ public class SummaryActivity extends MainNavigationActvity implements PagerActiv
 
     @Override
     protected int getContentLayout() {
-        return R.layout.summary;
+        return R.layout.pager;
     }
 
     @Override

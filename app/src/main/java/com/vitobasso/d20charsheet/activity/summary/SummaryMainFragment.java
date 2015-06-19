@@ -84,10 +84,9 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
         setField(R.id.will, R.string.empty, R.string.will, "" + data.getWill(), WILL);
 
         String concealValue = MessageFormat.format("{0}%", data.getConcealment());
-        setField(R.id.concealment, R.string.empty, R.string.conceal_short, concealValue, CONCEAL, data.getConcealment());
-
+        setField(R.id.concealment, R.string.empty, R.string.conceal, concealValue, CONCEAL, data.getConcealment());
         setField(R.id.initiative, R.string.empty, R.string.init, "" + data.getInitiative(), INIT);
-        setField(R.id.speed, R.string.empty, R.string.speed_short, "" + data.getSpeed(), SPEED);
+        setField(R.id.speed, R.string.empty, R.string.speed, "" + data.getSpeed(), SPEED);
 
         //attacks
         ViewGroup atkParent = findView(R.id.attacks_root);
@@ -220,8 +219,7 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
             }
         };
 
-        View rootView = findView(R.id.basic_root);
-        fontChange.recursiveCall(rootView);
+        fontChange.recursiveCall(findView(R.id.basic_root));
     }
 
     //TODO move to PageFragment

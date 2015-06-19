@@ -51,9 +51,9 @@
     <string name="dr_type">Tipo de RD</string>
     <string name="init">Iniciativa</string>
     <string name="init_short">Inic</string>
-    <string name="speed">Movimento</string>
-    <string name="speed_short">Mov</string>
-    <string name="speed_mult">×Movimento</string>
+    <string name="speed">Deslocamento</string>
+    <string name="speed_short">Desl</string>
+    <string name="speed_mult">×Deslocamento</string>
     <string name="atk">Jogada de Ataque</string>
     <string name="atk_short">Ataque</string>
     <string name="damage">Dano</string>

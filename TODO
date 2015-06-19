@@ -67,6 +67,7 @@ REFACTOR
         - "brief" queries (create separate BriefDaos?)
         - "new dao, try query, finally close" find a way to avoid this repeating pattern (dao wrapper?)
     - create a state machine to control AppGlobal/AppPreferences state vs navigation
+    - split ActivityUtil. have one instantiable w/ context as a field (so it can be omitted in calls).
 
 
 PROJECT

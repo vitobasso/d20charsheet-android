@@ -15,12 +15,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+
         <LinearLayout
                 android:id="@+id/attacks_root"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"/>
+                android:layout_marginTop="@dimen/double_padding"/>
 
     </LinearLayout>
 
