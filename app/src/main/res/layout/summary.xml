@@ -15,13 +15,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
+        <include
+            android:id="@+id/attacks_header"
+            layout="@layout/summary_attacks_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/double_padding" />
 
         <LinearLayout
                 android:id="@+id/attacks_root"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_padding"/>
+                android:layout_height="wrap_content"/>
 
     </LinearLayout>
 

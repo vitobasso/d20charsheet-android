@@ -213,18 +213,28 @@ public class ActivityUtil {
         return view;
     }
 
+    public static <T extends TextView> T populateTextView(Object root, int viewRes, int value) {
+        return populateTextView(root, viewRes, "" + value);
+    }
+
     public static <T extends TextView> T populateTextView(Object root, int viewRes, Object value) {
         T view = findView(root, viewRes);
+        populateTextView(view, value);
+        return view;
+    }
+
+    public static <T extends TextView> T populateTextView(Object root, int viewRes, int viewRes2, Object value) {
+        T view = findView(root, viewRes, viewRes2);
+        populateTextView(view, value);
+        return view;
+    }
+
+    public static <T extends TextView> void populateTextView(T view, Object value) {
         if (view != null && value != null) {
             String str = internationalize(value.toString(), view.getContext());
             view.setText(str);
             view.setError(null);
         }
-        return view;
-    }
-
-    public static <T extends TextView> T populateTextView(Object root, int viewRes, int value) {
-        return populateTextView(root, viewRes, "" + value);
     }
 
     public static <T extends TextView> T populateTextViewOrHide(Object root, int viewRes, Object value) {

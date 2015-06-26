@@ -19,7 +19,7 @@
                 android:layout_height="wrap_content"
                 style="@style/summary_value_text"
                 android:id="@+id/damage"
-                android:layout_marginLeft="24dp"/>
+                android:layout_marginLeft="@dimen/standard_padding"/>
 
         <TextView
                 android:layout_width="0dp"
@@ -27,6 +27,6 @@
                 android:layout_height="wrap_content"
                 style="@style/summary_value_text"
                 android:id="@+id/critical"
-                android:layout_marginLeft="24dp"/>
+                android:layout_marginLeft="@dimen/standard_padding"/>
 
 </LinearLayout>

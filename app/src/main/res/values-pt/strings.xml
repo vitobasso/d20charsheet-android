@@ -119,8 +119,8 @@
     <string name="chars">Personagens</string>
     <string name="char_remove">Remover Personagens</string>
     <string name="equip">Equipamento</string>
-    <string name="attacks">Attaques</string>
-    <string name="attack">Attaque</string>
+    <string name="attacks">Ataques</string>
+    <string name="attack">Ataque</string>
     <string name="attack_edit">Editar Ataque</string>
     <string name="bonuses">Bônus</string>
     <string name="modlink_edit">Editar Ligações</string>

@@ -18,21 +18,24 @@ import com.vitobasso.d20charsheet.util.gui.RecursiveViewCaller;
  */
 public class FontUtil {
 
-    Context ctx;
-    public final static String FUTURA_LIGHT = "fonts/FuturaLT-Light.ttf";
-    public final static String FUTURA_MEDIUM = "fonts/FuturaLT.ttf";
-    public final static String FUTURA_BOOK = "fonts/FuturaLT-Book.ttf";
-    public final static String FUTURA_BOLD = "fonts/FuturaLT-Bold.ttf";
-    public final static String FUTURA_EXTRA_BOLD = "fonts/FuturaLT-ExtraBold.ttf";
+    private final static String FUTURA_LIGHT = "fonts/FuturaLT-Light.ttf";
+    private final static String FUTURA_MEDIUM = "fonts/FuturaLT.ttf";
+    private final static String FUTURA_BOOK = "fonts/FuturaLT-Book.ttf";
+    private final static String FUTURA_BOLD = "fonts/FuturaLT-Bold.ttf";
+    private final static String FUTURA_EXTRA_BOLD = "fonts/FuturaLT-ExtraBold.ttf";
 
     public final static String MAIN_FONT = FUTURA_MEDIUM;
     public final static String BOLD_FONT = FUTURA_BOLD;
-    public final static String BOLDER_FONT = FUTURA_EXTRA_BOLD;
 
     private static LruCache<String, Typeface> sTypefaceCache = new LruCache<String, Typeface>(12);
 
+    private Context ctx;
+    private final Typeface mainFont, boldFont;
+
     public FontUtil(Context ctx) {
         this.ctx = ctx;
+        this.mainFont = getFont(MAIN_FONT);
+        this.boldFont = getFont(BOLD_FONT);
     }
 
     public Typeface getFont(String path) {
@@ -48,6 +51,20 @@ public class FontUtil {
         SpannableString s = new SpannableString(text);
         s.setSpan(new TypefaceSpan(ctx, fontPath), 0, s.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return s;
+    }
+
+    public void setFontRecursively(View view){
+        RecursiveViewCaller<TextView> fontChange = new RecursiveViewCaller<TextView>(TextView.class){
+            @Override
+            protected void leafCall(TextView v, Object... params) {
+                if (v.getTypeface() == null || !v.getTypeface().isBold()) {
+                    v.setTypeface(mainFont);
+                } else {
+                    v.setTypeface(boldFont);
+                }
+            }
+        };
+        fontChange.recursiveCall(view);
     }
 
     private static SpannableString getSpannableString(int style, int start, int end, CharSequence text) {

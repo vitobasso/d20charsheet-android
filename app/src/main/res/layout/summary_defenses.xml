@@ -6,28 +6,28 @@
 
     <include
         android:id="@+id/hit_points"
-        layout="@layout/summary_main_field_subtitle"
+        layout="@layout/summary_main_field_defense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/half_padding"/>
 
     <include
         android:id="@+id/damage_reduction"
-        layout="@layout/summary_main_field_subtitle"
+        layout="@layout/summary_main_field_defense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/half_padding"/>
 
     <include
         android:id="@+id/armor_class"
-        layout="@layout/summary_main_field_subtitle"
+        layout="@layout/summary_main_field_defense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/half_padding"/>
 
     <include
         android:id="@+id/spell_resistance"
-        layout="@layout/summary_main_field_subtitle"
+        layout="@layout/summary_main_field_defense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/half_padding"/>
@@ -39,19 +39,19 @@
 
         <include
             android:id="@+id/fortitude"
-            layout="@layout/summary_main_field_simple_resist"
+            layout="@layout/summary_main_field_resist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <include
             android:id="@+id/reflex"
-            layout="@layout/summary_main_field_simple_resist"
+            layout="@layout/summary_main_field_resist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
         <include
             android:id="@+id/will"
-            layout="@layout/summary_main_field_simple_resist"
+            layout="@layout/summary_main_field_resist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

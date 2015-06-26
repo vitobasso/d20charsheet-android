@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/black"
+    android:orientation="vertical"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
+
+    <TextView
+        android:id="@+id/description"
+        style="@style/summary_title"
+        android:layout_width="match_parent"
+        android:text="@string/attacks"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="3"
+            android:gravity="start"
+            android:text="@string/bonus"
+            style="@style/summary_description"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_marginLeft="@dimen/standard_padding"
+            android:gravity="start"
+            android:layout_weight="2"
+            android:text="@string/damage"
+            style="@style/summary_description"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_marginLeft="@dimen/standard_padding"
+            android:gravity="start"
+            android:layout_weight="2"
+            android:text="@string/critical"
+            style="@style/summary_description"/>
+
+    </LinearLayout>
+
+</LinearLayout>

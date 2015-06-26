@@ -1,7 +1,6 @@
 package com.vitobasso.d20charsheet.activity.summary;
 
 import android.content.Context;
-import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -16,9 +15,7 @@ import com.vitobasso.d20charsheet.model.effect.ModifierTarget;
 import com.vitobasso.d20charsheet.util.app.ActivityUtil;
 import com.vitobasso.d20charsheet.util.app.AppCommons;
 import com.vitobasso.d20charsheet.util.business.AttackUtil;
-import com.vitobasso.d20charsheet.util.font.FontUtil;
 import com.vitobasso.d20charsheet.util.gui.GuiInflater;
-import com.vitobasso.d20charsheet.util.gui.RecursiveViewCaller;
 
 import java.text.MessageFormat;
 import java.util.Map;
@@ -47,8 +44,6 @@ import static com.vitobasso.d20charsheet.model.effect.ModifierTarget.WILL;
 import static com.vitobasso.d20charsheet.model.effect.ModifierTarget.WIS;
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.inflate;
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.populateTextView;
-import static com.vitobasso.d20charsheet.util.font.FontUtil.BOLDER_FONT;
-import static com.vitobasso.d20charsheet.util.font.FontUtil.BOLD_FONT;
 
 /**
  * Created by Victor on 21/03/14.
@@ -108,12 +103,6 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
             }
         }
 
-    }
-
-    @Override
-    protected void onSetFont() {
-        super.onSetFont();
-        setFontToLabels();
     }
 
     private ViewGroup getGroup(int viewGroupId, final ModifierTarget target) {
@@ -203,23 +192,6 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
         int modifier = data.getAbilityModifier(target);
         String modifierStr = modifier < 0 ? "" + modifier : "+" + modifier;
         return MessageFormat.format("{0} ({1})", value, modifierStr);
-    }
-
-    private void setFontToLabels(){
-        final Typeface titleFont = new FontUtil(activity).getFont(BOLDER_FONT);
-        final Typeface descFont = new FontUtil(activity).getFont(BOLD_FONT);
-        RecursiveViewCaller<TextView> fontChange = new RecursiveViewCaller<TextView>(TextView.class){
-            @Override
-            protected void leafCall(TextView v, Object... params) {
-                if (v.getId() == R.id.title) {
-                    v.setTypeface(titleFont);
-                } else if (v.getId() == R.id.description) {
-                    v.setTypeface(descFont);
-                }
-            }
-        };
-
-        fontChange.recursiveCall(findView(R.id.basic_root));
     }
 
     //TODO move to PageFragment

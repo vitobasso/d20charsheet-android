@@ -8,10 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.vitobasso.d20charsheet.util.font.FontUtil;
 import com.vitobasso.d20charsheet.util.i18n.EnumI18n;
-
-import static com.vitobasso.d20charsheet.util.font.FontUtil.MAIN_FONT;
-import static com.vitobasso.d20charsheet.util.font.FontUtil.setFontRecursively;
 
 /**
  * Created by Victor on 28/02/14.
@@ -22,12 +20,14 @@ public abstract class PagerFragment<T, A extends Activity & PagerActivity<T>> ex
     protected T data;
     protected ViewGroup root;
     protected EnumI18n i18n;
+    protected FontUtil fontUtil;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         this.activity = (A) activity;
         this.i18n = new EnumI18n(activity);
+        this.fontUtil = new FontUtil(activity);
     }
 
     @Override
@@ -58,7 +58,7 @@ public abstract class PagerFragment<T, A extends Activity & PagerActivity<T>> ex
     protected abstract void onPopulate();
 
     protected void onSetFont(){
-        setFontRecursively(activity, root, MAIN_FONT);
+        fontUtil.setFontRecursively(root);
     }
 
     public boolean onValidate(){
