@@ -7,24 +7,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 
+import com.vitobasso.d20charsheet.util.font.FontUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.TreeMap;
-
-import static com.vitobasso.d20charsheet.util.font.FontUtil.MAIN_FONT;
-import static com.vitobasso.d20charsheet.util.font.FontUtil.setFontRecursively;
 
 /**
  * Created by Victor on 06/09/14.
  */
 public abstract class SimpleExpListAdapter<G, I> extends BaseExpandableListAdapter {
 
-
     protected Activity activity;
     protected List<G> groups;
     protected TreeMap<G, List<I>> children;
     protected int groupLayout;
     protected int childLayout;
+    protected FontUtil fontUtil;
 
     /**
      * @param children should not be modified otherwise the "groups" list will get inconsistent.
@@ -35,6 +34,7 @@ public abstract class SimpleExpListAdapter<G, I> extends BaseExpandableListAdapt
         this.groups = groups;
         this.groupLayout = groupLayout;
         this.childLayout = childLayout;
+        this.fontUtil = new FontUtil(activity);
     }
 
     /**
@@ -96,7 +96,7 @@ public abstract class SimpleExpListAdapter<G, I> extends BaseExpandableListAdapt
         G group = groups.get(groupPosition);
         populateGroup(group, isExpanded, convertView);
 
-        setFontRecursively(activity, convertView, MAIN_FONT);
+        fontUtil.setFontRecursively(convertView);
         return convertView;
     }
 
@@ -111,7 +111,7 @@ public abstract class SimpleExpListAdapter<G, I> extends BaseExpandableListAdapt
         I child = children.get(subgroup).get(childPosition);
         populateChild(child, convertView);
 
-        setFontRecursively(activity, convertView, MAIN_FONT);
+        fontUtil.setFontRecursively(convertView);
         return convertView;
     }
 

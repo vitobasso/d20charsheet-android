@@ -18,8 +18,6 @@ import java.util.List;
 
 import static com.vitobasso.d20charsheet.model.effect.ModifierTarget.SKILL;
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.populateTextView;
-import static com.vitobasso.d20charsheet.util.font.FontUtil.MAIN_FONT;
-import static com.vitobasso.d20charsheet.util.font.FontUtil.setFontRecursively;
 
 /**
  * Created by Victor on 21/03/14.
@@ -66,7 +64,7 @@ public class SummarySkillsFragment extends PagerFragment<CharSummary, SummaryAct
                 }
             });
 
-            setFontRecursively(activity, group, MAIN_FONT); //TODO bring to supperclass or to setText
+            fontUtil.setFontRecursively(group); //TODO bring to supperclass or to setText
             return group;
         }
     }

@@ -10,9 +10,6 @@ import com.vitobasso.d20charsheet.R;
 
 import java.util.List;
 
-import static com.vitobasso.d20charsheet.util.font.FontUtil.MAIN_FONT;
-import static com.vitobasso.d20charsheet.util.font.FontUtil.setFontRecursively;
-
 /**
  * Adds to {@link AbstractListFragment}:
  * - an ArrayAdapter skeleton
@@ -28,7 +25,7 @@ public abstract class AbstractSimpleListFragment<T, A extends Activity & PagerAc
         return new Adapter(listData);
     }
 
-     private class Adapter extends ArrayAdapter<E> {
+    private class Adapter extends ArrayAdapter<E> {
 
         public Adapter(List<E> objects) {
             super(activity, getRowLayoutResourceId(), getRowTextViewResourceId(), objects);
@@ -39,7 +36,7 @@ public abstract class AbstractSimpleListFragment<T, A extends Activity & PagerAc
             View view = super.getView(position, convertView, parent);
             E element = listData.get(position);
             onPopulateRow(view, element);
-            setFontRecursively(activity, view, MAIN_FONT);
+            fontUtil.setFontRecursively(view);
             return view;
         }
     }

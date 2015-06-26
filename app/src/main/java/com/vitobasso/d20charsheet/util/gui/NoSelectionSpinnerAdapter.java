@@ -6,8 +6,8 @@ import android.view.ViewGroup;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
-import static com.vitobasso.d20charsheet.util.font.FontUtil.MAIN_FONT;
-import static com.vitobasso.d20charsheet.util.font.FontUtil.setFontRecursively;
+import com.vitobasso.d20charsheet.util.font.FontUtil;
+
 
 /**
  * Adds a "no selection" item.
@@ -17,10 +17,12 @@ import static com.vitobasso.d20charsheet.util.font.FontUtil.setFontRecursively;
 public class NoSelectionSpinnerAdapter extends SpinnerAdapterWrapper {
 
     private final String defaultValue;
+    private FontUtil fontUtil;
 
     public NoSelectionSpinnerAdapter(Context context, SpinnerAdapter base) {
         super(context, base);
         this.defaultValue = "";
+        this.fontUtil = new FontUtil(context);
     }
 
     @Override
@@ -61,7 +63,7 @@ public class NoSelectionSpinnerAdapter extends SpinnerAdapterWrapper {
         } else {
             v = (TextView) base.getView(position - 1, convertView, parent);
         }
-        setFontRecursively(context, v, MAIN_FONT);
+        fontUtil.setFontRecursively(v);
         return v;
     }
 
@@ -74,7 +76,7 @@ public class NoSelectionSpinnerAdapter extends SpinnerAdapterWrapper {
         } else {
             v = (TextView) base.getDropDownView(position - 1, convertView, parent);
         }
-        setFontRecursively(context, v, MAIN_FONT);
+        fontUtil.setFontRecursively(v);
         return v;
     }
 

@@ -86,17 +86,6 @@ public class FontUtil {
         }
     }
 
-    public static void setFontRecursively(Context ctx, View view, String fontPath){
-        final Typeface font = new FontUtil(ctx).getFont(fontPath);
-        RecursiveViewCaller<TextView> fontChange = new RecursiveViewCaller<TextView>(TextView.class){
-            @Override
-            protected void leafCall(TextView v, Object... params) {
-                v.setTypeface(font);
-            }
-        };
-        fontChange.recursiveCall(view);
-    }
-
     public static CharSequence setFont(Context ctx, String font, CharSequence text){
         return new FontUtil(ctx).getSpannableString(font, text);
     }

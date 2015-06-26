@@ -7,23 +7,24 @@ import android.widget.ArrayAdapter;
 
 import com.vitobasso.d20charsheet.R;
 import com.vitobasso.d20charsheet.model.effect.EffectSource;
+import com.vitobasso.d20charsheet.util.font.FontUtil;
 
 import java.util.List;
-
-import static com.vitobasso.d20charsheet.util.font.FontUtil.MAIN_FONT;
-import static com.vitobasso.d20charsheet.util.font.FontUtil.setFontRecursively;
 
 /**
  * Created by Victor on 20/04/14.
  */
 public class EffectArrayAdapter<T extends EffectSource> extends ArrayAdapter<T> {
 
+    private FontUtil fontUtil;
+
     public EffectArrayAdapter(Context context, List<T> objects) {
-        super(context, R.layout.effect_row, R.id.name, objects);
+        this(context, R.layout.effect_row, objects);
     }
 
     public EffectArrayAdapter(Context context, int resource, List<T> objects) {
         super(context, resource, R.id.name, objects);
+        fontUtil = new FontUtil(context);
     }
 
     @Override
@@ -34,7 +35,7 @@ public class EffectArrayAdapter<T extends EffectSource> extends ArrayAdapter<T> 
         EffectPopulator populator = new EffectPopulator(getContext());
         populator.populate(source, group);
 
-        setFontRecursively(getContext(), group, MAIN_FONT);
+        fontUtil.setFontRecursively(group);
         return group;
     }
 

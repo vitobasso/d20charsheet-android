@@ -9,13 +9,12 @@ import android.view.MenuItem;
 import com.vitobasso.d20charsheet.R;
 import com.vitobasso.d20charsheet.model.AbstractEntity;
 import com.vitobasso.d20charsheet.util.ReflectionUtil;
+import com.vitobasso.d20charsheet.util.font.FontUtil;
 
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.EXTRA_EDITED;
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.EXTRA_SELECTED;
 import static com.vitobasso.d20charsheet.util.font.FontUtil.BOLD_FONT;
-import static com.vitobasso.d20charsheet.util.font.FontUtil.MAIN_FONT;
 import static com.vitobasso.d20charsheet.util.font.FontUtil.setActionbarTitle;
-import static com.vitobasso.d20charsheet.util.font.FontUtil.setFontRecursively;
 
 public abstract class AbstractEditActivity<T extends AbstractEntity> extends Activity {
 
@@ -33,7 +32,7 @@ public abstract class AbstractEditActivity<T extends AbstractEntity> extends Act
 
         populate();
 
-        setFontRecursively(this, findViewById(android.R.id.content), MAIN_FONT);
+        new FontUtil(this).setFontRecursively(findViewById(android.R.id.content));
         setActionbarTitle(this, BOLD_FONT, getTitle());
     }
 

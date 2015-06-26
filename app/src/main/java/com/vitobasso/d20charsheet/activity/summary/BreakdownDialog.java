@@ -22,8 +22,6 @@ import com.vitobasso.d20charsheet.util.i18n.ModifierStringConverter;
 
 import static android.view.View.GONE;
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.findView;
-import static com.vitobasso.d20charsheet.util.font.FontUtil.MAIN_FONT;
-import static com.vitobasso.d20charsheet.util.font.FontUtil.setFontRecursively;
 
 /**
  * Created by Victor on 20/03/14.
@@ -159,7 +157,7 @@ public class BreakdownDialog {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setView(rootView);
-        setFontRecursively(activity, rootView, MAIN_FONT);
+        new FontUtil(activity).setFontRecursively(rootView);
         return builder.create();
     }
 

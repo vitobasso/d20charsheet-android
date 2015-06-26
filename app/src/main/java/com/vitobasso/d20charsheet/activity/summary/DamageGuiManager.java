@@ -11,14 +11,13 @@ import com.vitobasso.d20charsheet.model.character.CharSummary;
 import com.vitobasso.d20charsheet.model.character.DamageTaken;
 import com.vitobasso.d20charsheet.model.effect.ModifierTarget;
 import com.vitobasso.d20charsheet.util.app.ActivityUtil;
+import com.vitobasso.d20charsheet.util.font.FontUtil;
 import com.vitobasso.d20charsheet.util.gui.GuiInflater;
 
 import static android.view.View.GONE;
 import static android.view.View.OnClickListener;
 import static android.view.View.VISIBLE;
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.findView;
-import static com.vitobasso.d20charsheet.util.font.FontUtil.MAIN_FONT;
-import static com.vitobasso.d20charsheet.util.font.FontUtil.setFontRecursively;
 
 /**
  * Created by Victor on 26/04/14.
@@ -63,7 +62,7 @@ public class DamageGuiManager implements GuiInflater {
         View titleView = findView(root, R.id.title);
         titleView.setVisibility(visibility);
 
-        setFontRecursively(activity, root, MAIN_FONT);
+        new FontUtil(activity).setFontRecursively(root);
     }
 
     private void populateDamageUI(final ViewGroup root, final DamageTaken dmg) {

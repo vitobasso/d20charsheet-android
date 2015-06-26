@@ -20,13 +20,12 @@ import android.widget.SearchView;
 import com.vitobasso.d20charsheet.R;
 import com.vitobasso.d20charsheet.dao.abstraction.AbstractEntityDao;
 import com.vitobasso.d20charsheet.model.AbstractEntity;
+import com.vitobasso.d20charsheet.util.font.FontUtil;
 
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.EXTRA_SELECTED;
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.populateTextView;
 import static com.vitobasso.d20charsheet.util.font.FontUtil.BOLD_FONT;
-import static com.vitobasso.d20charsheet.util.font.FontUtil.MAIN_FONT;
 import static com.vitobasso.d20charsheet.util.font.FontUtil.setActionbarTitle;
-import static com.vitobasso.d20charsheet.util.font.FontUtil.setFontRecursively;
 
 /**
  * Created by Victor on 17/03/14.
@@ -100,7 +99,7 @@ public abstract class AbstractSelectActivity<T extends AbstractEntity> extends A
                 } finally {
                     dao.close();
                 }
-                setFontRecursively(activity, view, MAIN_FONT);
+                new FontUtil(activity).setFontRecursively(view);
             }
         };
         adapter.setFilterQueryProvider(new FilterQueryProvider() {
