@@ -8,12 +8,12 @@ import com.vitobasso.d20charsheet.util.app.ActivityUtil;
 /**
  * Created by Victor on 11/06/2015.
  */
-public class CharUtil {
+public class CharHelper {
 
     private Context context;
     private CharBase charBase;
 
-    public CharUtil(Context context, CharBase charBase) {
+    public CharHelper(Context context, CharBase charBase) {
         this.context = context;
         this.charBase = charBase;
     }
