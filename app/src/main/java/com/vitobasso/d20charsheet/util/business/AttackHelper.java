@@ -1,21 +1,38 @@
 package com.vitobasso.d20charsheet.util.business;
 
+import android.content.Context;
+
+import com.vitobasso.d20charsheet.R;
 import com.vitobasso.d20charsheet.model.Critical;
 import com.vitobasso.d20charsheet.model.DiceRoll;
 import com.vitobasso.d20charsheet.model.character.Attack;
 import com.vitobasso.d20charsheet.model.character.AttackRound;
+import com.vitobasso.d20charsheet.model.character.CharBase;
 import com.vitobasso.d20charsheet.model.item.WeaponProperties;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+
+import static com.vitobasso.d20charsheet.model.character.Attack.WeaponReference.MAIN_HAND;
+import static com.vitobasso.d20charsheet.model.character.Attack.WeaponReference.OFFHAND;
 
 /**
  * Created by Victor on 13/09/14.
  */
-public class AttackUtil {
+public class AttackHelper {
+
+    private Context context;
+    private CharBase base;
+
+    public AttackHelper(Context context, CharBase base) {
+        this.context = context;
+        this.base = base;
+    }
 
     public static int[] fullAttackPenalties(int bab) {
         int[] values = new int[1 + (bab - 1) / 5];
@@ -114,6 +131,30 @@ public class AttackUtil {
             }
         }
         return null;
+    }
+
+    public String createDefaultAttackRoundName(AttackRound attackRound) {
+        Set<Attack.WeaponReference> weaponsUsed = new HashSet<>();
+        for (Attack attack : attackRound.getAttacks()) {
+            weaponsUsed.add(attack.getWeaponReference());
+        }
+        return createDefaultAttackRoundName(weaponsUsed);
+    }
+
+    private String createDefaultAttackRoundName(Set<Attack.WeaponReference> weaponsUsed) {
+        String mainWeaponName = base.getWeapon(MAIN_HAND).getName();
+        String offhandWeaponName = base.getWeapon(OFFHAND).getName();
+        if (weaponsUsed.size() == 1) {
+            if (weaponsUsed.contains(MAIN_HAND)) {
+                return mainWeaponName;
+            } else {
+                return offhandWeaponName;
+            }
+        } else if (weaponsUsed.size() == 2) {
+            return mainWeaponName + "/" + offhandWeaponName;
+        } else {
+            return context.getString(R.string.attacks);
+        }
     }
 
 }

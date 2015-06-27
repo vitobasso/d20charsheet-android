@@ -15,7 +15,7 @@ import com.vitobasso.d20charsheet.model.item.Item;
 import com.vitobasso.d20charsheet.model.item.WeaponItem;
 import com.vitobasso.d20charsheet.model.item.WeaponProperties;
 import com.vitobasso.d20charsheet.model.rulebook.Book;
-import com.vitobasso.d20charsheet.util.business.AttackUtil;
+import com.vitobasso.d20charsheet.util.business.AttackHelper;
 
 import java.security.InvalidParameterException;
 import java.text.MessageFormat;
@@ -43,24 +43,14 @@ import static com.vitobasso.d20charsheet.model.effect.ModifierTarget.WILL;
 public class CharBase extends AbstractEntity implements CharEntity {
 
     private int age;
-    private double height;
-    private double weight;
-    private String tendencyMoral;
-    private String tendencyLoyality;
+    private double height, weight;
+    private String tendencyMoral, tendencyLoyality;
     private String divinity;
     private String gender;
-    private String player;
-    private String dungeonMaster;
-    private String campaign;
-    private String creationDate;
+    private String player, dungeonMaster, campaign, creationDate;
 
     private int hitPoints;
-    private int strength;
-    private int dexterity;
-    private int constitution;
-    private int intelligence;
-    private int wisdom;
-    private int charisma;
+    private int strength, dexterity, constitution, intelligence, wisdom, charisma;
 
     private Race race;
     private List<ClassLevel> classLevels = new ArrayList<>();
@@ -106,7 +96,7 @@ public class CharBase extends AbstractEntity implements CharEntity {
         if (item != null && item instanceof WeaponItem) {
             return ((WeaponItem) item).getWeaponProperties();
         } else {
-            return AttackUtil.unnarmedStrike();
+            return AttackHelper.unnarmedStrike();
         }
         //TODO shield attack
     }
@@ -146,7 +136,7 @@ public class CharBase extends AbstractEntity implements CharEntity {
     public void createStandardAttacks() {
         //full attack
         AttackRound fullAtk = new AttackRound();
-        int[] bonuses = AttackUtil.fullAttackPenalties(getBaseAttack());
+        int[] bonuses = AttackHelper.fullAttackPenalties(getBaseAttack());
         for (int bonus : bonuses) {
             Attack attack = new Attack(bonus, MAIN_HAND);
             fullAtk.addAttack(attack);

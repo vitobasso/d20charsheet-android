@@ -12,7 +12,7 @@ import com.vitobasso.d20charsheet.activity.abstraction.PagerActivity;
 import com.vitobasso.d20charsheet.activity.abstraction.PagerFragment;
 import com.vitobasso.d20charsheet.dao.entity.CharDao;
 import com.vitobasso.d20charsheet.model.character.CharBase;
-import com.vitobasso.d20charsheet.util.business.CharBuilder;
+import com.vitobasso.d20charsheet.util.business.CharBaseCreator;
 
 import static com.vitobasso.d20charsheet.activity.edit_char.EditCharPagerAdapter.PAGE_BASIC;
 import static com.vitobasso.d20charsheet.util.app.ActivityUtil.EXTRA_CHAR;
@@ -50,7 +50,7 @@ public class EditCharActivity extends MainNavigationActvity implements PagerActi
         if (mode == Mode.EDIT) {
             base = cache.getChar();
         } else {
-            base = new CharBuilder(this).newChar();
+            base = new CharBaseCreator(this).createNew();
             cache.setNewChar(base);
         }
 

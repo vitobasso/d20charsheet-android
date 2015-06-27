@@ -16,6 +16,7 @@ import com.vitobasso.d20charsheet.model.character.CharBase;
 import com.vitobasso.d20charsheet.model.character.CharSummary;
 import com.vitobasso.d20charsheet.model.effect.ModifierTarget;
 import com.vitobasso.d20charsheet.model.item.WeaponProperties;
+import com.vitobasso.d20charsheet.util.business.ModifierCreator;
 import com.vitobasso.d20charsheet.util.font.FontUtil;
 import com.vitobasso.d20charsheet.util.gui.GuiInflater;
 import com.vitobasso.d20charsheet.util.i18n.ModifierStringConverter;
@@ -30,10 +31,12 @@ public class BreakdownDialog {
 
     private Activity activity;
     private CharSummary charSummary;
+    private ModifierCreator modifierCreator;
 
     public BreakdownDialog(Activity activity, CharSummary charSummary) {
         this.activity = activity;
         this.charSummary = charSummary;
+        this.modifierCreator = new ModifierCreator(activity, charSummary);
     }
 
     public Dialog buildDialog(ModifierTarget target, String variation) {
@@ -57,7 +60,7 @@ public class BreakdownDialog {
             ViewGroup baseGroup = findView(rootView, R.id.base);
 
             //base
-            int count = inflater.appendRows(baseGroup, charSummary.createBaseModifiers(), "Base");
+            int count = inflater.appendRows(baseGroup, modifierCreator.createBaseModifiers(), "Base");
 
             //attack specific
             if (attackRoundIndex != null) {
@@ -71,10 +74,10 @@ public class BreakdownDialog {
             }
 
             //size
-            count += inflater.appendRows(baseGroup, charSummary.createSizeModifiers(), "Size");
+            count += inflater.appendRows(baseGroup, modifierCreator.createSizeModifiers(), "Size");
 
             //attributes
-            count += inflater.appendRows(baseGroup, charSummary.createAbilityModifiers());
+            count += inflater.appendRows(baseGroup, modifierCreator.createAbilityModifiers());
 
             //feats
             count += inflater.appendRows(rootView, base.getFeats(), false);

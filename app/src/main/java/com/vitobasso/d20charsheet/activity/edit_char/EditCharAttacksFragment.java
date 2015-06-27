@@ -15,7 +15,7 @@ import com.vitobasso.d20charsheet.model.character.Attack;
 import com.vitobasso.d20charsheet.model.character.AttackRound;
 import com.vitobasso.d20charsheet.model.character.CharBase;
 import com.vitobasso.d20charsheet.util.app.ActivityUtil;
-import com.vitobasso.d20charsheet.util.business.AttackUtil;
+import com.vitobasso.d20charsheet.util.business.AttackHelper;
 
 import java.util.List;
 import java.util.Map;
@@ -51,7 +51,7 @@ public class EditCharAttacksFragment extends AbstractSimpleListFragment<CharBase
 
         ViewGroup listRoot = findView(view, R.id.list);
         listRoot.removeAllViews();
-        Map<Attack, String> attackGroups = AttackUtil.groupBonusByWeapon(attackRound);
+        Map<Attack, String> attackGroups = AttackHelper.groupBonusByWeapon(attackRound);
         for (Attack attack : attackGroups.keySet()) {
             ViewGroup group = inflate(activity, listRoot, R.layout.edit_attack_list_group_row);
             populateTextView(group, R.id.penalties, attackGroups.get(attack));

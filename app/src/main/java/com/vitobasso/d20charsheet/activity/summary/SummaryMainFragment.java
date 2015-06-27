@@ -14,7 +14,7 @@ import com.vitobasso.d20charsheet.model.effect.ModifierSource;
 import com.vitobasso.d20charsheet.model.effect.ModifierTarget;
 import com.vitobasso.d20charsheet.util.app.ActivityUtil;
 import com.vitobasso.d20charsheet.util.app.AppCommons;
-import com.vitobasso.d20charsheet.util.business.AttackUtil;
+import com.vitobasso.d20charsheet.util.business.AttackHelper;
 import com.vitobasso.d20charsheet.util.gui.GuiInflater;
 
 import java.text.MessageFormat;
@@ -94,7 +94,7 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
             //TODO decide if it's necessary to have independent damage or critical values
             //on different attacks of same weapon in the same attack round.
             //If so, group them based on an "equals" test.
-            Map<Attack,String> grouped = AttackUtil.groupBonusByWeapon(attackRound);
+            Map<Attack,String> grouped = AttackHelper.groupBonusByWeapon(attackRound);
             for (Attack attack : grouped.keySet()) {
                 ViewGroup groupGroup = inflate(activity, roundGroup, R.layout.summary_attack_group);
                 setField(groupGroup, R.id.attack, grouped.get(attack), HIT, i, attack.getWeaponReference());

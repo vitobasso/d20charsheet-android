@@ -8,15 +8,15 @@ import com.vitobasso.d20charsheet.model.character.CharBase;
 /**
  * Created by Victor on 13/06/2015.
  */
-public class CharBuilder {
+public class CharBaseCreator {
 
     private Context context;
 
-    public CharBuilder(Context context) {
+    public CharBaseCreator(Context context) {
         this.context = context;
     }
 
-    public CharBase newChar() {
+    public CharBase createNew() {
         CharBase base = new CharBase();
         base.setHitPoints(1);
         base.setStrength(10);

@@ -13,6 +13,7 @@ import com.vitobasso.d20charsheet.activity.abstraction.PagerFragment;
 import com.vitobasso.d20charsheet.activity.edit_char.EditCharPagerAdapter;
 import com.vitobasso.d20charsheet.model.character.CharBase;
 import com.vitobasso.d20charsheet.model.character.CharSummary;
+import com.vitobasso.d20charsheet.util.business.CharSummaryCreator;
 
 import java.util.List;
 
@@ -93,7 +94,7 @@ public class SummaryActivity extends MainNavigationActvity implements PagerActiv
 
     @SuppressWarnings("unchecked")
     private void open(CharBase base) {
-        this.charSummary = new CharSummary(this, base); //TODO replace by a "re-calculate" so the reference doesn't change
+        this.charSummary = new CharSummaryCreator(this).createFrom(base); //TODO replace by a "re-calculate" so the reference doesn't change
         setActionbarTitle(this, BOLD_FONT, charSummary.getBase().getName());
         updateConditionsDrawer();
         updateFragments();
