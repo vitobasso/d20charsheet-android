@@ -57,6 +57,11 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
 
     @Override
     protected void onPopulate() {
+        populateMain();
+        populateAttacks();
+    }
+
+    private void populateMain() {
         DamageGuiManager dmgGui = new DamageGuiManager(activity, data);
 
         String hpValue = MessageFormat.format("{0}/{1}", data.getCurrentHitPoints(), data.getHitPoints());
@@ -82,8 +87,9 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
         setField(R.id.concealment, R.string.empty, R.string.conceal, concealValue, CONCEAL, data.getConcealment());
         setField(R.id.initiative, R.string.empty, R.string.init, "" + data.getInitiative(), INIT);
         setField(R.id.speed, R.string.empty, R.string.speed, "" + data.getSpeed(), SPEED);
+    }
 
-        //attacks
+    private void populateAttacks() {
         ViewGroup atkParent = findView(R.id.attacks_root);
         atkParent.removeAllViews();
         for (int i = 0; i < data.getAttacks().size(); i++) {
@@ -102,7 +108,6 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
                 setField(groupGroup, R.id.critical, attack.getWeapon().getCritical().toString(), CRIT_MULT, i, attack.getWeaponReference());
             }
         }
-
     }
 
     private ViewGroup getGroup(int viewGroupId, final ModifierTarget target) {
