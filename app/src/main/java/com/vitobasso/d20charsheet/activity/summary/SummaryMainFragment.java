@@ -15,6 +15,7 @@ import com.vitobasso.d20charsheet.model.effect.ModifierTarget;
 import com.vitobasso.d20charsheet.util.app.ActivityUtil;
 import com.vitobasso.d20charsheet.util.app.AppCommons;
 import com.vitobasso.d20charsheet.util.business.AttackHelper;
+import com.vitobasso.d20charsheet.util.business.CharDisplayHelper;
 import com.vitobasso.d20charsheet.util.gui.GuiInflater;
 
 import java.text.MessageFormat;
@@ -62,6 +63,7 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
     }
 
     private void populateMain() {
+        CharDisplayHelper displayHelper = new CharDisplayHelper(activity, data);
 
         HpGuiInflater hpGui = new HpGuiInflater(activity, data);
         String hpValue = MessageFormat.format("{0}/{1}", data.getCurrentHitPoints(), data.getHitPoints());
@@ -86,7 +88,7 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
         String concealValue = MessageFormat.format("{0}%", data.getConcealment());
         setField(R.id.concealment, R.string.empty, R.string.conceal, concealValue, CONCEAL, data.getConcealment());
         setField(R.id.initiative, R.string.empty, R.string.init, "" + data.getInitiative(), INIT);
-        setField(R.id.speed, R.string.empty, R.string.speed, "" + data.getSpeed(), SPEED);
+        setField(R.id.speed, R.string.empty, R.string.speed, "" + displayHelper.getSpeed(), SPEED);
     }
 
     private void populateAttacks() {

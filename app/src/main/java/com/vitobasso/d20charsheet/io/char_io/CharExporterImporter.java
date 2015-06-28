@@ -7,7 +7,7 @@ import android.os.Environment;
 
 import com.vitobasso.d20charsheet.R;
 import com.vitobasso.d20charsheet.model.character.CharBase;
-import com.vitobasso.d20charsheet.util.business.CharHelper;
+import com.vitobasso.d20charsheet.util.business.CharDisplayHelper;
 
 import org.apache.commons.io.FileUtils;
 import org.codehaus.jackson.map.DeserializationConfig;
@@ -89,8 +89,8 @@ public class CharExporterImporter {
     }
 
     private String getFileName(CharBase charBase) {
-        CharHelper charHelper = new CharHelper(activity, charBase);
-        return charHelper.getDescription() + ".json";
+        CharDisplayHelper charDisplayHelper = new CharDisplayHelper(activity, charBase);
+        return charDisplayHelper.getDescription() + ".json";
     }
 
     private void openExportDialog(File jsonFile) {
