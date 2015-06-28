@@ -22,12 +22,12 @@ import static com.vitobasso.d20charsheet.util.app.ActivityUtil.findView;
 /**
  * Created by Victor on 26/04/14.
  */
-public class DamageGuiManager implements GuiInflater {
+public class HpGuiInflater implements GuiInflater {
 
     private SummaryActivity activity;
     private CharSummary charSummary;
 
-    public DamageGuiManager(SummaryActivity activity, CharSummary charSummary) {
+    public HpGuiInflater(SummaryActivity activity, CharSummary charSummary) {
         this.activity = activity;
         this.charSummary = charSummary;
     }

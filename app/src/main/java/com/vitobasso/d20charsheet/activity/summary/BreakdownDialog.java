@@ -93,7 +93,7 @@ public class BreakdownDialog {
         count += inflater.appendRows(baseGroup, modifierCreator.createAbilityModifiers());
 
         //feats
-        count += inflater.appendRows(rootView, base.getFeats(), false);
+        count += inflater.appendRows(rootView, base.getFeats());
 
         hideIfEmpty(null, baseGroup, count);
     }
@@ -117,7 +117,7 @@ public class BreakdownDialog {
         ViewGroup raceGroup = findView(rootView, R.id.race);
 
         Race race = base.getRace();
-        int count = inflater.appendRows(raceGroup, race, false);
+        int count = inflater.appendRows(raceGroup, race);
         if (race != null) {
             count += inflater.appendRows(raceGroup, race.getTraits(), race.getName());
         }
@@ -129,7 +129,7 @@ public class BreakdownDialog {
         View classTitle = findView(rootView, R.id.classTitle);
         ViewGroup classGroup = findView(rootView, R.id.clazz);
 
-        int count = inflater.appendRows(classGroup, base.getClassLevels(), false);
+        int count = inflater.appendRows(classGroup, base.getClassLevels());
         for (ClassLevel classLevel : base.getClassLevels()) {
             String source = classLevel.getClazz().getName() + " " + classLevel.getLevel();
             count += inflater.appendRows(classGroup, classLevel.getTraits(), source);
@@ -142,7 +142,7 @@ public class BreakdownDialog {
         View equipTitle = findView(rootView, R.id.equipTitle);
         ViewGroup equipGroup = findView(rootView, R.id.equip);
 
-        int count = inflater.appendRows(equipGroup, base.getEquipmentItems(), false);
+        int count = inflater.appendRows(equipGroup, base.getEquipmentItems());
 
         hideIfEmpty(equipTitle, equipGroup, count);
     }
@@ -151,7 +151,7 @@ public class BreakdownDialog {
         View tempTitle = findView(rootView, R.id.tempTitle);
         ViewGroup tempGroup = findView(rootView, R.id.temp);
 
-        int count = inflater.appendRows(tempGroup, base.getActiveTempEffects(), true);
+        int count = inflater.appendRowsColored(tempGroup, base.getActiveTempEffects());
 
         hideIfEmpty(tempTitle, tempGroup, count);
     }

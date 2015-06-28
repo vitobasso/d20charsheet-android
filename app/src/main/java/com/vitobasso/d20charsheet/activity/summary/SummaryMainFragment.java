@@ -62,10 +62,10 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
     }
 
     private void populateMain() {
-        DamageGuiManager dmgGui = new DamageGuiManager(activity, data);
 
+        HpGuiInflater hpGui = new HpGuiInflater(activity, data);
         String hpValue = MessageFormat.format("{0}/{1}", data.getCurrentHitPoints(), data.getHitPoints());
-        setField(R.id.hit_points, R.string.hp, R.string.hit_points, hpValue, HP, dmgGui);
+        setField(R.id.hit_points, R.string.hp, R.string.hit_points, hpValue, HP, hpGui);
         String drValue = MessageFormat.format("{0}/-", data.getDamageReduction());
         setField(R.id.damage_reduction, R.string.dr, R.string.damage_reduction, drValue, DR, data.getDamageReduction());
 

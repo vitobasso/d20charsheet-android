@@ -53,7 +53,15 @@ public class BreakdownDialogInflater {
         return count;
     }
 
-    public int appendRows(ViewGroup parentView, Collection<? extends EffectSource> effects, boolean isColored) {
+    public int appendRows(ViewGroup parentView, Collection<? extends EffectSource> effects) {
+        return appendRows(parentView, effects, false);
+    }
+
+    public int appendRowsColored(ViewGroup parentView, Collection<? extends EffectSource> effects) {
+        return appendRows(parentView, effects, true);
+    }
+
+    private int appendRows(ViewGroup parentView, Collection<? extends EffectSource> effects, boolean isColored) {
         int count = 0;
         for (EffectSource source : effects) {
             if (source != null) {
@@ -63,7 +71,7 @@ public class BreakdownDialogInflater {
         return count;
     }
 
-    public int appendRows(ViewGroup parentView, EffectSource source, String sourceName) {
+    private int appendRows(ViewGroup parentView, EffectSource source, String sourceName) {
         int count = 0;
         if (source != null) {
             for (Modifier modifier : source.getEffect().getModifiers()) {
@@ -76,7 +84,11 @@ public class BreakdownDialogInflater {
         return count;
     }
 
-    public int appendRows(ViewGroup parentView, EffectSource source, boolean isColored) {
+    public int appendRows(ViewGroup parentView, EffectSource source) {
+        return appendRows(parentView, source, false);
+    }
+
+    private int appendRows(ViewGroup parentView, EffectSource source, boolean isColored) {
         int count = 0;
         if (source != null && source.getEffect() != null) {
             for (Modifier modifier : source.getEffect().getModifiers()) {
@@ -116,7 +128,7 @@ public class BreakdownDialogInflater {
         return count;
     }
 
-    public ViewGroup  appendRow(ViewGroup parentView, Modifier modifier, String sourceName, ModifierType type, int color) {
+    private ViewGroup appendRow(ViewGroup parentView, Modifier modifier, String sourceName, ModifierType type, int color) {
         if (type != null) {
             sourceName = String.format("%s (%s)", sourceName, type.toString());
         }
@@ -124,7 +136,7 @@ public class BreakdownDialogInflater {
         return appendRow(parentView, value, sourceName, color);
     }
 
-    public ViewGroup  appendRow(ViewGroup parentView, Modifier modifier, String sourceName, int colorRes) {
+    private ViewGroup appendRow(ViewGroup parentView, Modifier modifier, String sourceName, int colorRes) {
         String value = AppCommons.modifierString(modifier, sourceName);
         return appendRow(parentView, value, sourceName, colorRes);
     }
@@ -133,7 +145,7 @@ public class BreakdownDialogInflater {
         return appendRow(parentView, "" + value, sourceName, color);
     }
 
-    public ViewGroup appendRow(ViewGroup parentView, String value, String sourceName, int color) {
+    private ViewGroup appendRow(ViewGroup parentView, String value, String sourceName, int color) {
         ViewGroup row = inflate(activity, parentView, R.layout.summary_breakdown_row);
 
         TextView valueView = populateTextView(row, R.id.value, value);
@@ -145,7 +157,7 @@ public class BreakdownDialogInflater {
         return row;
     }
 
-    public boolean modifierApplies(Modifier modifier) {
+    private boolean modifierApplies(Modifier modifier) {
         return AppCommons.modifierApplies(modifier, target, variation, charSummary.getBase().getActiveConditions());
     }
 
