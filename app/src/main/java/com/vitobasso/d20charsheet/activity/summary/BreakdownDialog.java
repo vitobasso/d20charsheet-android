@@ -71,10 +71,12 @@ public class BreakdownDialog {
     }
 
     private void setTitle(ModifierTarget target, String variation) {
+        TextView titleView = findView(rootView, R.id.title);
         ModifierStringConverter modConv = new ModifierStringConverter(activity);
         CharSequence title = modConv.getTargetLong(target, variation);
-        TextView titleView = findView(rootView, R.id.title);
-        titleView.setText(FontUtil.toBold(title));
+        title = title.toString().toUpperCase();
+        title = FontUtil.toBold(title);
+        titleView.setText(title);
     }
 
     private void inflateBase(ModifierTarget target, Integer attackRoundIndex, Attack.WeaponReference weaponReference) {

@@ -1,4 +1,4 @@
-package com.vitobasso.d20charsheet.util.app;
+package com.vitobasso.d20charsheet.util.business;
 
 import android.content.Context;
 
@@ -16,21 +16,24 @@ import static com.vitobasso.d20charsheet.model.effect.ModifierTarget.FORT;
 import static com.vitobasso.d20charsheet.model.effect.ModifierTarget.MAX_DEX;
 import static com.vitobasso.d20charsheet.model.effect.ModifierTarget.REFL;
 import static com.vitobasso.d20charsheet.model.effect.ModifierTarget.SAVES;
+import static com.vitobasso.d20charsheet.model.effect.ModifierTarget.SPEED;
 import static com.vitobasso.d20charsheet.model.effect.ModifierTarget.WILL;
 
 /**
  * Created by Victor on 24/04/14.
  */
-public class AppCommons {
+public class ModifierHelper {
 
-    private Context ctx;
+    private Context context;
     public final int black, green, red;
+    private DistanceHelper distanceHelper;
 
-    public AppCommons(Context ctx) {
-        this.ctx = ctx;
-        this.black = ctx.getResources().getColor(android.R.color.black);
-        this.green = ctx.getResources().getColor(android.R.color.holo_green_light);
-        this.red = ctx.getResources().getColor(android.R.color.holo_red_light);
+    public ModifierHelper(Context context) {
+        this.context = context;
+        this.black = getColor(android.R.color.black);
+        this.green = getColor(android.R.color.holo_green_light);
+        this.red = getColor(android.R.color.holo_red_light);
+        this.distanceHelper = new DistanceHelper(context);
     }
 
     public static boolean modifierApplies(Modifier modifier, ModifierTarget target, String variation,
@@ -51,24 +54,35 @@ public class AppCommons {
         return ((targetMatches && variationMatches) || maxDexApplies || aggregateTarget) && satisfiesCondition && nonZero;
     }
 
-    public static String modifierString(Modifier modifier, String source) {
-
+    public String getAsString(Modifier modifier, String source) {
         ModifierTarget modTarget = modifier.getTarget();
         DiceRoll amount = modifier.getAmount();
+        String prefix = getPrefix(source, modTarget, amount);
+        return prefix + getAmountAsString(modTarget, amount);
+    }
 
+    private static String getPrefix(String source, ModifierTarget modTarget, DiceRoll amount) {
         String prefix = "";
         if (!"Base".equals(source)) {
             if (modTarget == MAX_DEX) {
-                prefix = "<";
+                prefix = "≤";
             } else if (amount.isPositive()) {
                 prefix = "+";
             }
         }
-
-        return prefix + amount.toString();
+        return prefix;
     }
 
-    public int getValueColor(CharBase base, ModifierTarget target, String variation) {
+    private String getAmountAsString(ModifierTarget modTarget, DiceRoll amount) {
+        if (modTarget == SPEED) {
+            int fixedAmount = amount.toInt();
+            return distanceHelper.getSpeedAsString(fixedAmount);
+        } else {
+            return amount.toString();
+        }
+    }
+
+    public int getColor(ModifierTarget target, String variation, CharBase base) {
 
         //default color
         int color = black;
@@ -78,7 +92,7 @@ public class AppCommons {
         externalLoop:
         for (TempEffect temp : temps) {
             for (Modifier mod : temp.getEffect().getModifiers()) {
-                if (AppCommons.modifierApplies(mod, target, variation, base.getActiveConditions())) {
+                if (ModifierHelper.modifierApplies(mod, target, variation, base.getActiveConditions())) {
                     color = green;
                     if (!mod.isBonus()) {
                         color = red;
@@ -89,6 +103,10 @@ public class AppCommons {
         }
 
         return color;
+    }
+
+    private int getColor(int id) {
+        return context.getResources().getColor(id);
     }
 
 }

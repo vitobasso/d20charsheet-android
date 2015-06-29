@@ -13,9 +13,9 @@ import com.vitobasso.d20charsheet.model.character.CharSummary;
 import com.vitobasso.d20charsheet.model.effect.ModifierSource;
 import com.vitobasso.d20charsheet.model.effect.ModifierTarget;
 import com.vitobasso.d20charsheet.util.app.ActivityUtil;
-import com.vitobasso.d20charsheet.util.app.AppCommons;
 import com.vitobasso.d20charsheet.util.business.AttackHelper;
 import com.vitobasso.d20charsheet.util.business.CharDisplayHelper;
+import com.vitobasso.d20charsheet.util.business.ModifierHelper;
 import com.vitobasso.d20charsheet.util.gui.GuiInflater;
 
 import java.text.MessageFormat;
@@ -192,7 +192,7 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
     }
 
     public static int getValueColor(Context ctx, CharSummary charSummary, ModifierTarget target) {
-        return new AppCommons(ctx).getValueColor(charSummary.getBase(), target, null);
+        return new ModifierHelper(ctx).getColor(target, null, charSummary.getBase());
     }
 
     private String formatAbility(int value, ModifierSource target) {

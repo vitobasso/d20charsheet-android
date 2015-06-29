@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.vitobasso.d20charsheet.R;
 import com.vitobasso.d20charsheet.model.effect.EffectSource;
 import com.vitobasso.d20charsheet.model.effect.Modifier;
-import com.vitobasso.d20charsheet.util.app.AppCommons;
+import com.vitobasso.d20charsheet.util.business.ModifierHelper;
 import com.vitobasso.d20charsheet.util.i18n.ModifierStringConverter;
 
 import java.util.ArrayList;
@@ -23,11 +23,11 @@ import static com.vitobasso.d20charsheet.util.app.ActivityUtil.populateTextView;
 public class EffectPopulator {
 
     private ModifierStringConverter modConv;
-    private AppCommons appCommons;
+    private ModifierHelper modifierHelper;
 
     public EffectPopulator(Context context) {
         this.modConv = new ModifierStringConverter(context);
-        this.appCommons = new AppCommons(context);
+        this.modifierHelper = new ModifierHelper(context);
     }
 
     public void populate(EffectSource source, ViewGroup group){
@@ -48,9 +48,9 @@ public class EffectPopulator {
             Modifier mod = modifiers.get(i);
             modView.setText(modConv.getShortString(mod));
             if (mod.isBonus()) {
-                modView.setTextColor(appCommons.green);
+                modView.setTextColor(modifierHelper.green);
             } else {
-                modView.setTextColor(appCommons.red);
+                modView.setTextColor(modifierHelper.red);
             }
         }
 

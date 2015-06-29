@@ -6,8 +6,6 @@ import com.vitobasso.d20charsheet.model.character.CharBase;
 import com.vitobasso.d20charsheet.model.character.CharSummary;
 import com.vitobasso.d20charsheet.util.app.ActivityUtil;
 
-import java.util.Locale;
-
 /**
  * Created by Victor on 11/06/2015.
  */
@@ -16,16 +14,17 @@ public class CharDisplayHelper {
     private Context context;
     private CharBase base;
     private CharSummary summary;
+    private DistanceHelper distanceHelper;
 
     public CharDisplayHelper(Context context, CharBase base) {
         this.context = context;
         this.base = base;
+        this.distanceHelper = new DistanceHelper(context);
     }
 
     public CharDisplayHelper(Context context, CharSummary summary) {
-        this.context = context;
+        this(context, summary.getBase());
         this.summary = summary;
-        this.base = summary.getBase();
     }
 
     public String getDescription() {
@@ -34,17 +33,8 @@ public class CharDisplayHelper {
     }
 
     public String getSpeed() {
-        return createDistanceHelper().getSpeed();
-    }
-
-    private DistanceHelper createDistanceHelper() {
-        String language = Locale.getDefault().getLanguage();
-        switch (language) {
-            case "pt":
-                return new MeterDistanceHelper(context, summary);
-            default:
-                return new FeetDistanceHelper(context, summary);
-        }
+        int speedInSquares = summary.getSpeed();
+        return distanceHelper.getSpeedAsString(speedInSquares);
     }
 
 }

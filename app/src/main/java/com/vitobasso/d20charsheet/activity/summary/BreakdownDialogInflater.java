@@ -10,7 +10,7 @@ import com.vitobasso.d20charsheet.model.effect.EffectSource;
 import com.vitobasso.d20charsheet.model.effect.Modifier;
 import com.vitobasso.d20charsheet.model.effect.ModifierTarget;
 import com.vitobasso.d20charsheet.model.effect.ModifierType;
-import com.vitobasso.d20charsheet.util.app.AppCommons;
+import com.vitobasso.d20charsheet.util.business.ModifierHelper;
 
 import java.util.Collection;
 import java.util.List;
@@ -26,6 +26,7 @@ public class BreakdownDialogInflater {
 
     private Activity activity;
     private CharSummary charSummary;
+    private ModifierHelper modifierHelper;
     public final int black, green, red;
 
     private ModifierTarget target;
@@ -37,10 +38,10 @@ public class BreakdownDialogInflater {
         this.target = target;
         this.variation = variation;
 
-        AppCommons commons = new AppCommons(activity);
-        this.black = commons.black;
-        this.green = commons.green;
-        this.red = commons.red;
+        this.modifierHelper = new ModifierHelper(activity);
+        this.black = modifierHelper.black;
+        this.green = modifierHelper.green;
+        this.red = modifierHelper.red;
     }
 
     public int appendRows(ViewGroup parentView, Collection<? extends EffectSource> sources, String sourceName) {
@@ -102,13 +103,13 @@ public class BreakdownDialogInflater {
         return count;
     }
 
-    public int appendRows(ViewGroup parentView, Map<Modifier, String> modifiers) {
+    public int appendRows(ViewGroup parentView, Map<Modifier, String> modifierSources) {
         int count = 0;
-        if (modifiers != null) {
-            for (Modifier modifier : modifiers.keySet()) {
+        if (modifierSources != null) {
+            for (Modifier modifier : modifierSources.keySet()) {
                 if (modifierApplies(modifier)) {
                     count++;
-                    appendRow(parentView, modifier, modifiers.get(modifier), black);
+                    appendRow(parentView, modifier, modifierSources.get(modifier), black);
                 }
             }
         }
@@ -132,12 +133,12 @@ public class BreakdownDialogInflater {
         if (type != null) {
             sourceName = String.format("%s (%s)", sourceName, type.toString());
         }
-        String value = AppCommons.modifierString(modifier,  sourceName);
+        String value = modifierHelper.getAsString(modifier, sourceName);
         return appendRow(parentView, value, sourceName, color);
     }
 
     private ViewGroup appendRow(ViewGroup parentView, Modifier modifier, String sourceName, int colorRes) {
-        String value = AppCommons.modifierString(modifier, sourceName);
+        String value = modifierHelper.getAsString(modifier, sourceName);
         return appendRow(parentView, value, sourceName, colorRes);
     }
 
@@ -158,7 +159,7 @@ public class BreakdownDialogInflater {
     }
 
     private boolean modifierApplies(Modifier modifier) {
-        return AppCommons.modifierApplies(modifier, target, variation, charSummary.getBase().getActiveConditions());
+        return ModifierHelper.modifierApplies(modifier, target, variation, charSummary.getBase().getActiveConditions());
     }
 
 }

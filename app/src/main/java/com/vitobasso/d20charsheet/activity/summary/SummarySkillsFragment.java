@@ -10,7 +10,7 @@ import com.vitobasso.d20charsheet.R;
 import com.vitobasso.d20charsheet.activity.abstraction.PagerFragment;
 import com.vitobasso.d20charsheet.model.character.CharSkill;
 import com.vitobasso.d20charsheet.model.character.CharSummary;
-import com.vitobasso.d20charsheet.util.app.AppCommons;
+import com.vitobasso.d20charsheet.util.business.ModifierHelper;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,7 +54,7 @@ public class SummarySkillsFragment extends PagerFragment<CharSummary, SummaryAct
             populateTextView(group, R.id.skill, skillName);
 
             TextView bonusView = populateTextView(group, R.id.bonus, skill.getScore());
-            int color = new AppCommons(activity).getValueColor(data.getBase(), SKILL, skillName);
+            int color = new ModifierHelper(activity).getColor(SKILL, skillName, data.getBase());
             bonusView.setTextColor(color);
 
             group.setOnClickListener(new View.OnClickListener() {
