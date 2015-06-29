@@ -9,8 +9,10 @@ import com.vitobasso.d20charsheet.model.effect.Condition;
 import com.vitobasso.d20charsheet.model.effect.Modifier;
 import com.vitobasso.d20charsheet.model.effect.ModifierTarget;
 
+import java.text.MessageFormat;
 import java.util.Collection;
 
+import static com.vitobasso.d20charsheet.model.effect.ModifierTarget.CONCEAL;
 import static com.vitobasso.d20charsheet.model.effect.ModifierTarget.DEX;
 import static com.vitobasso.d20charsheet.model.effect.ModifierTarget.FORT;
 import static com.vitobasso.d20charsheet.model.effect.ModifierTarget.MAX_DEX;
@@ -75,8 +77,9 @@ public class ModifierHelper {
 
     private String getAmountAsString(ModifierTarget modTarget, DiceRoll amount) {
         if (modTarget == SPEED) {
-            int fixedAmount = amount.toInt();
-            return distanceHelper.getSpeedAsString(fixedAmount);
+            return distanceHelper.getAsString(amount.toInt());
+        } else if (modTarget == CONCEAL) {
+            return MessageFormat.format("{0}%", amount.toInt());
         } else {
             return amount.toString();
         }

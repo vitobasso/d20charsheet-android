@@ -6,6 +6,8 @@ import com.vitobasso.d20charsheet.model.character.CharBase;
 import com.vitobasso.d20charsheet.model.character.CharSummary;
 import com.vitobasso.d20charsheet.util.app.ActivityUtil;
 
+import java.text.MessageFormat;
+
 /**
  * Created by Victor on 11/06/2015.
  */
@@ -34,7 +36,11 @@ public class CharDisplayHelper {
 
     public String getSpeed() {
         int speedInSquares = summary.getSpeed();
-        return distanceHelper.getSpeedAsString(speedInSquares);
+        return distanceHelper.getAsString(speedInSquares);
+    }
+
+    public String getConcealment() {
+        return MessageFormat.format("{0}%", summary.getConcealment());
     }
 
 }

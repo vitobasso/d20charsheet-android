@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
 
     <TextView
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:paddingRight="@dimen/standard_padding"
-            android:gravity="right"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/value"/>
+        android:id="@+id/value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:minEms="2"
+        android:paddingRight="@dimen/standard_padding"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-            android:layout_width="0dp"
-            android:layout_weight="4"
-            android:layout_height="wrap_content"
-            android:paddingLeft="@dimen/standard_padding"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/source"/>
+        android:id="@+id/source"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:paddingLeft="@dimen/standard_padding"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </LinearLayout>

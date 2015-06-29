@@ -17,7 +17,7 @@ public class DistanceHelper {
         this.context = context;
     }
 
-    public String getSpeedAsString(int valueInSquares) {
+    public String getAsString(int valueInSquares) {
         float displayValue = convertToDisplayUnit(valueInSquares);
         return String.format("%.0f%s", displayValue, getUnitAbbreviation());
     }

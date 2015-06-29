@@ -63,7 +63,7 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
     }
 
     private void populateMain() {
-        CharDisplayHelper displayHelper = new CharDisplayHelper(activity, data);
+        CharDisplayHelper display = new CharDisplayHelper(activity, data);
 
         HpGuiInflater hpGui = new HpGuiInflater(activity, data);
         String hpValue = MessageFormat.format("{0}/{1}", data.getCurrentHitPoints(), data.getHitPoints());
@@ -85,10 +85,9 @@ public class SummaryMainFragment extends PagerFragment<CharSummary, SummaryActiv
         setField(R.id.reflex, R.string.empty, R.string.refl, "" + data.getReflex(), REFL);
         setField(R.id.will, R.string.empty, R.string.will, "" + data.getWill(), WILL);
 
-        String concealValue = MessageFormat.format("{0}%", data.getConcealment());
-        setField(R.id.concealment, R.string.empty, R.string.conceal, concealValue, CONCEAL, data.getConcealment());
+        setField(R.id.concealment, R.string.empty, R.string.conceal, display.getConcealment(), CONCEAL, data.getConcealment());
         setField(R.id.initiative, R.string.empty, R.string.init, "" + data.getInitiative(), INIT);
-        setField(R.id.speed, R.string.empty, R.string.speed, "" + displayHelper.getSpeed(), SPEED);
+        setField(R.id.speed, R.string.empty, R.string.speed, "" + display.getSpeed(), SPEED);
     }
 
     private void populateAttacks() {
